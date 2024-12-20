@@ -19,7 +19,6 @@ import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_
 import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_row_widget.dart';
 import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_search_result_widget.dart';
 import 'package:keklist/presentation/screens/mind_info/mind_info_screen.dart';
-import 'package:keklist/presentation/screens/settings/settings_screen.dart';
 import 'package:keklist/presentation/screens/user_profile/user_profile_screen.dart';
 import 'package:keklist/presentation/screens/web_page/web_page_screen.dart';
 import 'package:keklist/presentation/core/widgets/rounded_container.dart';
