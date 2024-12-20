@@ -13,9 +13,9 @@ final class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
   })  : _mindRepository = mindRepository,
         super(
           UserProfileState(
-            userName: '',
-            userDescribingMinds: [],
-            userDescribingSuggestionEmojies: [],
+            nickname: '',
+            userDescriptionMinds: [],
+            userDescriptionSuggestionEmojies: [],
           ),
         ) {
     on<UserProfileGet>(_getUserProfile);
@@ -35,9 +35,9 @@ final class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
         .distinct();
     emit(
       UserProfileState(
-        userName: "@sashkyn", // TODO: store it
-        userDescribingMinds: userDescribingMinds,
-        userDescribingSuggestionEmojies: suggestionEmojies,
+        nickname: "@sashkyn", // TODO: store it
+        userDescriptionMinds: userDescribingMinds,
+        userDescriptionSuggestionEmojies: suggestionEmojies,
       ),
     );
   }
@@ -58,14 +58,14 @@ final class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
       ),
       isUploadedToServer: false,
     );
-    final List<String> newSuggestions = state.userDescribingSuggestionEmojies
+    final List<String> newSuggestions = state.userDescriptionSuggestionEmojies
         .where((suggestionEmoji) => suggestionEmoji != event.emoji)
         .toList(growable: false);
     emit(
       UserProfileState(
-        userName: state.userName,
-        userDescribingMinds: state.userDescribingMinds.concat([mind]),
-        userDescribingSuggestionEmojies: newSuggestions,
+        nickname: state.nickname,
+        userDescriptionMinds: state.userDescriptionMinds.concat([mind]),
+        userDescriptionSuggestionEmojies: newSuggestions,
       ),
     );
   }
@@ -105,13 +105,13 @@ final class UserProfileAddDescribingMind extends UserProfileEvent {
 // State.
 
 final class UserProfileState {
-  final String userName;
-  final List<Mind> userDescribingMinds;
-  final List<String> userDescribingSuggestionEmojies;
+  final String nickname;
+  final List<Mind> userDescriptionMinds;
+  final List<String> userDescriptionSuggestionEmojies;
 
   UserProfileState({
-    required this.userName,
-    required this.userDescribingMinds,
-    required this.userDescribingSuggestionEmojies,
+    required this.nickname,
+    required this.userDescriptionMinds,
+    required this.userDescriptionSuggestionEmojies,
   });
 }

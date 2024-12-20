@@ -23,7 +23,7 @@ final class MyChipWidget extends StatelessWidget {
       shape: StadiumBorder(
         side: BorderSide(
           color: selectedColor,
-          width: 2.0,
+          width: 0.2,
         ),
       ),
       selectedColor: selectedColor,
