@@ -23,7 +23,7 @@ final class _MindCollectionBody extends StatelessWidget {
     required this.shouldShowTitles,
   });
 
-  static final DateFormat _formatter = DateFormat('dd.MM.yyyy - EEEE');
+  static final DateFormat _dayFormatter = DateFormat('dd.MM.yyyy - EEEE');
   static final DateFormat _yearTitleFormatter = DateFormat.y();
   static final DateFormat _monthTitleFormatter = DateFormat.MMMM().addPattern('').addPattern('yy', '');
 
@@ -89,7 +89,7 @@ final class _MindCollectionBody extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  _formatter.format(currentDayDateIndex),
+                  _dayFormatter.format(currentDayDateIndex),
                   textAlign: TextAlign.center,
                   style: TextStyle(fontWeight: isToday ? FontWeight.bold : FontWeight.normal),
                 ),
@@ -101,7 +101,7 @@ final class _MindCollectionBody extends StatelessWidget {
                     child: RoundedContainer(
                       border: isToday
                           ? Border.all(
-                              color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
+                              color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.4),
                               width: 2.0,
                             )
                           : null,
@@ -127,6 +127,8 @@ final class _MindCollectionBody extends StatelessWidget {
       ),
     );
   }
+
+  // TODO: to not show week number in start of each year.
 
   int _getWeekNumber(DateTime date) {
     final DateTime firstDayOfYear = DateTime(date.year, 1, 1);

@@ -170,26 +170,27 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
           condition: !_isDemoMode,
           falseChild: const SizedBox.shrink(),
           trueChild: BoolWidget(
-              condition: _isSearching,
-              trueChild: _SearchAppBar(
-                searchTextController: _searchTextController,
-                onSearchAddEmotion: () => _showMindPickerScreen(onSelect: (emoji) {
-                  _searchTextController.text += emoji;
-                }),
-                onSearchCancel: () => _cancelSearch(),
-              ),
-              falseChild: _MindCollectionAppBar(
-                isOfflineMode: _isOfflineMode,
-                isUpdating: _isUpdating,
-                onSearch: () => sendEventTo<MindBloc>(MindStartSearch()),
-                onTitle: () => _scrollToNow(),
-                onCalendar: () => _showCalendarActions(),
-                onUserProfile: () => _showUserProfile(),
-                onInsights: () => _showInsights(),
-                onOfflineMode: () {
-                  print('heheh');
-                },
-              )),
+            condition: _isSearching,
+            trueChild: _SearchAppBar(
+              searchTextController: _searchTextController,
+              onSearchAddEmotion: () => _showMindPickerScreen(onSelect: (emoji) {
+                _searchTextController.text += emoji;
+              }),
+              onSearchCancel: () => _cancelSearch(),
+            ),
+            falseChild: _MindCollectionAppBar(
+              isOfflineMode: _isOfflineMode,
+              isUpdating: _isUpdating,
+              onSearch: () => sendEventTo<MindBloc>(MindStartSearch()),
+              onTitle: () => _scrollToNow(),
+              onCalendar: () => _showCalendarActions(),
+              onUserProfile: () => _showUserProfile(),
+              onInsights: () => _showInsights(),
+              onOfflineMode: () {
+                print('heheh');
+              },
+            ),
+          ),
         ),
       ),
       body: BoolWidget(
@@ -268,24 +269,24 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
 
   int _getNowDayIndex() => MindUtils.getDayIndex(from: DateTime.now());
 
-  void _enableDemoMode() {
-    if (_isDemoMode) {
-      return;
-    }
+  // void _enableDemoMode() {
+  //   if (_isDemoMode) {
+  //     return;
+  //   }
 
-    setState(() => _isDemoMode = true);
-  }
+  //   setState(() => _isDemoMode = true);
+  // }
 
-  void _disableDemoMode() {
-    if (!_isDemoMode) {
-      return;
-    }
+  // void _disableDemoMode() {
+  //   if (!_isDemoMode) {
+  //     return;
+  //   }
 
-    setState(() => _isDemoMode = false);
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      _jumpToNow();
-    });
-  }
+  //   setState(() => _isDemoMode = false);
+  //   WidgetsBinding.instance.addPostFrameCallback((_) async {
+  //     _jumpToNow();
+  //   });
+  // }
 
   Future<void> _showDateSwitcher() async {
     final List<DateTime?>? dates = await showCalendarDatePicker2Dialog(
@@ -304,7 +305,7 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
     _scrollToDayIndex(dayIndex);
   }
 
-  Future<void> _showDatePeriod() async {
+  Future<(int startDateIndex, int endDateIndex)?> _showPeriodPicker() async {
     final List<DateTime?>? dates = await showCalendarDatePicker2Dialog(
       context: context,
       value: [],
@@ -317,12 +318,97 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
     );
 
     if (dates == null || dates.length < 2) {
-      return;
+      return null;
     }
 
     final int startDayIndex = MindUtils.getDayIndex(from: dates[0]!);
     final int endDayIndex = MindUtils.getDayIndex(from: dates[1]!);
 
+    return (startDayIndex, endDayIndex);
+  }
+
+  void _showCalendarActions() {
+    showBarModalBottomSheet(
+      context: context,
+      builder: (context) => ActionsScreen(
+        actions: [
+          (ActionModel.goToDate(), () => _showDateSwitcher()),
+          (ActionModel.showDigest(), () => _showDigestPeriodOptions()),
+        ],
+      ),
+    );
+  }
+
+  // TODO: move to DateUtils
+
+  DateTime _getLastDayOfWeek(DateTime date) {
+    int currentWeekday = date.weekday;
+    int daysToLastDay = DateTime.sunday - currentWeekday;
+    return date.add(Duration(days: daysToLastDay));
+  }
+
+  void _showDigestPeriodOptions() {
+    final DateTime now = DateTime.now();
+    showBarModalBottomSheet(
+      context: context,
+      builder: (context) => ActionsScreen(
+        actions: [
+          (
+            ActionModel.custom(icon: const Icon(Icons.view_week_rounded), title: 'This week'),
+            () async {
+              final DateTime thisWeekStartDate = now.subtract(Duration(days: now.weekday - 1));
+              final DateTime endThisWeekDate = _getLastDayOfWeek(thisWeekStartDate);
+              _showDigest(
+                startDayIndex: MindUtils.getDayIndex(from: thisWeekStartDate),
+                endDayIndex: MindUtils.getDayIndex(from: endThisWeekDate),
+              );
+            }
+          ),
+          (
+            ActionModel.custom(icon: const Icon(Icons.view_week_rounded), title: 'Previous week'),
+            () async {
+              final DateTime lastWeekStartDate =
+                  now.subtract(const Duration(days: 7)).subtract(Duration(days: now.weekday - 1));
+              final DateTime endLastWeekDate = _getLastDayOfWeek(lastWeekStartDate);
+              _showDigest(
+                startDayIndex: MindUtils.getDayIndex(from: lastWeekStartDate),
+                endDayIndex: MindUtils.getDayIndex(from: endLastWeekDate),
+              );
+            }
+          ),
+          (
+            ActionModel.custom(icon: const Icon(Icons.calendar_view_week), title: 'Last 2 weeks'),
+            () async {
+              final DateTime twoWeeksAgoStartDate =
+                  now.subtract(const Duration(days: 14)).subtract(Duration(days: now.weekday - 1));
+              final DateTime thisWeekEndDate = _getLastDayOfWeek(now);
+              _showDigest(
+                startDayIndex: MindUtils.getDayIndex(from: twoWeeksAgoStartDate),
+                endDayIndex: MindUtils.getDayIndex(from: thisWeekEndDate),
+              );
+            }
+          ),
+          (
+            ActionModel.custom(icon: const Icon(Icons.date_range), title: 'Select period ...'),
+            () async => _showDigestForCustomPeriod()
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showDigestForCustomPeriod() async {
+    final (int startDayIndex, int endDayIndex)? period = await _showPeriodPicker();
+    if (period == null) {
+      return;
+    }
+    _showDigest(startDayIndex: period.$1, endDayIndex: period.$2);
+  }
+
+  void _showDigest({
+    required int startDayIndex,
+    required int endDayIndex,
+  }) async {
     if (mountedContext == null) {
       return;
     }
@@ -340,18 +426,6 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
             onSelectMind: (mind) => _showMindInfo(mind),
           );
         },
-      ),
-    );
-  }
-
-  void _showCalendarActions() {
-    showBarModalBottomSheet(
-      context: context,
-      builder: (context) => ActionsScreen(
-        actions: [
-          (ActionModel.goToDate(), () => _showDateSwitcher()),
-          (ActionModel.showDigestForPeriod(), () => _showDatePeriod()),
-        ],
       ),
     );
   }
