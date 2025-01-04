@@ -43,7 +43,7 @@ final class _InsightsScreenState extends KekWidgetState<InsightsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Insights')),
+      appBar: AppBar(title: const Text('Statistics')),
       body: SafeArea(
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
@@ -57,22 +57,15 @@ final class _InsightsScreenState extends KekWidgetState<InsightsScreen> {
                   axisDirection: AxisDirection.down,
                   crossAxisCount: crossAxisCount,
                   children: [
-                    StaggeredGridTile.fit(
-                      crossAxisCellCount: crossAxisCellCount,
-                      child: GestureDetector(
-                        onTap: () => _showDayCollectionScreen(groupDayIndex: MindUtils.getTodayIndex()),
-                        child: InsightsTodayMindsWidget(
-                          todayMinds: MindUtils.findTodayMinds(allMinds: _minds),
-                        ),
-                      ),
-                    ),
-                    StaggeredGridTile.fit(
-                      crossAxisCellCount: crossAxisCellCount,
-                      child: InsightsRandomMindWidget(
-                        allMinds: _minds,
-                        onTapToMind: (mind) => _showDayCollectionScreen(groupDayIndex: mind.dayIndex),
-                      ),
-                    ),
+                    // StaggeredGridTile.fit(
+                    //   crossAxisCellCount: crossAxisCellCount,
+                    //   child: GestureDetector(
+                    //     onTap: () => _showDayCollectionScreen(groupDayIndex: MindUtils.getTodayIndex()),
+                    //     child: InsightsTodayMindsWidget(
+                    //       todayMinds: MindUtils.findTodayMinds(allMinds: _minds),
+                    //     ),
+                    //   ),
+                    // ),
                     StaggeredGridTile.fit(
                       crossAxisCellCount: crossAxisCellCount,
                       child: InsightsPieWidget(allMinds: _minds),
@@ -80,6 +73,13 @@ final class _InsightsScreenState extends KekWidgetState<InsightsScreen> {
                     StaggeredGridTile.fit(
                       crossAxisCellCount: crossAxisCellCount,
                       child: InsightsTopChartWidget(allMinds: _minds),
+                    ),
+                    StaggeredGridTile.fit(
+                      crossAxisCellCount: crossAxisCellCount,
+                      child: InsightsRandomMindWidget(
+                        allMinds: _minds,
+                        onTapToMind: (mind) => _showDayCollectionScreen(groupDayIndex: mind.dayIndex),
+                      ),
                     ),
                   ],
                 ),

@@ -5,6 +5,9 @@ import 'package:keklist/domain/services/entities/mind.dart';
 // TODO: remove from here isUploadedToServer and etc.
 // TODO: merge with service
 
+// TODO: add constant with folder mind (1)
+// TODO: add minds as a child of folder
+
 abstract class MindRepository {
   Iterable<Mind> get values;
   Stream<Iterable<Mind>> get stream;

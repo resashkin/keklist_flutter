@@ -28,9 +28,7 @@ final class MyChipWidget extends StatelessWidget {
       ),
       selectedColor: selectedColor,
       selected: isSelected,
-      onPressed: () {
-        onSelect(isSelected);
-      },
+      onPressed: () => onSelect(isSelected),
     );
   }
 }

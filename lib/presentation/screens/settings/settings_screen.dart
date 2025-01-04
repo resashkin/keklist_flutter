@@ -282,7 +282,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   }
 
   Future<void> _openFeatureSuggestion() async {
-    final Uri uri = Uri.parse(KeklistConstants.featureSuggestionURL);
+    final Uri uri = Uri.parse(KeklistConstants.featureSuggestionsURL);
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);
     }

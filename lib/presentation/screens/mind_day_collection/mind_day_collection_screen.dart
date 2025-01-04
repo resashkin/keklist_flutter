@@ -176,7 +176,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
               onOptions: (Mind mind) => _showActions(context, mind),
               mindIdsToChildren: _mindIdsToChildren,
             ),
-            falseChild: MindCollectionEmptyDayWidget.noMinds(text: 'No minds for current day'),
+            falseChild: MindCollectionEmptyDayWidget.noMinds(),
           ),
         ),
       ),

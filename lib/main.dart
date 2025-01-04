@@ -116,7 +116,10 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
             ),
           ),
           BlocProvider(
-            create: (context) => UserProfileBloc(mindRepository: mainInjector.get<MindRepository>()),
+            create: (context) => UserProfileBloc(
+              mindRepository: mainInjector.get<MindRepository>(),
+              settingsRepository: mainInjector.get<SettingsRepository>(),
+            ),
           ),
         ],
         child: const KeklistApp(),
@@ -138,7 +141,7 @@ void _setupBlockingLoadingWidget() {
     ..backgroundColor = Colors.black.withAlpha(200)
     ..indicatorColor = Colors.white
     ..textColor = Colors.black
-    ..maskColor = Colors.blue.withOpacity(0.5)
+    ..maskColor = Colors.blue.withValues(alpha: 0.5)
     ..userInteractions = false
     ..dismissOnTap = false;
 }
@@ -149,8 +152,8 @@ Future<void> _initHive() async {
   Hive.registerAdapter<MessageObject>(MessageObjectAdapter());
   await Hive.initFlutter();
   final Box<SettingsObject> settingsBox = await Hive.openBox<SettingsObject>(HiveConstants.settingsBoxName);
-  if (settingsBox.get(HiveConstants.settingsGlobalSettingsIndex) == null) {
-    settingsBox.put(HiveConstants.settingsGlobalSettingsIndex, KeklistSettings.initial().toObject());
+  if (settingsBox.get(HiveConstants.globalSettingsIndex) == null) {
+    settingsBox.put(HiveConstants.globalSettingsIndex, KeklistSettings.initial().toObject());
   }
   await Hive.openBox<MindObject>(HiveConstants.mindBoxName);
   await Hive.openBox<MessageObject>(HiveConstants.messageChatBoxName);

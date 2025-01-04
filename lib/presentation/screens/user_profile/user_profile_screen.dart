@@ -1,3 +1,4 @@
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -6,6 +7,7 @@ import 'package:keklist/presentation/blocs/user_profile_bloc/user_profile_bloc.d
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
+import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/presentation/core/widgets/my_chip_widget.dart';
 import 'package:keklist/presentation/screens/mind_creator_screen.dart';
 import 'package:keklist/presentation/screens/settings/settings_screen.dart';
@@ -22,9 +24,8 @@ final class UserProfileScreen extends StatefulWidget {
 
 final class _UserProfileScreenState extends KekWidgetState<UserProfileScreen> {
   UserProfileState _userProfileState = UserProfileState(
-    nickname: '',
-    userDescriptionMinds: [],
-    userDescriptionSuggestionEmojies: [],
+    nickname: null,
+    folders: [],
   );
 
   @override
@@ -58,12 +59,19 @@ final class _UserProfileScreenState extends KekWidgetState<UserProfileScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const Gap(16.0),
-              const _UserAvatarPlaceholder(),
+              _UserAvatarPlaceholder(character: _userProfileState.nickname?[0].toUpperCase() ?? 'A'),
+              const Gap(8.0),
+              GestureDetector(
+                child: BoolWidget(
+                  condition: _userProfileState.nickname != null && _userProfileState.nickname!.isNotEmpty,
+                  trueChild: _UserName(name: '@${_userProfileState.nickname}'),
+                  falseChild: const _UserName(name: 'Enter your nickname...'),
+                ),
+                onTap: () => _showChangeUserName(),
+              ),
               const Gap(16.0),
-              _UserName(name: _userProfileState.nickname),
-              const Gap(4.0),
               const Text(
-                'About me',
+                'Folders',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16.0,
@@ -71,38 +79,36 @@ final class _UserProfileScreenState extends KekWidgetState<UserProfileScreen> {
                   color: Colors.grey,
                 ),
               ),
-              _UserIdentityChipsWidget(
-                minds: _userProfileState.userDescriptionMinds,
-                onAddIdentityTag: () => _showMindCreator(initialEmoji: '🙂'),
+              _MindsChipsWidget(
+                minds: _userProfileState.folders,
+                onCreate: () => _showMindCreator(initialEmoji: '🙂'),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.all(4.0),
-              //   child: Wrap(
-              //     alignment: WrapAlignment.center,
-              //     spacing: 8.0,
-              //     runSpacing: 8.0,
-              //     children: [
-              //       ..._userProfileState.userDescriptionSuggestionEmojies.map(
-              //         (emoji) => MyChipWidget(
-              //           isSelected: false,
-              //           onSelect: (_) => {
-              //             _showMindCreator(initialEmoji: emoji),
-              //           },
-              //           selectedColor: Colors.grey,
-              //           child: Text(
-              //             emoji,
-              //             style: const TextStyle(fontSize: 24.0),
-              //           ),
-              //         ),
-              //       )
-              //     ],
-              //   ),
-              // ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void _showChangeUserName() async {
+    final List<String>? dialogValues = await showTextInputDialog(
+      context: context,
+      title: 'Update your nickname',
+      autoSubmit: true,
+      textFields: [
+        DialogTextField(
+          initialText: _userProfileState.nickname,
+          hintText: 'Your nickname',
+          prefixText: '@',
+          autocorrect: false,
+          keyboardType: TextInputType.text,
+        )
+      ],
+    );
+    if (dialogValues?.firstOrNull == null) {
+      return;
+    }
+    sendEventTo<UserProfileBloc>(UserProfileUpdateNickName(nickName: dialogValues!.first));
   }
 
   void _showSettings() {
@@ -123,10 +129,10 @@ final class _UserProfileScreenState extends KekWidgetState<UserProfileScreen> {
           buttonText: 'Create',
           initialEmoji: initialEmoji,
           shouldSuggestEmoji: false,
-          hintText: 'Who are you?',
+          hintText: 'Your folder name',
           onDone: (String text, String emoji) {
             sendEventTo<UserProfileBloc>(
-              UserProfileAddDescribingMind(
+              UserProfileAddFolderMind(
                 emoji: emoji,
                 note: text,
               ),
@@ -159,34 +165,36 @@ final class _UserName extends StatelessWidget {
 }
 
 final class _UserAvatarPlaceholder extends StatelessWidget {
-  const _UserAvatarPlaceholder();
+  final String _character;
+
+  const _UserAvatarPlaceholder({required String character}) : _character = character;
 
   @override
   Widget build(BuildContext context) {
-    return const Stack(
+    return Stack(
       alignment: AlignmentDirectional.center,
       children: [
-        CircleAvatar(
+        const CircleAvatar(
           radius: 80.0,
           backgroundColor: Colors.blueAccent,
         ),
         Text(
-          'S', // TODO: first letter of name
-          style: TextStyle(fontSize: 64.0),
+          _character,
+          style: const TextStyle(fontSize: 64.0),
         ),
       ],
     );
   }
 }
 
-final class _UserIdentityChipsWidget extends StatelessWidget {
+final class _MindsChipsWidget extends StatelessWidget {
   final List<Mind> _minds;
-  final Function() _onAddIdentityTag;
+  final Function() _onCreate;
 
-  const _UserIdentityChipsWidget({
+  const _MindsChipsWidget({
     required List<Mind> minds,
-    required dynamic Function() onAddIdentityTag,
-  })  : _onAddIdentityTag = onAddIdentityTag,
+    required void Function() onCreate,
+  })  : _onCreate = onCreate,
         _minds = minds;
 
   @override
@@ -202,7 +210,7 @@ final class _UserIdentityChipsWidget extends StatelessWidget {
             (mind) => MyChipWidget(
               isSelected: false,
               onSelect: (_) => print('didSelect'),
-              selectedColor: Colors.white,
+              selectedColor: Theme.of(context).colorScheme.primary,
               child: Text(
                 '${mind.emoji} ${mind.note}',
                 style: const TextStyle(fontSize: 16.0),
@@ -214,11 +222,11 @@ final class _UserIdentityChipsWidget extends StatelessWidget {
             onSelect: (_) => {
               // TODO: show picker with suggestions
               //_showMindCreator(initialEmoji: '🙂')
-              _onAddIdentityTag()
+              _onCreate()
             },
-            selectedColor: Colors.white,
+            selectedColor: Theme.of(context).colorScheme.primary,
             child: const Text(
-              '+ ADD TAG',
+              '+ ADD',
               style: TextStyle(fontSize: 14.0),
             ),
           ),
