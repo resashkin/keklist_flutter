@@ -133,8 +133,10 @@ Runner.ipa
 
 # dotenv
 .env
+dotenv
 
 # Firebase
 /.firebase
 .firebaserc
 firebase.json
+

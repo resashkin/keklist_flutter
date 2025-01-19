@@ -41,7 +41,7 @@ Future<void> main() async {
   _initNativeWidgets();
   _setupBlockingLoadingWidget();
 
-  await dotenv.load(fileName: '.env');
+  await dotenv.load(fileName: 'dotenv');
   setPathUrlStrategy();
   await _initHive();
   await _initSupabase();
