@@ -30,6 +30,8 @@ import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
 import 'package:keklist/presentation/cubits/mind_searcher/mind_searcher_cubit.dart';
 import 'package:keklist/di/containers.dart';
 import 'package:keklist/domain/services/mind_service/main_service.dart';
+import 'package:flutter_telegram_web_app/flutter_telegram_web_app.dart' as telegram_web_app;
+import 'package:keklist/native/web/telegram/telegram_web_app.dart' as my_telegram_web_app;
 
 import 'presentation/native/ios/watch/watch_communication_manager.dart';
 
@@ -53,6 +55,10 @@ Future<void> main() async {
   _connectToWatchCommunicationManager(mainInjector);
   _enableDebugBLOCLogs();
   _configureOpenAI();
+
+  if (telegram_web_app.isSupported) {
+    _initTelegramWebApp();
+  }
 
   final Widget application = _getApplication(mainInjector);
   runApp(application);
@@ -84,6 +90,13 @@ void _connectToWatchCommunicationManager(Injector mainInjector) {
   } else if (Platform.isIOS) {
     mainInjector.get<WatchCommunicationManager>().connect();
   }
+}
+
+void _initTelegramWebApp() {
+  telegram_web_app.ready();
+  telegram_web_app.expand();
+  telegram_web_app.enableClosingConfirmation();
+  my_telegram_web_app.disableVerticalSwipes();
 }
 
 Widget _getApplication(Injector mainInjector) => MultiProvider(

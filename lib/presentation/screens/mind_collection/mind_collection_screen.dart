@@ -186,9 +186,7 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
               onCalendar: () => _showCalendarActions(),
               onUserProfile: () => _showUserProfile(),
               onInsights: () => _showInsights(),
-              onOfflineMode: () {
-                print('heheh');
-              },
+              onOfflineMode: () => print('heheh'),
             ),
           ),
         ),

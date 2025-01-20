@@ -80,6 +80,8 @@ dependencies:
   google_sign_in: ^6.2.1
   local_auth: ^2.2.0
   translator: ^1.0.0
+  flutter_telegram_web_app: ^0.0.1
+  js: ^0.6.7
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1

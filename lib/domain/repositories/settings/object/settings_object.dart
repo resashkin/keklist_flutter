@@ -11,7 +11,7 @@ final class SettingsObject extends HiveObject {
   @HiveField(1, defaultValue: null)
   late String? previousAppVersion;
 
-  @HiveField(2, defaultValue: false)
+  @HiveField(2, defaultValue: true)
   late bool isOfflineMode;
 
   @HiveField(3, defaultValue: true)
