@@ -117,7 +117,7 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
           BlocProvider(
             create: (context) => AuthBloc(
               mainService: mainInjector.get<MindService>(),
-              authRepository: mainInjector.get<AuthService>(),
+              authService: mainInjector.get<AuthService>(),
             ),
           ),
           BlocProvider(

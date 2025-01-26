@@ -10,6 +10,7 @@ abstract class AuthService {
   FutureOr<void> loginWithCredentials({required String email, required String password});
   FutureOr<void> loginWithOTP({required String email});
   FutureOr<void> loginWithSocialNetwork(Uri uri);
+  FutureOr<void> verifyOTP({required String email, required String token});
   FutureOr<void> logout();
 }
 
@@ -69,6 +70,15 @@ final class AuthSupabaseService implements AuthService {
     return await _client.auth.getOAuthSignInUrl(
       provider: socialProvider,
       redirectTo: 'io.supabase.zenmode://login-callback/',
+    );
+  }
+
+  @override
+  Future<void> verifyOTP({required String email, required String token}) async {
+    await _client.auth.verifyOTP(
+      type: OtpType.magiclink,
+      email: email,
+      token: token,
     );
   }
 }

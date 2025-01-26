@@ -10,7 +10,7 @@ environment:
 
 dependencies:
   adaptive_dialog: ^2.0.0
-  bloc: ^8.1.1
+  bloc: ^9.0.0
   blur: ^4.0.0
   calendar_date_picker2: ^1.0.2
   cross_file: ^0.3.3+4
@@ -18,20 +18,20 @@ dependencies:
   cupertino_icons: ^1.0.5
   emojis: ^0.9.9
   equatable: ^2.0.5
-  fast_immutable_collections: ^10.0.0
-  fl_chart: ^0.69.0
+  fast_immutable_collections: ^11.0.3
+  fl_chart: ^0.70.2
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
   flutter_animate: ^4.1.1+1
-  flutter_bloc: ^8.1.2
+  flutter_bloc: ^9.0.0
   flutter_easyloading: ^3.0.5
   flutter_emoji: ^2.4.0
   #flutter_inapp_purchase: ^5.4.1
   flutter_simple_dependency_injection: ^2.0.0
   flutter_svg: ^2.0.5
-  flutter_web_auth_2: ^3.0.4
+  flutter_web_auth_2: ^4.1.0
   form_field_validator: ^1.1.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
@@ -84,8 +84,8 @@ dependencies:
   js: ^0.6.7
 
 dev_dependencies:
-  flutter_launcher_icons: ^0.13.1
-  flutter_lints: ^4.0.0
+  flutter_launcher_icons: ^0.14.3
+  flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
   mocktail: ^1.0.0

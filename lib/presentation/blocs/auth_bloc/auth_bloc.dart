@@ -16,12 +16,12 @@ part 'auth_state.dart';
 
 final class AuthBloc extends Bloc<AuthEvent, AuthState> with DisposeBag {
   final MindService mainService;
-  final AuthService authRepository;
+  final AuthService authService;
   final SupabaseClient _client = Supabase.instance.client;
 
   AuthBloc({
     required this.mainService,
-    required this.authRepository,
+    required this.authService,
   }) : super(AuthInitial()) {
     on<AuthLoginWithEmailAndPassword>(_authWithEmailAndPassword);
     on<AuthLoginWithEmail>(_authWithEmail);
@@ -29,14 +29,20 @@ final class AuthBloc extends Bloc<AuthEvent, AuthState> with DisposeBag {
     on<AuthDeleteAccount>(_deleteAccount);
     on<AuthLogout>(_logout);
     on<AuthGetStatus>(_getStatus);
-    authRepository.currentUserStream.listen((event) => add(AuthGetStatus())).disposed(by: this);
+    on<AuthVerifyOTP>(_verifyOTP);
+    authService.currentUserStream.listen((event) => add(AuthGetStatus())).disposed(by: this);
   }
+
+  Future<void> _verifyOTP(event, emit) async => authService.verifyOTP(
+        email: event.email,
+        token: event.token,
+      );
 
   void _getStatus(event, emit) {
-    emit(AuthCurrentState(isLoggedIn: authRepository.currentUser != null));
+    emit(AuthCurrentState(isLoggedIn: authService.currentUser != null));
   }
 
-  Future<void> _logout(event, emit) async => await authRepository.logout();
+  Future<void> _logout(event, emit) async => await authService.logout();
 
   Future<void> _deleteAccount(event, emit) async {
     await mainService.deleteAccount();
@@ -44,11 +50,11 @@ final class AuthBloc extends Bloc<AuthEvent, AuthState> with DisposeBag {
   }
 
   FutureOr<void> _authWithEmailAndPassword(event, emit) {
-    return authRepository.loginWithCredentials(email: event.email, password: event.password);
+    return authService.loginWithCredentials(email: event.email, password: event.password);
   }
 
   FutureOr<void> _authWithEmail(event, emit) {
-    return authRepository.loginWithOTP(email: event.email);
+    return authService.loginWithOTP(email: event.email);
   }
 
   Future<void> _authWithSocialNetwork(event, emit) async {
@@ -73,7 +79,7 @@ final class AuthBloc extends Bloc<AuthEvent, AuthState> with DisposeBag {
     //   return;
     // }
 
-    final OAuthResponse result = await authRepository.getAuthWebURL(socialProvider: provider);
+    final OAuthResponse result = await authService.getAuthWebURL(socialProvider: provider);
 
     final String webResult = await FlutterWebAuth2.authenticate(
       url: result.url.toString(),
@@ -84,7 +90,7 @@ final class AuthBloc extends Bloc<AuthEvent, AuthState> with DisposeBag {
     );
 
     final Uri uri = Uri.parse(webResult);
-    await authRepository.loginWithSocialNetwork(uri);
+    await authService.loginWithSocialNetwork(uri);
 
     // NOTE: теперь можно делать, но окошко с браузером не закрывается автоматически. Нужно понять почему...
     // NOTE: пока не понятно, как открывать это в боттом шите :(

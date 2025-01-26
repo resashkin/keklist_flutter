@@ -4,19 +4,29 @@ sealed class AuthEvent {
   const AuthEvent();
 }
 
-class AuthLoginWithEmail extends AuthEvent {
+final class AuthLoginWithEmail extends AuthEvent {
   final String email;
 
   const AuthLoginWithEmail(this.email);
 }
 
-class AuthLoginWithEmailAndPassword extends AuthEvent {
+final class AuthLoginWithEmailAndPassword extends AuthEvent {
   final String email;
   final String password;
 
   AuthLoginWithEmailAndPassword({
     required this.email,
     required this.password,
+  });
+}
+
+final class AuthVerifyOTP extends AuthEvent {
+  final String email;
+  final String token;
+
+  AuthVerifyOTP({
+    required this.email,
+    required this.token,
   });
 }
 

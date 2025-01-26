@@ -103,7 +103,7 @@ final class AuthScreenState extends State<AuthScreen> with DisposeBag {
                   const SizedBox(height: 16.0),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primary),
-                    onPressed: () {
+                    onPressed: () async {
                       if (_loginTextEditingController.text == KeklistConstants.demoAccountEmail) {
                         _displayTextInputDialog(
                           context,
@@ -123,11 +123,33 @@ final class AuthScreenState extends State<AuthScreen> with DisposeBag {
                       }
                       context.read<AuthBloc>().add(AuthLoginWithEmail(_loginTextEditingController.text));
                       // TODO: показать алерт на экшен в блоке.
-                      showOkAlertDialog(
+                      // showOkAlertDialog(
+                      //   context: context,
+                      //   title: 'Success',
+                      //   message: 'Please, go to your email app and open magic link',
+                      // );
+
+                      final List<String>? result = await showTextInputDialog(
+                        title: 'Enter code from email - ${_loginTextEditingController.text}',
+                        autoSubmit: true,
+                        okLabel: 'Verify',
                         context: context,
-                        title: 'Success',
-                        message: 'Please, go to your email app and open magic link',
+                        textFields: [
+                          DialogTextField(
+                            autocorrect: false,
+                            keyboardType: TextInputType.number,
+                          )
+                        ],
                       );
+
+                      if (result != null && result.first.isNotEmpty) {
+                        sendEventTo<AuthBloc>(
+                          AuthVerifyOTP(
+                            email: _loginTextEditingController.text,
+                            token: result.first,
+                          ),
+                        );
+                      }
                     },
                     child: SizedBox(
                       width: 100,
