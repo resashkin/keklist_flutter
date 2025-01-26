@@ -75,7 +75,12 @@ final class AuthSupabaseService implements AuthService {
 
   @override
   Future<void> verifyOTP({required String email, required String token}) async {
-    await _client.auth.verifyOTP(
+    _client.auth.verifyOTP(
+      type: OtpType.signup,
+      email: email,
+      token: token,
+    );
+    _client.auth.verifyOTP(
       type: OtpType.magiclink,
       email: email,
       token: token,
