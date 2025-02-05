@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:adaptive_dialog/adaptive_dialog.dart';
-import 'package:blur/blur.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
@@ -36,11 +34,9 @@ import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
-import 'package:uuid/uuid.dart';
 part 'local_widgets/search_app_bar/search_app_bar.dart';
 part 'local_widgets/app_bar/mind_collection_app_bar.dart';
 part 'local_widgets/body/mind_collection_body.dart';
-part 'local_widgets/body/mind_collection_demo_body.dart';
 
 final class MindCollectionScreen extends StatefulWidget {
   const MindCollectionScreen({super.key});
@@ -191,23 +187,19 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
           ),
         ),
       ),
-      body: BoolWidget(
-        condition: _isDemoMode,
-        trueChild: _MindCollectionDemoBody(),
-        falseChild: _MindCollectionBody(
-          mindsByDayIndex: _mindsByDayIndex,
-          isSearching: _isSearching,
-          searchResults: _searchResults,
-          hideKeyboard: _hideKeyboard,
-          onTapToDay: (dayIndex) => _showDayCollectionScreen(
-            groupDayIndex: dayIndex,
-            initialError: null,
-          ),
-          itemScrollController: _itemScrollController,
-          itemPositionsListener: _itemPositionsListener,
-          getNowDayIndex: _getNowDayIndex,
-          shouldShowTitles: _shouldShowTitles,
+      body: _MindCollectionBody(
+        mindsByDayIndex: _mindsByDayIndex,
+        isSearching: _isSearching,
+        searchResults: _searchResults,
+        hideKeyboard: _hideKeyboard,
+        onTapToDay: (dayIndex) => _showDayCollectionScreen(
+          groupDayIndex: dayIndex,
+          initialError: null,
         ),
+        itemScrollController: _itemScrollController,
+        itemPositionsListener: _itemPositionsListener,
+        getNowDayIndex: _getNowDayIndex,
+        shouldShowTitles: _shouldShowTitles,
       ),
       resizeToAvoidBottomInset: false,
     );

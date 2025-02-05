@@ -36,6 +36,8 @@
 </head>
 
 <body>
+  <!-- Enabling colored emoji -->
+  <script src="flutter_bootstrap.js" async></script>
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
@@ -103,7 +105,21 @@
       loadMainDartJs();
     }
   </script>
+  <!-- Telegram WEB App -->
   <script src="https://telegram.org/js/telegram-web-app.js" defer=""></script>
+
+  <!-- <script async>
+    engineInitializer.initializeEngine({
+      // other config...
+      useColorEmoji: true,
+    });
+  </script> -->
+  <!-- <script>
+    engineInitializer.initializeEngine({
+      // other config...
+      useColorEmoji: true,
+    });
+  </script> -->
 </body>
 
 </html>
