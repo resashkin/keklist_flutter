@@ -6,6 +6,7 @@ import 'package:dart_openai/dart_openai.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 // import 'package:home_widget/home_widget.dart';
 // import 'package:home_widget/home_widget.dart';
@@ -20,7 +21,6 @@ import 'package:keklist/domain/repositories/settings/object/settings_object.dart
 import 'package:keklist/presentation/blocs/user_profile_bloc/user_profile_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:url_strategy/url_strategy.dart';
 import 'package:keklist/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -30,8 +30,7 @@ import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
 import 'package:keklist/presentation/cubits/mind_searcher/mind_searcher_cubit.dart';
 import 'package:keklist/di/containers.dart';
 import 'package:keklist/domain/services/mind_service/main_service.dart';
-import 'package:flutter_telegram_web_app/flutter_telegram_web_app.dart' as telegram_web_app;
-import 'package:keklist/native/web/telegram/telegram_web_app.dart' as my_telegram_web_app;
+// import 'package:keklist/native/web/telegram/telegram_web_app.dart' as telegram_web_app;
 
 import 'presentation/native/ios/watch/watch_communication_manager.dart';
 
@@ -44,7 +43,7 @@ Future<void> main() async {
   _setupBlockingLoadingWidget();
 
   await dotenv.load(fileName: 'dotenv');
-  setPathUrlStrategy();
+  usePathUrlStrategy();
   await _initHive();
   await _initSupabase();
 
@@ -56,9 +55,9 @@ Future<void> main() async {
   _enableDebugBLOCLogs();
   _configureOpenAI();
 
-  if (telegram_web_app.isSupported) {
-    _initTelegramWebApp();
-  }
+  // if (telegram_web_app.isSupported) {
+  //   _initTelegramWebApp();
+  // }
 
   final Widget application = _getApplication(mainInjector);
   runApp(application);
@@ -92,12 +91,12 @@ void _connectToWatchCommunicationManager(Injector mainInjector) {
   }
 }
 
-void _initTelegramWebApp() {
-  telegram_web_app.ready();
-  telegram_web_app.expand();
-  telegram_web_app.enableClosingConfirmation();
-  my_telegram_web_app.disableVerticalSwipes();
-}
+// void _initTelegramWebApp() {
+//   telegram_web_app.ready();
+//   telegram_web_app.expand();
+//   telegram_web_app.enableClosingConfirmation();
+//   telegram_web_app.disableVerticalSwipes();
+// }
 
 Widget _getApplication(Injector mainInjector) => MultiProvider(
       providers: [

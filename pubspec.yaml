@@ -22,6 +22,8 @@ dependencies:
   fl_chart: ^0.70.2
   flutter:
     sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
   flutter_localizations:
     sdk: flutter
   flutter_animate: ^4.1.1+1
@@ -61,7 +63,6 @@ dependencies:
       ref: support-flutter-3.24.0
       path: packages/syncfusion_localizations
   url_launcher: ^6.1.9
-  url_strategy: ^0.3.0
   uuid: ^4.2.1
   webview_flutter: ^4.1.0
   gap: ^3.0.1
@@ -80,11 +81,9 @@ dependencies:
   google_sign_in: ^6.2.1
   local_auth: ^2.2.0
   translator: ^1.0.0
-  flutter_telegram_web_app: ^0.0.1
-  js: ^0.6.7
 
 dev_dependencies:
-  flutter_launcher_icons: ^0.14.3
+  flutter_launcher_icons: ^0.14.3 # To generate icons - "flutter pub run flutter_launcher_icons"
   flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
@@ -112,7 +111,3 @@ flutter:
   assets:
     - dotenv
     - assets/auth_icons/
-  # fonts:
-  #   - family: NotoColorEmoji
-  #     fonts:
-  #       - asset: assets/fonts/NotoColorEmoji.ttf

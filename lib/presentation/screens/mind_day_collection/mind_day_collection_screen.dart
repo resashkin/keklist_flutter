@@ -194,29 +194,20 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
     HapticFeedback.mediumImpact();
     if (!_isMindContentVisible) {
       final LocalAuthentication auth = LocalAuthentication();
-      final bool canAuthenticateWithBiometrics = await auth.canCheckBiometrics;
-      final bool canAuthenticate = canAuthenticateWithBiometrics || await auth.isDeviceSupported();
-      if (canAuthenticate) {
-        try {
+      try {
+        final bool canAuthenticateWithBiometrics = await auth.canCheckBiometrics;
+        final bool canAuthenticate = canAuthenticateWithBiometrics || await auth.isDeviceSupported();
+        if (canAuthenticate) {
           final bool didAuthenticate = await auth.authenticate(
-              localizedReason: 'Please authenticate to show account balance',
+              localizedReason: 'Please authenticate to show content of your mind',
               options: const AuthenticationOptions(useErrorDialogs: false));
           if (didAuthenticate) {
             setState(() {
               sendEventTo<SettingsBloc>(const SettingsChangeMindContentVisibility(isVisible: true));
             });
           }
-        } on PlatformException catch (e) {
-          print(e);
-          // if (e.code == auth_error.notAvailable) {
-          //   // Add handling of no hardware here.
-          // } else if (e.code == auth_error.notEnrolled) {
-          //   // ...
-          // } else {
-          //   // ...
-          // }
         }
-      } else {
+      } on Exception {
         setState(() {
           sendEventTo<SettingsBloc>(const SettingsChangeMindContentVisibility(isVisible: true));
         });
@@ -298,16 +289,16 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
     Haptics.vibrate(HapticsType.heavy);
   }
 
-  void _showNerdActions(BuildContext context, Mind mind) {
-    showBarModalBottomSheet(
-      context: context,
-      builder: (context) => ActionsScreen(
-        actions: [
-          (ActionModel.tranlsateToEnglish(), () => _translateToEnglish(mind: mind)),
-        ],
-      ),
-    );
-  }
+  // void _showNerdActions(BuildContext context, Mind mind) {
+  //   showBarModalBottomSheet(
+  //     context: context,
+  //     builder: (context) => ActionsScreen(
+  //       actions: [
+  //         (ActionModel.tranlsateToEnglish(), () => _translateToEnglish(mind: mind)),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   // TODO: extract to some navigator
 
@@ -317,6 +308,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
       builder: (context) => ActionsScreen(
         actions: [
           (ActionModel.chatWithAI(), () => _showChatDiscussionScreen(mind: mind)),
+          if (mind.rootId != null) (ActionModel.convertToStandalone(), () => _convertToStandalone(mind)),
           (ActionModel.edit(), () => _editMind(mind)),
           (ActionModel.switchDay(), () => _updateMindDay(mind)),
           (ActionModel.showAll(), () => _showAllMinds(mind)),
@@ -324,6 +316,11 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
         ],
       ),
     );
+  }
+
+  void _convertToStandalone(Mind mind) {
+    final Mind standaloneMind = mind.copyWith(rootId: null);
+    sendEventTo<MindBloc>(MindEdit(mind: standaloneMind));
   }
 
   void _showChatDiscussionScreen({required Mind mind}) async {

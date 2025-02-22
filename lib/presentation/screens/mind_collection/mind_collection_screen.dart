@@ -54,7 +54,7 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
   SettingsDataState? _settingsDataState;
   MindSearching? _searchingMindState;
 
-  bool _isDemoMode = false;
+  final bool _isDemoMode = false;
 
   bool get _isOfflineMode => _settingsDataState?.settings.isOfflineMode ?? false;
   bool get _shouldShowTitles => _settingsDataState?.settings.shouldShowTitles ?? true;

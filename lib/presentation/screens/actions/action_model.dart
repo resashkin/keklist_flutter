@@ -9,6 +9,8 @@ sealed class ActionModel {
     required this.icon,
   });
 
+  // TODO: get rid from this list and make it smarter
+
   factory ActionModel.custom({required String title, required Icon icon}) =>
       CustomActionModel(title: title, icon: icon);
   factory ActionModel.chatWithAI() => const ChatWithAIActionModel();
@@ -23,6 +25,7 @@ sealed class ActionModel {
   factory ActionModel.goToDate() => const GoToDateMenuActionModel();
   factory ActionModel.showAll() => const ShowAllMenuActionModel();
   factory ActionModel.tranlsateToEnglish() => const TranslateToEnglishMenuActionModel();
+  factory ActionModel.convertToStandalone() => const ConvertToStandaloneMenuActionModel();
 }
 
 final class CustomActionModel extends ActionModel {
@@ -124,3 +127,12 @@ final class TranslateToEnglishMenuActionModel extends ActionModel {
           icon: const Icon(Icons.translate),
         );
 }
+
+final class ConvertToStandaloneMenuActionModel extends ActionModel {
+  const ConvertToStandaloneMenuActionModel()
+      : super(
+          title: 'Convert to standalone entry',
+          icon: const Icon(Icons.move_up),
+        );
+}
+

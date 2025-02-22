@@ -140,3 +140,5 @@ dotenv
 .firebaserc
 firebase.json
 
+# FVM Version Cache
+.fvm/
