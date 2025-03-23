@@ -54,6 +54,7 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
   SettingsDataState? _settingsDataState;
   MindSearching? _searchingMindState;
 
+  bool _isMonthView = false;
   final bool _isDemoMode = false;
 
   bool get _isOfflineMode => _settingsDataState?.settings.isOfflineMode ?? false;
@@ -183,6 +184,7 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
               onUserProfile: () => _showUserProfile(),
               onInsights: () => _showInsights(),
               onOfflineMode: () => print('heheh'),
+              onCalendarLongTap: () => setState(() => _isMonthView = !_isMonthView),
             ),
           ),
         ),

@@ -9,6 +9,7 @@ final class _MindCollectionAppBar extends StatelessWidget {
   final VoidCallback onUserProfile;
   final VoidCallback onInsights;
   final VoidCallback onOfflineMode;
+  final VoidCallback onCalendarLongTap;
 
   const _MindCollectionAppBar({
     required this.isUpdating,
@@ -19,6 +20,7 @@ final class _MindCollectionAppBar extends StatelessWidget {
     required this.onInsights,
     required this.isOfflineMode,
     required this.onOfflineMode,
+    required this.onCalendarLongTap,
   });
 
   @override
@@ -62,6 +64,7 @@ final class _MindCollectionAppBar extends StatelessWidget {
         IconButton(
           icon: const Icon(Icons.calendar_month),
           onPressed: onCalendar,
+          onLongPress: onCalendarLongTap,
         ),
         SensitiveWidget(
           mode: SensitiveMode.blurred,

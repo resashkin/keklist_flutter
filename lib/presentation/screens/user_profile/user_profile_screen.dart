@@ -70,19 +70,19 @@ final class _UserProfileScreenState extends KekWidgetState<UserProfileScreen> {
                 onTap: () => _showChangeUserName(),
               ),
               const Gap(16.0),
-              const Text(
-                'Folders',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.grey,
-                ),
-              ),
-              _MindsChipsWidget(
-                minds: _userProfileState.folders,
-                onCreate: () => _showMindCreator(initialEmoji: '🙂'),
-              ),
+              // const Text(
+              //   'Folders',
+              //   textAlign: TextAlign.center,
+              //   style: TextStyle(
+              //     fontSize: 16.0,
+              //     fontWeight: FontWeight.w500,
+              //     color: Colors.grey,
+              //   ),
+              // ),
+              // _MindsChipsWidget(
+              //   minds: _userProfileState.folders,
+              //   onCreate: () => _showMindCreator(initialEmoji: '🙂'),
+              // ),
             ],
           ),
         ),
