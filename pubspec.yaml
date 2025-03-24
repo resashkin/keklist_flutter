@@ -82,6 +82,8 @@ dependencies:
   local_auth: ^2.2.0
   translator: ^1.0.0
   telegram_web_app: ^0.3.3
+  auto_size_text: ^3.0.0
+  scrollview_observer: ^1.26.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.14.3 # To generate icons - "flutter pub run flutter_launcher_icons"

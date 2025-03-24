@@ -3,6 +3,7 @@ import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/presentation/core/widgets/rounded_circle.dart';
 
 enum MindSize {
+  superSmall,
   small,
   medium,
   large,
@@ -48,6 +49,15 @@ final class MindWidget extends StatelessWidget {
     VoidCallback? onLongTap,
   }) {
     switch (size) {
+      case MindSize.superSmall:
+        return MindWidget(
+          item: item,
+          badge: badge,
+          isHighlighted: isHighlighted,
+          onTap: onTap,
+          onLongPress: onLongTap,
+          fontSize: 12,
+        );
       case MindSize.small:
         return MindWidget(
           item: item,

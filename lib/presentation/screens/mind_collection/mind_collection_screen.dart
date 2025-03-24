@@ -14,6 +14,7 @@ import 'package:keklist/presentation/screens/actions/actions_screen.dart';
 import 'package:keklist/presentation/screens/digest/mind_universal_list_screen.dart';
 import 'package:keklist/presentation/screens/insights/insights_screen.dart';
 import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_collection_empty_day_widget.dart';
+import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_month_collection_widget.dart';
 import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_row_widget.dart';
 import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_search_result_widget.dart';
 import 'package:keklist/presentation/screens/mind_info/mind_info_screen.dart';
@@ -34,6 +35,7 @@ import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
+import 'package:scrollview_observer/scrollview_observer.dart';
 part 'local_widgets/search_app_bar/search_app_bar.dart';
 part 'local_widgets/app_bar/mind_collection_app_bar.dart';
 part 'local_widgets/body/mind_collection_body.dart';
@@ -48,6 +50,11 @@ final class MindCollectionScreen extends StatefulWidget {
 final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScreen> {
   final ItemScrollController _itemScrollController = ItemScrollController();
   final ItemPositionsListener _itemPositionsListener = ItemPositionsListener.create();
+
+  final ScrollController _monthGridScrollController = ScrollController();
+  late final GridObserverController _monthGridObserverController = GridObserverController(
+    controller: _monthGridScrollController,
+  );
 
   Iterable<Mind> _minds = [];
   Map<int, Iterable<Mind>> _mindsByDayIndex = {};
@@ -202,6 +209,9 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
         itemPositionsListener: _itemPositionsListener,
         getNowDayIndex: _getNowDayIndex,
         shouldShowTitles: _shouldShowTitles,
+        isMonthView: _isMonthView,
+        monthGridScrollController: _monthGridScrollController,
+        monthGridObserverController: _monthGridObserverController,
       ),
       resizeToAvoidBottomInset: false,
     );
@@ -246,15 +256,24 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
       return;
     }
     _itemScrollController.jumpTo(index: _getNowDayIndex());
+    _monthGridObserverController.jumpTo(index: _getNowDayIndex());
   }
 
   Future<void> _scrollToNow() => _scrollToDayIndex(_getNowDayIndex());
 
-  Future<void> _scrollToDayIndex(int dayIndex) {
-    return _itemScrollController.scrollTo(
-      index: dayIndex,
-      duration: const Duration(milliseconds: 200),
-    );
+  Future<void> _scrollToDayIndex(int dayIndex) async {
+    if (_isMonthView) {
+      await _monthGridObserverController.animateTo(
+        index: _getNowDayIndex(),
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.linear,
+      );
+    } else {
+      await _itemScrollController.scrollTo(
+        index: dayIndex,
+        duration: const Duration(milliseconds: 200),
+      );
+    }
   }
 
   void _hideKeyboard() => FocusScope.of(context).requestFocus(FocusNode());
