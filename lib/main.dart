@@ -19,6 +19,7 @@ import 'package:keklist/domain/hive_constants.dart';
 import 'package:keklist/domain/repositories/message/message/message_object.dart';
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
 import 'package:keklist/native/web/telegram/telegram_web_initializer.dart';
+import 'package:keklist/presentation/blocs/tab_container_bloc/tab_container_bloc.dart';
 import 'package:keklist/presentation/blocs/user_profile_bloc/user_profile_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -124,6 +125,9 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
               mindRepository: mainInjector.get<MindRepository>(),
               settingsRepository: mainInjector.get<SettingsRepository>(),
             ),
+          ),
+          BlocProvider(
+            create: (context) => TabContainerBloc(),
           ),
         ],
         child: const KeklistApp(),
