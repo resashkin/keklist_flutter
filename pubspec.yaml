@@ -6,7 +6,7 @@ publish_to: "none"
 version: 3.5.0+69
 
 environment:
-  sdk: ">=3.0.0"
+  sdk: ">=3.5.0"
 
 dependencies:
   adaptive_dialog: ^2.0.0
@@ -84,6 +84,9 @@ dependencies:
   telegram_web_app: ^0.3.3
   auto_size_text: ^3.0.0
   scrollview_observer: ^1.26.0
+  streaming_shared_preferences: ^2.0.0
+  json_serializable: ^6.9.0
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.14.3 # To generate icons - "flutter pub run flutter_launcher_icons"

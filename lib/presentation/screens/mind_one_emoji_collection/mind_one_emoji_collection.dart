@@ -75,7 +75,7 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
       _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
     });
 
-    subscribeTo<MindBloc>(onNewState: (state) async {
+    subscribeToBloc<MindBloc>(onNewState: (state) async {
       if (state is MindList) {
         setState(() {
           allMinds
@@ -133,7 +133,7 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
                     placeholder: 'Append a mind...',
                     onDone: (CreateMindData data) {
                       if (_editableMind == null) {
-                        sendEventTo<MindBloc>(
+                        sendEventToBloc<MindBloc>(
                           MindCreate(
                             dayIndex: MindUtils.getTodayIndex(),
                             note: data.text,
@@ -146,7 +146,7 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
                           note: data.text,
                           emoji: data.emoji,
                         );
-                        sendEventTo<MindBloc>(MindEdit(mind: mindForEdit));
+                        sendEventToBloc<MindBloc>(MindEdit(mind: mindForEdit));
                       }
                       _resetMindCreator();
                     },
@@ -218,11 +218,11 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
                 );
                 final int sortIndex = (switchedDayMinds.map((mind) => mind.sortIndex).maxOrNull ?? -1) + 1;
                 final Mind newMind = mind.copyWith(dayIndex: switchedDay, sortIndex: sortIndex);
-                sendEventTo<MindBloc>(MindEdit(mind: newMind));
+                sendEventToBloc<MindBloc>(MindEdit(mind: newMind));
               }
             }
           ),
-          (ActionModel.delete(), () => sendEventTo<MindBloc>(MindDelete(mind: mind))),
+          (ActionModel.delete(), () => sendEventToBloc<MindBloc>(MindDelete(mind: mind))),
         ],
       ),
     );

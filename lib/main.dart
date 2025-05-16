@@ -8,6 +8,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:keklist/domain/repositories/tabs/tabs_settings_repository.dart';
 // import 'package:home_widget/home_widget.dart';
 // import 'package:home_widget/home_widget.dart';
 import 'package:keklist/domain/services/auth/auth_service.dart';
@@ -19,9 +20,11 @@ import 'package:keklist/domain/hive_constants.dart';
 import 'package:keklist/domain/repositories/message/message/message_object.dart';
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
 import 'package:keklist/native/web/telegram/telegram_web_initializer.dart';
-import 'package:keklist/presentation/blocs/tab_container_bloc/tab_container_bloc.dart';
+import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bloc.dart';
+import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_state.dart';
 import 'package:keklist/presentation/blocs/user_profile_bloc/user_profile_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:keklist/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:flutter/foundation.dart';
@@ -49,9 +52,12 @@ Future<void> main() async {
   await _initHive();
   await _initSupabase();
 
+  final StreamingSharedPreferences streamingSharedPreferences = await StreamingSharedPreferences.instance;
+
   // Инициализация DI-контейнера.
   final Injector injector = Injector();
-  final Injector mainInjector = MainContainer().initialize(injector);
+  final Injector mainInjector =
+      MainContainer(streamingSharedPreferences: streamingSharedPreferences).initialize(injector);
 
   _connectToWatchCommunicationManager(mainInjector);
   _enableDebugBLOCLogs();
@@ -127,7 +133,9 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
             ),
           ),
           BlocProvider(
-            create: (context) => TabContainerBloc(),
+            create: (context) => TabsContainerBloc(
+              repository: mainInjector.get<TabsSettingsRepository>(),
+            ),
           ),
         ],
         child: const KeklistApp(),
@@ -141,7 +149,7 @@ void _initNativeWidgets() {
 void _setupBlockingLoadingWidget() {
   EasyLoading.instance
     ..displayDuration = const Duration(milliseconds: 10000)
-    ..indicatorType = EasyLoadingIndicatorType.doubleBounce
+    ..indicatorType = EasyLoadingIndicatorType.pouringHourGlass
     ..loadingStyle = EasyLoadingStyle.light
     ..indicatorSize = 45.0
     ..radius = 10.0

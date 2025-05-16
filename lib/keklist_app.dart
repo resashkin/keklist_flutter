@@ -7,7 +7,7 @@ import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
-import 'package:keklist/presentation/screens/tab_container/tab_container_screen.dart';
+import 'package:keklist/presentation/screens/tabs_container/tabs_container_screen.dart';
 
 final class KeklistApp extends StatefulWidget {
   const KeklistApp({super.key});
@@ -23,7 +23,7 @@ final class KeklistAppState extends KekWidgetState<KeklistApp> {
   void initState() {
     super.initState();
 
-    subscribeTo<SettingsBloc>(
+    subscribeToBloc<SettingsBloc>(
       onNewState: (state) {
         if (state is SettingsDataState) {
           if (state.settings.openAIKey != null) {
@@ -42,7 +42,7 @@ final class KeklistAppState extends KekWidgetState<KeklistApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Keklist',
-      home: const TabContainerScreen(),
+      home: const TabsContainerScreen(),
       theme: _isDarkMode ? Themes.dark : Themes.light,
       darkTheme: Themes.dark,
       themeMode: ThemeMode.light,

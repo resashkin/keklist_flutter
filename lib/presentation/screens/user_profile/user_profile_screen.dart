@@ -108,7 +108,7 @@ final class _UserProfileScreenState extends KekWidgetState<UserProfileScreen> {
     if (dialogValues?.firstOrNull == null) {
       return;
     }
-    sendEventTo<UserProfileBloc>(UserProfileUpdateNickName(nickName: dialogValues!.first));
+    sendEventToBloc<UserProfileBloc>(UserProfileUpdateNickName(nickName: dialogValues!.first));
   }
 
   void _showSettings() {
@@ -131,7 +131,7 @@ final class _UserProfileScreenState extends KekWidgetState<UserProfileScreen> {
           shouldSuggestEmoji: false,
           hintText: 'Your folder name',
           onDone: (String text, String emoji) {
-            sendEventTo<UserProfileBloc>(
+            sendEventToBloc<UserProfileBloc>(
               UserProfileAddFolderMind(
                 emoji: emoji,
                 note: text,

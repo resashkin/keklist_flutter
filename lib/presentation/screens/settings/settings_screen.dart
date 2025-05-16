@@ -40,7 +40,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   void initState() {
     super.initState();
 
-    subscribeTo<SettingsBloc>(onNewState: (state) {
+    subscribeToBloc<SettingsBloc>(onNewState: (state) {
       switch (state) {
         case SettingsDataState state:
           setState(() {
@@ -69,11 +69,11 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
           );
           break;
         case SettingsUploadOfflineMindsCompletedState _:
-          sendEventTo<SettingsBloc>(SettingsGet());
+          sendEventToBloc<SettingsBloc>(SettingsGet());
       }
     })?.disposed(by: this);
 
-    subscribeTo<MindBloc>(onNewState: (state) {
+    subscribeToBloc<MindBloc>(onNewState: (state) {
       switch (state.runtimeType) {
         case const (MindServerOperationStarted):
           if (state.type == MindOperationType.uploadCachedData ||
@@ -101,7 +101,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
               });
             case MindOperationType.deleteAll:
               EasyLoading.dismiss();
-              sendEventTo<MindBloc>(SettingsGetMindCandidatesToUpload());
+              sendEventToBloc<MindBloc>(SettingsGetMindCandidatesToUpload());
               showOkAlertDialog(
                 context: context,
                 title: 'Success',
@@ -111,7 +111,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
       }
     })?.disposed(by: this);
 
-    sendEventTo<SettingsBloc>(SettingsGet());
+    sendEventToBloc<SettingsBloc>(SettingsGet());
   }
 
   @override
@@ -136,7 +136,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
                   title: const Text('Logout'),
                   leading: const Icon(Icons.logout, color: Colors.red),
                   onPressed: (BuildContext context) {
-                    sendEventTo<SettingsBloc>(SettingsLogout());
+                    sendEventToBloc<SettingsBloc>(SettingsLogout());
                   },
                 ),
               SettingsTile.switchTile(
@@ -150,7 +150,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
                   title: Text('Upload $_cachedMindCountToUpload minds'),
                   leading: const Icon(Icons.cloud_upload, color: Colors.green),
                   onPressed: (BuildContext context) {
-                    sendEventTo<SettingsBloc>(SettingsUploadMindCandidates());
+                    sendEventToBloc<SettingsBloc>(SettingsUploadMindCandidates());
                   },
                 ),
               },
@@ -166,7 +166,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
                 leading: const Icon(Icons.file_download, color: Colors.brown),
                 onPressed: (BuildContext context) {
                   // TODO: Add loading
-                  sendEventTo<SettingsBloc>(SettingsExportAllMindsToCSV());
+                  sendEventToBloc<SettingsBloc>(SettingsExportAllMindsToCSV());
                 },
               )
             ],
@@ -313,7 +313,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
               onPressed: () {
                 _openAiKey = openAiToken;
                 Navigator.of(context).pop();
-                sendEventTo<SettingsBloc>(SettingsChangeOpenAIKey(openAIToken: openAiToken));
+                sendEventToBloc<SettingsBloc>(SettingsChangeOpenAIKey(openAIToken: openAiToken));
               },
               child: const Text('Save'),
             ),
@@ -334,7 +334,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     );
     switch (result) {
       case OkCancelResult.ok:
-        sendEventTo<AuthBloc>(AuthDeleteAccount());
+        sendEventToBloc<AuthBloc>(AuthDeleteAccount());
         break;
       case OkCancelResult.cancel:
         break;
@@ -342,19 +342,19 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   }
 
   void _switchOfflineMode(bool value) {
-    sendEventTo<SettingsBloc>(SettingsChangeOfflineMode(isOfflineMode: value));
+    sendEventToBloc<SettingsBloc>(SettingsChangeOfflineMode(isOfflineMode: value));
   }
 
   void _switchSensitiveContentVisibility(bool value) {
-    sendEventTo<SettingsBloc>(SettingsChangeMindContentVisibility(isVisible: value));
+    sendEventToBloc<SettingsBloc>(SettingsChangeMindContentVisibility(isVisible: value));
   }
 
   void _switchDarkMode(bool value) {
-    sendEventTo<SettingsBloc>(SettingsChangeIsDarkMode(isDarkMode: value));
+    sendEventToBloc<SettingsBloc>(SettingsChangeIsDarkMode(isDarkMode: value));
   }
 
   void _switchShowTitles(bool value) {
-    sendEventTo<SettingsBloc>(SettingsUpdateShouldShowTitlesMode(value: value));
+    sendEventToBloc<SettingsBloc>(SettingsUpdateShouldShowTitlesMode(value: value));
   }
 
   void _showWhatsNew() {
@@ -388,7 +388,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     );
     switch (result) {
       case OkCancelResult.ok:
-        sendEventTo<MindBloc>(MindDeleteAllMinds());
+        sendEventToBloc<MindBloc>(MindDeleteAllMinds());
         break;
       case OkCancelResult.cancel:
         break;
@@ -406,7 +406,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     );
     switch (result) {
       case OkCancelResult.ok:
-        sendEventTo<MindBloc>(MindClearCache());
+        sendEventToBloc<MindBloc>(MindClearCache());
         break;
       case OkCancelResult.cancel:
         break;

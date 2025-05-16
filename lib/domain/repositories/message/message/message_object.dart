@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:keklist/presentation/core/enum_from_string.dart';
+import 'package:keklist/presentation/core/helpers/enum_utils.dart';
 import 'package:keklist/domain/services/entities/message.dart';
 
 part 'message_object.g.dart';
@@ -28,6 +28,6 @@ final class MessageObject extends HiveObject {
         text: text,
         rootMindId: rootMindId,
         timestamp: timestamp,
-        sender: enumFromString(value: sender, fromValues: MessageSender.values) ?? MessageSender.assistant,
+        sender: EnumUtils.enumFromString(value: sender, fromValues: MessageSender.values) ?? MessageSender.assistant,
       );
 }

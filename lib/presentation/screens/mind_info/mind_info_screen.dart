@@ -66,7 +66,7 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
       });
     });
 
-    subscribeTo<MindBloc>(onNewState: (state) async {
+    subscribeToBloc<MindBloc>(onNewState: (state) async {
       if (state is MindList) {
         setState(() {
           _allMinds
@@ -152,7 +152,7 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
                     placeholder: 'Comment mind...',
                     onDone: (CreateMindData data) {
                       if (_editableMind == null) {
-                        sendEventTo<MindBloc>(
+                        sendEventToBloc<MindBloc>(
                           MindCreate(
                             dayIndex: _rootMind.dayIndex,
                             note: data.text,
@@ -165,7 +165,7 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
                           note: data.text,
                           emoji: _selectedEmoji,
                         );
-                        sendEventTo<MindBloc>(MindEdit(mind: mindForEdit));
+                        sendEventToBloc<MindBloc>(MindEdit(mind: mindForEdit));
                       }
                       _resetMindCreator();
                     },
@@ -269,6 +269,6 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
   }
 
   void _removeMind(Mind mind) {
-    sendEventTo<MindBloc>(MindDelete(mind: mind));
+    sendEventToBloc<MindBloc>(MindDelete(mind: mind));
   }
 }

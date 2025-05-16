@@ -86,26 +86,26 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
 
       // NOTE: Слежение за полем ввода поиска при изменении его значения.
       _searchTextController.addListener(() {
-        sendEventTo<MindBloc>(
+        sendEventToBloc<MindBloc>(
           MindEnterSearchText(text: _searchTextController.text),
         );
       });
 
-      subscribeTo<SettingsBloc>(onNewState: (state) {
+      subscribeToBloc<SettingsBloc>(onNewState: (state) {
         switch (state) {
           case SettingsDataState settingsDataState:
             _settingsDataState = settingsDataState;
             if (settingsDataState.settings.isOfflineMode) {
               setState(() => _isUpdating = false);
             }
-            sendEventTo<AuthBloc>(AuthGetStatus());
+            sendEventToBloc<AuthBloc>(AuthGetStatus());
           case SettingsNeedToShowWhatsNew _:
             _showWhatsNew();
-            sendEventTo<SettingsBloc>(SettingsWhatsNewShown());
+            sendEventToBloc<SettingsBloc>(SettingsWhatsNewShown());
         }
       })?.disposed(by: this);
 
-      subscribeTo<MindBloc>(
+      subscribeToBloc<MindBloc>(
         onNewState: (state) async {
           if (state is MindList) {
             setState(() {
@@ -114,7 +114,7 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
                   state.values.where((element) => element.rootId == null).groupListsBy((element) => element.dayIndex);
             });
             if (DeviceUtils.safeGetPlatform() == SupportedPlatform.iOS) {
-              sendEventTo<MindBloc>(MindUpdateMobileWidgets());
+              sendEventToBloc<MindBloc>(MindUpdateMobileWidgets());
             }
           } else if (state is MindServerOperationStarted) {
             if (state.type == MindOperationType.fetch) {
@@ -152,16 +152,16 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
         },
       )?.disposed(by: this);
 
-      subscribeTo<AuthBloc>(onNewState: (state) {
+      subscribeToBloc<AuthBloc>(onNewState: (state) {
         switch (state) {
           case AuthCurrentState _:
-            sendEventTo<MindBloc>(MindGetList());
+            sendEventToBloc<MindBloc>(MindGetList());
         }
       })?.disposed(by: this);
 
-      sendEventTo<AuthBloc>(AuthGetStatus());
-      sendEventTo<SettingsBloc>(SettingsGet());
-      sendEventTo<MindBloc>(MindGetList());
+      sendEventToBloc<AuthBloc>(AuthGetStatus());
+      sendEventToBloc<SettingsBloc>(SettingsGet());
+      sendEventToBloc<MindBloc>(MindGetList());
     });
   }
 
@@ -185,7 +185,7 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
             falseChild: _MindCollectionAppBar(
               isOfflineMode: _isOfflineMode,
               isUpdating: _isUpdating,
-              onSearch: () => sendEventTo<MindBloc>(MindStartSearch()),
+              onSearch: () => sendEventToBloc<MindBloc>(MindStartSearch()),
               onTitle: () => _scrollToNow(),
               onCalendar: () => _showCalendarActions(),
               onUserProfile: () => _showUserProfile(),
@@ -461,7 +461,7 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
 
   void _cancelSearch() {
     _searchTextController.clear();
-    sendEventTo<MindBloc>(MindStopSearch());
+    sendEventToBloc<MindBloc>(MindStopSearch());
     WidgetsBinding.instance.addPostFrameCallback((_) async => _jumpToNow());
   }
 

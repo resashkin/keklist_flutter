@@ -78,7 +78,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
       }
     });
 
-    subscribeTo<MindBloc>(onNewState: (state) async {
+    subscribeToBloc<MindBloc>(onNewState: (state) async {
       if (state is MindList) {
         setState(() {
           allMinds
@@ -90,7 +90,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
       }
     })?.disposed(by: this);
 
-    subscribeTo<SettingsBloc>(onNewState: (state) {
+    subscribeToBloc<SettingsBloc>(onNewState: (state) {
       if (state is SettingsDataState) {
         setState(() {
           _isMindContentVisible = state.settings.isMindContentVisible;
@@ -98,7 +98,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
       }
     })?.disposed(by: this);
 
-    sendEventTo<SettingsBloc>(SettingsGet());
+    sendEventToBloc<SettingsBloc>(SettingsGet());
   }
 
   @override
@@ -203,18 +203,18 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
               options: const AuthenticationOptions(useErrorDialogs: false));
           if (didAuthenticate) {
             setState(() {
-              sendEventTo<SettingsBloc>(const SettingsChangeMindContentVisibility(isVisible: true));
+              sendEventToBloc<SettingsBloc>(const SettingsChangeMindContentVisibility(isVisible: true));
             });
           }
         }
       } on Exception {
         setState(() {
-          sendEventTo<SettingsBloc>(const SettingsChangeMindContentVisibility(isVisible: true));
+          sendEventToBloc<SettingsBloc>(const SettingsChangeMindContentVisibility(isVisible: true));
         });
       }
     } else {
       setState(() {
-        sendEventTo<SettingsBloc>(const SettingsChangeMindContentVisibility(isVisible: false));
+        sendEventToBloc<SettingsBloc>(const SettingsChangeMindContentVisibility(isVisible: false));
       });
     }
   }
@@ -320,7 +320,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
 
   void _convertToStandalone(Mind mind) {
     final Mind standaloneMind = mind.copyWith(rootId: null);
-    sendEventTo<MindBloc>(MindEdit(mind: standaloneMind));
+    sendEventToBloc<MindBloc>(MindEdit(mind: standaloneMind));
   }
 
   void _showChatDiscussionScreen({required Mind mind}) async {
@@ -351,7 +351,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
       );
       final int sortIndex = (switchedDayMinds.map((mind) => mind.sortIndex).maxOrNull ?? -1) + 1;
       final Mind newMind = mind.copyWith(dayIndex: switchedDay, sortIndex: sortIndex);
-      sendEventTo<MindBloc>(MindEdit(mind: newMind));
+      sendEventToBloc<MindBloc>(MindEdit(mind: newMind));
     }
   }
 
@@ -367,7 +367,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
   }
 
   void _removeMind(Mind mind) {
-    sendEventTo<MindBloc>(MindDelete(mind: mind));
+    sendEventToBloc<MindBloc>(MindDelete(mind: mind));
   }
 
   void _showMindCreator({String? initialText, String? initialEmoji}) {
@@ -388,13 +388,13 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
                 emoji: emoji,
                 rootId: null,
               );
-              sendEventTo<MindBloc>(event);
+              sendEventToBloc<MindBloc>(event);
             } else {
               final Mind mindForEdit = _editableMind!.copyWith(
                 note: text,
                 emoji: emoji,
               );
-              sendEventTo<MindBloc>(MindEdit(mind: mindForEdit));
+              sendEventToBloc<MindBloc>(MindEdit(mind: mindForEdit));
               _editableMind = null;
             }
           },

@@ -29,7 +29,7 @@ final class AuthScreenState extends State<AuthScreen> with DisposeBag {
   void initState() {
     super.initState();
 
-    subscribeTo<AuthBloc>(
+    subscribeToBloc<AuthBloc>(
       onNewState: (state) {
         switch (state) {
           case AuthCurrentState status when status.isLoggedIn:
@@ -38,7 +38,7 @@ final class AuthScreenState extends State<AuthScreen> with DisposeBag {
       },
     )?.disposed(by: this);
 
-    subscribeTo<SettingsBloc>(
+    subscribeToBloc<SettingsBloc>(
       onNewState: (state) {
         if (state is SettingsDataState && state.settings.isOfflineMode) {
           _dismiss();
@@ -143,7 +143,7 @@ final class AuthScreenState extends State<AuthScreen> with DisposeBag {
                       );
 
                       if (result != null && result.first.isNotEmpty) {
-                        sendEventTo<AuthBloc>(
+                        sendEventToBloc<AuthBloc>(
                           AuthVerifyOTP(
                             email: _loginTextEditingController.text,
                             token: result.first,
@@ -175,7 +175,7 @@ final class AuthScreenState extends State<AuthScreen> with DisposeBag {
                         trueChild: Row(
                           children: [
                             AuthButton(
-                              onTap: () => sendEventTo<AuthBloc>(AuthLoginWithSocialNetwork.apple()),
+                              onTap: () => sendEventToBloc<AuthBloc>(AuthLoginWithSocialNetwork.apple()),
                               type: AuthButtonType.apple,
                             ),
                             const SizedBox(width: 16.0),
@@ -184,12 +184,12 @@ final class AuthScreenState extends State<AuthScreen> with DisposeBag {
                         falseChild: const SizedBox.shrink(),
                       ),
                       AuthButton(
-                        onTap: () => sendEventTo<AuthBloc>(AuthLoginWithSocialNetwork.google()),
+                        onTap: () => sendEventToBloc<AuthBloc>(AuthLoginWithSocialNetwork.google()),
                         type: AuthButtonType.google,
                       ),
                       const SizedBox(width: 16.0),
                       AuthButton(
-                        onTap: () => sendEventTo<AuthBloc>(AuthLoginWithSocialNetwork.facebook()),
+                        onTap: () => sendEventToBloc<AuthBloc>(AuthLoginWithSocialNetwork.facebook()),
                         type: AuthButtonType.facebook,
                       ),
                       const SizedBox(width: 16.0),

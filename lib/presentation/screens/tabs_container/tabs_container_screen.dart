@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:keklist/presentation/blocs/tab_container_bloc/tab_container_bloc.dart';
-import 'package:keklist/presentation/blocs/tab_container_bloc/tab_container_event.dart';
-import 'package:keklist/presentation/blocs/tab_container_bloc/tab_container_state.dart';
+import 'package:keklist/domain/repositories/tabs/models/tabs_settings.dart';
+import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bloc.dart';
+import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_event.dart';
+import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_state.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/presentation/screens/mind_collection/mind_collection_screen.dart';
 
-final class TabContainerScreen extends StatefulWidget {
-  const TabContainerScreen({super.key});
+final class TabsContainerScreen extends StatefulWidget {
+  const TabsContainerScreen({super.key});
 
   @override
-  State<TabContainerScreen> createState() => _TabContainerScreenState();
+  State<TabsContainerScreen> createState() => _TabsContainerScreenState();
 }
 
-final class _TabContainerScreenState extends State<TabContainerScreen> with DisposeBag {
+final class _TabsContainerScreenState extends State<TabsContainerScreen> with DisposeBag {
   int _selectedTabIndex = 0;
   final List<BottomNavigationBarItem> _items = [];
 
@@ -22,8 +23,8 @@ final class _TabContainerScreenState extends State<TabContainerScreen> with Disp
   void initState() {
     super.initState();
 
-    subscribeTo<TabContainerBloc>(onNewState: (state) async {
-      if (state is TabContainerState) {
+    subscribeToBloc<TabsContainerBloc>(onNewState: (state) async {
+      if (state is TabsContainerState) {
         setState(() {
           _selectedTabIndex = state.selectedTabIndex;
           _items.clear();
@@ -37,7 +38,7 @@ final class _TabContainerScreenState extends State<TabContainerScreen> with Disp
         });
       }
     })?.disposed(by: this);
-    sendEventTo<TabContainerBloc>(TabContainerGetCurrentState());
+    sendEventToBloc<TabsContainerBloc>(TabsContainerGetCurrentState());
   }
 
   @override
@@ -61,7 +62,8 @@ final class _TabContainerScreenState extends State<TabContainerScreen> with Disp
                 ]
               : _items,
           currentIndex: _selectedTabIndex,
-          onTap: (tabIndex) => sendEventTo<TabContainerBloc>(TabContainerChangeSelectedTab(selectedIndex: tabIndex)),
+          onTap: (tabIndex) =>
+              sendEventToBloc<TabsContainerBloc>(TabsContainerChangeSelectedTab(selectedIndex: tabIndex)),
           useLegacyColorScheme: false,
         ),
         falseChild: SizedBox.shrink(),
