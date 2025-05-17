@@ -6,7 +6,10 @@ import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_st
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
+import 'package:keklist/presentation/screens/insights/insights_screen.dart';
 import 'package:keklist/presentation/screens/mind_collection/mind_collection_screen.dart';
+import 'package:keklist/presentation/screens/settings/settings_screen.dart';
+import 'package:keklist/presentation/screens/user_profile/user_profile_screen.dart';
 
 final class TabsContainerScreen extends StatefulWidget {
   const TabsContainerScreen({super.key});
@@ -18,6 +21,7 @@ final class TabsContainerScreen extends StatefulWidget {
 final class _TabsContainerScreenState extends State<TabsContainerScreen> with DisposeBag {
   int _selectedTabIndex = 0;
   final List<BottomNavigationBarItem> _items = [];
+  final List<Widget> _bodyWidgets = [MindCollectionScreen()];
 
   @override
   void initState() {
@@ -27,14 +31,20 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
       if (state is TabsContainerState) {
         setState(() {
           _selectedTabIndex = state.selectedTabIndex;
-          _items.clear();
           final Iterable<BottomNavigationBarItem> items = state.tabs.map(
             (item) => BottomNavigationBarItem(
               icon: _getTabIcon(item.type),
               label: item.type.label,
             ),
           );
-          _items.addAll(items);
+          _items
+            ..clear
+            ..addAll(items);
+
+          final Iterable<Widget> bodyWidgets = state.tabs.map((item) => item.type).map(_bodyWidgetByType);
+          _bodyWidgets
+            ..clear()
+            ..addAll(bodyWidgets);
         });
       }
     })?.disposed(by: this);
@@ -49,27 +59,38 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: BoolWidget(
-        condition: _items.isNotEmpty,
-        trueChild: BottomNavigationBar(
-          enableFeedback: true,
-          items: _items.isEmpty
-              ? [
-                  BottomNavigationBarItem(icon: SizedBox(), label: ''),
-                  BottomNavigationBarItem(icon: SizedBox(), label: ''),
-                ]
-              : _items,
-          currentIndex: _selectedTabIndex,
-          onTap: (tabIndex) =>
-              sendEventToBloc<TabsContainerBloc>(TabsContainerChangeSelectedTab(selectedIndex: tabIndex)),
-          useLegacyColorScheme: false,
+  Widget build(BuildContext context) => Scaffold(
+        bottomNavigationBar: BoolWidget(
+          condition: _items.isNotEmpty,
+          trueChild: BottomNavigationBar(
+            enableFeedback: true,
+            items: _items.isEmpty
+                ? [
+                    BottomNavigationBarItem(icon: SizedBox(), label: ''),
+                    BottomNavigationBarItem(icon: SizedBox(), label: ''),
+                  ]
+                : _items,
+            currentIndex: _selectedTabIndex,
+            onTap: (tabIndex) =>
+                sendEventToBloc<TabsContainerBloc>(TabsContainerChangeSelectedTab(selectedIndex: tabIndex)),
+            useLegacyColorScheme: false,
+          ),
+          falseChild: SizedBox.shrink(),
         ),
-        falseChild: SizedBox.shrink(),
-      ),
-      body: MindCollectionScreen(),
-    );
+        body: _bodyWidgets[_selectedTabIndex],
+      );
+
+  Widget _bodyWidgetByType(TabType type) {
+    switch (type) {
+      case TabType.calendar:
+        return MindCollectionScreen();
+      case TabType.insights:
+        return InsightsScreen();
+      case TabType.profile:
+        return UserProfileScreen();
+      case TabType.settings:
+        return SettingsScreen();
+    }
   }
 
   Icon _getTabIcon(TabType type) {

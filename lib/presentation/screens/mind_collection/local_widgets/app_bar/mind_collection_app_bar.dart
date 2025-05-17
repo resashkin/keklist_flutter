@@ -6,21 +6,19 @@ final class _MindCollectionAppBar extends StatelessWidget {
   final VoidCallback onSearch;
   final VoidCallback onTitle;
   final VoidCallback onCalendar;
-  final VoidCallback onUserProfile;
-  final VoidCallback onInsights;
-  final VoidCallback onOfflineMode;
   final VoidCallback onCalendarLongTap;
+  final VoidCallback? onUserProfile = null;
+  final VoidCallback? onInsights = null;
+  final VoidCallback onOfflineMode;
 
   const _MindCollectionAppBar({
     required this.isUpdating,
     required this.onSearch,
     required this.onTitle,
     required this.onCalendar,
-    required this.onUserProfile,
-    required this.onInsights,
+    required this.onCalendarLongTap,
     required this.isOfflineMode,
     required this.onOfflineMode,
-    required this.onCalendarLongTap,
   });
 
   @override
@@ -53,14 +51,18 @@ final class _MindCollectionAppBar extends StatelessWidget {
   }
 
   List<Widget>? _makeAppBarActions() => [
-        IconButton(
-          icon: const Icon(Icons.insights),
-          onPressed: onInsights,
-        ),
-        IconButton(
-          icon: const Icon(Icons.person),
-          onPressed: onUserProfile,
-        ),
+        if (onInsights != null) ...{
+          IconButton(
+            icon: const Icon(Icons.insights),
+            onPressed: onInsights,
+          ),
+        },
+        if (onUserProfile != null) ...{
+          IconButton(
+            icon: const Icon(Icons.person),
+            onPressed: onUserProfile,
+          ),
+        },
         IconButton(
           icon: const Icon(Icons.calendar_month),
           onPressed: onCalendar,
