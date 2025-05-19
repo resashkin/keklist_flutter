@@ -38,7 +38,7 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
             ),
           );
           _items
-            ..clear
+            ..clear()
             ..addAll(items);
 
           final Iterable<Widget> bodyWidgets = state.tabs.map((item) => item.type).map(_bodyWidgetByType);
@@ -59,26 +59,28 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        bottomNavigationBar: BoolWidget(
-          condition: _items.isNotEmpty,
-          trueChild: BottomNavigationBar(
-            enableFeedback: true,
-            items: _items.isEmpty
-                ? [
-                    BottomNavigationBarItem(icon: SizedBox(), label: ''),
-                    BottomNavigationBarItem(icon: SizedBox(), label: ''),
-                  ]
-                : _items,
-            currentIndex: _selectedTabIndex,
-            onTap: (tabIndex) =>
-                sendEventToBloc<TabsContainerBloc>(TabsContainerChangeSelectedTab(selectedIndex: tabIndex)),
-            useLegacyColorScheme: false,
-          ),
-          falseChild: SizedBox.shrink(),
-        ),
-        body: _bodyWidgets[_selectedTabIndex],
-      );
+  Widget build(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        enableFeedback: true,
+        items: _items.length >= 2
+            ? _items
+            : [
+                BottomNavigationBarItem(icon: _getTabIcon(TabType.calendar), label: '1'),
+                BottomNavigationBarItem(icon: _getTabIcon(TabType.settings), label: '2'),
+                BottomNavigationBarItem(icon: _getTabIcon(TabType.profile), label: '3'),
+              ],
+        currentIndex: _selectedTabIndex,
+        onTap: (tabIndex) =>
+            sendEventToBloc<TabsContainerBloc>(TabsContainerChangeSelectedTab(selectedIndex: tabIndex)),
+        useLegacyColorScheme: false,
+      ),
+      body: IndexedStack(
+        index: _selectedTabIndex,
+        children: _bodyWidgets,
+      ),
+    );
+  }
 
   Widget _bodyWidgetByType(TabType type) {
     switch (type) {
