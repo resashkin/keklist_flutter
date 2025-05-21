@@ -255,7 +255,10 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
     if (_isDemoMode) {
       return;
     }
-    _itemScrollController.jumpTo(index: _getNowDayIndex());
+
+    if (_itemScrollController.isAttached) {
+      _itemScrollController.jumpTo(index: _getNowDayIndex());
+    }
     _monthGridObserverController.jumpTo(index: _getNowDayIndex());
   }
 

@@ -10,6 +10,7 @@ import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/screens/auth/auth_screen.dart';
 import 'package:keklist/presentation/screens/feature_flag/feature_flag_screen.dart';
+import 'package:keklist/presentation/screens/tabs_settings/tabs_settings_screen.dart';
 import 'package:keklist/presentation/screens/web_page/web_page_screen.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:settings_ui/settings_ui.dart';
@@ -192,10 +193,15 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
               //   title: const Text('Hide sensitive content'),
               //   onToggle: (bool value) => _switchSensitiveContentVisibility(!value),
               // ),
+              // SettingsTile.navigation(
+              //   title: const Text('Feature flags'),
+              //   leading: const Icon(Icons.flag, color: Colors.blue),
+              //   onPressed: (BuildContext context) => _showFeatureFlags(),
+              // ),
               SettingsTile.navigation(
-                title: const Text('Feature flags'),
-                leading: const Icon(Icons.flag, color: Colors.blue),
-                onPressed: (BuildContext context) => _showFeatureFlags(),
+                title: const Text('Tabs settings'),
+                leading: const Icon(Icons.dashboard, color: Colors.blue),
+                onPressed: (BuildContext context) => _showTabsSettings(),
               ),
             ],
           ),
@@ -372,6 +378,14 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     Navigator.of(context).push<void>(
       MaterialPageRoute<void>(
         builder: (BuildContext context) => const FeatureFlagScreen(),
+      ),
+    );
+  }
+
+  void _showTabsSettings() {
+    Navigator.of(context).push<void>(
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) => const TabsSettingsScreen(),
       ),
     );
   }

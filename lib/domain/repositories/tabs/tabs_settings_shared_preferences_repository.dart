@@ -10,6 +10,17 @@ final class TabsSettingsSharedPreferencesRepository extends TabsSettingsReposito
   final Preference<TabsSettings?> _tabsSettingsPreferences;
   final BehaviorSubject<TabsSettings> _behaviorSubject = BehaviorSubject<TabsSettings>();
 
+  @override
+  Stream<TabsSettings> get stream => _behaviorSubject;
+
+  @override
+  TabsSettings get value =>
+      _behaviorSubject.valueOrNull ??
+      TabsSettings(
+        selectedTabModels: [],
+        defaultSelectedTabIndex: 0,
+      );
+
   TabsSettingsSharedPreferencesRepository({required StreamingSharedPreferences preferences})
       : _preferences = preferences,
         _tabsSettingsPreferences = preferences.getCustomValue<TabsSettings?>(
@@ -25,7 +36,7 @@ final class TabsSettingsSharedPreferencesRepository extends TabsSettingsReposito
     _updateSettings(
       TabsSettings(
         defaultSelectedTabIndex: 0,
-        tabModels: [
+        selectedTabModels: [
           TabModel(type: TabType.calendar),
           TabModel(type: TabType.insights),
           TabModel(type: TabType.profile),
@@ -38,16 +49,20 @@ final class TabsSettingsSharedPreferencesRepository extends TabsSettingsReposito
   }
 
   @override
-  Stream<TabsSettings> get stream => _behaviorSubject;
+  FutureOr<void> updateDefaultSelectedTabIndex({required int defaultSelectedTabIndex}) {
+    return _updateSettings(TabsSettings(
+      selectedTabModels: _tabsSettingsPreferences.getValue()?.selectedTabModels ?? [],
+      defaultSelectedTabIndex: defaultSelectedTabIndex,
+    ));
+  }
 
   @override
-  TabsSettings get value => _behaviorSubject.value;
-
-  @override
-  FutureOr<void> updateDefaultSelectedTabIndex({required List<TabModel> defaultSelectedTabIndex}) {}
-
-  @override
-  FutureOr<void> updateTabList({required List<TabModel> tabList}) {}
+  FutureOr<void> update({required List<TabModel> selectedTabList}) {
+    return _updateSettings(TabsSettings(
+      selectedTabModels: selectedTabList,
+      defaultSelectedTabIndex: _tabsSettingsPreferences.getValue()?.defaultSelectedTabIndex ?? 0,
+    ));
+  }
 
   FutureOr<void> _updateSettings(TabsSettings settings) async {
     _preferences.setCustomValue(

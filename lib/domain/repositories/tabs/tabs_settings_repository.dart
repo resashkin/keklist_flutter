@@ -6,6 +6,6 @@ abstract class TabsSettingsRepository {
   TabsSettings get value;
   Stream<TabsSettings> get stream;
 
-  FutureOr<void> updateTabList({required List<TabModel> tabList});
-  FutureOr<void> updateDefaultSelectedTabIndex({required List<TabModel> defaultSelectedTabIndex});
+  FutureOr<void> update({required List<TabModel> selectedTabList});
+  FutureOr<void> updateDefaultSelectedTabIndex({required int defaultSelectedTabIndex});
 }

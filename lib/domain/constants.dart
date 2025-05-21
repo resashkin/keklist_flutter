@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
+import 'package:keklist/domain/repositories/tabs/models/tabs_settings.dart';
 
 final class Themes {
   static final ThemeData light = ThemeData(
@@ -72,4 +73,11 @@ final class KeklistConstants {
   static String sourceCodeURL = 'https://github.com/sashkyn/keklist_flutter';
   static String featureSuggestionsURL = 'https://insigh.to/b/keklist';
   static int foldersDayIndex = 0;
+
+  static List<TabModel> tabs = [
+    TabModel(type: TabType.calendar),
+    TabModel(type: TabType.insights),
+    TabModel(type: TabType.profile),
+    TabModel(type: TabType.settings),
+  ];
 }

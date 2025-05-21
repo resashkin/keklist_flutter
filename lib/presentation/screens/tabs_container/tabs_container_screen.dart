@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:keklist/domain/repositories/tabs/models/tabs_settings.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bloc.dart';
@@ -5,7 +7,6 @@ import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_ev
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_state.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
-import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/presentation/screens/insights/insights_screen.dart';
 import 'package:keklist/presentation/screens/mind_collection/mind_collection_screen.dart';
 import 'package:keklist/presentation/screens/settings/settings_screen.dart';
@@ -31,7 +32,7 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
       if (state is TabsContainerState) {
         setState(() {
           _selectedTabIndex = state.selectedTabIndex;
-          final Iterable<BottomNavigationBarItem> items = state.tabs.map(
+          final Iterable<BottomNavigationBarItem> items = state.selectedTabs.map(
             (item) => BottomNavigationBarItem(
               icon: _getTabIcon(item.type),
               label: item.type.label,
@@ -41,7 +42,7 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
             ..clear()
             ..addAll(items);
 
-          final Iterable<Widget> bodyWidgets = state.tabs.map((item) => item.type).map(_bodyWidgetByType);
+          final Iterable<Widget> bodyWidgets = state.selectedTabs.map((item) => item.type).map(_bodyWidgetByType);
           _bodyWidgets
             ..clear()
             ..addAll(bodyWidgets);
@@ -70,7 +71,7 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
                 BottomNavigationBarItem(icon: _getTabIcon(TabType.settings), label: '2'),
                 BottomNavigationBarItem(icon: _getTabIcon(TabType.profile), label: '3'),
               ],
-        currentIndex: _selectedTabIndex,
+        currentIndex: max(_selectedTabIndex, 0),
         onTap: (tabIndex) =>
             sendEventToBloc<TabsContainerBloc>(TabsContainerChangeSelectedTab(selectedIndex: tabIndex)),
         useLegacyColorScheme: false,

@@ -7,7 +7,7 @@ part of 'tabs_settings.dart';
 // **************************************************************************
 
 TabsSettings _$TabsSettingsFromJson(Map<String, dynamic> json) => TabsSettings(
-      tabModels: (json['tabModels'] as List<dynamic>)
+      selectedTabModels: (json['selectedTabModels'] as List<dynamic>)
           .map((e) => TabModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       defaultSelectedTabIndex: (json['defaultSelectedTabIndex'] as num).toInt(),
@@ -15,7 +15,7 @@ TabsSettings _$TabsSettingsFromJson(Map<String, dynamic> json) => TabsSettings(
 
 Map<String, dynamic> _$TabsSettingsToJson(TabsSettings instance) =>
     <String, dynamic>{
-      'tabModels': instance.tabModels,
+      'selectedTabModels': instance.selectedTabModels,
       'defaultSelectedTabIndex': instance.defaultSelectedTabIndex,
     };
 
