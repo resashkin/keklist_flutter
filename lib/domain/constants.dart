@@ -11,7 +11,7 @@ final class Themes {
       onPrimary: Colors.white,
       secondary: Colors.grey,
     ),
-    cardTheme: const CardTheme(color: Colors.white),
+    cardTheme: const CardThemeData(color: Colors.white),
     iconTheme: const IconThemeData(color: Colors.black),
     textTheme: ThemeData().textTheme.apply(
           bodyColor: Colors.black,
@@ -31,7 +31,7 @@ final class Themes {
       onPrimary: Colors.black,
       secondary: Colors.grey,
     ),
-    cardTheme: const CardTheme(color: Colors.black),
+    cardTheme: const CardThemeData(color: Colors.black),
     iconTheme: const IconThemeData(color: Colors.white),
     textTheme: ThemeData().textTheme.apply(
           bodyColor: Colors.white,
