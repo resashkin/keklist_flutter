@@ -7,6 +7,7 @@ import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_ev
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_state.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
+import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/presentation/screens/insights/insights_screen.dart';
 import 'package:keklist/presentation/screens/mind_collection/mind_collection_screen.dart';
 import 'package:keklist/presentation/screens/settings/settings_screen.dart';
@@ -22,7 +23,7 @@ final class TabsContainerScreen extends StatefulWidget {
 final class _TabsContainerScreenState extends State<TabsContainerScreen> with DisposeBag {
   int _selectedTabIndex = 0;
   final List<BottomNavigationBarItem> _items = [];
-  final List<Widget> _bodyWidgets = [MindCollectionScreen()];
+  final List<Widget> _bodyWidgets = [];
 
   @override
   void initState() {
@@ -62,26 +63,29 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        enableFeedback: true,
-        items: _items.length >= 2
-            ? _items
-            : [
-                BottomNavigationBarItem(icon: _getTabIcon(TabType.calendar), label: '1'),
-                BottomNavigationBarItem(icon: _getTabIcon(TabType.settings), label: '2'),
-                BottomNavigationBarItem(icon: _getTabIcon(TabType.profile), label: '3'),
-              ],
-        currentIndex: max(_selectedTabIndex, 0),
-        onTap: (tabIndex) =>
-            sendEventToBloc<TabsContainerBloc>(TabsContainerChangeSelectedTab(selectedIndex: tabIndex)),
-        useLegacyColorScheme: false,
-      ),
       body: IndexedStack(
         index: _selectedTabIndex,
         children: _bodyWidgets,
       ),
+      bottomNavigationBar: BoolWidget(
+        condition: _items.length >= 2,
+        trueChild: BottomNavigationBar(
+          enableFeedback: true,
+          items: _items.length >= 2 ? _items : _getFakeItems,
+          currentIndex: max(_selectedTabIndex, 0),
+          onTap: (tabIndex) =>
+              sendEventToBloc<TabsContainerBloc>(TabsContainerChangeSelectedTab(selectedIndex: tabIndex)),
+          useLegacyColorScheme: false,
+        ),
+        falseChild: SizedBox.shrink(),
+      ),
     );
   }
+
+  List<BottomNavigationBarItem> get _getFakeItems => [
+        BottomNavigationBarItem(icon: _getTabIcon(TabType.calendar), label: 'fake_1'),
+        BottomNavigationBarItem(icon: _getTabIcon(TabType.settings), label: 'fake_2')
+      ];
 
   Widget _bodyWidgetByType(TabType type) {
     switch (type) {

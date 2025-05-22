@@ -34,7 +34,7 @@ final class TabsContainerBloc extends Bloc<TabsContainerEvent, TabsContainerStat
     Emitter<TabsContainerState> emit,
   ) {
     final TabsContainerState newState = TabsContainerState(
-      selectedTabIndex: min(state.selectedTabIndex, min(_repository.value.selectedTabModels.length - 1, 0)),
+      selectedTabIndex: min(state.selectedTabIndex, max(_repository.value.selectedTabModels.length - 1, 0)),
       selectedTabs: _repository.value.selectedTabModels,
       unSelectedTabs: KeklistConstants.tabs
           .where((tab) => !_repository.value.selectedTabModels.map((tab) => tab.type).contains(tab.type))
