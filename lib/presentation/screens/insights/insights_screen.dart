@@ -7,6 +7,7 @@ import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/screens/insights/widgets/insights_pie_widget.dart';
 import 'package:keklist/presentation/screens/insights/widgets/insights_random_mind_widget.dart';
 import 'package:keklist/presentation/screens/insights/widgets/insights_top_chart.dart';
+import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_collection_empty_day_widget.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/mind_day_collection_screen.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
@@ -49,7 +50,7 @@ final class _InsightsScreenState extends KekWidgetState<InsightsScreen> {
             final int crossAxisCellCount = constraints.maxWidth > 600 ? 2 : 3;
             return BoolWidget(
               condition: _minds.isNotEmpty,
-              falseChild: const SizedBox.shrink(),
+              falseChild: MindCollectionEmptyDayWidget.noInsights(),
               trueChild: SingleChildScrollView(
                 child: StaggeredGrid.count(
                   axisDirection: AxisDirection.down,
