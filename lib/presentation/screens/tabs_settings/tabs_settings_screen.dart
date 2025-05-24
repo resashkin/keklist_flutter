@@ -5,6 +5,7 @@ import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bl
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_event.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_state.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
+import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 
 final class TabsSettingsScreen extends StatefulWidget {
   const TabsSettingsScreen({super.key});
@@ -16,6 +17,7 @@ final class TabsSettingsScreen extends StatefulWidget {
 final class _TabsSettingsScreenState extends State<TabsSettingsScreen> {
   final List<TabModel> _selectedTabModels = [];
   final List<TabModel> _unselectedTabModels = [];
+  final List<BottomNavigationBarItem> _items = [];
 
   @override
   void initState() {
@@ -30,15 +32,41 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> {
           _unselectedTabModels
             ..clear()
             ..addAll(state.unSelectedTabs);
+          final Iterable<BottomNavigationBarItem> items = state.selectedTabs.map(
+            (item) => BottomNavigationBarItem(
+              icon: _getTabIcon(item.type),
+              label: item.type.label,
+            ),
+          );
+          _items
+            ..clear()
+            ..addAll(items);
         });
       }
     });
     sendEventToBloc<TabsContainerBloc>(TabsContainerGetCurrentState());
   }
 
+  List<BottomNavigationBarItem> get _getFakeItems => [
+        BottomNavigationBarItem(icon: _getTabIcon(TabType.calendar), label: 'fake_1'),
+        BottomNavigationBarItem(icon: _getTabIcon(TabType.settings), label: 'fake_2')
+      ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BoolWidget(
+        condition: _items.length >= 2,
+        falseChild: const SizedBox.shrink(),
+        trueChild: BottomNavigationBar(
+          enableFeedback: true,
+          items: _items.length >= 2 ? _items : _getFakeItems,
+          currentIndex: 0,
+          onTap: (tabIndex) =>
+              sendEventToBloc<TabsContainerBloc>(TabsContainerChangeSelectedTab(selectedIndex: tabIndex)),
+          useLegacyColorScheme: false,
+        ),
+      ),
       appBar: AppBar(
         title: Text('Tabs settings'),
       ),
@@ -52,33 +80,58 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> {
                   .map(
                     (item) => _SelectableTabWidget(
                       title: item.type.label,
-                      subtitle: 'Hehehehehe',
+                      subtitle: item.type.description,
                       trailingAction: Icon(Icons.remove),
-                      onTrailingAction: () =>
-                          sendEventToBloc<TabsContainerBloc>(TabsContainerUnselectTab(tabType: item.type)),
+                      onTrailingAction: () {
+                        if (item.type == TabType.calendar) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content:
+                                  Text('Cannot remove main screen. You will loose availibility to setup your data.'),
+                            ),
+                          );
+                          return;
+                        }
+                        sendEventToBloc<TabsContainerBloc>(TabsContainerUnselectTab(tabType: item.type));
+                      },
                     ),
                   )
                   .toList(),
             ),
             Gap(8.0),
-            Text('Unselected tabs'),
-            Column(
-              children: _unselectedTabModels
-                  .map(
-                    (item) => _SelectableTabWidget(
-                      title: item.type.label,
-                      subtitle: 'Hehehehehe',
-                      trailingAction: Icon(Icons.remove),
-                      onTrailingAction: () =>
-                          sendEventToBloc<TabsContainerBloc>(TabsContainerSelectTab(tabType: item.type)),
-                    ),
-                  )
-                  .toList(),
-            ),
+            if (_unselectedTabModels.isNotEmpty) Divider(),
+            if (_unselectedTabModels.isNotEmpty) Text('Unselected tabs'),
+            if (_unselectedTabModels.isNotEmpty)
+              Column(
+                children: _unselectedTabModels
+                    .map(
+                      (item) => _SelectableTabWidget(
+                        title: item.type.label,
+                        subtitle: item.type.description,
+                        trailingAction: Icon(Icons.add),
+                        onTrailingAction: () =>
+                            sendEventToBloc<TabsContainerBloc>(TabsContainerSelectTab(tabType: item.type)),
+                      ),
+                    )
+                    .toList(),
+              ),
           ],
         ),
       ),
     );
+  }
+
+  Icon _getTabIcon(TabType type) {
+    switch (type) {
+      case TabType.calendar:
+        return Icon(Icons.calendar_month);
+      case TabType.insights:
+        return Icon(Icons.insights);
+      case TabType.profile:
+        return Icon(Icons.person);
+      case TabType.settings:
+        return Icon(Icons.settings);
+    }
   }
 }
 
@@ -103,7 +156,10 @@ final class _SelectableTabWidget extends StatelessWidget {
         child: Text(title),
       ),
       title: Text(title),
-      subtitle: Text(subtitle),
+      subtitle: Text(
+        subtitle,
+        style: TextStyle(color: Colors.blueGrey),
+      ),
       trailing: GestureDetector(
         onTap: onTrailingAction,
         child: trailingAction,

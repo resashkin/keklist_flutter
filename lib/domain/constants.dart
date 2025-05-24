@@ -20,7 +20,7 @@ final class Themes {
         ),
     inputDecorationTheme: const InputDecorationTheme(
       labelStyle: TextStyle(color: Colors.black),
-      hintStyle: TextStyle(color: Colors.grey),
+      hintStyle: TextStyle(color: Color.fromARGB(255, 90, 77, 77)),
     ),
   );
 

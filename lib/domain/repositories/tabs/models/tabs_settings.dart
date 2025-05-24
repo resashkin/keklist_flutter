@@ -64,6 +64,19 @@ enum TabType implements Equatable {
     }
   }
 
+  String get description {
+    switch (this) {
+      case TabType.calendar:
+        return 'Main screen with Calendar of entries';
+      case TabType.insights:
+        return 'Statistics all yours entries';
+      case TabType.settings:
+        return 'Screen with all settings (dark mode, sync and etc.)';
+      case TabType.profile:
+        return 'Screen with your profile';
+    }
+  }
+
   @override
   List<Object?> get props => [this];
 

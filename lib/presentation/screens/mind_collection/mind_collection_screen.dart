@@ -4,7 +4,11 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:keklist/domain/repositories/tabs/models/tabs_settings.dart';
 import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
+import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bloc.dart';
+import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_event.dart';
+import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_state.dart';
 import 'package:keklist/presentation/core/helpers/extensions/state_extensions.dart';
 import 'package:keklist/presentation/core/helpers/platform_utils.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
@@ -60,7 +64,8 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
   Map<int, Iterable<Mind>> _mindsByDayIndex = {};
   SettingsDataState? _settingsDataState;
   MindSearching? _searchingMindState;
-
+  bool _isProfileVisible = true;
+  bool _isInsightsVisible = true;
   bool _isMonthView = false;
   final bool _isDemoMode = false;
 
@@ -159,9 +164,19 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
         }
       })?.disposed(by: this);
 
+      subscribeToBloc<TabsContainerBloc>(onNewState: (state) {
+        if (state is TabsContainerState) {
+          setState(() {
+            _isInsightsVisible = !state.selectedTabs.map((tab) => tab.type).contains(TabType.insights);
+            _isProfileVisible = !state.selectedTabs.map((tab) => tab.type).contains(TabType.profile);
+          });
+        }
+      })?.disposed(by: this);
+
       sendEventToBloc<AuthBloc>(AuthGetStatus());
       sendEventToBloc<SettingsBloc>(SettingsGet());
       sendEventToBloc<MindBloc>(MindGetList());
+      sendEventToBloc<TabsContainerBloc>(TabsContainerGetCurrentState());
     });
   }
 
@@ -188,8 +203,8 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
               onSearch: () => sendEventToBloc<MindBloc>(MindStartSearch()),
               onTitle: () => _scrollToNow(),
               onCalendar: () => _showCalendarActions(),
-              // onUserProfile: () => _showUserProfile(),
-              // onInsights: () => _showInsights(),
+              onUserProfile: _isProfileVisible ? (() => _showUserProfile()) : null,
+              onInsights: _isInsightsVisible ? (() => _showInsights()) : null,
               onOfflineMode: () => print('heheh'),
               onCalendarLongTap: () => setState(() => _isMonthView = !_isMonthView),
             ),

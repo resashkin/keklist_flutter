@@ -21,7 +21,6 @@ import 'package:keklist/domain/repositories/message/message/message_object.dart'
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
 import 'package:keklist/native/web/telegram/telegram_web_initializer.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bloc.dart';
-import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_state.dart';
 import 'package:keklist/presentation/blocs/user_profile_bloc/user_profile_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';

@@ -33,6 +33,13 @@ final class TabsSettingsSharedPreferencesRepository extends TabsSettingsReposito
             },
           ),
         ) {
+    _behaviorSubject.addStream(
+      _tabsSettingsPreferences.asBroadcastStream().whereNotNull().debounceTime(const Duration(milliseconds: 10)),
+    );
+  }
+
+  @override
+  FutureOr<void> setDefaultTabs() {
     _updateSettings(
       TabsSettings(
         defaultSelectedTabIndex: 0,
@@ -42,9 +49,6 @@ final class TabsSettingsSharedPreferencesRepository extends TabsSettingsReposito
           TabModel(type: TabType.profile),
         ],
       ),
-    );
-    _behaviorSubject.addStream(
-      _tabsSettingsPreferences.asBroadcastStream().whereNotNull().debounceTime(const Duration(milliseconds: 10)),
     );
   }
 

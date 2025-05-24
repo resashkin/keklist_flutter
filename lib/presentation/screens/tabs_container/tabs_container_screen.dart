@@ -63,16 +63,20 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _selectedTabIndex,
-        children: _bodyWidgets,
+      body: BoolWidget(
+        condition: _bodyWidgets.isNotEmpty,
+        trueChild: IndexedStack(
+          index: _selectedTabIndex,
+          children: _bodyWidgets,
+        ),
+        falseChild: MindCollectionScreen(),
       ),
       bottomNavigationBar: BoolWidget(
         condition: _items.length >= 2,
         trueChild: BottomNavigationBar(
           enableFeedback: true,
           items: _items.length >= 2 ? _items : _getFakeItems,
-          currentIndex: max(_selectedTabIndex, 0),
+          currentIndex: _selectedTabIndex,
           onTap: (tabIndex) =>
               sendEventToBloc<TabsContainerBloc>(TabsContainerChangeSelectedTab(selectedIndex: tabIndex)),
           useLegacyColorScheme: false,

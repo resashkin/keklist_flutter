@@ -7,8 +7,8 @@ final class _MindCollectionAppBar extends StatelessWidget {
   final VoidCallback onTitle;
   final VoidCallback onCalendar;
   final VoidCallback onCalendarLongTap;
-  final VoidCallback? onUserProfile = null;
-  final VoidCallback? onInsights = null;
+  final VoidCallback? onUserProfile;
+  final VoidCallback? onInsights;
   final VoidCallback onOfflineMode;
 
   const _MindCollectionAppBar({
@@ -19,6 +19,8 @@ final class _MindCollectionAppBar extends StatelessWidget {
     required this.onCalendarLongTap,
     required this.isOfflineMode,
     required this.onOfflineMode,
+    required this.onUserProfile,
+    required this.onInsights,
   });
 
   @override
