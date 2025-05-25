@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
@@ -22,6 +23,9 @@ final class Themes {
       labelStyle: TextStyle(color: Colors.black),
       hintStyle: TextStyle(color: Color.fromARGB(255, 90, 77, 77)),
     ),
+    cupertinoOverrideTheme: const CupertinoThemeData(
+      textTheme: CupertinoTextThemeData(), // This is required for Dialog Inputs
+    ),
   );
 
   static final ThemeData dark = ThemeData(
@@ -41,6 +45,9 @@ final class Themes {
     inputDecorationTheme: const InputDecorationTheme(
       labelStyle: TextStyle(color: Colors.white),
       hintStyle: TextStyle(color: Colors.grey),
+    ),
+    cupertinoOverrideTheme: const CupertinoThemeData(
+      textTheme: CupertinoTextThemeData(), // This is required for Dialog Inputs
     ),
   );
 }

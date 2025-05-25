@@ -1,4 +1,4 @@
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:keklist/domain/repositories/tabs/models/tabs_settings.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bloc.dart';
@@ -61,7 +61,7 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final Scaffold scaffold = Scaffold(
       body: BoolWidget(
         condition: _bodyWidgets.isNotEmpty,
         trueChild: IndexedStack(
@@ -76,11 +76,17 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
           enableFeedback: true,
           items: List.of(_items.length >= 2 ? _items : _getFakeItems),
           currentIndex: _selectedTabIndex,
-          onTap: (tabIndex) => sendEventToBloc<TabsContainerBloc>(TabsContainerChangeSelectedTab(selectedIndex: tabIndex)),
+          onTap: (tabIndex) =>
+              sendEventToBloc<TabsContainerBloc>(TabsContainerChangeSelectedTab(selectedIndex: tabIndex)),
           useLegacyColorScheme: false,
         ),
         falseChild: SizedBox.shrink(),
       ),
+    );
+
+    return Padding(
+      padding: EdgeInsets.only(bottom: kIsWeb ? 25 : 0),
+      child: scaffold,
     );
   }
 
