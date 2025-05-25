@@ -126,7 +126,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
             tiles: [
               if (!_isLoggedIn)
                 SettingsTile(
-                  title: const Text('Sign in'),
+                  title: const Text('Sign up'),
                   leading: const Icon(Icons.login),
                   onPressed: (BuildContext context) {
                     _showAuthBottomSheet();

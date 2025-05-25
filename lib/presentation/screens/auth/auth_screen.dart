@@ -74,7 +74,7 @@ final class AuthScreenState extends State<AuthScreen> with DisposeBag {
                 children: [
                   const SizedBox(height: 16.0),
                   Text(
-                    'Sign in',
+                    'Sign up',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 16.0),

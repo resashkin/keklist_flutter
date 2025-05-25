@@ -22,6 +22,7 @@ import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_
 import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_row_widget.dart';
 import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_search_result_widget.dart';
 import 'package:keklist/presentation/screens/mind_info/mind_info_screen.dart';
+import 'package:keklist/presentation/screens/settings/settings_screen.dart';
 import 'package:keklist/presentation/screens/user_profile/user_profile_screen.dart';
 import 'package:keklist/presentation/screens/web_page/web_page_screen.dart';
 import 'package:keklist/presentation/core/widgets/rounded_container.dart';
@@ -64,7 +65,7 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
   Map<int, Iterable<Mind>> _mindsByDayIndex = {};
   SettingsDataState? _settingsDataState;
   MindSearching? _searchingMindState;
-  bool _isProfileVisible = true;
+  bool _isSettingsVisible = true;
   bool _isInsightsVisible = true;
   bool _isMonthView = false;
   final bool _isDemoMode = false;
@@ -168,7 +169,7 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
         if (state is TabsContainerState) {
           setState(() {
             _isInsightsVisible = !state.selectedTabs.map((tab) => tab.type).contains(TabType.insights);
-            _isProfileVisible = !state.selectedTabs.map((tab) => tab.type).contains(TabType.profile);
+            _isSettingsVisible = !state.selectedTabs.map((tab) => tab.type).contains(TabType.settings);
           });
         }
       })?.disposed(by: this);
@@ -203,7 +204,7 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
               onSearch: () => sendEventToBloc<MindBloc>(MindStartSearch()),
               onTitle: () => _scrollToNow(),
               onCalendar: () => _showCalendarActions(),
-              onUserProfile: _isProfileVisible ? (() => _showUserProfile()) : null,
+              onSettings: _isSettingsVisible ? (() => _showSettings()) : null,
               onInsights: _isInsightsVisible ? (() => _showInsights()) : null,
               onOfflineMode: () => print('heheh'),
               onCalendarLongTap: () => setState(() => _isMonthView = !_isMonthView),
@@ -464,6 +465,15 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
       context,
       MaterialPageRoute(
         builder: (context) => const UserProfileScreen(),
+      ),
+    );
+  }
+
+  void _showSettings() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SettingsScreen(),
       ),
     );
   }
