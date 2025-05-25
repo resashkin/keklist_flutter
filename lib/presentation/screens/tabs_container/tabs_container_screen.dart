@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:keklist/domain/repositories/tabs/models/tabs_settings.dart';
@@ -77,9 +76,7 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
           enableFeedback: true,
           items: List.of(_items.length >= 2 ? _items : _getFakeItems),
           currentIndex: _selectedTabIndex,
-          onTap: (tabIndex) {
-            setState(() => sendEventToBloc<TabsContainerBloc>(TabsContainerChangeSelectedTab(selectedIndex: tabIndex)));
-          },
+          onTap: (tabIndex) => sendEventToBloc<TabsContainerBloc>(TabsContainerChangeSelectedTab(selectedIndex: tabIndex)),
           useLegacyColorScheme: false,
         ),
         falseChild: SizedBox.shrink(),
