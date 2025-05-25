@@ -75,10 +75,11 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
         condition: _items.length >= 2,
         trueChild: BottomNavigationBar(
           enableFeedback: true,
-          items: _items.length >= 2 ? _items : _getFakeItems,
+          items: List.of(_items.length >= 2 ? _items : _getFakeItems),
           currentIndex: _selectedTabIndex,
-          onTap: (tabIndex) =>
-              sendEventToBloc<TabsContainerBloc>(TabsContainerChangeSelectedTab(selectedIndex: tabIndex)),
+          onTap: (tabIndex) {
+            setState(() => sendEventToBloc<TabsContainerBloc>(TabsContainerChangeSelectedTab(selectedIndex: tabIndex)));
+          },
           useLegacyColorScheme: false,
         ),
         falseChild: SizedBox.shrink(),

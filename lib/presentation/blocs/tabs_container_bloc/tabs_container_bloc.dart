@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:is_first_run/is_first_run.dart';
 import 'package:keklist/domain/constants.dart';
 import 'package:keklist/domain/repositories/tabs/models/tabs_settings.dart';
 import 'package:keklist/domain/repositories/tabs/tabs_settings_repository.dart';
@@ -42,7 +40,6 @@ final class TabsContainerBloc extends Bloc<TabsContainerEvent, TabsContainerStat
     Emitter<TabsContainerState> emit,
   ) {
     final TabsContainerState newState = TabsContainerState(
-      //selectedTabIndex: min(state.selectedTabIndex, max(_repository.value.selectedTabModels.length - 1, 0)),
       selectedTabIndex: _getSelectedTabIndex(),
       selectedTabs: _repository.value.selectedTabModels,
       unSelectedTabs: KeklistConstants.tabs
@@ -82,7 +79,7 @@ final class TabsContainerBloc extends Bloc<TabsContainerEvent, TabsContainerStat
     TabsContainerInit event,
     Emitter<TabsContainerState> emit,
   ) async {
-    if (await IsFirstRun.isFirstRun() || _repository.value.selectedTabModels.isEmpty) {
+    if (_repository.value.selectedTabModels.isEmpty) {
       await _repository.setDefaultTabs();
     }
   }

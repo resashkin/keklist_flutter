@@ -4,6 +4,7 @@ import 'package:keklist/domain/repositories/tabs/models/tabs_settings.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bloc.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_event.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_state.dart';
+import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 
@@ -14,7 +15,7 @@ final class TabsSettingsScreen extends StatefulWidget {
   State<TabsSettingsScreen> createState() => _TabsSettingsScreenState();
 }
 
-final class _TabsSettingsScreenState extends State<TabsSettingsScreen> {
+final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with DisposeBag {
   final List<TabModel> _selectedTabModels = [];
   final List<TabModel> _unselectedTabModels = [];
   final List<BottomNavigationBarItem> _items = [];
@@ -43,8 +44,15 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> {
             ..addAll(items);
         });
       }
-    });
+    })?.disposed(by: this);
     sendEventToBloc<TabsContainerBloc>(TabsContainerGetCurrentState());
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    cancelSubscriptions();
   }
 
   List<BottomNavigationBarItem> get _getFakeItems => [
@@ -60,10 +68,8 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> {
         falseChild: const SizedBox.shrink(),
         trueChild: BottomNavigationBar(
           enableFeedback: true,
-          items: _items.length >= 2 ? _items : _getFakeItems,
+          items: List.of(_items.length >= 2 ? _items : _getFakeItems),
           currentIndex: 0,
-          onTap: (tabIndex) =>
-              sendEventToBloc<TabsContainerBloc>(TabsContainerChangeSelectedTab(selectedIndex: tabIndex)),
           useLegacyColorScheme: false,
         ),
       ),
@@ -78,18 +84,13 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> {
             Column(
               children: _selectedTabModels
                   .map(
-                    (item) => _SelectableTabWidget(
+                    (item) => _SelectableTabItemWidget(
                       title: item.type.label,
                       subtitle: item.type.description,
                       trailingAction: Icon(Icons.remove),
                       onTrailingAction: () {
                         if (item.type == TabType.calendar) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content:
-                                  Text('Cannot remove main screen. You will loose availibility to setup your data.'),
-                            ),
-                          );
+                          _showCalendarRemoveErrorMessage();
                           return;
                         }
                         sendEventToBloc<TabsContainerBloc>(TabsContainerUnselectTab(tabType: item.type));
@@ -105,7 +106,7 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> {
               Column(
                 children: _unselectedTabModels
                     .map(
-                      (item) => _SelectableTabWidget(
+                      (item) => _SelectableTabItemWidget(
                         title: item.type.label,
                         subtitle: item.type.description,
                         trailingAction: Icon(Icons.add),
@@ -117,6 +118,15 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> {
               ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _showCalendarRemoveErrorMessage() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content:
+            Text('Cannot remove main screen. You will loose availibility to setup your data.'),
       ),
     );
   }
@@ -135,13 +145,13 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> {
   }
 }
 
-final class _SelectableTabWidget extends StatelessWidget {
+final class _SelectableTabItemWidget extends StatelessWidget {
   final String title;
   final String subtitle;
   final Widget? trailingAction;
   final Function()? onTrailingAction;
 
-  const _SelectableTabWidget({
+  const _SelectableTabItemWidget({
     required this.title,
     required this.subtitle,
     required this.trailingAction,
