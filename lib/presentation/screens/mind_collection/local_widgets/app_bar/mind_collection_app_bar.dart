@@ -45,7 +45,7 @@ final class _MindCollectionAppBar extends StatelessWidget {
                 ),
               ),
             ),
-            const Text('Notes'),
+            const Text('Minds'),
           ],
         ),
       ),
