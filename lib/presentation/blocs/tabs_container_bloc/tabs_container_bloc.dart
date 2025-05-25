@@ -17,15 +17,13 @@ final class TabsContainerBloc extends Bloc<TabsContainerEvent, TabsContainerStat
           TabsContainerState(
             selectedTabIndex: 0,
             selectedTabs: [],
-            unSelectedTabs: KeklistConstants.tabs,
+            unSelectedTabs: KeklistConstants.availableTabModels,
           ),
         ) {
     on<TabsContainerGetCurrentState>(_sendState);
     on<TabsContainerChangeSelectedTab>(_changeTab);
     on<TabsContainerSelectTab>(_selectTab);
     on<TabsContainerUnselectTab>(_unselectTab);
-    on<TabsContainerInit>(_initRepository);
-    add(TabsContainerInit());
     _repository.stream.listen((data) => add(TabsContainerGetCurrentState())).disposed(by: this);
   }
 
@@ -42,7 +40,7 @@ final class TabsContainerBloc extends Bloc<TabsContainerEvent, TabsContainerStat
     final TabsContainerState newState = TabsContainerState(
       selectedTabIndex: _getSelectedTabIndex(),
       selectedTabs: _repository.value.selectedTabModels,
-      unSelectedTabs: KeklistConstants.tabs
+      unSelectedTabs: KeklistConstants.availableTabModels
           .where((tab) => !_repository.value.selectedTabModels.map((tab) => tab.type).contains(tab.type))
           .toList(),
     );
@@ -57,7 +55,7 @@ final class TabsContainerBloc extends Bloc<TabsContainerEvent, TabsContainerStat
       TabsContainerState(
         selectedTabIndex: event.selectedIndex,
         selectedTabs: state.selectedTabs,
-        unSelectedTabs: KeklistConstants.tabs
+        unSelectedTabs: KeklistConstants.availableTabModels
             .where((tab) => !_repository.value.selectedTabModels.map((tab) => tab.type).contains(tab.type))
             .toList(),
       ),
@@ -65,7 +63,8 @@ final class TabsContainerBloc extends Bloc<TabsContainerEvent, TabsContainerStat
   }
 
   FutureOr<void> _selectTab(TabsContainerSelectTab event, Emitter<TabsContainerState> emit) {
-    final TabModel selectedTabModel = KeklistConstants.tabs.firstWhere((tabModel) => tabModel.type == event.tabType);
+    final TabModel selectedTabModel =
+        KeklistConstants.availableTabModels.firstWhere((tabModel) => tabModel.type == event.tabType);
     _repository.update(selectedTabList: _repository.value.selectedTabModels + [selectedTabModel]);
   }
 
@@ -73,15 +72,6 @@ final class TabsContainerBloc extends Bloc<TabsContainerEvent, TabsContainerStat
     final List<TabModel> updatedTabList =
         _repository.value.selectedTabModels.where((tabModel) => tabModel.type != event.tabType).toList();
     _repository.update(selectedTabList: updatedTabList);
-  }
-
-  Future<void> _initRepository(
-    TabsContainerInit event,
-    Emitter<TabsContainerState> emit,
-  ) async {
-    if (_repository.value.selectedTabModels.isEmpty) {
-      await _repository.setDefaultTabs();
-    }
   }
 
   int _getSelectedTabIndex() {

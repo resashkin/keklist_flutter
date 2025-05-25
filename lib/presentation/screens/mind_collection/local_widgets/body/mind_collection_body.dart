@@ -33,7 +33,7 @@ final class _MindCollectionBody extends StatelessWidget {
 
   static final DateFormat _dayFormatter = DateFormat('dd.MM.yyyy - EEEE');
   static final DateFormat _yearTitleFormatter = DateFormat.y();
-  static final DateFormat _monthTitleFormatter = DateFormat.MMMM().addPattern('').addPattern('yy', '');
+  static final DateFormat _monthTitleFormatter = DateFormat.MMMM().addPattern('').addPattern('yyyy', '');
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +94,7 @@ final class _MindCollectionBody extends StatelessWidget {
                           BoolWidget(
                             condition: currentDayWeekNumber != previousDayWeekNumber,
                             trueChild: Text(
-                              'Week ${_getWeekNumber(currentDayDateIndex)}',
+                              'Week #${_getWeekNumber(currentDayDateIndex)}',
                               style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
                             ),
                             falseChild: const SizedBox.shrink(),

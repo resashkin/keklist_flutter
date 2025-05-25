@@ -140,12 +140,12 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
                     sendEventToBloc<SettingsBloc>(SettingsLogout());
                   },
                 ),
-              SettingsTile.switchTile(
-                initialValue: _offlineMode,
-                leading: const Icon(Icons.cloud_off, color: Colors.grey),
-                title: const Text('Offline mode'),
-                onToggle: (bool value) => _switchOfflineMode(value),
-              ),
+              // SettingsTile.switchTile(
+              //   initialValue: _offlineMode,
+              //   leading: const Icon(Icons.cloud_off, color: Colors.grey),
+              //   title: const Text('Offline mode'),
+              //   onToggle: (bool value) => _switchOfflineMode(value),
+              // ),
               if (_cachedMindCountToUpload > 0 && !_offlineMode && _isLoggedIn) ...{
                 SettingsTile(
                   title: Text('Upload $_cachedMindCountToUpload minds'),
@@ -155,13 +155,14 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
                   },
                 ),
               },
-              SettingsTile(
-                title: const Text('Setup OpenAI Token'),
-                leading: const Icon(Icons.chat, color: Colors.greenAccent),
-                onPressed: (BuildContext context) async {
-                  await _showOpenAITokenChanger();
-                },
-              ),
+              // NOTE: Open AI is temporary disabled.
+              // SettingsTile(
+              //   title: const Text('Setup OpenAI Token'),
+              //   leading: const Icon(Icons.chat, color: Colors.greenAccent),
+              //   onPressed: (BuildContext context) async {
+              //     await _showOpenAITokenChanger();
+              //   },
+              // ),
               SettingsTile(
                 title: const Text('Export to CSV'),
                 leading: const Icon(Icons.file_download, color: Colors.brown),
@@ -231,10 +232,20 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
               ),
               SettingsTile.navigation(
                 title: const Text('Source code'),
-                leading: const Icon(Icons.code, color: Colors.grey),
+                leading: const Icon(Icons.code, color: Colors.yellow),
                 onPressed: (BuildContext context) async {
                   await _openSourceCode();
                 },
+              ),
+              SettingsTile.navigation(
+                title: const Text('Terms Of Use'),
+                leading: const Icon(Icons.verified_user, color: Colors.grey),
+                onPressed: (BuildContext context) => _openTermsOfUse(),
+              ),
+              SettingsTile.navigation(
+                title: const Text('Privacy Policy'),
+                leading: const Icon(Icons.privacy_tip, color: Colors.grey),
+                onPressed: (BuildContext context) => _openPrivacyPolicy(),
               ),
             ],
           ),
@@ -289,6 +300,20 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
 
   Future<void> _openFeatureSuggestion() async {
     final Uri uri = Uri.parse(KeklistConstants.featureSuggestionsURL);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    }
+  }
+
+  Future<void> _openPrivacyPolicy() async {
+    final Uri uri = Uri.parse(KeklistConstants.privacyURL);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    }
+  }
+
+  Future<void> _openTermsOfUse() async {
+    final Uri uri = Uri.parse(KeklistConstants.termsOfUseURL);
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);
     }
@@ -374,13 +399,13 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     );
   }
 
-  void _showFeatureFlags() {
-    Navigator.of(context).push<void>(
-      MaterialPageRoute<void>(
-        builder: (BuildContext context) => const FeatureFlagScreen(),
-      ),
-    );
-  }
+  // void _showFeatureFlags() {
+  //   Navigator.of(context).push<void>(
+  //     MaterialPageRoute<void>(
+  //       builder: (BuildContext context) => const FeatureFlagScreen(),
+  //     ),
+  //   );
+  // }
 
   void _showTabsSettings() {
     Navigator.of(context).push<void>(

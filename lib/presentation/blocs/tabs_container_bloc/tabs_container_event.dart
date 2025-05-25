@@ -2,8 +2,6 @@ import 'package:keklist/domain/repositories/tabs/models/tabs_settings.dart';
 
 abstract class TabsContainerEvent {}
 
-final class TabsContainerInit extends TabsContainerEvent {}
-
 final class TabsContainerGetCurrentState extends TabsContainerEvent {}
 
 final class TabsContainerChangeSelectedTab extends TabsContainerEvent {

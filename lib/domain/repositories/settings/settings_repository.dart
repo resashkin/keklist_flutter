@@ -46,7 +46,7 @@ final class KeklistSettings {
   factory KeklistSettings.initial() => KeklistSettings(
         isMindContentVisible: true,
         previousAppVersion: null,
-        isOfflineMode: true,
+        isOfflineMode: false, // temporary false
         isDarkMode: true,
         shouldShowTitles: true,
         openAIKey: null,

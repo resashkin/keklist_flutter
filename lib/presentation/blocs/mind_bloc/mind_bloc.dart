@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
 // import 'package:home_widget/home_widget.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
+import 'package:keklist/domain/services/auth/auth_service.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/mind_utils.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
@@ -23,17 +24,20 @@ final class MindBloc extends Bloc<MindEvent, MindState> with DisposeBag {
   late final MindSearcherCubit _searcherCubit;
   late final MindRepository _mindRepository;
   late final SettingsRepository _settingsRepository;
+  late final AuthService _authService;
 
   MindBloc({
     required MindService mainService,
     required MindSearcherCubit mindSearcherCubit,
     required MindRepository mindRepository,
     required SettingsRepository settingsRepository,
+    required AuthService authService,
   }) : super(MindList(values: const [])) {
     _service = mainService;
     _searcherCubit = mindSearcherCubit;
     _mindRepository = mindRepository;
     _settingsRepository = settingsRepository;
+    _authService = authService;
     on<MindGetList>(_getMinds);
     on<MindUpdateMobileWidgets>(_updateMobileWidgets);
     on<MindCreate>(_createMind);
@@ -61,7 +65,7 @@ final class MindBloc extends Bloc<MindEvent, MindState> with DisposeBag {
   Future<void> _getMinds(MindGetList event, Emitter<MindState> emit) async {
     _emitMindList(emit);
 
-    if (!(_settingsRepository.value.isOfflineMode)) {
+    if (!_settingsRepository.value.isOfflineMode && _authService.currentUser != null) {
       emit(
         MindServerOperationStarted(
           minds: [],
@@ -104,7 +108,7 @@ final class MindBloc extends Bloc<MindEvent, MindState> with DisposeBag {
     );
     _mindRepository.createMind(mind: mind, isUploadedToServer: false);
 
-    if (!(_settingsRepository.value.isOfflineMode)) {
+    if (!_settingsRepository.value.isOfflineMode && _authService.currentUser != null) {
       emit(
         MindServerOperationStarted(
           minds: [mind],
@@ -141,7 +145,7 @@ final class MindBloc extends Bloc<MindEvent, MindState> with DisposeBag {
     await _mindRepository.deleteMindsWhere((mind) => mind.rootId == event.mind.id);
     await _mindRepository.deleteMind(mindId: event.mind.id);
 
-    if (!(_settingsRepository.value.isOfflineMode)) {
+    if (!_settingsRepository.value.isOfflineMode && _authService.currentUser != null) {
       // Removing childMinds.
       emit(
         MindServerOperationStarted(
@@ -254,7 +258,7 @@ final class MindBloc extends Bloc<MindEvent, MindState> with DisposeBag {
 
     await _mindRepository.updateMind(mind: editedMind, isUploadedToServer: false);
 
-    if (!(_settingsRepository.value.isOfflineMode)) {
+    if (!_settingsRepository.value.isOfflineMode && _authService.currentUser != null) {
       emit(
         MindServerOperationStarted(minds: [event.mind], type: MindOperationType.edit),
       );

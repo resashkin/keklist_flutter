@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:keklist/domain/constants.dart';
 import 'package:keklist/domain/repositories/tabs/models/tabs_settings.dart';
 import 'package:keklist/domain/repositories/tabs/tabs_settings_repository.dart';
 import 'package:rxdart/rxdart.dart';
@@ -14,18 +15,13 @@ final class TabsSettingsSharedPreferencesRepository extends TabsSettingsReposito
   Stream<TabsSettings> get stream => _behaviorSubject;
 
   @override
-  TabsSettings get value =>
-      _behaviorSubject.valueOrNull ??
-      TabsSettings(
-        selectedTabModels: [],
-        defaultSelectedTabIndex: 0,
-      );
+  TabsSettings get value => _behaviorSubject.valueOrNull ?? _tabsSettingsPreferences.getValue()!;
 
   TabsSettingsSharedPreferencesRepository({required StreamingSharedPreferences preferences})
       : _preferences = preferences,
         _tabsSettingsPreferences = preferences.getCustomValue<TabsSettings?>(
           'tabs_settings',
-          defaultValue: null,
+          defaultValue: KeklistConstants.defaultTabSettings,
           adapter: JsonAdapter<TabsSettings>(
             deserializer: (jsonObject) {
               final Map<String, dynamic> json = (jsonObject as Map<String, dynamic>);
@@ -39,40 +35,24 @@ final class TabsSettingsSharedPreferencesRepository extends TabsSettingsReposito
   }
 
   @override
-  FutureOr<void> setDefaultTabs() {
-    _updateSettings(
-      TabsSettings(
-        defaultSelectedTabIndex: 0,
-        selectedTabModels: [
-          TabModel(type: TabType.calendar),
-          TabModel(type: TabType.insights),
-          TabModel(type: TabType.profile),
-        ],
-      ),
-    );
-  }
+  FutureOr<void> updateDefaultSelectedTabIndex({required int defaultSelectedTabIndex}) => _updateSettings(
+        TabsSettings(
+          selectedTabModels: _tabsSettingsPreferences.getValue()?.selectedTabModels ?? [],
+          defaultSelectedTabIndex: defaultSelectedTabIndex,
+        ),
+      );
 
   @override
-  FutureOr<void> updateDefaultSelectedTabIndex({required int defaultSelectedTabIndex}) {
-    return _updateSettings(TabsSettings(
-      selectedTabModels: _tabsSettingsPreferences.getValue()?.selectedTabModels ?? [],
-      defaultSelectedTabIndex: defaultSelectedTabIndex,
-    ));
-  }
+  FutureOr<void> update({required List<TabModel> selectedTabList}) => _updateSettings(
+        TabsSettings(
+          selectedTabModels: selectedTabList,
+          defaultSelectedTabIndex: _tabsSettingsPreferences.getValue()?.defaultSelectedTabIndex ?? 0,
+        ),
+      );
 
-  @override
-  FutureOr<void> update({required List<TabModel> selectedTabList}) {
-    return _updateSettings(TabsSettings(
-      selectedTabModels: selectedTabList,
-      defaultSelectedTabIndex: _tabsSettingsPreferences.getValue()?.defaultSelectedTabIndex ?? 0,
-    ));
-  }
-
-  FutureOr<void> _updateSettings(TabsSettings settings) async {
-    _preferences.setCustomValue(
-      'tabs_settings',
-      settings,
-      adapter: JsonAdapter<TabsSettings>(),
-    );
-  }
+  FutureOr<void> _updateSettings(TabsSettings settings) async => _preferences.setCustomValue(
+        'tabs_settings',
+        settings,
+        adapter: JsonAdapter<TabsSettings>(),
+      );
 }

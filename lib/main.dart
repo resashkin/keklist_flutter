@@ -108,6 +108,7 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
               mindSearcherCubit: mainInjector.get<MindSearcherCubit>(),
               mindRepository: mainInjector.get<MindRepository>(),
               settingsRepository: mainInjector.get<SettingsRepository>(),
+              authService: mainInjector.get<AuthService>(),
             ),
           ),
           BlocProvider(create: (context) => mainInjector.get<MindSearcherCubit>()),

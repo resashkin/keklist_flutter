@@ -76,15 +76,25 @@ final class KeklistConstants {
   static String demoAccountEmail = dotenv.get('DEMO_ACCOUNT_EMAIL');
   static String termsOfUseURL = 'https://sashkyn.notion.site/Zenmode-Terms-of-Use-df179704b2d149b8a5a915296f5cb78f';
   static String whatsNewURL = 'https://sashkyn.notion.site/Rememoji-Mind-Tracker-8548383aede2406bbb8d26c7f58e769c';
+  static String privacyURL = 'https://sashkyn.notion.site/Keklist-Privacy-Policy-1e183fccf71f80be899ad9eed309790a';
   static String feedbackEmail = 'sashkn2@gmail.com';
   static String sourceCodeURL = 'https://github.com/sashkyn/keklist_flutter';
   static String featureSuggestionsURL = 'https://insigh.to/b/keklist';
   static int foldersDayIndex = 0;
 
-  static List<TabModel> tabs = [
+  static List<TabModel> availableTabModels = [
     TabModel(type: TabType.calendar),
     TabModel(type: TabType.insights),
     TabModel(type: TabType.profile),
     TabModel(type: TabType.settings),
   ];
+
+  static TabsSettings defaultTabSettings = TabsSettings(
+    defaultSelectedTabIndex: 0,
+    selectedTabModels: [
+      TabModel(type: TabType.calendar),
+      TabModel(type: TabType.insights),
+      TabModel(type: TabType.profile),
+    ],
+  );
 }
