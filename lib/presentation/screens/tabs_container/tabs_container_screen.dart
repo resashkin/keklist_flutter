@@ -34,7 +34,7 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
           _selectedTabIndex = state.selectedTabIndex;
           final Iterable<BottomNavigationBarItem> items = state.selectedTabs.map(
             (item) => BottomNavigationBarItem(
-              icon: _getTabIcon(item.type),
+              icon: item.type.materialIcon,
               label: item.type.label,
             ),
           );
@@ -85,8 +85,8 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
   }
 
   List<BottomNavigationBarItem> get _getFakeItems => [
-        BottomNavigationBarItem(icon: _getTabIcon(TabType.calendar), label: 'fake_1'),
-        BottomNavigationBarItem(icon: _getTabIcon(TabType.settings), label: 'fake_2')
+        BottomNavigationBarItem(icon: TabType.calendar.materialIcon, label: TabType.calendar.label),
+        BottomNavigationBarItem(icon: TabType.settings.materialIcon, label: TabType.settings.label)
       ];
 
   Widget _bodyWidgetByType(TabType type) {
@@ -99,19 +99,6 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
         return UserProfileScreen();
       case TabType.settings:
         return SettingsScreen();
-    }
-  }
-
-  Icon _getTabIcon(TabType type) {
-    switch (type) {
-      case TabType.calendar:
-        return Icon(Icons.calendar_month);
-      case TabType.insights:
-        return Icon(Icons.insights);
-      case TabType.profile:
-        return Icon(Icons.person);
-      case TabType.settings:
-        return Icon(Icons.settings);
     }
   }
 }

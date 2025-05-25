@@ -56,8 +56,14 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
   }
 
   List<BottomNavigationBarItem> get _getFakeItems => [
-        BottomNavigationBarItem(icon: _getTabIcon(TabType.calendar), label: 'fake_1'),
-        BottomNavigationBarItem(icon: _getTabIcon(TabType.settings), label: 'fake_2')
+        BottomNavigationBarItem(
+          icon: TabType.calendar.materialIcon,
+          label: TabType.calendar.label,
+        ),
+        BottomNavigationBarItem(
+          icon: TabType.settings.materialIcon,
+          label: TabType.settings.label,
+        )
       ];
 
   @override
@@ -85,6 +91,7 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
               children: _selectedTabModels
                   .map(
                     (item) => _SelectableTabItemWidget(
+                      leadingIcon: item.type.materialIcon,
                       title: item.type.label,
                       subtitle: item.type.description,
                       trailingAction: Icon(Icons.remove),
@@ -107,6 +114,7 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
                 children: _unselectedTabModels
                     .map(
                       (item) => _SelectableTabItemWidget(
+                        leadingIcon: item.type.materialIcon,
                         title: item.type.label,
                         subtitle: item.type.description,
                         trailingAction: Icon(Icons.add),
@@ -123,12 +131,13 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
   }
 
   void _showCalendarRemoveErrorMessage() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content:
-            Text('Cannot remove main screen. You will loose availibility to setup your data.'),
-      ),
-    );
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        const SnackBar(
+          content: Text('Cannot remove main screen. You could loose availibility to setup tabs.'),
+        ),
+      );
   }
 
   Icon _getTabIcon(TabType type) {
@@ -148,6 +157,7 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
 final class _SelectableTabItemWidget extends StatelessWidget {
   final String title;
   final String subtitle;
+  final Icon leadingIcon;
   final Widget? trailingAction;
   final Function()? onTrailingAction;
 
@@ -156,14 +166,15 @@ final class _SelectableTabItemWidget extends StatelessWidget {
     required this.subtitle,
     required this.trailingAction,
     required this.onTrailingAction,
+    required this.leadingIcon,
   });
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(
-        backgroundColor: const Color(0xff764abc),
-        child: Text(title),
+        backgroundColor: Colors.blueGrey,
+        child: leadingIcon,
       ),
       title: Text(title),
       subtitle: Text(

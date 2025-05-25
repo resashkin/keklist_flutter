@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'tabs_settings.g.dart';
@@ -74,6 +75,19 @@ enum TabType implements Equatable {
         return 'Screen with all settings (dark mode, sync and etc.)';
       case TabType.profile:
         return 'Screen with your profile';
+    }
+  }
+
+  Icon get materialIcon {
+    switch (this) {
+      case TabType.calendar:
+        return Icon(Icons.calendar_month);
+      case TabType.insights:
+        return Icon(Icons.insights);
+      case TabType.profile:
+        return Icon(Icons.person);
+      case TabType.settings:
+        return Icon(Icons.settings);
     }
   }
 
