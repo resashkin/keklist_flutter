@@ -58,7 +58,7 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
     cancelSubscriptions();
   }
 
-  List<BottomNavigationBarItem> get _getFakeItems => [
+  List<BottomNavigationBarItem> get _getTwoFakeItems => [
         BottomNavigationBarItem(
           icon: TabType.calendar.materialIcon,
           label: TabType.calendar.label,
@@ -76,7 +76,7 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
         condition: _items.length >= 2,
         falseChild: const SizedBox.shrink(),
         trueChild: AdaptiveBottomNavigationBar(
-          items: List.of(_items.length >= 2 ? _items : _getFakeItems),
+          items: List.of(_items.length >= 2 ? _items : _getTwoFakeItems),
           selectedIndex: _selectedIndex,
           onTap: (int index) => setState(() => _selectedIndex = index),
         ),
@@ -137,7 +137,7 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
       ..hideCurrentSnackBar()
       ..showSnackBar(
         const SnackBar(
-          content: Text('Cannot remove main screen. You could loose availibility to setup tabs.'),
+          content: Text('Cannot remove main screen. You will loose option to setup tabs.'),
         ),
       );
   }
