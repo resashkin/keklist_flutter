@@ -7,6 +7,7 @@ import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_st
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
+import 'package:keklist/presentation/core/widgets/bottom_navigation_bar.dart';
 import 'package:keklist/presentation/screens/insights/insights_screen.dart';
 import 'package:keklist/presentation/screens/mind_collection/mind_collection_screen.dart';
 import 'package:keklist/presentation/screens/settings/settings_screen.dart';
@@ -72,21 +73,23 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
       ),
       bottomNavigationBar: BoolWidget(
         condition: _items.length >= 2,
-        trueChild: BottomNavigationBar(
-          enableFeedback: true,
+        trueChild: AdaptiveBottomNavigationBar(
           items: List.of(_items.length >= 2 ? _items : _getFakeItems),
-          currentIndex: _selectedTabIndex,
+          selectedIndex: _selectedTabIndex,
           onTap: (tabIndex) =>
               sendEventToBloc<TabsContainerBloc>(TabsContainerChangeSelectedTab(selectedIndex: tabIndex)),
-          useLegacyColorScheme: false,
         ),
         falseChild: SizedBox.shrink(),
       ),
     );
 
-    return Padding(
-      padding: EdgeInsets.only(bottom: kIsWeb ? 25 : 0),
-      child: scaffold,
+    return BoolWidget(
+      condition: kIsWeb,
+      trueChild: Padding(
+        padding: EdgeInsets.only(top: 32.0, bottom: 24.0),
+        child: scaffold,
+      ),
+      falseChild: scaffold,
     );
   }
 

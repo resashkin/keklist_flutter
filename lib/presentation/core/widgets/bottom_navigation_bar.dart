@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class AdaptiveBottomNavigationBar extends StatelessWidget {
+final class AdaptiveBottomNavigationBar extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onTap;
   final List<BottomNavigationBarItem> items;

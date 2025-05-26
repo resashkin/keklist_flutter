@@ -7,6 +7,7 @@ import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_st
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
+import 'package:keklist/presentation/core/widgets/bottom_navigation_bar.dart';
 
 final class TabsSettingsScreen extends StatefulWidget {
   const TabsSettingsScreen({super.key});
@@ -16,6 +17,7 @@ final class TabsSettingsScreen extends StatefulWidget {
 }
 
 final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with DisposeBag {
+  int _selectedIndex = 0;
   final List<TabModel> _selectedTabModels = [];
   final List<TabModel> _unselectedTabModels = [];
   final List<BottomNavigationBarItem> _items = [];
@@ -27,6 +29,7 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
     subscribeToBloc<TabsContainerBloc>(onNewState: (state) {
       if (state is TabsContainerState) {
         setState(() {
+          _selectedIndex = 0;
           _selectedTabModels
             ..clear()
             ..addAll(state.selectedTabs);
@@ -72,11 +75,10 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
       bottomNavigationBar: BoolWidget(
         condition: _items.length >= 2,
         falseChild: const SizedBox.shrink(),
-        trueChild: BottomNavigationBar(
-          enableFeedback: true,
+        trueChild: AdaptiveBottomNavigationBar(
           items: List.of(_items.length >= 2 ? _items : _getFakeItems),
-          currentIndex: 0,
-          useLegacyColorScheme: false,
+          selectedIndex: _selectedIndex,
+          onTap: (int index) => setState(() => _selectedIndex = index),
         ),
       ),
       appBar: AppBar(
