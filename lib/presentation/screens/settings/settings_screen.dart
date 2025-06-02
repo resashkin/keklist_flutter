@@ -10,6 +10,7 @@ import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/screens/auth/auth_screen.dart';
 import 'package:keklist/presentation/screens/feature_flag/feature_flag_screen.dart';
+import 'package:keklist/presentation/screens/tabs_settings/tabs_settings_screen.dart';
 import 'package:keklist/presentation/screens/web_page/web_page_screen.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:settings_ui/settings_ui.dart';
@@ -40,7 +41,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   void initState() {
     super.initState();
 
-    subscribeTo<SettingsBloc>(onNewState: (state) {
+    subscribeToBloc<SettingsBloc>(onNewState: (state) {
       switch (state) {
         case SettingsDataState state:
           setState(() {
@@ -69,11 +70,11 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
           );
           break;
         case SettingsUploadOfflineMindsCompletedState _:
-          sendEventTo<SettingsBloc>(SettingsGet());
+          sendEventToBloc<SettingsBloc>(SettingsGet());
       }
     })?.disposed(by: this);
 
-    subscribeTo<MindBloc>(onNewState: (state) {
+    subscribeToBloc<MindBloc>(onNewState: (state) {
       switch (state.runtimeType) {
         case const (MindServerOperationStarted):
           if (state.type == MindOperationType.uploadCachedData ||
@@ -101,7 +102,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
               });
             case MindOperationType.deleteAll:
               EasyLoading.dismiss();
-              sendEventTo<MindBloc>(SettingsGetMindCandidatesToUpload());
+              sendEventToBloc<MindBloc>(SettingsGetMindCandidatesToUpload());
               showOkAlertDialog(
                 context: context,
                 title: 'Success',
@@ -111,7 +112,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
       }
     })?.disposed(by: this);
 
-    sendEventTo<SettingsBloc>(SettingsGet());
+    sendEventToBloc<SettingsBloc>(SettingsGet());
   }
 
   @override
@@ -125,7 +126,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
             tiles: [
               if (!_isLoggedIn)
                 SettingsTile(
-                  title: const Text('Sign in'),
+                  title: const Text('Sign up'),
                   leading: const Icon(Icons.login),
                   onPressed: (BuildContext context) {
                     _showAuthBottomSheet();
@@ -136,37 +137,38 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
                   title: const Text('Logout'),
                   leading: const Icon(Icons.logout, color: Colors.red),
                   onPressed: (BuildContext context) {
-                    sendEventTo<SettingsBloc>(SettingsLogout());
+                    sendEventToBloc<SettingsBloc>(SettingsLogout());
                   },
                 ),
-              SettingsTile.switchTile(
-                initialValue: _offlineMode,
-                leading: const Icon(Icons.cloud_off, color: Colors.grey),
-                title: const Text('Offline mode'),
-                onToggle: (bool value) => _switchOfflineMode(value),
-              ),
+              // SettingsTile.switchTile(
+              //   initialValue: _offlineMode,
+              //   leading: const Icon(Icons.cloud_off, color: Colors.grey),
+              //   title: const Text('Offline mode'),
+              //   onToggle: (bool value) => _switchOfflineMode(value),
+              // ),
               if (_cachedMindCountToUpload > 0 && !_offlineMode && _isLoggedIn) ...{
                 SettingsTile(
                   title: Text('Upload $_cachedMindCountToUpload minds'),
                   leading: const Icon(Icons.cloud_upload, color: Colors.green),
                   onPressed: (BuildContext context) {
-                    sendEventTo<SettingsBloc>(SettingsUploadMindCandidates());
+                    sendEventToBloc<SettingsBloc>(SettingsUploadMindCandidates());
                   },
                 ),
               },
-              SettingsTile(
-                title: const Text('Setup OpenAI Token'),
-                leading: const Icon(Icons.chat, color: Colors.greenAccent),
-                onPressed: (BuildContext context) async {
-                  await _showOpenAITokenChanger();
-                },
-              ),
+              // NOTE: Open AI is temporary disabled.
+              // SettingsTile(
+              //   title: const Text('Setup OpenAI Token'),
+              //   leading: const Icon(Icons.chat, color: Colors.greenAccent),
+              //   onPressed: (BuildContext context) async {
+              //     await _showOpenAITokenChanger();
+              //   },
+              // ),
               SettingsTile(
                 title: const Text('Export to CSV'),
                 leading: const Icon(Icons.file_download, color: Colors.brown),
                 onPressed: (BuildContext context) {
                   // TODO: Add loading
-                  sendEventTo<SettingsBloc>(SettingsExportAllMindsToCSV());
+                  sendEventToBloc<SettingsBloc>(SettingsExportAllMindsToCSV());
                 },
               )
             ],
@@ -192,10 +194,15 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
               //   title: const Text('Hide sensitive content'),
               //   onToggle: (bool value) => _switchSensitiveContentVisibility(!value),
               // ),
+              // SettingsTile.navigation(
+              //   title: const Text('Feature flags'),
+              //   leading: const Icon(Icons.flag, color: Colors.blue),
+              //   onPressed: (BuildContext context) => _showFeatureFlags(),
+              // ),
               SettingsTile.navigation(
-                title: const Text('Feature flags'),
-                leading: const Icon(Icons.flag, color: Colors.blue),
-                onPressed: (BuildContext context) => _showFeatureFlags(),
+                title: const Text('Tabs settings'),
+                leading: const Icon(Icons.dashboard, color: Colors.blue),
+                onPressed: (BuildContext context) => _showTabsSettings(),
               ),
             ],
           ),
@@ -225,10 +232,20 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
               ),
               SettingsTile.navigation(
                 title: const Text('Source code'),
-                leading: const Icon(Icons.code, color: Colors.grey),
+                leading: const Icon(Icons.code, color: Colors.yellow),
                 onPressed: (BuildContext context) async {
                   await _openSourceCode();
                 },
+              ),
+              SettingsTile.navigation(
+                title: const Text('Terms Of Use'),
+                leading: const Icon(Icons.verified_user, color: Colors.grey),
+                onPressed: (BuildContext context) => _openTermsOfUse(),
+              ),
+              SettingsTile.navigation(
+                title: const Text('Privacy Policy'),
+                leading: const Icon(Icons.privacy_tip, color: Colors.grey),
+                onPressed: (BuildContext context) => _openPrivacyPolicy(),
               ),
             ],
           ),
@@ -282,7 +299,21 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   }
 
   Future<void> _openFeatureSuggestion() async {
-    final Uri uri = Uri.parse(KeklistConstants.featureSuggestionURL);
+    final Uri uri = Uri.parse(KeklistConstants.featureSuggestionsURL);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    }
+  }
+
+  Future<void> _openPrivacyPolicy() async {
+    final Uri uri = Uri.parse(KeklistConstants.privacyURL);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    }
+  }
+
+  Future<void> _openTermsOfUse() async {
+    final Uri uri = Uri.parse(KeklistConstants.termsOfUseURL);
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);
     }
@@ -313,7 +344,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
               onPressed: () {
                 _openAiKey = openAiToken;
                 Navigator.of(context).pop();
-                sendEventTo<SettingsBloc>(SettingsChangeOpenAIKey(openAIToken: openAiToken));
+                sendEventToBloc<SettingsBloc>(SettingsChangeOpenAIKey(openAIToken: openAiToken));
               },
               child: const Text('Save'),
             ),
@@ -334,7 +365,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     );
     switch (result) {
       case OkCancelResult.ok:
-        sendEventTo<AuthBloc>(AuthDeleteAccount());
+        sendEventToBloc<AuthBloc>(AuthDeleteAccount());
         break;
       case OkCancelResult.cancel:
         break;
@@ -342,19 +373,19 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   }
 
   void _switchOfflineMode(bool value) {
-    sendEventTo<SettingsBloc>(SettingsChangeOfflineMode(isOfflineMode: value));
+    sendEventToBloc<SettingsBloc>(SettingsChangeOfflineMode(isOfflineMode: value));
   }
 
   void _switchSensitiveContentVisibility(bool value) {
-    sendEventTo<SettingsBloc>(SettingsChangeMindContentVisibility(isVisible: value));
+    sendEventToBloc<SettingsBloc>(SettingsChangeMindContentVisibility(isVisible: value));
   }
 
   void _switchDarkMode(bool value) {
-    sendEventTo<SettingsBloc>(SettingsChangeIsDarkMode(isDarkMode: value));
+    sendEventToBloc<SettingsBloc>(SettingsChangeIsDarkMode(isDarkMode: value));
   }
 
   void _switchShowTitles(bool value) {
-    sendEventTo<SettingsBloc>(SettingsUpdateShouldShowTitlesMode(value: value));
+    sendEventToBloc<SettingsBloc>(SettingsUpdateShouldShowTitlesMode(value: value));
   }
 
   void _showWhatsNew() {
@@ -368,10 +399,18 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     );
   }
 
-  void _showFeatureFlags() {
+  // void _showFeatureFlags() {
+  //   Navigator.of(context).push<void>(
+  //     MaterialPageRoute<void>(
+  //       builder: (BuildContext context) => const FeatureFlagScreen(),
+  //     ),
+  //   );
+  // }
+
+  void _showTabsSettings() {
     Navigator.of(context).push<void>(
       MaterialPageRoute<void>(
-        builder: (BuildContext context) => const FeatureFlagScreen(),
+        builder: (BuildContext context) => const TabsSettingsScreen(),
       ),
     );
   }
@@ -388,7 +427,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     );
     switch (result) {
       case OkCancelResult.ok:
-        sendEventTo<MindBloc>(MindDeleteAllMinds());
+        sendEventToBloc<MindBloc>(MindDeleteAllMinds());
         break;
       case OkCancelResult.cancel:
         break;
@@ -406,7 +445,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     );
     switch (result) {
       case OkCancelResult.ok:
-        sendEventTo<MindBloc>(MindClearCache());
+        sendEventToBloc<MindBloc>(MindClearCache());
         break;
       case OkCancelResult.cancel:
         break;

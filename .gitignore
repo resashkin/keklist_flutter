@@ -133,3 +133,12 @@ Runner.ipa
 
 # dotenv
 .env
+dotenv
+
+# Firebase
+/.firebase
+.firebaserc
+firebase.json
+
+# FVM Version Cache
+.fvm/

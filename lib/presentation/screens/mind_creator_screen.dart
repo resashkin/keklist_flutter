@@ -12,6 +12,8 @@ final class MindCreatorScreen extends StatefulWidget {
   final Icon buttonIcon;
   final String? initialText;
   final String? initialEmoji;
+  final String? hintText;
+  final bool shouldSuggestEmoji;
 
   const MindCreatorScreen({
     super.key,
@@ -20,6 +22,8 @@ final class MindCreatorScreen extends StatefulWidget {
     this.initialText,
     this.initialEmoji,
     required this.buttonIcon,
+    this.hintText = 'Write something...',
+    this.shouldSuggestEmoji = true,
   });
 
   @override
@@ -37,7 +41,7 @@ final class _MindCreatorScreenState extends KekWidgetState<MindCreatorScreen> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      if (widget.initialText != null) {
+      if (widget.initialEmoji != null) {
         setState(() {
           _selectedEmoji = widget.initialEmoji!;
         });
@@ -47,9 +51,11 @@ final class _MindCreatorScreenState extends KekWidgetState<MindCreatorScreen> {
         _textEditingController.text = widget.initialText!;
       }
 
-      _textEditingController.addListener(() {
-        _bloc.add(MindCreatorChangeText(text: _textEditingController.text));
-      });
+      if (widget.shouldSuggestEmoji) {
+        _textEditingController.addListener(() {
+          _bloc.add(MindCreatorChangeText(text: _textEditingController.text));
+        });
+      }
     });
   }
 
@@ -77,24 +83,25 @@ final class _MindCreatorScreenState extends KekWidgetState<MindCreatorScreen> {
       },
       child: Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-        floatingActionButton: FloatingActionButton.extended(
-          icon: widget.buttonIcon,
-          onPressed: () {
-            Navigator.of(context).pop();
-            widget.onDone(_textEditingController.text, _selectedEmoji);
-          },
-          label: Text(
-            widget.buttonText,
-            style: const TextStyle(fontSize: 16.0),
-          ),
-        ),
         appBar: AppBar(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          leading: const SizedBox.shrink(),
+          leading: IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
           actions: [
-            IconButton(
-              icon: const Icon(Icons.close),
-              onPressed: () => Navigator.of(context).pop(),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                widget.onDone(_textEditingController.text, _selectedEmoji);
+              },
+              child: Text(
+                widget.buttonText,
+                style: const TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.blueAccent,
+                ),
+              ),
             )
           ],
         ),
@@ -122,10 +129,10 @@ final class _MindCreatorScreenState extends KekWidgetState<MindCreatorScreen> {
                 textCapitalization: TextCapitalization.sentences,
                 controller: _textEditingController,
                 style: const TextStyle(fontSize: 20.0),
-                decoration: const InputDecoration(
-                  contentPadding: EdgeInsets.all(12.0),
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.all(12.0),
                   border: InputBorder.none,
-                  hintText: 'Write a mind...',
+                  hintText: widget.hintText,
                 ),
               ),
             ],

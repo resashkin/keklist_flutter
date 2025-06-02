@@ -8,7 +8,7 @@ part of 'feature_flag_object.dart';
 
 class FeatureFlagObjectAdapter extends TypeAdapter<FeatureFlagObject> {
   @override
-  final int typeId = 0;
+  final int typeId = 4;
 
   @override
   FeatureFlagObject read(BinaryReader reader) {

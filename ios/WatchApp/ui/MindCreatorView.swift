@@ -62,8 +62,8 @@ final class MindCreatorViewModel: ObservableObject {
             .visibleInterfaceController?
             .presentTextInputController(
                 withSuggestions: [],
-                allowedInputMode: .plain
-            ) { [weak self] result in
+                allowedInputMode: WKTextInputMode.plain
+            ) { [weak self] (result: [Any]?) in
                 guard let result = result as? [String],
                       let resultText = result.first else {
                     self?.textToCreateMind = ""

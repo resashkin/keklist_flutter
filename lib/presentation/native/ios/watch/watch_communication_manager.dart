@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
-import 'package:keklist/presentation/core/enum_from_string.dart';
+import 'package:keklist/presentation/core/helpers/enum_utils.dart';
 import 'package:keklist/presentation/core/helpers/mind_utils.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/domain/services/mind_service/main_service.dart';
@@ -42,12 +42,12 @@ final class AppleWatchCommunicationManager implements WatchCommunicationManager 
   }) async {
     final Map<String, String> methodArguments = arguments.map(
       (key, value) => MapEntry<String, String>(
-        stringFromEnum(key),
+        EnumUtils.stringFromEnum(key),
         value.toString(),
       ),
     );
 
-    final String methodName = stringFromEnum(outputMethod);
+    final String methodName = EnumUtils.stringFromEnum(outputMethod);
     await _channel.invokeMethod(
       methodName,
       [methodArguments],
@@ -68,20 +68,20 @@ final class AppleWatchCommunicationManager implements WatchCommunicationManager 
         // print('methodArgs = $methodArgs');
 
         // TODO: переписать на Switch
-        if (methodName == stringFromEnum(WatchInputMethod.obtainTodayMinds)) {
+        if (methodName == EnumUtils.stringFromEnum(WatchInputMethod.obtainTodayMinds)) {
           return _showMindList();
-        } else if (methodName == stringFromEnum(WatchInputMethod.obtainPredictedEmojies)) {
-          final String mindText = methodArgs[stringFromEnum(WatchMethodArgumentKey.mindText)];
+        } else if (methodName == EnumUtils.stringFromEnum(WatchInputMethod.obtainPredictedEmojies)) {
+          final String mindText = methodArgs[EnumUtils.stringFromEnum(WatchMethodArgumentKey.mindText)];
           return _showPredictedEmojies(mindText: mindText);
-        } else if (methodName == stringFromEnum(WatchInputMethod.createMind)) {
-          final String mindText = methodArgs[stringFromEnum(WatchMethodArgumentKey.mindText)];
-          final String emoji = methodArgs[stringFromEnum(WatchMethodArgumentKey.mindEmoji)];
+        } else if (methodName == EnumUtils.stringFromEnum(WatchInputMethod.createMind)) {
+          final String mindText = methodArgs[EnumUtils.stringFromEnum(WatchMethodArgumentKey.mindText)];
+          final String emoji = methodArgs[EnumUtils.stringFromEnum(WatchMethodArgumentKey.mindEmoji)];
           return _createMindForToday(
             mindText: mindText,
             emoji: emoji,
           );
-        } else if (methodName == stringFromEnum(WatchInputMethod.deleteMind)) {
-          final String mindId = methodArgs[stringFromEnum(WatchMethodArgumentKey.mindId)];
+        } else if (methodName == EnumUtils.stringFromEnum(WatchInputMethod.deleteMind)) {
+          final String mindId = methodArgs[EnumUtils.stringFromEnum(WatchMethodArgumentKey.mindId)];
           return _removeMindFromToday(id: mindId);
         }
       },
@@ -175,7 +175,7 @@ final class AppleWatchCommunicationManager implements WatchCommunicationManager 
   Future<void> _showError({required WatchError error}) async => _sendToWatch(
         outputMethod: WatchOutputMethod.showError,
         arguments: {
-          WatchMethodArgumentKey.error: stringFromEnum(error),
+          WatchMethodArgumentKey.error: EnumUtils.stringFromEnum(error),
         },
       );
 }

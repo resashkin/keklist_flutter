@@ -13,11 +13,5 @@ final class BoolWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    if (condition) {
-      return trueChild;
-    } else {
-      return falseChild;
-    }
-  }
+  Widget build(BuildContext context) => condition ? trueChild : falseChild;
 }

@@ -30,12 +30,12 @@ class AuthButton extends StatelessWidget {
       height: 66.0,
       child: IconButton(
         style: ButtonStyle(
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          shape: WidgetStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           ),
-          backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).cardColor),
-          shadowColor: MaterialStateProperty.all<Color>(Theme.of(context).shadowColor),
-          elevation: MaterialStateProperty.all<double>(5.0),
+          backgroundColor: WidgetStateProperty.all<Color>(Theme.of(context).cardColor),
+          shadowColor: WidgetStateProperty.all<Color>(Theme.of(context).shadowColor),
+          elevation: WidgetStateProperty.all<double>(5.0),
         ),
         onPressed: onTap,
         icon: BoolWidget(

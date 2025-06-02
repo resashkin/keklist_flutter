@@ -1,6 +1,6 @@
 import 'package:keklist/domain/services/entities/mind.dart';
 
-class MindUtils {
+final class MindUtils {
   static const int millisecondsInDay = 1000 * 60 * 60 * 24;
 
   static int getDayIndex({required DateTime from}) =>

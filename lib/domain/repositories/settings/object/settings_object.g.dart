@@ -19,16 +19,17 @@ class SettingsObjectAdapter extends TypeAdapter<SettingsObject> {
     return SettingsObject()
       ..isMindContentVisible = fields[0] == null ? true : fields[0] as bool
       ..previousAppVersion = fields[1] as String?
-      ..isOfflineMode = fields[2] == null ? false : fields[2] as bool
+      ..isOfflineMode = fields[2] == null ? true : fields[2] as bool
       ..isDarkMode = fields[3] == null ? true : fields[3] as bool
       ..openAIKey = fields[4] as String?
-      ..shouldShowTitles = fields[5] == null ? true : fields[5] as bool;
+      ..shouldShowTitles = fields[5] == null ? true : fields[5] as bool
+      ..userName = fields[6] as String?;
   }
 
   @override
   void write(BinaryWriter writer, SettingsObject obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.isMindContentVisible)
       ..writeByte(1)
@@ -40,7 +41,9 @@ class SettingsObjectAdapter extends TypeAdapter<SettingsObject> {
       ..writeByte(4)
       ..write(obj.openAIKey)
       ..writeByte(5)
-      ..write(obj.shouldShowTitles);
+      ..write(obj.shouldShowTitles)
+      ..writeByte(6)
+      ..write(obj.userName);
   }
 
   @override

@@ -6,7 +6,9 @@ import 'package:dart_openai/dart_openai.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:keklist/domain/repositories/tabs/tabs_settings_repository.dart';
 // import 'package:home_widget/home_widget.dart';
 // import 'package:home_widget/home_widget.dart';
 import 'package:keklist/domain/services/auth/auth_service.dart';
@@ -17,9 +19,12 @@ import 'package:keklist/keklist_app.dart';
 import 'package:keklist/domain/hive_constants.dart';
 import 'package:keklist/domain/repositories/message/message/message_object.dart';
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
+import 'package:keklist/native/web/telegram/telegram_web_initializer.dart';
+import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bloc.dart';
+import 'package:keklist/presentation/blocs/user_profile_bloc/user_profile_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:url_strategy/url_strategy.dart';
 import 'package:keklist/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -40,18 +45,24 @@ Future<void> main() async {
   _initNativeWidgets();
   _setupBlockingLoadingWidget();
 
-  await dotenv.load(fileName: '.env');
-  setPathUrlStrategy();
+  await dotenv.load(fileName: 'dotenv');
+
+  usePathUrlStrategy();
   await _initHive();
   await _initSupabase();
 
+  final StreamingSharedPreferences streamingSharedPreferences = await StreamingSharedPreferences.instance;
+
   // Инициализация DI-контейнера.
   final Injector injector = Injector();
-  final Injector mainInjector = MainContainer().initialize(injector);
+  final Injector mainInjector =
+      MainContainer(streamingSharedPreferences: streamingSharedPreferences).initialize(injector);
 
   _connectToWatchCommunicationManager(mainInjector);
   _enableDebugBLOCLogs();
   _configureOpenAI();
+
+  TelegramWebInitializer.init();
 
   final Widget application = _getApplication(mainInjector);
   runApp(application);
@@ -97,13 +108,14 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
               mindSearcherCubit: mainInjector.get<MindSearcherCubit>(),
               mindRepository: mainInjector.get<MindRepository>(),
               settingsRepository: mainInjector.get<SettingsRepository>(),
+              authService: mainInjector.get<AuthService>(),
             ),
           ),
           BlocProvider(create: (context) => mainInjector.get<MindSearcherCubit>()),
           BlocProvider(
             create: (context) => AuthBloc(
               mainService: mainInjector.get<MindService>(),
-              authRepository: mainInjector.get<AuthService>(),
+              authService: mainInjector.get<AuthService>(),
             ),
           ),
           BlocProvider(
@@ -112,6 +124,17 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
               authService: mainInjector.get<AuthService>(),
               mindRepository: mainInjector.get<MindRepository>(),
               mindService: mainInjector.get<MindService>(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => UserProfileBloc(
+              mindRepository: mainInjector.get<MindRepository>(),
+              settingsRepository: mainInjector.get<SettingsRepository>(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => TabsContainerBloc(
+              repository: mainInjector.get<TabsSettingsRepository>(),
             ),
           ),
         ],
@@ -126,7 +149,7 @@ void _initNativeWidgets() {
 void _setupBlockingLoadingWidget() {
   EasyLoading.instance
     ..displayDuration = const Duration(milliseconds: 10000)
-    ..indicatorType = EasyLoadingIndicatorType.doubleBounce
+    ..indicatorType = EasyLoadingIndicatorType.pouringHourGlass
     ..loadingStyle = EasyLoadingStyle.light
     ..indicatorSize = 45.0
     ..radius = 10.0
@@ -134,7 +157,7 @@ void _setupBlockingLoadingWidget() {
     ..backgroundColor = Colors.black.withAlpha(200)
     ..indicatorColor = Colors.white
     ..textColor = Colors.black
-    ..maskColor = Colors.blue.withOpacity(0.5)
+    ..maskColor = Colors.blue.withValues(alpha: 0.5)
     ..userInteractions = false
     ..dismissOnTap = false;
 }
@@ -145,8 +168,8 @@ Future<void> _initHive() async {
   Hive.registerAdapter<MessageObject>(MessageObjectAdapter());
   await Hive.initFlutter();
   final Box<SettingsObject> settingsBox = await Hive.openBox<SettingsObject>(HiveConstants.settingsBoxName);
-  if (settingsBox.get(HiveConstants.settingsGlobalSettingsIndex) == null) {
-    settingsBox.put(HiveConstants.settingsGlobalSettingsIndex, KeklistSettings.initial().toObject());
+  if (settingsBox.get(HiveConstants.globalSettingsIndex) == null) {
+    settingsBox.put(HiveConstants.globalSettingsIndex, KeklistSettings.initial().toObject());
   }
   await Hive.openBox<MindObject>(HiveConstants.mindBoxName);
   await Hive.openBox<MessageObject>(HiveConstants.messageChatBoxName);

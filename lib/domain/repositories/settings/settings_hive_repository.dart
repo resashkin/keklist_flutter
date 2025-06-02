@@ -34,48 +34,55 @@ final class SettingsHiveRepository implements SettingsRepository {
 
   @override
   FutureOr<void> updateDarkMode(bool isDarkMode) async {
-    final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.settingsGlobalSettingsIndex);
+    final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.globalSettingsIndex);
     settingsObject?.isDarkMode = isDarkMode;
     await settingsObject?.save();
   }
 
   @override
   FutureOr<void> updateMindContentVisibility(bool isVisible) async {
-    final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.settingsGlobalSettingsIndex);
+    final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.globalSettingsIndex);
     settingsObject?.isMindContentVisible = isVisible;
     await settingsObject?.save();
   }
 
   @override
   FutureOr<void> updateOfflineMode(bool isOfflineMode) async {
-    final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.settingsGlobalSettingsIndex);
+    final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.globalSettingsIndex);
     settingsObject?.isOfflineMode = isOfflineMode;
     await settingsObject?.save();
   }
 
   @override
   FutureOr<void> updateOpenAIKey(String? openAIKey) async {
-    final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.settingsGlobalSettingsIndex);
+    final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.globalSettingsIndex);
     settingsObject?.openAIKey = openAIKey;
     await settingsObject?.save();
   }
 
   @override
   FutureOr<void> updatePreviousAppVersion(String? previousAppVersion) async {
-    final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.settingsGlobalSettingsIndex);
+    final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.globalSettingsIndex);
     settingsObject?.previousAppVersion = previousAppVersion;
     await settingsObject?.save();
   }
 
   @override
   FutureOr<void> updateSettings(KeklistSettings settings) async {
-    await _hiveBox.put(HiveConstants.settingsGlobalSettingsIndex, settings.toObject());
+    await _hiveBox.put(HiveConstants.globalSettingsIndex, settings.toObject());
   }
 
   @override
   FutureOr<void> updateShouldShowTitles(bool shouldShowTitles) async {
-    final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.settingsGlobalSettingsIndex);
+    final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.globalSettingsIndex);
     settingsObject?.shouldShowTitles = shouldShowTitles;
+    await settingsObject?.save();
+  }
+
+  @override
+  FutureOr<void> updateUserName(String userName) async {
+    final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.globalSettingsIndex);
+    settingsObject?.userName = userName;
     await settingsObject?.save();
   }
 }

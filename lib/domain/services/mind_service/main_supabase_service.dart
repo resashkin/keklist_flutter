@@ -74,6 +74,9 @@ final class MindSupabaseService implements MindService {
     _validateAreYouDumb();
     _validateUserAuthorization();
 
+    // TODO: suggest to make backup your data first
+
+    // not working for some reason...
     await _client.rpc('deleteUser');
   }
 

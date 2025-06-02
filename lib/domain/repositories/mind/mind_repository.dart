@@ -5,11 +5,14 @@ import 'package:keklist/domain/services/entities/mind.dart';
 // TODO: remove from here isUploadedToServer and etc.
 // TODO: merge with service
 
+// TODO: add constant with folder mind (1)
+// TODO: add minds as a child of folder
+
 abstract class MindRepository {
   Iterable<Mind> get values;
   Stream<Iterable<Mind>> get stream;
   FutureOr<Iterable<Mind>> obtainMinds();
-  FutureOr<void> createMind({required Mind mind, required bool isUploadedToServer});
+  FutureOr<Mind> createMind({required Mind mind, required bool isUploadedToServer});
   FutureOr<void> createMinds({required Iterable<Mind> minds, required bool isUploadedToServer});
   FutureOr<Mind?> obtainMind({required String mindId});
   FutureOr<Iterable<Mind>> obtainMindsWhere(bool Function(Mind) where);

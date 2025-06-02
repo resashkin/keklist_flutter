@@ -29,7 +29,7 @@ final class AuthScreenState extends State<AuthScreen> with DisposeBag {
   void initState() {
     super.initState();
 
-    subscribeTo<AuthBloc>(
+    subscribeToBloc<AuthBloc>(
       onNewState: (state) {
         switch (state) {
           case AuthCurrentState status when status.isLoggedIn:
@@ -38,7 +38,7 @@ final class AuthScreenState extends State<AuthScreen> with DisposeBag {
       },
     )?.disposed(by: this);
 
-    subscribeTo<SettingsBloc>(
+    subscribeToBloc<SettingsBloc>(
       onNewState: (state) {
         if (state is SettingsDataState && state.settings.isOfflineMode) {
           _dismiss();
@@ -74,7 +74,7 @@ final class AuthScreenState extends State<AuthScreen> with DisposeBag {
                 children: [
                   const SizedBox(height: 16.0),
                   Text(
-                    'Sign in',
+                    'Sign up',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 16.0),
@@ -103,7 +103,7 @@ final class AuthScreenState extends State<AuthScreen> with DisposeBag {
                   const SizedBox(height: 16.0),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primary),
-                    onPressed: () {
+                    onPressed: () async {
                       if (_loginTextEditingController.text == KeklistConstants.demoAccountEmail) {
                         _displayTextInputDialog(
                           context,
@@ -123,11 +123,33 @@ final class AuthScreenState extends State<AuthScreen> with DisposeBag {
                       }
                       context.read<AuthBloc>().add(AuthLoginWithEmail(_loginTextEditingController.text));
                       // TODO: показать алерт на экшен в блоке.
-                      showOkAlertDialog(
+                      // showOkAlertDialog(
+                      //   context: context,
+                      //   title: 'Success',
+                      //   message: 'Please, go to your email app and open magic link',
+                      // );
+
+                      final List<String>? result = await showTextInputDialog(
+                        title: 'Enter code from email - ${_loginTextEditingController.text}',
+                        autoSubmit: true,
+                        okLabel: 'Verify',
                         context: context,
-                        title: 'Success',
-                        message: 'Please, go to your email app and open magic link',
+                        textFields: [
+                          DialogTextField(
+                            autocorrect: false,
+                            keyboardType: TextInputType.number,
+                          )
+                        ],
                       );
+
+                      if (result != null && result.first.isNotEmpty) {
+                        sendEventToBloc<AuthBloc>(
+                          AuthVerifyOTP(
+                            email: _loginTextEditingController.text,
+                            token: result.first,
+                          ),
+                        );
+                      }
                     },
                     child: SizedBox(
                       width: 100,
@@ -153,7 +175,7 @@ final class AuthScreenState extends State<AuthScreen> with DisposeBag {
                         trueChild: Row(
                           children: [
                             AuthButton(
-                              onTap: () => sendEventTo<AuthBloc>(AuthLoginWithSocialNetwork.apple()),
+                              onTap: () => sendEventToBloc<AuthBloc>(AuthLoginWithSocialNetwork.apple()),
                               type: AuthButtonType.apple,
                             ),
                             const SizedBox(width: 16.0),
@@ -162,12 +184,12 @@ final class AuthScreenState extends State<AuthScreen> with DisposeBag {
                         falseChild: const SizedBox.shrink(),
                       ),
                       AuthButton(
-                        onTap: () => sendEventTo<AuthBloc>(AuthLoginWithSocialNetwork.google()),
+                        onTap: () => sendEventToBloc<AuthBloc>(AuthLoginWithSocialNetwork.google()),
                         type: AuthButtonType.google,
                       ),
                       const SizedBox(width: 16.0),
                       AuthButton(
-                        onTap: () => sendEventTo<AuthBloc>(AuthLoginWithSocialNetwork.facebook()),
+                        onTap: () => sendEventToBloc<AuthBloc>(AuthLoginWithSocialNetwork.facebook()),
                         type: AuthButtonType.facebook,
                       ),
                       const SizedBox(width: 16.0),

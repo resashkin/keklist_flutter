@@ -51,7 +51,7 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
           ),
     );
 
-    subscribeTo<MindBloc>(onNewState: (state) async {
+    subscribeToBloc<MindBloc>(onNewState: (state) async {
       if (state is MindList) {
         setState(() {
           _allMinds

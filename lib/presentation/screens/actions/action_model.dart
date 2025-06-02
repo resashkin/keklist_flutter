@@ -9,6 +9,10 @@ sealed class ActionModel {
     required this.icon,
   });
 
+  // TODO: get rid from this list and make it smarter
+
+  factory ActionModel.custom({required String title, required Icon icon}) =>
+      CustomActionModel(title: title, icon: icon);
   factory ActionModel.chatWithAI() => const ChatWithAIActionModel();
   factory ActionModel.photosPerDay() => const PhotosPerDayActionModel();
   factory ActionModel.extraActions() => const ExtraActionsMenuActionModel();
@@ -17,10 +21,15 @@ sealed class ActionModel {
   factory ActionModel.delete() => const DeleteMenuActionModel();
   factory ActionModel.share() => const ShareMenuActionModel();
   factory ActionModel.switchDay() => const SwitchDayMenuActionModel();
-  factory ActionModel.showDigestForPeriod() => const ShowDigestForPeriodActionModel();
+  factory ActionModel.showDigest() => const ShowDigestActionModel();
   factory ActionModel.goToDate() => const GoToDateMenuActionModel();
   factory ActionModel.showAll() => const ShowAllMenuActionModel();
   factory ActionModel.tranlsateToEnglish() => const TranslateToEnglishMenuActionModel();
+  factory ActionModel.convertToStandalone() => const ConvertToStandaloneMenuActionModel();
+}
+
+final class CustomActionModel extends ActionModel {
+  const CustomActionModel({required super.title, required super.icon});
 }
 
 final class ChatWithAIActionModel extends ActionModel {
@@ -95,10 +104,10 @@ final class GoToDateMenuActionModel extends ActionModel {
         );
 }
 
-final class ShowDigestForPeriodActionModel extends ActionModel {
-  const ShowDigestForPeriodActionModel()
+final class ShowDigestActionModel extends ActionModel {
+  const ShowDigestActionModel()
       : super(
-          title: 'Show digest for period',
+          title: 'Show digest for ...',
           icon: const Icon(Icons.filter_center_focus),
         );
 }
@@ -118,3 +127,12 @@ final class TranslateToEnglishMenuActionModel extends ActionModel {
           icon: const Icon(Icons.translate),
         );
 }
+
+final class ConvertToStandaloneMenuActionModel extends ActionModel {
+  const ConvertToStandaloneMenuActionModel()
+      : super(
+          title: 'Convert to standalone entry',
+          icon: const Icon(Icons.move_up),
+        );
+}
+

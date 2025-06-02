@@ -1,7 +1,7 @@
 import UIKit
 import Flutter
 import WatchConnectivity
-import workmanager
+//import workmanager
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
@@ -23,7 +23,7 @@ import workmanager
         
         GeneratedPluginRegistrant.register(with: self)
         
-        WorkmanagerPlugin.registerTask(withIdentifier: "update-today-minds")
+        //WorkmanagerPlugin.registerTask(withIdentifier: "update-today-minds")
         //UIApplication.shared.setMinimumBackgroundFetchInterval(TimeInterval(60*60)) // Each 1 hour.
         
         // MARK: Activation Apple Watch Session

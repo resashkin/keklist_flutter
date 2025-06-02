@@ -78,7 +78,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
       }
     });
 
-    subscribeTo<MindBloc>(onNewState: (state) async {
+    subscribeToBloc<MindBloc>(onNewState: (state) async {
       if (state is MindList) {
         setState(() {
           allMinds
@@ -90,7 +90,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
       }
     })?.disposed(by: this);
 
-    subscribeTo<SettingsBloc>(onNewState: (state) {
+    subscribeToBloc<SettingsBloc>(onNewState: (state) {
       if (state is SettingsDataState) {
         setState(() {
           _isMindContentVisible = state.settings.isMindContentVisible;
@@ -98,7 +98,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
       }
     })?.disposed(by: this);
 
-    sendEventTo<SettingsBloc>(SettingsGet());
+    sendEventToBloc<SettingsBloc>(SettingsGet());
   }
 
   @override
@@ -176,7 +176,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
               onOptions: (Mind mind) => _showActions(context, mind),
               mindIdsToChildren: _mindIdsToChildren,
             ),
-            falseChild: MindCollectionEmptyDayWidget.noMinds(text: 'No minds for current day'),
+            falseChild: MindCollectionEmptyDayWidget.noMinds(),
           ),
         ),
       ),
@@ -194,36 +194,27 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
     HapticFeedback.mediumImpact();
     if (!_isMindContentVisible) {
       final LocalAuthentication auth = LocalAuthentication();
-      final bool canAuthenticateWithBiometrics = await auth.canCheckBiometrics;
-      final bool canAuthenticate = canAuthenticateWithBiometrics || await auth.isDeviceSupported();
-      if (canAuthenticate) {
-        try {
+      try {
+        final bool canAuthenticateWithBiometrics = await auth.canCheckBiometrics;
+        final bool canAuthenticate = canAuthenticateWithBiometrics || await auth.isDeviceSupported();
+        if (canAuthenticate) {
           final bool didAuthenticate = await auth.authenticate(
-              localizedReason: 'Please authenticate to show account balance',
+              localizedReason: 'Please authenticate to show content of your mind',
               options: const AuthenticationOptions(useErrorDialogs: false));
           if (didAuthenticate) {
             setState(() {
-              sendEventTo<SettingsBloc>(const SettingsChangeMindContentVisibility(isVisible: true));
+              sendEventToBloc<SettingsBloc>(const SettingsChangeMindContentVisibility(isVisible: true));
             });
           }
-        } on PlatformException catch (e) {
-          print(e);
-          // if (e.code == auth_error.notAvailable) {
-          //   // Add handling of no hardware here.
-          // } else if (e.code == auth_error.notEnrolled) {
-          //   // ...
-          // } else {
-          //   // ...
-          // }
         }
-      } else {
+      } on Exception {
         setState(() {
-          sendEventTo<SettingsBloc>(const SettingsChangeMindContentVisibility(isVisible: true));
+          sendEventToBloc<SettingsBloc>(const SettingsChangeMindContentVisibility(isVisible: true));
         });
       }
     } else {
       setState(() {
-        sendEventTo<SettingsBloc>(const SettingsChangeMindContentVisibility(isVisible: false));
+        sendEventToBloc<SettingsBloc>(const SettingsChangeMindContentVisibility(isVisible: false));
       });
     }
   }
@@ -298,16 +289,16 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
     Haptics.vibrate(HapticsType.heavy);
   }
 
-  void _showNerdActions(BuildContext context, Mind mind) {
-    showBarModalBottomSheet(
-      context: context,
-      builder: (context) => ActionsScreen(
-        actions: [
-          (ActionModel.tranlsateToEnglish(), () => _translateToEnglish(mind: mind)),
-        ],
-      ),
-    );
-  }
+  // void _showNerdActions(BuildContext context, Mind mind) {
+  //   showBarModalBottomSheet(
+  //     context: context,
+  //     builder: (context) => ActionsScreen(
+  //       actions: [
+  //         (ActionModel.tranlsateToEnglish(), () => _translateToEnglish(mind: mind)),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   // TODO: extract to some navigator
 
@@ -317,6 +308,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
       builder: (context) => ActionsScreen(
         actions: [
           (ActionModel.chatWithAI(), () => _showChatDiscussionScreen(mind: mind)),
+          if (mind.rootId != null) (ActionModel.convertToStandalone(), () => _convertToStandalone(mind)),
           (ActionModel.edit(), () => _editMind(mind)),
           (ActionModel.switchDay(), () => _updateMindDay(mind)),
           (ActionModel.showAll(), () => _showAllMinds(mind)),
@@ -324,6 +316,11 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
         ],
       ),
     );
+  }
+
+  void _convertToStandalone(Mind mind) {
+    final Mind standaloneMind = mind.copyWith(rootId: null);
+    sendEventToBloc<MindBloc>(MindEdit(mind: standaloneMind));
   }
 
   void _showChatDiscussionScreen({required Mind mind}) async {
@@ -354,7 +351,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
       );
       final int sortIndex = (switchedDayMinds.map((mind) => mind.sortIndex).maxOrNull ?? -1) + 1;
       final Mind newMind = mind.copyWith(dayIndex: switchedDay, sortIndex: sortIndex);
-      sendEventTo<MindBloc>(MindEdit(mind: newMind));
+      sendEventToBloc<MindBloc>(MindEdit(mind: newMind));
     }
   }
 
@@ -370,7 +367,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
   }
 
   void _removeMind(Mind mind) {
-    sendEventTo<MindBloc>(MindDelete(mind: mind));
+    sendEventToBloc<MindBloc>(MindDelete(mind: mind));
   }
 
   void _showMindCreator({String? initialText, String? initialEmoji}) {
@@ -382,6 +379,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
           buttonText: initialEmoji == null ? 'Create' : 'Edit',
           initialEmoji: initialEmoji,
           initialText: initialText,
+          shouldSuggestEmoji: true,
           onDone: (String text, String emoji) {
             if (_editableMind == null) {
               final MindCreate event = MindCreate(
@@ -390,13 +388,13 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
                 emoji: emoji,
                 rootId: null,
               );
-              sendEventTo<MindBloc>(event);
+              sendEventToBloc<MindBloc>(event);
             } else {
               final Mind mindForEdit = _editableMind!.copyWith(
                 note: text,
                 emoji: emoji,
               );
-              sendEventTo<MindBloc>(MindEdit(mind: mindForEdit));
+              sendEventToBloc<MindBloc>(MindEdit(mind: mindForEdit));
               _editableMind = null;
             }
           },

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:keklist/presentation/core/enum_from_string.dart';
+import 'package:keklist/presentation/core/helpers/enum_utils.dart';
 import 'package:keklist/domain/repositories/message/message/message_object.dart';
 
 class Message with EquatableMixin {
@@ -33,7 +33,7 @@ class Message with EquatableMixin {
     ..text = text
     ..rootMindId = rootMindId
     ..timestamp = timestamp
-    ..sender = stringFromEnum(sender);
+    ..sender = EnumUtils.stringFromEnum(sender);
 }
 
 enum MessageSender { user, system, assistant }

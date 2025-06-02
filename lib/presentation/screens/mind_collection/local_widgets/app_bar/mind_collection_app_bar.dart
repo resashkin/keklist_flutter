@@ -6,8 +6,9 @@ final class _MindCollectionAppBar extends StatelessWidget {
   final VoidCallback onSearch;
   final VoidCallback onTitle;
   final VoidCallback onCalendar;
-  final VoidCallback onSettings;
-  final VoidCallback onInsights;
+  final VoidCallback onCalendarLongTap;
+  final VoidCallback? onSettings;
+  final VoidCallback? onInsights;
   final VoidCallback onOfflineMode;
 
   const _MindCollectionAppBar({
@@ -15,10 +16,11 @@ final class _MindCollectionAppBar extends StatelessWidget {
     required this.onSearch,
     required this.onTitle,
     required this.onCalendar,
-    required this.onSettings,
-    required this.onInsights,
+    required this.onCalendarLongTap,
     required this.isOfflineMode,
     required this.onOfflineMode,
+    required this.onSettings,
+    required this.onInsights,
   });
 
   @override
@@ -43,36 +45,39 @@ final class _MindCollectionAppBar extends StatelessWidget {
                 ),
               ),
             ),
-            const Text('Notes'),
+            const Text('Minds'),
           ],
         ),
       ),
     );
   }
 
-  List<Widget>? _makeAppBarActions() {
-    return [
-      IconButton(
-        icon: const Icon(Icons.insights),
-        onPressed: onInsights,
-      ),
-      IconButton(
-        icon: const Icon(Icons.settings),
-        onPressed: onSettings,
-      ),
-      IconButton(
-        icon: const Icon(Icons.calendar_month),
-        onPressed: onCalendar,
-      ),
-      SensitiveWidget(
-        mode: SensitiveMode.blurred,
-        child: IconButton(
-          icon: const Icon(Icons.search),
-          onPressed: () {
-            !SensitiveWidget.isProtected ? onSearch() : null;
-          },
+  List<Widget>? _makeAppBarActions() => [
+        if (onInsights != null) ...{
+          IconButton(
+            icon: const Icon(Icons.insights),
+            onPressed: onInsights,
+          ),
+        },
+        if (onSettings != null) ...{
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: onSettings,
+          ),
+        },
+        IconButton(
+          icon: const Icon(Icons.calendar_month),
+          onPressed: onCalendar,
+          onLongPress: onCalendarLongTap,
         ),
-      ),
-    ];
-  }
+        SensitiveWidget(
+          mode: SensitiveMode.blurred,
+          child: IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              !SensitiveWidget.isProtected ? onSearch() : null;
+            },
+          ),
+        ),
+      ];
 }
