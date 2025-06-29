@@ -307,7 +307,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
       context: context,
       builder: (context) => ActionsScreen(
         actions: [
-          (ActionModel.chatWithAI(), () => _showChatDiscussionScreen(mind: mind)),
+          // (ActionModel.chatWithAI(), () => _showChatDiscussionScreen(mind: mind)),
           if (mind.rootId != null) (ActionModel.convertToStandalone(), () => _convertToStandalone(mind)),
           (ActionModel.edit(), () => _editMind(mind)),
           (ActionModel.switchDay(), () => _updateMindDay(mind)),

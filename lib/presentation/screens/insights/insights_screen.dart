@@ -3,7 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
+import 'package:keklist/presentation/core/helpers/extensions/state_extensions.dart';
+import 'package:keklist/presentation/core/helpers/mind_utils.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
+import 'package:keklist/presentation/screens/digest/mind_universal_list_screen.dart';
 import 'package:keklist/presentation/screens/insights/widgets/insights_pie_widget.dart';
 import 'package:keklist/presentation/screens/insights/widgets/insights_random_mind_widget.dart';
 import 'package:keklist/presentation/screens/insights/widgets/insights_top_chart.dart';
@@ -67,7 +70,10 @@ final class _InsightsScreenState extends KekWidgetState<InsightsScreen> {
                     // ),
                     StaggeredGridTile.fit(
                       crossAxisCellCount: crossAxisCellCount,
-                      child: InsightsPieWidget(allMinds: _minds),
+                      child: InsightsPieWidget(
+                        allMinds: _minds,
+                        onViewMinds: (choice, selectedEmoji) {},
+                      ),
                     ),
                     StaggeredGridTile.fit(
                       crossAxisCellCount: crossAxisCellCount,
@@ -99,5 +105,52 @@ final class _InsightsScreenState extends KekWidgetState<InsightsScreen> {
         ),
       ),
     );
+  }
+
+  void _showMinds(InsightsPieWidgetChoice choice, String? emoji) {
+    if (mountedContext == null) {
+      return;
+    }
+
+    final int startDayIndex;
+    final int endDayIndex;
+    switch (choice) {
+      case InsightsPieWidgetChoice.today:
+        startDayIndex = MindUtils.getTodayIndex();
+        endDayIndex = MindUtils.getTodayIndex();
+        break;
+      case InsightsPieWidgetChoice.thisWeek:
+        
+        break;
+      case InsightsPieWidgetChoice.yesterday:
+        // TODO: Handle this case.
+        throw UnimplementedError();
+      case InsightsPieWidgetChoice.thisMonth:
+        // TODO: Handle this case.
+        throw UnimplementedError();
+      case InsightsPieWidgetChoice.thisYear:
+        // TODO: Handle this case.
+        throw UnimplementedError();
+    }
+
+    // Navigator.push(
+    //   mountedContext!,
+    //   MaterialPageRoute(
+    //     builder: (context) {
+    //       bool filterFunction(mind) {
+    //         //return mind.dayIndex >= startDayIndex && mind.dayIndex <= endDayIndex;
+    //         return true;
+    //       }
+
+    //       return MindUniversalListScreen(
+    //         allMinds: _minds,
+    //         filterFunction: filterFunction,
+    //         title: 'Minds',
+    //         emptyStateMessage: 'No minds in selected period',
+    //         onSelectMind: (mind) => _showMindInfo(mind),
+    //       );
+    //     },
+    //   ),
+    // );
   }
 }

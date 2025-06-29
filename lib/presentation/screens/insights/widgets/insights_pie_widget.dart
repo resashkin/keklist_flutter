@@ -35,10 +35,12 @@ enum InsightsPieWidgetChoice {
 
 final class InsightsPieWidget extends StatefulWidget {
   final List<Mind> allMinds;
+  final Function(InsightsPieWidgetChoice choice, String? selectedEmoji)? onViewMinds;
 
   const InsightsPieWidget({
     super.key,
     required this.allMinds,
+    this.onViewMinds,
   });
 
   @override
@@ -139,7 +141,7 @@ final class _InsightsPieWidgetState extends State<InsightsPieWidget> {
                       sectionsSpace: 0,
                       startDegreeOffset: 0,
                     ),
-                    swapAnimationCurve: Curves.bounceInOut,
+                    curve: Curves.bounceInOut,
                   ),
                 ),
                 falseChild: Center(child: MindCollectionEmptyDayWidget.noMinds(text: 'No minds for this period')),
@@ -156,7 +158,7 @@ final class _InsightsPieWidgetState extends State<InsightsPieWidget> {
                         isSelected: _selectedEmoji == entry.key,
                         onSelect: (bool selected) {
                           setState(() {
-                            _selectedEmoji = entry.key;
+                            _selectedEmoji = !selected ? entry.key : null;
                           });
                         },
                         selectedColor: _colorFromEmoji(entry.key),
@@ -173,6 +175,20 @@ final class _InsightsPieWidgetState extends State<InsightsPieWidget> {
               ),
             ),
             const SizedBox(height: 8.0),
+            // link button on the center
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextButton(
+                child: Text(
+                  (_selectedEmoji != null) ? 'View $_selectedEmoji minds' : 'View all minds',
+                  style: TextStyle(color: Colors.blueAccent),
+                ),
+                onPressed: () => widget.onViewMinds?.call(
+                  _choices[_selectedChoiceIndex],
+                  _selectedEmoji,
+                ),
+              ),
+            )
           ],
         ),
       ),
