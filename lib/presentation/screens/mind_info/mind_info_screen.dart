@@ -218,7 +218,7 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
       builder: (context) => ActionsScreen(
         actions: [
           // (ActionModel.chatWithAI(), () => _showMessageScreen(mind: mind)),
-          // (ActionModel.tranlsateToEnglish(), () => _translateToEnglish(mind: mind)),
+          (ActionModel.tranlsateToEnglish(), () => _translateToEnglish(mind: mind)),
           (ActionModel.edit(), () => _editMind(mind)),
           (ActionModel.showAll(), () => _showAllMinds(mind)),
           (ActionModel.delete(), () => _removeMind(mind)),
