@@ -50,7 +50,8 @@ enum TabType implements Equatable {
   calendar,
   insights,
   settings,
-  profile;
+  profile,
+  today;
 
   String get label {
     switch (this) {
@@ -62,6 +63,8 @@ enum TabType implements Equatable {
         return 'Settings';
       case TabType.profile:
         return 'Profile';
+      case TabType.today:
+        return 'Today';
     }
   }
 
@@ -75,6 +78,8 @@ enum TabType implements Equatable {
         return 'Screen with all settings (dark mode, sync and etc.)';
       case TabType.profile:
         return 'Screen with your profile';
+      case TabType.today:
+        return 'Only today minds';
     }
   }
 
@@ -88,6 +93,8 @@ enum TabType implements Equatable {
         return Icon(Icons.person);
       case TabType.settings:
         return Icon(Icons.settings);
+      case TabType.today:
+        return Icon(Icons.today);
     }
   }
 

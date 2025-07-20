@@ -252,7 +252,6 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => MindDayCollectionScreen(
-          allMinds: _minds,
           initialDayIndex: groupDayIndex,
           initialError: initialError,
         ),

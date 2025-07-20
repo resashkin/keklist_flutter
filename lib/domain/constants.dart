@@ -80,15 +80,17 @@ final class KeklistConstants {
   static String feedbackEmail = 'sashkn2@gmail.com';
   static String sourceCodeURL = 'https://github.com/sashkyn/keklist_flutter';
   static String featureSuggestionsURL = 'https://insigh.to/b/keklist';
-  static int foldersDayIndex = 0;
+  static int foldersDayIndex = 0; // TODO: remove
 
   static List<TabModel> availableTabModels = [
     TabModel(type: TabType.calendar),
     TabModel(type: TabType.insights),
     //TabModel(type: TabType.profile),
     TabModel(type: TabType.settings),
+    TabModel(type: TabType.today),
   ];
 
+  // Available list of Tabs that can be reached after first launch.
   static TabsSettings defaultTabSettings = TabsSettings(
     defaultSelectedTabIndex: 0,
     selectedTabModels: [

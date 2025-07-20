@@ -38,7 +38,7 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
             ..addAll(state.unSelectedTabs);
           final Iterable<BottomNavigationBarItem> items = state.selectedTabs.map(
             (item) => BottomNavigationBarItem(
-              icon: _getTabIcon(item.type),
+              icon: item.type.materialIcon,
               label: item.type.label,
             ),
           );
@@ -140,19 +140,6 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
           content: Text('Cannot remove main screen. You will loose option to setup tabs.'),
         ),
       );
-  }
-
-  Icon _getTabIcon(TabType type) {
-    switch (type) {
-      case TabType.calendar:
-        return Icon(Icons.calendar_month);
-      case TabType.insights:
-        return Icon(Icons.insights);
-      case TabType.profile:
-        return Icon(Icons.person);
-      case TabType.settings:
-        return Icon(Icons.settings);
-    }
   }
 }
 
