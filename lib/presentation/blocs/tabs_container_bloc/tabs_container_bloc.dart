@@ -24,6 +24,7 @@ final class TabsContainerBloc extends Bloc<TabsContainerEvent, TabsContainerStat
     on<TabsContainerChangeSelectedTab>(_changeTab);
     on<TabsContainerSelectTab>(_selectTab);
     on<TabsContainerUnselectTab>(_unselectTab);
+    on<TabsContainerReorderTabs>(_reorderTabs);
     _repository.stream.listen((data) => add(TabsContainerGetCurrentState())).disposed(by: this);
   }
 
@@ -72,6 +73,13 @@ final class TabsContainerBloc extends Bloc<TabsContainerEvent, TabsContainerStat
     final List<TabModel> updatedTabList =
         _repository.value.selectedTabModels.where((tabModel) => tabModel.type != event.tabType).toList();
     _repository.update(selectedTabList: updatedTabList);
+  }
+
+  FutureOr<void> _reorderTabs(TabsContainerReorderTabs event, Emitter<TabsContainerState> emit) {
+    final List<TabModel> updatedTabs = List.of(_repository.value.selectedTabModels);
+    final tab = updatedTabs.removeAt(event.oldIndex);
+    updatedTabs.insert(event.newIndex, tab);
+    _repository.update(selectedTabList: updatedTabs);
   }
 
   int _getSelectedTabIndex() {
