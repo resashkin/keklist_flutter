@@ -94,6 +94,7 @@ final class KeklistConstants {
   static TabsSettings defaultTabSettings = TabsSettings(
     defaultSelectedTabIndex: 0,
     selectedTabModels: [
+      TabModel(type: TabType.today),
       TabModel(type: TabType.calendar),
       TabModel(type: TabType.insights),
       TabModel(type: TabType.settings),
