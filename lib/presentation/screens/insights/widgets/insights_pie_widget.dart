@@ -10,6 +10,9 @@ import 'package:keklist/presentation/core/widgets/my_chip_widget.dart';
 import 'package:keklist/presentation/core/widgets/rounded_container.dart';
 import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
 import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_collection_empty_day_widget.dart';
+import 'package:keklist/domain/period.dart';
+import 'package:keklist/presentation/screens/digest/mind_universal_list_screen.dart';
+import 'package:keklist/presentation/screens/mind_info/mind_info_screen.dart';
 
 // Improvements:
 // Переключатель по количеству символов
@@ -17,21 +20,7 @@ import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_
 // Цвета - более приятно рандомизированные - попросить ChatGPT сгенерить для каждого эмодзика
 // Показывать за конкретный день лучше, а то получается как то много, либо поменять с пая на что нибудь еще
 
-enum InsightsPieWidgetChoice {
-  today(localizedTitle: 'Today', filter: MindUtils.findTodayMinds),
-  yesterday(localizedTitle: 'Yesterday', filter: MindUtils.findYesterdayMinds),
-  thisWeek(localizedTitle: 'This week', filter: MindUtils.findThisWeekMinds),
-  thisMonth(localizedTitle: 'This Month', filter: MindUtils.findThisMonthMinds),
-  thisYear(localizedTitle: 'This year', filter: MindUtils.findThisYearMinds);
-
-  final String localizedTitle;
-  final List<Mind> Function({required List<Mind> allMinds}) filter;
-
-  const InsightsPieWidgetChoice({
-    required this.localizedTitle,
-    required this.filter,
-  });
-}
+// REMOVE enum InsightsPieWidgetChoice and use PeriodType global enum instead
 
 final class InsightsPieWidget extends StatefulWidget {
   final List<Mind> allMinds;
@@ -46,36 +35,22 @@ final class InsightsPieWidget extends StatefulWidget {
 }
 
 final class _InsightsPieWidgetState extends State<InsightsPieWidget> {
-  final List<InsightsPieWidgetChoice> _choices = [
-    InsightsPieWidgetChoice.today,
-    InsightsPieWidgetChoice.yesterday,
-    InsightsPieWidgetChoice.thisWeek,
-    InsightsPieWidgetChoice.thisMonth,
-    InsightsPieWidgetChoice.thisYear,
-  ];
-
+  final List<PeriodType> _choices = PeriodType.values;
   int _selectedChoiceIndex = 0;
   String? _selectedEmoji;
 
   @override
   Widget build(BuildContext context) {
-    final List<Mind> choiceMinds = _choices[_selectedChoiceIndex].filter(allMinds: widget.allMinds);
+    final PeriodType selectedPeriod = _choices[_selectedChoiceIndex];
+    final List<Mind> choiceMinds = selectedPeriod.filterMinds(widget.allMinds);
     final HashMap<String, int> intervalChoiceMap = HashMap<String, int>();
 
     for (final Mind mind in choiceMinds) {
-      // Это по длине текста
       if (intervalChoiceMap.containsKey(mind.emoji)) {
         intervalChoiceMap[mind.emoji] = intervalChoiceMap[mind.emoji]! + mind.note.length;
       } else {
         intervalChoiceMap[mind.emoji] = mind.note.length;
       }
-
-      // Это по количеству использований
-      // if (intervalChoiceMap.containsKey(mind.emoji)) {
-      //   intervalChoiceMap[mind.emoji] = intervalChoiceMap[mind.emoji]! + 1;
-      // } else {
-      //   intervalChoiceMap[mind.emoji] = 1;
-      // }
     }
 
     final List<PieChartSectionData> pieSections = _getPieSections(choiceMap: intervalChoiceMap);
@@ -138,8 +113,31 @@ final class _InsightsPieWidgetState extends State<InsightsPieWidget> {
                       centerSpaceRadius: 0,
                       sectionsSpace: 0,
                       startDegreeOffset: 0,
+                      pieTouchData: PieTouchData(
+                        touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                          if (!event.isInterestedForInteractions ||
+                              pieTouchResponse == null ||
+                              pieTouchResponse.touchedSection == null ||
+                              event is! FlTapUpEvent) {
+                            return;
+                          }
+                          final int touchedIndex = pieTouchResponse.touchedSection!.touchedSectionIndex;
+                          final sortedEntries =
+                              intervalChoiceMap.entries.sortedByProperty((e) => e.value, reversed: true).toList();
+                          if (touchedIndex >= 0 && touchedIndex < sortedEntries.length) {
+                            final tappedEmoji = sortedEntries[touchedIndex].key;
+                            setState(() {
+                              if (_selectedEmoji != tappedEmoji) {
+                                _selectedEmoji = tappedEmoji;
+                              } else {
+                                _selectedEmoji = null;
+                              }
+                            });
+                          }
+                        },
+                      ),
                     ),
-                    swapAnimationCurve: Curves.bounceInOut,
+                    curve: Curves.bounceInOut,
                   ),
                 ),
                 falseChild: Center(child: MindCollectionEmptyDayWidget.noMinds(text: 'No minds for this period')),
@@ -156,7 +154,11 @@ final class _InsightsPieWidgetState extends State<InsightsPieWidget> {
                         isSelected: _selectedEmoji == entry.key,
                         onSelect: (bool selected) {
                           setState(() {
-                            _selectedEmoji = entry.key;
+                            if (selected) {
+                              _selectedEmoji = entry.key;
+                            } else {
+                              _selectedEmoji = null;
+                            }
                           });
                         },
                         selectedColor: _colorFromEmoji(entry.key),
@@ -173,6 +175,46 @@ final class _InsightsPieWidgetState extends State<InsightsPieWidget> {
               ),
             ),
             const SizedBox(height: 8.0),
+            Center(
+              child: TextButton(
+                onPressed: () {
+                  final PeriodType selectedPeriod = _choices[_selectedChoiceIndex];
+                  final String? selectedEmoji = _selectedEmoji;
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => MindUniversalListScreen(
+                        allMinds: widget.allMinds,
+                        filterFunction: (mind) {
+                          final bool periodMatch = selectedPeriod.filterMinds([mind]).isNotEmpty;
+                          final bool emojiMatch = selectedEmoji == null || mind.emoji == selectedEmoji;
+                          return periodMatch && emojiMatch;
+                        },
+                        title: 'Minds',
+                        emptyStateMessage: 'No minds for this period',
+                        onSelectMind: (mind) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => MindInfoScreen(
+                                rootMind: mind,
+                                allMinds: widget.allMinds,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  );
+                },
+                child: Text(
+                  'Show ${_selectedEmoji != null ? '${_selectedEmoji!} ' : 'all '}minds for ${_choices[_selectedChoiceIndex].localizedTitle.toLowerCase()} (${_getFilteredMindsCount()})',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16.0,
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -181,7 +223,9 @@ final class _InsightsPieWidgetState extends State<InsightsPieWidget> {
 
   List<PieChartSectionData> _getPieSections({required HashMap<String, int> choiceMap}) {
     final int allValues = choiceMap.values.map((e) => e).fold<int>(0, (a, b) => a + b);
-    return choiceMap.entries.sortedByProperty((e) => e.value).map(
+    // Sort descending by value for both pie and chips
+    final sortedEntries = choiceMap.entries.sortedByProperty((e) => e.value, reversed: true).toList();
+    return sortedEntries.map(
       (entry) {
         final currentValue = choiceMap.entries
             .where((element) => element.key == entry.key)
@@ -214,9 +258,7 @@ final class _InsightsPieWidgetState extends State<InsightsPieWidget> {
           badgePositionPercentageOffset: 0.50,
         );
       },
-    )
-        // .where((element) => element.showTitle)
-        .toList();
+    ).toList();
   }
 
   Color _colorFromEmoji(String emoji) {
@@ -228,5 +270,15 @@ final class _InsightsPieWidgetState extends State<InsightsPieWidget> {
       random.nextInt(256),
       random.nextInt(256),
     );
+  }
+
+  int _getFilteredMindsCount() {
+    final PeriodType selectedPeriod = _choices[_selectedChoiceIndex];
+    final String? selectedEmoji = _selectedEmoji;
+    return selectedPeriod.filterMinds(widget.allMinds).where((mind) {
+      final bool periodMatch = selectedPeriod.filterMinds([mind]).isNotEmpty;
+      final bool emojiMatch = selectedEmoji == null || mind.emoji == selectedEmoji;
+      return periodMatch && emojiMatch;
+    }).length;
   }
 }
