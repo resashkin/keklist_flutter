@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:keklist/domain/repositories/tabs/models/tabs_settings.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bloc.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_event.dart';
@@ -12,19 +11,19 @@ import 'package:keklist/presentation/core/widgets/bottom_navigation_bar.dart';
 // Define the types of items in the list
 sealed class TabsSettingsListItem {}
 
-class SectionHeaderItem extends TabsSettingsListItem {
+final class SectionHeaderItem extends TabsSettingsListItem {
   final String title;
   SectionHeaderItem(this.title);
 }
 
-class DividerItem extends TabsSettingsListItem {}
+final class DividerItem extends TabsSettingsListItem {}
 
-class SelectedTabItem extends TabsSettingsListItem {
+final class SelectedTabItem extends TabsSettingsListItem {
   final TabModel tabModel;
   SelectedTabItem(this.tabModel);
 }
 
-class UnselectedTabItem extends TabsSettingsListItem {
+final class UnselectedTabItem extends TabsSettingsListItem {
   final TabModel tabModel;
   UnselectedTabItem(this.tabModel);
 }
@@ -94,7 +93,7 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
     items.addAll(_selectedTabModels.map((tab) => SelectedTabItem(tab)));
     if (_unselectedTabModels.isNotEmpty) {
       items.add(DividerItem());
-      items.add(SectionHeaderItem('Unactive tabs'));
+      items.add(SectionHeaderItem('Hidden tabs'));
       items.addAll(_unselectedTabModels.map((tab) => UnselectedTabItem(tab)));
     }
     return items;
@@ -113,9 +112,7 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
           onTap: (int index) => setState(() => _selectedIndex = index),
         ),
       ),
-      appBar: AppBar(
-        title: Text('Tabs settings'),
-      ),
+      appBar: AppBar(title: Text('Tabs settings')),
       body: ReorderableListView.builder(
         itemCount: listItems.length,
         onReorder: (oldIndex, newIndex) {
@@ -136,69 +133,70 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
                     : newIndex - selectedStart,
                 item);
           });
-          sendEventToBloc<TabsContainerBloc>(TabsContainerReorderTabs(
-            oldIndex: oldIndex - selectedStart,
-            newIndex: newIndex - selectedStart > oldIndex - selectedStart
-                ? newIndex - selectedStart - 1
-                : newIndex - selectedStart,
-          ));
+          sendEventToBloc<TabsContainerBloc>(
+            TabsContainerReorderTabs(
+              oldIndex: oldIndex - selectedStart,
+              newIndex: newIndex - selectedStart > oldIndex - selectedStart
+                  ? newIndex - selectedStart - 1
+                  : newIndex - selectedStart,
+            ),
+          );
         },
         buildDefaultDragHandles: false,
         itemBuilder: (context, i) {
           final item = listItems[i];
-          if (item is SectionHeaderItem) {
-            return ListTile(
-              key: ValueKey('header_${item.title}'),
-              title: Text(item.title, style: TextStyle(fontWeight: FontWeight.bold)),
-            );
-          } else if (item is DividerItem) {
-            return Divider(key: ValueKey('divider'), thickness: 2);
-          } else if (item is SelectedTabItem) {
-            final tab = item.tabModel;
-            final index = _selectedTabModels.indexOf(tab);
-            return KeyedSubtree(
-              key: ValueKey('selected_${tab.type}'),
-              child: _SelectableTabItemWidget(
-                leadingIcon: tab.type.materialIcon,
-                title: tab.type.label,
-                subtitle: tab.type.description,
-                trailingAction: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ReorderableDragStartListener(
-                      index: i,
-                      child: const Icon(Icons.menu),
-                    ),
-                    const SizedBox(width: 8),
-                    GestureDetector(
-                      onTap: () {
-                        if (tab.type == TabType.calendar) {
-                          _showCalendarRemoveErrorMessage();
-                          return;
-                        }
-                        sendEventToBloc<TabsContainerBloc>(TabsContainerUnselectTab(tabType: tab.type));
-                      },
-                      child: Icon(Icons.remove),
-                    ),
-                  ],
+          switch (item) {
+            case SectionHeaderItem():
+              return ListTile(
+                key: ValueKey('header_${item.title}'),
+                title: Text(item.title, style: TextStyle(fontWeight: FontWeight.bold)),
+              );
+            case DividerItem():
+              return Divider(key: ValueKey('divider'), thickness: 2);
+            case SelectedTabItem():
+              final tab = item.tabModel;
+              return KeyedSubtree(
+                key: ValueKey('selected_${tab.type}'),
+                child: _SelectableTabItemWidget(
+                  leadingIcon: tab.type.materialIcon,
+                  title: tab.type.label,
+                  subtitle: tab.type.description,
+                  trailingActionWidget: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ReorderableDragStartListener(
+                        index: i,
+                        child: const Icon(Icons.menu),
+                      ),
+                      const SizedBox(width: 8),
+                      GestureDetector(
+                        onTap: () {
+                          if (tab.type == TabType.calendar) {
+                            _showCalendarRemoveErrorMessage();
+                            return;
+                          }
+                          sendEventToBloc<TabsContainerBloc>(TabsContainerUnselectTab(tabType: tab.type));
+                        },
+                        child: Icon(Icons.remove),
+                      ),
+                    ],
+                  ),
+                  onTrailingAction: null, // handled above
                 ),
-                onTrailingAction: null, // handled above
-              ),
-            );
-          } else if (item is UnselectedTabItem) {
-            final tab = item.tabModel;
-            return KeyedSubtree(
-              key: ValueKey('unselected_${tab.type}'),
-              child: _SelectableTabItemWidget(
-                leadingIcon: tab.type.materialIcon,
-                title: tab.type.label,
-                subtitle: tab.type.description,
-                trailingAction: Icon(Icons.add),
-                onTrailingAction: () => sendEventToBloc<TabsContainerBloc>(TabsContainerSelectTab(tabType: tab.type)),
-              ),
-            );
+              );
+            case UnselectedTabItem():
+              final tab = item.tabModel;
+              return KeyedSubtree(
+                key: ValueKey('unselected_${tab.type}'),
+                child: _SelectableTabItemWidget(
+                  leadingIcon: tab.type.materialIcon,
+                  title: tab.type.label,
+                  subtitle: tab.type.description,
+                  trailingActionWidget: Icon(Icons.add),
+                  onTrailingAction: () => sendEventToBloc<TabsContainerBloc>(TabsContainerSelectTab(tabType: tab.type)),
+                ),
+              );
           }
-          return const SizedBox.shrink();
         },
       ),
     );
@@ -219,25 +217,25 @@ final class _SelectableTabItemWidget extends StatelessWidget {
   final String title;
   final String subtitle;
   final Icon leadingIcon;
-  final Widget? trailingAction;
+  final Widget? trailingActionWidget;
   final Function()? onTrailingAction;
 
   const _SelectableTabItemWidget({
     required this.title,
     required this.subtitle,
-    required this.trailingAction,
+    required this.trailingActionWidget,
     required this.onTrailingAction,
     required this.leadingIcon,
   });
 
   @override
   Widget build(BuildContext context) {
-    Widget trailingWidget = trailingAction ?? const SizedBox.shrink();
+    Widget trailingWidget = trailingActionWidget ?? const SizedBox.shrink();
     // If the trailingAction is a plus icon and onTrailingAction is provided, make it tappable
-    if (trailingAction is Icon && (trailingAction as Icon).icon == Icons.add && onTrailingAction != null) {
+    if (trailingActionWidget is Icon && (trailingActionWidget as Icon).icon == Icons.add && onTrailingAction != null) {
       trailingWidget = GestureDetector(
         onTap: onTrailingAction,
-        child: trailingAction,
+        child: trailingActionWidget,
       );
     }
     return ListTile(
