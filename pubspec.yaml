@@ -46,22 +46,7 @@ dependencies:
   settings_ui: ^2.0.2
   share_plus: ^10.0.0
   supabase_flutter: ^2.0.1
-  #syncfusion_flutter_charts: ^26.1.39
   syncfusion_flutter_charts: ^30.1.41
-    # git:
-    #   url: https://github.com/iktakahiro/flutter-widgets.git
-    #   ref: support-flutter-3.24.0
-    #   path: packages/syncfusion_flutter_charts
-  # syncfusion_flutter_core:
-    # git:
-    #   url: https://github.com/iktakahiro/flutter-widgets.git
-    #   ref: support-flutter-3.24.0
-    #   path: packages/syncfusion_flutter_core
-  # syncfusion_localizations:
-    # git:
-    #   url: https://github.com/iktakahiro/flutter-widgets.git
-    #   ref: support-flutter-3.24.0
-    #   path: packages/syncfusion_localizations
   url_launcher: ^6.1.9
   uuid: ^4.2.1
   webview_flutter: ^4.1.0
