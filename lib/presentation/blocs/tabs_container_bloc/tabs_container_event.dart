@@ -21,3 +21,10 @@ final class TabsContainerUnselectTab extends TabsContainerEvent {
 
   TabsContainerUnselectTab({required this.tabType});
 }
+
+final class TabsContainerReorderTabs extends TabsContainerEvent {
+  final int oldIndex;
+  final int newIndex;
+
+  TabsContainerReorderTabs({required this.oldIndex, required this.newIndex});
+}

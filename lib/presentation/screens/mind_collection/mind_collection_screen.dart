@@ -41,6 +41,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:scrollview_observer/scrollview_observer.dart';
+import 'package:keklist/domain/period.dart';
 part 'local_widgets/search_app_bar/search_app_bar.dart';
 part 'local_widgets/app_bar/mind_collection_app_bar.dart';
 part 'local_widgets/body/mind_collection_body.dart';
@@ -252,7 +253,6 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => MindDayCollectionScreen(
-          allMinds: _minds,
           initialDayIndex: groupDayIndex,
           initialError: initialError,
         ),
@@ -378,51 +378,65 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
   }
 
   void _showDigestPeriodOptions() {
-    final DateTime now = DateTime.now();
     showBarModalBottomSheet(
       context: context,
       builder: (context) => ActionsScreen(
         actions: [
-          (
-            ActionModel.custom(icon: const Icon(Icons.view_week_rounded), title: 'This week'),
-            () async {
-              final DateTime thisWeekStartDate = now.subtract(Duration(days: now.weekday - 1));
-              final DateTime endThisWeekDate = _getLastDayOfWeek(thisWeekStartDate);
-              _showDigest(
-                startDayIndex: MindUtils.getDayIndex(from: thisWeekStartDate),
-                endDayIndex: MindUtils.getDayIndex(from: endThisWeekDate),
-              );
-            }
-          ),
-          (
-            ActionModel.custom(icon: const Icon(Icons.view_week_rounded), title: 'Previous week'),
-            () async {
-              final DateTime lastWeekStartDate =
-                  now.subtract(const Duration(days: 7)).subtract(Duration(days: now.weekday - 1));
-              final DateTime endLastWeekDate = _getLastDayOfWeek(lastWeekStartDate);
-              _showDigest(
-                startDayIndex: MindUtils.getDayIndex(from: lastWeekStartDate),
-                endDayIndex: MindUtils.getDayIndex(from: endLastWeekDate),
-              );
-            }
-          ),
-          (
-            ActionModel.custom(icon: const Icon(Icons.calendar_view_week), title: 'Last 2 weeks'),
-            () async {
-              final DateTime twoWeeksAgoStartDate =
-                  now.subtract(const Duration(days: 14)).subtract(Duration(days: now.weekday - 1));
-              final DateTime thisWeekEndDate = _getLastDayOfWeek(now);
-              _showDigest(
-                startDayIndex: MindUtils.getDayIndex(from: twoWeeksAgoStartDate),
-                endDayIndex: MindUtils.getDayIndex(from: thisWeekEndDate),
-              );
-            }
-          ),
+          ...PeriodType.values.map((periodType) => (
+                ActionModel.custom(
+                  icon: _getPeriodIcon(periodType),
+                  title: periodType.localizedTitle,
+                ),
+                () async {
+                  final List<Mind> periodMinds = periodType.filterMinds(_minds.toList());
+                  if (periodMinds.isNotEmpty) {
+                    _showDigestForPeriod(periodType, periodMinds);
+                  }
+                }
+              )),
           (
             ActionModel.custom(icon: const Icon(Icons.date_range), title: 'Select period ...'),
             () async => _showDigestForCustomPeriod()
           ),
         ],
+      ),
+    );
+  }
+
+  Icon _getPeriodIcon(PeriodType periodType) {
+    switch (periodType) {
+      case PeriodType.today:
+        return const Icon(Icons.today);
+      case PeriodType.yesterday:
+        return const Icon(Icons.history);
+      case PeriodType.thisWeek:
+        return const Icon(Icons.view_week_rounded);
+      case PeriodType.lastTwoWeeks:
+        return const Icon(Icons.calendar_view_week);
+      case PeriodType.thisMonth:
+        return const Icon(Icons.calendar_view_month);
+      case PeriodType.thisYear:
+        return const Icon(Icons.calendar_today);
+    }
+  }
+
+  void _showDigestForPeriod(PeriodType periodType, List<Mind> periodMinds) {
+    if (mountedContext == null) {
+      return;
+    }
+
+    Navigator.push(
+      mountedContext!,
+      MaterialPageRoute(
+        builder: (context) {
+          return MindUniversalListScreen(
+            allMinds: _minds,
+            filterFunction: (mind) => periodType.filterMinds([mind]).isNotEmpty,
+            title: '${periodType.localizedTitle} (${periodMinds.length} minds)',
+            emptyStateMessage: 'No minds for ${periodType.localizedTitle.toLowerCase()}',
+            onSelectMind: (mind) => _showMindInfo(mind),
+          );
+        },
       ),
     );
   }

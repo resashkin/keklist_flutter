@@ -50,46 +50,32 @@ enum TabType implements Equatable {
   calendar,
   insights,
   settings,
-  profile;
+  profile,
+  today;
 
-  String get label {
-    switch (this) {
-      case TabType.calendar:
-        return 'Calendar';
-      case TabType.insights:
-        return 'Insights';
-      case TabType.settings:
-        return 'Settings';
-      case TabType.profile:
-        return 'Profile';
-    }
-  }
+  String get label => switch (this) {
+      TabType.calendar => 'Calendar',
+      TabType.insights => 'Insights',
+      TabType.settings => 'Settings',
+      TabType.profile => 'Profile',
+      TabType.today => 'Today'
+    };
 
-  String get description {
-    switch (this) {
-      case TabType.calendar:
-        return 'Main screen with Calendar of entries';
-      case TabType.insights:
-        return 'Statistics all yours entries';
-      case TabType.settings:
-        return 'Screen with all settings (dark mode, sync and etc.)';
-      case TabType.profile:
-        return 'Screen with your profile';
-    }
-  }
+  String get description => switch (this) {
+      TabType.calendar => 'Main screen with Calendar of entries',
+      TabType.insights => 'Statistics all yours entries',
+      TabType.settings => 'Screen with all settings (dark mode, sync and etc.)',
+      TabType.profile => 'Screen with your profile',
+      TabType.today => 'Only today minds'
+    };
 
-  Icon get materialIcon {
-    switch (this) {
-      case TabType.calendar:
-        return Icon(Icons.calendar_month);
-      case TabType.insights:
-        return Icon(Icons.insights);
-      case TabType.profile:
-        return Icon(Icons.person);
-      case TabType.settings:
-        return Icon(Icons.settings);
-    }
-  }
+  Icon get materialIcon => switch (this) {
+      TabType.calendar => Icon(Icons.calendar_month),
+      TabType.insights => Icon(Icons.insights),
+      TabType.profile => Icon(Icons.person),
+      TabType.settings => Icon(Icons.settings),
+      TabType.today => Icon(Icons.today)
+    };
 
   @override
   List<Object?> get props => [this];

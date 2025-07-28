@@ -29,11 +29,11 @@ import 'package:translator/translator.dart';
 final class MindDayCollectionScreen extends StatefulWidget {
   final int initialDayIndex;
   final MindOperationError? initialError;
-  final Iterable<Mind> allMinds;
+  // final Iterable<Mind> allMinds;
 
   const MindDayCollectionScreen({
     super.key,
-    required this.allMinds,
+    // required this.allMinds,
     required this.initialDayIndex,
     this.initialError,
   });
@@ -42,13 +42,13 @@ final class MindDayCollectionScreen extends StatefulWidget {
   // ignore: no_logic_in_create_state
   State<MindDayCollectionScreen> createState() => _MindDayCollectionScreenState(
         dayIndex: initialDayIndex,
-        allMinds: allMinds.sortedBySortIndex(),
+        // allMinds: allMinds.sortedBySortIndex(),
       );
 }
 
 final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen> with DisposeBag {
   int dayIndex;
-  final List<Mind> allMinds;
+  final List<Mind> allMinds = [];
 
   final ScrollController _scrollController = ScrollController();
 
@@ -65,7 +65,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
 
   _MindDayCollectionScreenState({
     required this.dayIndex,
-    required this.allMinds,
+    //required this.allMinds,
   });
 
   @override
@@ -98,6 +98,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
       }
     })?.disposed(by: this);
 
+    sendEventToBloc<MindBloc>(MindGetList());
     sendEventToBloc<SettingsBloc>(SettingsGet());
   }
 

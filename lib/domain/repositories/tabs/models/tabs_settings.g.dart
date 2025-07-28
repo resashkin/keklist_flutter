@@ -32,4 +32,5 @@ const _$TabTypeEnumMap = {
   TabType.insights: 'insights',
   TabType.settings: 'settings',
   TabType.profile: 'profile',
+  TabType.today: 'today',
 };

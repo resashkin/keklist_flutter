@@ -94,7 +94,6 @@ final class _InsightsScreenState extends KekWidgetState<InsightsScreen> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => MindDayCollectionScreen(
-          allMinds: _minds,
           initialDayIndex: groupDayIndex,
         ),
       ),

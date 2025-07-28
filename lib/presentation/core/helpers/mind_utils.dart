@@ -8,7 +8,8 @@ final class MindUtils {
 
   static int getTodayIndex() => MindUtils.getDayIndex(from: DateTime.now());
 
-  static DateTime getDateFromDayIndex(int dayIndex) => DateTime.fromMillisecondsSinceEpoch(millisecondsInDay * dayIndex);
+  static DateTime getDateFromDayIndex(int dayIndex) =>
+      DateTime.fromMillisecondsSinceEpoch(millisecondsInDay * dayIndex);
 
   static List<Mind> findMindsByDayIndex({
     required int dayIndex,
@@ -45,21 +46,27 @@ final class MindUtils {
   }
 
   static List<Mind> findThisWeekMinds({required List<Mind> allMinds}) {
-    final int todayIndex = MindUtils.getDayIndex(from: DateTime.now());
-    final int weekAgoIndex = todayIndex - 7;
-    return allMinds.where((item) => item.dayIndex >= weekAgoIndex && item.dayIndex <= todayIndex).toList();
+    final DateTime now = DateTime.now();
+    final int todayIndex = getDayIndex(from: now);
+    final DateTime weekStart = now.subtract(Duration(days: now.weekday - 1)); // Monday
+    final int weekStartIndex = getDayIndex(from: weekStart);
+    return allMinds.where((item) => item.dayIndex >= weekStartIndex && item.dayIndex <= todayIndex).toList();
   }
 
   static List<Mind> findThisMonthMinds({required List<Mind> allMinds}) {
-    final int todayIndex = MindUtils.getDayIndex(from: DateTime.now());
-    final int monthAgoIndex = todayIndex - 30;
-    return allMinds.where((item) => item.dayIndex >= monthAgoIndex && item.dayIndex <= todayIndex).toList();
+    final DateTime now = DateTime.now();
+    final int todayIndex = getDayIndex(from: now);
+    final DateTime monthStart = DateTime(now.year, now.month, 1);
+    final int monthStartIndex = getDayIndex(from: monthStart);
+    return allMinds.where((item) => item.dayIndex >= monthStartIndex && item.dayIndex <= todayIndex).toList();
   }
 
   static List<Mind> findThisYearMinds({required List<Mind> allMinds}) {
-    final int todayIndex = MindUtils.getDayIndex(from: DateTime.now());
-    final int yearAgoIndex = todayIndex - 365;
-    return allMinds.where((item) => item.dayIndex >= yearAgoIndex && item.dayIndex <= todayIndex).toList();
+    final DateTime now = DateTime.now();
+    final int todayIndex = getDayIndex(from: now);
+    final DateTime yearStart = DateTime(now.year, 1, 1);
+    final int yearStartIndex = getDayIndex(from: yearStart);
+    return allMinds.where((item) => item.dayIndex >= yearStartIndex && item.dayIndex <= todayIndex).toList();
   }
 
   static List<Mind> findMindsByEmoji({
@@ -109,6 +116,16 @@ final class MindUtils {
     }
 
     return mindChildrenMap;
+  }
+
+  static List<Mind> findLastTwoWeeksMinds({required List<Mind> allMinds}) {
+    final DateTime now = DateTime.now();
+    final int todayIndex = getDayIndex(from: now);
+    // Start from Monday two weeks ago
+    final DateTime thisWeekStart = now.subtract(Duration(days: now.weekday - 1));
+    final DateTime twoWeeksAgoMonday = thisWeekStart.subtract(const Duration(days: 7));
+    final int twoWeeksAgoMondayIndex = getDayIndex(from: twoWeeksAgoMonday);
+    return allMinds.where((item) => item.dayIndex >= twoWeeksAgoMondayIndex && item.dayIndex <= todayIndex).toList();
   }
 }
 
