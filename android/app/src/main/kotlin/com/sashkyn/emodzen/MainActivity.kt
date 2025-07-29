@@ -1,4 +1,4 @@
-package com.sashkyn.keklist
+package com.sashkyn.emodzen
 
 import io.flutter.embedding.android.FlutterActivity
 
