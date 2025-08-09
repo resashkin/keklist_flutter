@@ -88,6 +88,7 @@ final class KeklistConstants {
     //TabModel(type: TabType.profile),
     TabModel(type: TabType.settings),
     TabModel(type: TabType.today),
+    TabModel(type: TabType.debugMenu),
   ];
 
   // Available list of Tabs that can be reached after first launch.

@@ -15,6 +15,7 @@ import 'package:keklist/presentation/screens/mind_collection/mind_collection_scr
 import 'package:keklist/presentation/screens/mind_day_collection/mind_day_collection_screen.dart';
 import 'package:keklist/presentation/screens/settings/settings_screen.dart';
 import 'package:keklist/presentation/screens/user_profile/user_profile_screen.dart';
+import 'package:keklist/presentation/screens/debug_menu/debug_menu_screen.dart';
 
 final class TabsContainerScreen extends StatefulWidget {
   const TabsContainerScreen({super.key});
@@ -111,6 +112,8 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
         return UserProfileScreen();
       case TabType.settings:
         return SettingsScreen();
+      case TabType.debugMenu:
+        return DebugMenuScreen();
       default:
         return MindDayCollectionScreen(
           initialDayIndex: MindUtils.getTodayIndex(),

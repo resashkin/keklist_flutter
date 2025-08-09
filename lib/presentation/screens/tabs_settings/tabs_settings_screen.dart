@@ -3,10 +3,12 @@ import 'package:keklist/domain/repositories/tabs/models/tabs_settings.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bloc.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_event.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_state.dart';
+import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/presentation/core/widgets/bottom_navigation_bar.dart';
+import 'package:shake/shake.dart';
 
 // Define the types of items in the list
 sealed class TabsSettingsListItem {}
@@ -40,10 +42,35 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
   final List<TabModel> _selectedTabModels = [];
   final List<TabModel> _unselectedTabModels = [];
   final List<BottomNavigationBarItem> _items = [];
+  bool _isDeveloperModeEnabled = false;
+  ShakeDetector? _shakeDetector;
 
   @override
   void initState() {
     super.initState();
+
+    // Initialize shake detector with error handling
+    try {
+      _shakeDetector = ShakeDetector.autoStart(
+        onPhoneShake: () {
+          if (!_isDeveloperModeEnabled) {
+            sendEventToBloc<DebugMenuBloc>(DebugMenuEnableDeveloperMode());
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                const SnackBar(
+                  content: Text('🔧 Developer mode enabled! Debug Menu tab is now available!'),
+                  duration: Duration(seconds: 3),
+                ),
+              );
+          }
+        },
+      );
+    } catch (e) {
+      // Shake detection not available on this platform
+      // Developer mode can still be enabled manually via debug menu if needed
+      print('Shake detection not available: $e');
+    }
 
     subscribeToBloc<TabsContainerBloc>(onNewState: (state) {
       if (state is TabsContainerState) {
@@ -54,7 +81,7 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
             ..addAll(state.selectedTabs);
           _unselectedTabModels
             ..clear()
-            ..addAll(state.unSelectedTabs);
+            ..addAll(state.unSelectedTabs.where((tab) => tab.type != TabType.debugMenu || _isDeveloperModeEnabled));
           final Iterable<BottomNavigationBarItem> items = state.selectedTabs.map(
             (item) => BottomNavigationBarItem(
               icon: item.type.materialIcon,
@@ -67,11 +94,23 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
         });
       }
     })?.disposed(by: this);
+
+    subscribeToBloc<DebugMenuBloc>(onNewState: (state) {
+      if (state is DebugMenuDataState) {
+        setState(() {
+          _isDeveloperModeEnabled = state.isDeveloperModeEnabled;
+        });
+        // Refresh tabs when developer mode state changes
+        sendEventToBloc<TabsContainerBloc>(TabsContainerGetCurrentState());
+      }
+    })?.disposed(by: this);
+
     sendEventToBloc<TabsContainerBloc>(TabsContainerGetCurrentState());
   }
 
   @override
   void dispose() {
+    _shakeDetector?.stopListening();
     super.dispose();
     cancelSubscriptions();
   }
@@ -112,7 +151,25 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
           onTap: (int index) => setState(() => _selectedIndex = index),
         ),
       ),
-      appBar: AppBar(title: Text('Tabs settings')),
+      appBar: AppBar(
+        title: GestureDetector(
+          onLongPress: () {
+            // Alternative way to enable developer mode if shake detection fails
+            if (!_isDeveloperModeEnabled) {
+              sendEventToBloc<DebugMenuBloc>(DebugMenuEnableDeveloperMode());
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  const SnackBar(
+                    content: Text('🔧 Developer mode enabled! Debug Menu tab is now available!'),
+                    duration: Duration(seconds: 3),
+                  ),
+                );
+            }
+          },
+          child: Text('Tabs settings'),
+        ),
+      ),
       body: ReorderableListView.builder(
         itemCount: listItems.length,
         onReorder: (oldIndex, newIndex) {

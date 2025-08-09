@@ -474,14 +474,14 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
     );
   }
 
-  void _showUserProfile() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const UserProfileScreen(),
-      ),
-    );
-  }
+  // void _showUserProfile() {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (context) => const UserProfileScreen(),
+  //     ),
+  //   );
+  // }
 
   void _showSettings() {
     Navigator.push(

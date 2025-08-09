@@ -4,15 +4,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keklist/domain/constants.dart';
 import 'package:keklist/domain/repositories/tabs/models/tabs_settings.dart';
 import 'package:keklist/domain/repositories/tabs/tabs_settings_repository.dart';
+import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_event.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_state.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 
 final class TabsContainerBloc extends Bloc<TabsContainerEvent, TabsContainerState> with DisposeBag {
   final TabsSettingsRepository _repository;
+  final DebugMenuRepository _debugMenuRepository;
 
-  TabsContainerBloc({required TabsSettingsRepository repository})
-      : _repository = repository,
+  TabsContainerBloc({
+    required TabsSettingsRepository repository,
+    required DebugMenuRepository debugMenuRepository,
+  })  : _repository = repository,
+        _debugMenuRepository = debugMenuRepository,
         super(
           TabsContainerState(
             selectedTabIndex: 0,
@@ -26,6 +31,7 @@ final class TabsContainerBloc extends Bloc<TabsContainerEvent, TabsContainerStat
     on<TabsContainerUnselectTab>(_unselectTab);
     on<TabsContainerReorderTabs>(_reorderTabs);
     _repository.stream.listen((data) => add(TabsContainerGetCurrentState())).disposed(by: this);
+    _debugMenuRepository.developerModeStream.listen((_) => add(TabsContainerGetCurrentState())).disposed(by: this);
   }
 
   @override
@@ -34,16 +40,26 @@ final class TabsContainerBloc extends Bloc<TabsContainerEvent, TabsContainerStat
     return super.close();
   }
 
+  List<TabModel> get _availableTabModels {
+    return KeklistConstants.availableTabModels
+        .where((tab) => tab.type != TabType.debugMenu || _debugMenuRepository.isDeveloperModeEnabled)
+        .toList();
+  }
+
   FutureOr<void> _sendState(
     TabsContainerGetCurrentState event,
     Emitter<TabsContainerState> emit,
   ) {
+    final availableTabs = _availableTabModels;
+    final selectedTabs = _repository.value.selectedTabModels
+        .where((tab) => availableTabs.any((available) => available.type == tab.type))
+        .toList();
+
     final TabsContainerState newState = TabsContainerState(
       selectedTabIndex: _getSelectedTabIndex(),
-      selectedTabs: _repository.value.selectedTabModels,
-      unSelectedTabs: KeklistConstants.availableTabModels
-          .where((tab) => !_repository.value.selectedTabModels.map((tab) => tab.type).contains(tab.type))
-          .toList(),
+      selectedTabs: selectedTabs,
+      unSelectedTabs:
+          availableTabs.where((tab) => !selectedTabs.map((selected) => selected.type).contains(tab.type)).toList(),
     );
     emit(newState);
   }

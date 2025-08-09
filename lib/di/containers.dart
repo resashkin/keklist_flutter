@@ -11,6 +11,9 @@ import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
 import 'package:keklist/domain/repositories/settings/settings_hive_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
+import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
+import 'package:keklist/domain/repositories/debug_menu/debug_menu_hive_repository.dart';
+import 'package:keklist/domain/repositories/debug_menu/object/debug_menu_object.dart';
 import 'package:keklist/domain/services/mind_service/main_supabase_service.dart';
 import 'package:keklist/presentation/core/helpers/platform_utils.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
@@ -48,6 +51,9 @@ final class MainContainer {
     );
     injector.map<SettingsRepository>(
       (injector) => SettingsHiveRepository(box: Hive.box<SettingsObject>(HiveConstants.settingsBoxName)),
+    );
+    injector.map<DebugMenuRepository>(
+      (injector) => DebugMenuHiveRepository(box: Hive.box<DebugMenuObject>(HiveConstants.debugMenuBoxName)),
     );
     injector.map<TabsSettingsRepository>(
       (injector) => TabsSettingsSharedPreferencesRepository(preferences: _streamingSharedPreferences),

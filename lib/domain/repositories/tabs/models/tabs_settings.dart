@@ -51,31 +51,35 @@ enum TabType implements Equatable {
   insights,
   settings,
   profile,
-  today;
+  today,
+  debugMenu;
 
   String get label => switch (this) {
-      TabType.calendar => 'Calendar',
-      TabType.insights => 'Insights',
-      TabType.settings => 'Settings',
-      TabType.profile => 'Profile',
-      TabType.today => 'Today'
-    };
+        TabType.calendar => 'Calendar',
+        TabType.insights => 'Insights',
+        TabType.settings => 'Settings',
+        TabType.profile => 'Profile',
+        TabType.today => 'Today',
+        TabType.debugMenu => 'Debug Menu'
+      };
 
   String get description => switch (this) {
-      TabType.calendar => 'Main screen with Calendar of entries',
-      TabType.insights => 'Statistics all yours entries',
-      TabType.settings => 'Screen with all settings (dark mode, sync and etc.)',
-      TabType.profile => 'Screen with your profile',
-      TabType.today => 'Only today minds'
-    };
+        TabType.calendar => 'Main screen with Calendar of entries',
+        TabType.insights => 'Statistics all yours entries',
+        TabType.settings => 'Screen with all settings (dark mode, sync and etc.)',
+        TabType.profile => 'Screen with your profile',
+        TabType.today => 'Only today minds',
+        TabType.debugMenu => 'Developer tools for toggling experimental features'
+      };
 
   Icon get materialIcon => switch (this) {
-      TabType.calendar => Icon(Icons.calendar_month),
-      TabType.insights => Icon(Icons.insights),
-      TabType.profile => Icon(Icons.person),
-      TabType.settings => Icon(Icons.settings),
-      TabType.today => Icon(Icons.today)
-    };
+        TabType.calendar => Icon(Icons.calendar_month),
+        TabType.insights => Icon(Icons.insights),
+        TabType.profile => Icon(Icons.person),
+        TabType.settings => Icon(Icons.settings),
+        TabType.today => Icon(Icons.today),
+        TabType.debugMenu => Icon(Icons.bug_report)
+      };
 
   @override
   List<Object?> get props => [this];
