@@ -25,4 +25,5 @@ enum DebugMenuType {
   chatWithAI,
   translation,
   sensitiveContent,
+  syncWithServer,
 }

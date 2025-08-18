@@ -62,25 +62,19 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
     );
   }
 
-  String _getDebugMenuItemTitle(DebugMenuType type) {
-    switch (type) {
-      case DebugMenuType.chatWithAI:
-        return 'Chat with AI';
-      case DebugMenuType.translation:
-        return 'Translate content';
-      case DebugMenuType.sensitiveContent:
-        return 'Sensitive content';
-    }
-  }
+  String _getDebugMenuItemTitle(DebugMenuType type) => switch (type) {
+        DebugMenuType.chatWithAI => 'Chat with AI',
+        DebugMenuType.translation => 'Translate content',
+        DebugMenuType.sensitiveContent => 'Sensitive content',
+        DebugMenuType.syncWithServer => 'Sign In'
+      };
 
-  String _getDebugMenuItemDescription(DebugMenuType type) {
-    switch (type) {
-      case DebugMenuType.chatWithAI:
-        return 'Showing/Hiding Chat with AI action, that allows to discuss Mind with AI in chat.';
-      case DebugMenuType.translation:
-        return 'Showing/Hiding Translate action, that just opens Alert with translation on English.';
-      case DebugMenuType.sensitiveContent:
-        return 'Showing/Hiding Eye button that allows to hide content for users when you showing phone to others.';
-    }
-  }
+  String _getDebugMenuItemDescription(DebugMenuType type) => switch (type) {
+        DebugMenuType.chatWithAI => 'Showing/Hiding Chat with AI action, that allows to discuss Mind with AI in chat.',
+        DebugMenuType.translation =>
+          'Showing/Hiding Translate action, that just opens Alert with translation on English.',
+        DebugMenuType.sensitiveContent =>
+          'Showing/Hiding Eye button that allows to hide content for users when you showing phone to others.',
+        DebugMenuType.syncWithServer => 'Syncronization with remote server'
+      };
 }

@@ -38,21 +38,15 @@ final class DebugMenuHiveRepository implements DebugMenuRepository {
     }
   }
 
-  bool _getDefaultValueForFlag(DebugMenuType flagType) {
-    // Set default values for each debug menu item
-    switch (flagType) {
-      case DebugMenuType.chatWithAI:
-        return true;
-      case DebugMenuType.translation:
-        return true;
-      case DebugMenuType.sensitiveContent:
-        return false;
-    }
-  }
+  bool _getDefaultValueForFlag(DebugMenuType flagType) => switch (flagType) {
+        DebugMenuType.chatWithAI => true,
+        DebugMenuType.translation => true,
+        DebugMenuType.sensitiveContent => false,
+        DebugMenuType.syncWithServer => false,
+      };
 
-  List<DebugMenuData> _getCurrentDebugMenuItems() {
-    return _debugMenuObjects.map((obj) => obj.toDebugMenuData()).whereType<DebugMenuData>().toList();
-  }
+  List<DebugMenuData> _getCurrentDebugMenuItems() =>
+      _debugMenuObjects.map((obj) => obj.toDebugMenuData()).whereType<DebugMenuData>().toList();
 
   @override
   List<DebugMenuData> get value => _behaviorSubject.value;
