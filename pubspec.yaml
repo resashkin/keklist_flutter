@@ -71,7 +71,7 @@ dependencies:
   auto_size_text: ^3.0.0
   scrollview_observer: ^1.26.0
   streaming_shared_preferences: ^2.0.0
-  json_serializable: ^6.9.0
+  json_serializable: ^6.8.0
   json_annotation: ^4.9.0
 
 dev_dependencies:
