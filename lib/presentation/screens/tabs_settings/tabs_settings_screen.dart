@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:keklist/domain/repositories/tabs/models/tabs_settings.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bloc.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_event.dart';
@@ -7,26 +8,7 @@ import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/presentation/core/widgets/bottom_navigation_bar.dart';
-
-// Define the types of items in the list
-sealed class TabsSettingsListItem {}
-
-final class SectionHeaderItem extends TabsSettingsListItem {
-  final String title;
-  SectionHeaderItem(this.title);
-}
-
-final class DividerItem extends TabsSettingsListItem {}
-
-final class SelectedTabItem extends TabsSettingsListItem {
-  final TabModel tabModel;
-  SelectedTabItem(this.tabModel);
-}
-
-final class UnselectedTabItem extends TabsSettingsListItem {
-  final TabModel tabModel;
-  UnselectedTabItem(this.tabModel);
-}
+import 'package:keklist/presentation/screens/tabs_settings/tabs_settings_list_item.dart';
 
 final class TabsSettingsScreen extends StatefulWidget {
   const TabsSettingsScreen({super.key});
@@ -38,8 +20,8 @@ final class TabsSettingsScreen extends StatefulWidget {
 final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with DisposeBag {
   int _selectedIndex = 0;
   final List<TabModel> _selectedTabModels = [];
-  final List<TabModel> _unselectedTabModels = [];
-  final List<BottomNavigationBarItem> _items = [];
+  final List<TabModel> _hiddenTabModels = [];
+  final List<BottomNavigationBarItem> _tabItems = [];
 
   @override
   void initState() {
@@ -52,16 +34,16 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
           _selectedTabModels
             ..clear()
             ..addAll(state.selectedTabs);
-          _unselectedTabModels
+          _hiddenTabModels
             ..clear()
-            ..addAll(state.unSelectedTabs);
+            ..addAll(state.hiddenTabs);
           final Iterable<BottomNavigationBarItem> items = state.selectedTabs.map(
             (item) => BottomNavigationBarItem(
               icon: item.type.materialIcon,
               label: item.type.label,
             ),
           );
-          _items
+          _tabItems
             ..clear()
             ..addAll(items);
         });
@@ -76,38 +58,15 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
     cancelSubscriptions();
   }
 
-  List<BottomNavigationBarItem> get _getTwoFakeItems => [
-        BottomNavigationBarItem(
-          icon: TabType.calendar.materialIcon,
-          label: TabType.calendar.label,
-        ),
-        BottomNavigationBarItem(
-          icon: TabType.settings.materialIcon,
-          label: TabType.settings.label,
-        )
-      ];
-
-  List<TabsSettingsListItem> _buildListItems() {
-    final List<TabsSettingsListItem> items = [];
-    items.add(SectionHeaderItem('Active tabs'));
-    items.addAll(_selectedTabModels.map((tab) => SelectedTabItem(tab)));
-    if (_unselectedTabModels.isNotEmpty) {
-      items.add(DividerItem());
-      items.add(SectionHeaderItem('Hidden tabs'));
-      items.addAll(_unselectedTabModels.map((tab) => UnselectedTabItem(tab)));
-    }
-    return items;
-  }
-
   @override
   Widget build(BuildContext context) {
     final listItems = _buildListItems();
     return Scaffold(
       bottomNavigationBar: BoolWidget(
-        condition: _items.length >= 2,
+        condition: _tabItems.length >= 2,
         falseChild: const SizedBox.shrink(),
         trueChild: AdaptiveBottomNavigationBar(
-          items: List.of(_items.length >= 2 ? _items : _getTwoFakeItems),
+          items: List.of(_tabItems.length >= 2 ? _tabItems : _buildFakeItems()),
           selectedIndex: _selectedIndex,
           onTap: (int index) => setState(() => _selectedIndex = index),
         ),
@@ -143,8 +102,8 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
           );
         },
         buildDefaultDragHandles: false,
-        itemBuilder: (context, i) {
-          final item = listItems[i];
+        itemBuilder: (context, index) {
+          final item = listItems[index];
           switch (item) {
             case SectionHeaderItem():
               return ListTile(
@@ -157,7 +116,7 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
               final tab = item.tabModel;
               return KeyedSubtree(
                 key: ValueKey('selected_${tab.type}'),
-                child: _SelectableTabItemWidget(
+                child: _TabItemWidget(
                   leadingIcon: tab.type.materialIcon,
                   title: tab.type.label,
                   subtitle: tab.type.description,
@@ -165,41 +124,67 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       ReorderableDragStartListener(
-                        index: i,
+                        index: index,
                         child: const Icon(Icons.menu),
                       ),
-                      const SizedBox(width: 8),
+                      const Gap(8.0),
                       GestureDetector(
-                        onTap: () {
-                          if (tab.type == TabType.calendar) {
-                            _showCalendarRemoveErrorMessage();
-                            return;
-                          }
-                          sendEventToBloc<TabsContainerBloc>(TabsContainerUnselectTab(tabType: tab.type));
-                        },
+                        onTap: () => handleRemoveItem(tabType: tab.type),
                         child: Icon(Icons.remove),
                       ),
                     ],
                   ),
-                  onTrailingAction: null, // handled above
                 ),
               );
-            case UnselectedTabItem():
+            case HiddenTabItem():
               final tab = item.tabModel;
               return KeyedSubtree(
                 key: ValueKey('unselected_${tab.type}'),
-                child: _SelectableTabItemWidget(
+                child: _TabItemWidget(
                   leadingIcon: tab.type.materialIcon,
                   title: tab.type.label,
                   subtitle: tab.type.description,
-                  trailingActionWidget: Icon(Icons.add),
-                  onTrailingAction: () => sendEventToBloc<TabsContainerBloc>(TabsContainerSelectTab(tabType: tab.type)),
+                  trailingActionWidget: GestureDetector(
+                    child: Icon(Icons.add),
+                    onTap: () => sendEventToBloc<TabsContainerBloc>(TabsContainerSelectTab(tabType: tab.type)),
+                  ),
                 ),
               );
           }
         },
       ),
     );
+  }
+
+  void handleRemoveItem({required TabType tabType}) {
+    if (tabType == TabType.calendar) {
+      _showCalendarRemoveErrorMessage();
+      return;
+    }
+    sendEventToBloc<TabsContainerBloc>(TabsContainerUnselectTab(tabType: tabType));
+  }
+
+  List<BottomNavigationBarItem> _buildFakeItems() => [
+        BottomNavigationBarItem(
+          icon: TabType.calendar.materialIcon,
+          label: TabType.calendar.label,
+        ),
+        BottomNavigationBarItem(
+          icon: TabType.settings.materialIcon,
+          label: TabType.settings.label,
+        )
+      ];
+
+  List<TabsSettingsListItem> _buildListItems() {
+    final List<TabsSettingsListItem> items = [];
+    items.add(SectionHeaderItem('Active tabs'));
+    items.addAll(_selectedTabModels.map((tab) => SelectedTabItem(tab)));
+    if (_hiddenTabModels.isNotEmpty) {
+      items.add(DividerItem());
+      items.add(SectionHeaderItem('Hidden tabs'));
+      items.addAll(_hiddenTabModels.map((tab) => HiddenTabItem(tab)));
+    }
+    return items;
   }
 
   void _showCalendarRemoveErrorMessage() {
@@ -213,43 +198,30 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
   }
 }
 
-final class _SelectableTabItemWidget extends StatelessWidget {
+final class _TabItemWidget extends StatelessWidget {
   final String title;
   final String subtitle;
   final Icon leadingIcon;
   final Widget? trailingActionWidget;
-  final Function()? onTrailingAction;
 
-  const _SelectableTabItemWidget({
+  const _TabItemWidget({
     required this.title,
     required this.subtitle,
     required this.trailingActionWidget,
-    required this.onTrailingAction,
     required this.leadingIcon,
   });
 
   @override
-  Widget build(BuildContext context) {
-    Widget trailingWidget = trailingActionWidget ?? const SizedBox.shrink();
-    // If the trailingAction is a plus icon and onTrailingAction is provided, make it tappable
-    if (trailingActionWidget is Icon && (trailingActionWidget as Icon).icon == Icons.add && onTrailingAction != null) {
-      trailingWidget = GestureDetector(
-        onTap: onTrailingAction,
-        child: trailingActionWidget,
+  Widget build(BuildContext context) => ListTile(
+        leading: CircleAvatar(
+          backgroundColor: Colors.blueGrey,
+          child: leadingIcon,
+        ),
+        title: Text(title),
+        subtitle: Text(
+          subtitle,
+          style: TextStyle(color: Colors.blueGrey),
+        ),
+        trailing: trailingActionWidget,
       );
-    }
-    return ListTile(
-      leading: CircleAvatar(
-        backgroundColor: Colors.blueGrey,
-        child: leadingIcon,
-      ),
-      title: Text(title),
-      subtitle: Text(
-        subtitle,
-        style: TextStyle(color: Colors.blueGrey),
-      ),
-      trailing: trailingWidget,
-      // trailingAction now handles its own tap logic (for drag and remove/add)
-    );
-  }
 }
