@@ -17,7 +17,7 @@ final class TabsContainerBloc extends Bloc<TabsContainerEvent, TabsContainerStat
           TabsContainerState(
             selectedTabIndex: 0,
             selectedTabs: [],
-            unSelectedTabs: KeklistConstants.availableTabModels,
+            hiddenTabs: KeklistConstants.availableTabModels,
           ),
         ) {
     on<TabsContainerGetCurrentState>(_sendState);
@@ -41,7 +41,7 @@ final class TabsContainerBloc extends Bloc<TabsContainerEvent, TabsContainerStat
     final TabsContainerState newState = TabsContainerState(
       selectedTabIndex: _getSelectedTabIndex(),
       selectedTabs: _repository.value.selectedTabModels,
-      unSelectedTabs: KeklistConstants.availableTabModels
+      hiddenTabs: KeklistConstants.availableTabModels
           .where((tab) => !_repository.value.selectedTabModels.map((tab) => tab.type).contains(tab.type))
           .toList(),
     );
@@ -56,7 +56,7 @@ final class TabsContainerBloc extends Bloc<TabsContainerEvent, TabsContainerStat
       TabsContainerState(
         selectedTabIndex: event.selectedIndex,
         selectedTabs: state.selectedTabs,
-        unSelectedTabs: KeklistConstants.availableTabModels
+        hiddenTabs: KeklistConstants.availableTabModels
             .where((tab) => !_repository.value.selectedTabModels.map((tab) => tab.type).contains(tab.type))
             .toList(),
       ),
@@ -66,20 +66,20 @@ final class TabsContainerBloc extends Bloc<TabsContainerEvent, TabsContainerStat
   FutureOr<void> _selectTab(TabsContainerSelectTab event, Emitter<TabsContainerState> emit) {
     final TabModel selectedTabModel =
         KeklistConstants.availableTabModels.firstWhere((tabModel) => tabModel.type == event.tabType);
-    _repository.update(selectedTabList: _repository.value.selectedTabModels + [selectedTabModel]);
+    _repository.update(tabModels: _repository.value.selectedTabModels + [selectedTabModel]);
   }
 
   FutureOr<void> _unselectTab(TabsContainerUnselectTab event, Emitter<TabsContainerState> emit) {
     final List<TabModel> updatedTabList =
         _repository.value.selectedTabModels.where((tabModel) => tabModel.type != event.tabType).toList();
-    _repository.update(selectedTabList: updatedTabList);
+    _repository.update(tabModels: updatedTabList);
   }
 
   FutureOr<void> _reorderTabs(TabsContainerReorderTabs event, Emitter<TabsContainerState> emit) {
     final List<TabModel> updatedTabs = List.of(_repository.value.selectedTabModels);
     final tab = updatedTabs.removeAt(event.oldIndex);
     updatedTabs.insert(event.newIndex, tab);
-    _repository.update(selectedTabList: updatedTabs);
+    _repository.update(tabModels: updatedTabs);
   }
 
   int _getSelectedTabIndex() {
