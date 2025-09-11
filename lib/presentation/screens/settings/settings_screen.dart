@@ -123,14 +123,14 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
           SettingsSection(
             title: Text('USER DATA'.toUpperCase()),
             tiles: [
-              if (!_isLoggedIn)
-                SettingsTile(
-                  title: const Text('Sign up'),
-                  leading: const Icon(Icons.login),
-                  onPressed: (BuildContext context) {
-                    _showAuthBottomSheet();
-                  },
-                ),
+              // if (!_isLoggedIn)
+              //   SettingsTile(
+              //     title: const Text('Sign up'),
+              //     leading: const Icon(Icons.login),
+              //     onPressed: (BuildContext context) {
+              //       _showAuthBottomSheet();
+              //     },
+              //   ),
               if (_isLoggedIn)
                 SettingsTile(
                   title: const Text('Logout'),
