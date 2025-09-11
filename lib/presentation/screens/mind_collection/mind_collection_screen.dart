@@ -1,9 +1,7 @@
 import 'dart:async';
 
-import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:collection/collection.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:keklist/domain/repositories/tabs/models/tabs_settings.dart';
 import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bloc.dart';
@@ -23,10 +21,8 @@ import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_
 import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_search_result_widget.dart';
 import 'package:keklist/presentation/screens/mind_info/mind_info_screen.dart';
 import 'package:keklist/presentation/screens/settings/settings_screen.dart';
-import 'package:keklist/presentation/screens/user_profile/user_profile_screen.dart';
 import 'package:keklist/presentation/screens/web_page/web_page_screen.dart';
 import 'package:keklist/presentation/core/widgets/rounded_container.dart';
-import 'package:keklist/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/domain/constants.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
@@ -71,7 +67,6 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
   bool _isMonthView = false;
   final bool _isDemoMode = false;
 
-  bool get _isOfflineMode => _settingsDataState?.settings.isOfflineMode ?? false;
   bool get _shouldShowTitles => _settingsDataState?.settings.shouldShowTitles ?? true;
 
   // NOTE: Состояние SearchBar.
@@ -82,8 +77,6 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
   // NOTE: Payments.
   // final PaymentService _payementService = PaymentService();
 
-  // NOTE: Состояние обновления с сервером.
-  bool _isUpdating = false;
   @override
   void initState() {
     super.initState();
@@ -102,10 +95,6 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
         switch (state) {
           case SettingsDataState settingsDataState:
             _settingsDataState = settingsDataState;
-            if (settingsDataState.settings.isOfflineMode) {
-              setState(() => _isUpdating = false);
-            }
-            sendEventToBloc<AuthBloc>(AuthGetStatus());
           case SettingsNeedToShowWhatsNew _:
             _showWhatsNew();
             sendEventToBloc<SettingsBloc>(SettingsWhatsNewShown());
@@ -123,48 +112,13 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
             if (DeviceUtils.safeGetPlatform() == SupportedPlatform.iOS) {
               sendEventToBloc<MindBloc>(MindUpdateMobileWidgets());
             }
-          } else if (state is MindServerOperationStarted) {
-            if (state.type == MindOperationType.fetch) {
-              setState(() => _isUpdating = true);
-            }
-          } else if (state is MindOperationCompleted) {
-            if (state.type == MindOperationType.fetch) {
-              setState(() => _isUpdating = false);
-            }
-          } else if (state is MindOperationError) {
-            if (ModalRoute.of(context)?.isCurrent ?? false) {
-              _showDayCollectionAndHandleError(state: state);
-            }
-
-            if (state.notCompleted == MindOperationType.fetch) {
-              setState(() => _isUpdating = false);
-            }
-
-            // TODO: сделать единый центр обработки блокирующих событий UI-ных
-            // Показ ошибки.
-            if (MindOperationType.values
-                .where(
-                  (element) => element != MindOperationType.uploadCachedData && element != MindOperationType.fetch,
-                )
-                .contains(state.notCompleted)) {
-              showOkAlertDialog(
-                context: context,
-                title: 'Error',
-                message: state.localizedString,
-              );
-            }
           } else if (state is MindSearching) {
             setState(() => _searchingMindState = state);
           }
         },
       )?.disposed(by: this);
 
-      subscribeToBloc<AuthBloc>(onNewState: (state) {
-        switch (state) {
-          case AuthCurrentState _:
-            sendEventToBloc<MindBloc>(MindGetList());
-        }
-      })?.disposed(by: this);
+      // Auth removed - no authentication required
 
       subscribeToBloc<TabsContainerBloc>(onNewState: (state) {
         if (state is TabsContainerState) {
@@ -175,7 +129,7 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
         }
       })?.disposed(by: this);
 
-      sendEventToBloc<AuthBloc>(AuthGetStatus());
+      // Auth removed - no authentication required
       sendEventToBloc<SettingsBloc>(SettingsGet());
       sendEventToBloc<MindBloc>(MindGetList());
       sendEventToBloc<TabsContainerBloc>(TabsContainerGetCurrentState());
@@ -200,14 +154,11 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
               onSearchCancel: () => _cancelSearch(),
             ),
             falseChild: _MindCollectionAppBar(
-              isOfflineMode: _isOfflineMode,
-              isUpdating: _isUpdating,
               onSearch: () => sendEventToBloc<MindBloc>(MindStartSearch()),
               onTitle: () => _scrollToNow(),
               onCalendar: () => _showCalendarActions(),
               onSettings: _isSettingsVisible ? (() => _showSettings()) : null,
               onInsights: _isInsightsVisible ? (() => _showInsights()) : null,
-              onOfflineMode: () => print('heheh'),
               onCalendarLongTap: () => setState(() => _isMonthView = !_isMonthView),
             ),
           ),
@@ -218,10 +169,7 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
         isSearching: _isSearching,
         searchResults: _searchResults,
         hideKeyboard: _hideKeyboard,
-        onTapToDay: (dayIndex) => _showDayCollectionScreen(
-          groupDayIndex: dayIndex,
-          initialError: null,
-        ),
+        onTapToDay: (dayIndex) => _showDayCollectionScreen(groupDayIndex: dayIndex),
         itemScrollController: _itemScrollController,
         itemPositionsListener: _itemPositionsListener,
         getNowDayIndex: _getNowDayIndex,
@@ -246,16 +194,10 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
     );
   }
 
-  void _showDayCollectionScreen({
-    required int groupDayIndex,
-    required MindOperationError? initialError,
-  }) {
+  void _showDayCollectionScreen({required int groupDayIndex}) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => MindDayCollectionScreen(
-          initialDayIndex: groupDayIndex,
-          initialError: initialError,
-        ),
+        builder: (context) => MindDayCollectionScreen(initialDayIndex: groupDayIndex),
       ),
     );
   }
@@ -505,21 +447,6 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
     _searchTextController.clear();
     sendEventToBloc<MindBloc>(MindStopSearch());
     WidgetsBinding.instance.addPostFrameCallback((_) async => _jumpToNow());
-  }
-
-  void _showDayCollectionAndHandleError({required MindOperationError state}) {
-    if ([
-      MindOperationType.create,
-      MindOperationType.edit,
-    ].contains(state.notCompleted)) {
-      if (state.minds.isEmpty) {
-        return;
-      }
-      _showDayCollectionScreen(
-        groupDayIndex: state.minds.first.dayIndex,
-        initialError: state,
-      );
-    }
   }
 
   void _showMindInfo(Mind mind) {

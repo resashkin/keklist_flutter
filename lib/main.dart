@@ -12,7 +12,6 @@ import 'package:keklist/domain/repositories/tabs/tabs_settings_repository.dart';
 import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
 // import 'package:home_widget/home_widget.dart';
 // import 'package:home_widget/home_widget.dart';
-import 'package:keklist/domain/services/auth/auth_service.dart';
 import 'package:keklist/domain/repositories/mind/object/mind_object.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
@@ -27,8 +26,6 @@ import 'package:keklist/presentation/blocs/user_profile_bloc/user_profile_bloc.d
 import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:keklist/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,7 +33,6 @@ import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
 import 'package:keklist/presentation/cubits/mind_searcher/mind_searcher_cubit.dart';
 import 'package:keklist/di/containers.dart';
-import 'package:keklist/domain/services/mind_service/main_service.dart';
 
 import 'presentation/native/ios/watch/watch_communication_manager.dart';
 
@@ -52,7 +48,6 @@ Future<void> main() async {
 
   usePathUrlStrategy();
   await _initHive();
-  await _initSupabase();
 
   final StreamingSharedPreferences streamingSharedPreferences = await StreamingSharedPreferences.instance;
 
@@ -74,15 +69,6 @@ Future<void> main() async {
 void _configureOpenAI() {
   OpenAI.showLogs = !kReleaseMode;
   OpenAI.requestsTimeOut = const Duration(seconds: 40);
-}
-
-Future<void> _initSupabase() async {
-  await Supabase.initialize(
-    url: dotenv.get('SUPABASE_URL'),
-    anonKey: dotenv.get('SUPABASE_ANON_KEY'),
-    authOptions: const FlutterAuthClientOptions(autoRefreshToken: true),
-    debug: !kReleaseMode,
-  );
 }
 
 void _enableDebugBLOCLogs() {
@@ -107,26 +93,15 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
         providers: [
           BlocProvider(
             create: (context) => MindBloc(
-              mainService: mainInjector.get<MindService>(),
               mindSearcherCubit: mainInjector.get<MindSearcherCubit>(),
               mindRepository: mainInjector.get<MindRepository>(),
-              settingsRepository: mainInjector.get<SettingsRepository>(),
-              authService: mainInjector.get<AuthService>(),
             ),
           ),
           BlocProvider(create: (context) => mainInjector.get<MindSearcherCubit>()),
           BlocProvider(
-            create: (context) => AuthBloc(
-              mainService: mainInjector.get<MindService>(),
-              authService: mainInjector.get<AuthService>(),
-            ),
-          ),
-          BlocProvider(
             create: (context) => SettingsBloc(
               repository: mainInjector.get<SettingsRepository>(),
-              authService: mainInjector.get<AuthService>(),
               mindRepository: mainInjector.get<MindRepository>(),
-              mindService: mainInjector.get<MindService>(),
             ),
           ),
           BlocProvider(

@@ -33,28 +33,6 @@ final class Mind with EquatableMixin {
         creationDate.millisecondsSinceEpoch,
       ];
 
-  Mind.fromSupabaseJson(Map<String, dynamic> json)
-      : id = json['uuid'] ?? 'heheh',
-        emoji = json['emoji'],
-        dayIndex = json['day_index'],
-        note = json['note'],
-        creationDate = DateTime.parse(json['created_at']).toUtc(),
-        sortIndex = json["sort_index"] ?? 0,
-        rootId = json["root_id"];
-
-  Map<String, dynamic> toSupabaseJson({required String userId}) {
-    return {
-      'user_id': userId,
-      'uuid': id,
-      'emoji': emoji,
-      'note': note,
-      'day_index': dayIndex,
-      'sort_index': sortIndex,
-      'created_at': creationDate.toUtc().toIso8601String(),
-      'root_id': rootId,
-    };
-  }
-
   Map<String, dynamic> toShortJson() => {
         'uuid': id,
         'emoji': emoji,
@@ -93,13 +71,12 @@ final class Mind with EquatableMixin {
     );
   }
 
-  MindObject toObject({required bool isUploadedToServer}) => MindObject()
+  MindObject toObject() => MindObject()
     ..id = id
     ..emoji = emoji
     ..note = note
     ..dayIndex = dayIndex
     ..creationDate = creationDate
-    ..isUploadedToServer = isUploadedToServer
     ..sortIndex = sortIndex
     ..rootId = rootId;
 }

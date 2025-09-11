@@ -9,7 +9,6 @@ abstract class SettingsRepository {
   FutureOr<void> updateSettings(KeklistSettings settings);
   FutureOr<void> updateOpenAIKey(String? openAIKey);
   FutureOr<void> updateDarkMode(bool isDarkMode);
-  FutureOr<void> updateOfflineMode(bool isOfflineMode);
   FutureOr<void> updateMindContentVisibility(bool isVisible);
   FutureOr<void> updateShouldShowTitles(bool shouldShowTitles);
   FutureOr<void> updatePreviousAppVersion(String? previousAppVersion);
@@ -18,7 +17,6 @@ abstract class SettingsRepository {
 final class KeklistSettings {
   final bool isMindContentVisible;
   final String? previousAppVersion;
-  final bool isOfflineMode;
   final bool isDarkMode;
   final String? openAIKey;
   final bool shouldShowTitles;
@@ -27,7 +25,6 @@ final class KeklistSettings {
   KeklistSettings({
     required this.isMindContentVisible,
     required this.previousAppVersion,
-    required this.isOfflineMode,
     required this.isDarkMode,
     required this.openAIKey,
     required this.shouldShowTitles,
@@ -37,7 +34,6 @@ final class KeklistSettings {
   SettingsObject toObject() => SettingsObject()
     ..isMindContentVisible = isMindContentVisible
     ..previousAppVersion = previousAppVersion
-    ..isOfflineMode = isOfflineMode
     ..isDarkMode = isDarkMode
     ..shouldShowTitles = shouldShowTitles
     ..openAIKey = openAIKey
@@ -46,7 +42,6 @@ final class KeklistSettings {
   factory KeklistSettings.initial() => KeklistSettings(
         isMindContentVisible: true,
         previousAppVersion: null,
-        isOfflineMode: false, // temporary false
         isDarkMode: true,
         shouldShowTitles: true,
         openAIKey: null,

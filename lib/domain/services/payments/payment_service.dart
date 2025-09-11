@@ -177,7 +177,7 @@
 //     }
 //   }
 
-//   // TODO: implement edge function on Supabase.
+//   // TODO: implement payment verification.
 //   Future<bool> _verifyPurchase(PurchasedItem purchasedItem) {
 //     return Future.value(true);
 //   }

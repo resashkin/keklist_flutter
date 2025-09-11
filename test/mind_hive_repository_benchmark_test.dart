@@ -32,10 +32,7 @@ Future<void> main() async {
     'update minds in repository',
     settings: const BenchmarkSettings(minimumRunTime: Duration(seconds: 1)),
     () async {
-      await repository.updateMinds(
-        minds: minds,
-        isUploadedToServer: true,
-      );
+      await repository.updateMinds(minds: minds);
     },
   ).report();
 

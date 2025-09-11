@@ -28,7 +28,7 @@ void main() {
     );
 
     // When
-    await repository.updateMinds(minds: [mind, mind, mind, mind], isUploadedToServer: false);
+    await repository.updateMinds(minds: [mind, mind, mind, mind]);
     repository.stream.listen((minds) {
       // Then
       expect(repository.values, minds);
@@ -51,10 +51,7 @@ void main() {
         creationDate: DateTime.now(),
         rootId: null,
       );
-      await repository.createMind(
-        mind: mind,
-        isUploadedToServer: false,
-      );
+      await repository.createMind(mind: mind);
       final minds = await repository.obtainMinds();
 
       // Then

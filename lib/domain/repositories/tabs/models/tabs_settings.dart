@@ -7,7 +7,7 @@ part 'tabs_settings.g.dart';
 @JsonSerializable()
 final class TabsSettings with EquatableMixin {
   final List<TabModel> selectedTabModels;
-  final int defaultSelectedTabIndex; // selected index when user login
+  final int defaultSelectedTabIndex; // selected index when app starts
 
   TabsSettings({
     required this.selectedTabModels,

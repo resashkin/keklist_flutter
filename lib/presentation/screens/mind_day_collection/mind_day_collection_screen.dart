@@ -28,14 +28,12 @@ import 'package:translator/translator.dart';
 
 final class MindDayCollectionScreen extends StatefulWidget {
   final int initialDayIndex;
-  final MindOperationError? initialError;
   // final Iterable<Mind> allMinds;
 
   const MindDayCollectionScreen({
     super.key,
     // required this.allMinds,
     required this.initialDayIndex,
-    this.initialError,
   });
 
   @override
@@ -72,12 +70,6 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      if (widget.initialError != null) {
-        _handleError(widget.initialError!);
-      }
-    });
-
     subscribeToBloc<MindBloc>(onNewState: (state) async {
       if (state is MindList) {
         setState(() {
@@ -85,8 +77,6 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
             ..clear()
             ..addAll(state.values.sortedBySortIndex());
         });
-      } else if (state is MindOperationError) {
-        _handleError(state);
       }
     })?.disposed(by: this);
 
@@ -218,10 +208,6 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
         sendEventToBloc<SettingsBloc>(const SettingsChangeMindContentVisibility(isVisible: false));
       });
     }
-  }
-
-  void _handleError(MindOperationError error) {
-    // TODO: handle error if needed
   }
 
   Future<int?> _showDateSwitcherToNewDay() async {

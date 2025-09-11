@@ -6,12 +6,10 @@ import 'package:collection/collection.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/services.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
 import 'package:keklist/presentation/core/helpers/enum_utils.dart';
 import 'package:keklist/presentation/core/helpers/mind_utils.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
-import 'package:keklist/domain/services/mind_service/main_service.dart';
 import 'package:emojis/emoji.dart' as emojies_pub;
 
 abstract class WatchCommunicationManager {
@@ -21,14 +19,10 @@ abstract class WatchCommunicationManager {
 final class AppleWatchCommunicationManager implements WatchCommunicationManager {
   final MethodChannel _channel = const MethodChannel('com.sashkyn.kekable');
 
-  final MindService mindService;
   final MindRepository mindRepository;
-  final SupabaseClient client;
 
   AppleWatchCommunicationManager({
-    required this.mindService,
     required this.mindRepository,
-    required this.client,
   });
 
   @override
@@ -57,9 +51,7 @@ final class AppleWatchCommunicationManager implements WatchCommunicationManager 
   void _setupCallBackHandler() {
     _channel.setMethodCallHandler(
       (MethodCall call) async {
-        if (client.auth.currentUser == null) {
-          return _showError(error: WatchError.notAuthorized);
-        }
+        // Authentication check removed - local mode doesn't require auth
 
         final String methodName = call.method;
         final dynamic methodArgs = call.arguments;
@@ -105,7 +97,8 @@ final class AppleWatchCommunicationManager implements WatchCommunicationManager 
       sortIndex: sortIndex,
       rootId: null,
     );
-    await mindService.createMind(mind);
+    //await mindService.createMind(mind);
+    // TODO: create in repo instead
     final String mindJSON = json.encode(
       mind,
       toEncodable: (_) => mind.toShortJson(),
@@ -139,11 +132,11 @@ final class AppleWatchCommunicationManager implements WatchCommunicationManager 
   }
 
   Future<void> _removeMindFromToday({required String id}) async {
-    await mindService.deleteMind(id);
-    return _sendToWatch(
-      outputMethod: WatchOutputMethod.mindDidDeleted,
-      arguments: {},
-    );
+    // await mindService.deleteMind(id);
+    // return _sendToWatch(
+    //   outputMethod: WatchOutputMethod.mindDidDeleted,
+    //   arguments: {},
+    // );
   }
 
   Future<void> _showPredictedEmojies({required String mindText}) async {

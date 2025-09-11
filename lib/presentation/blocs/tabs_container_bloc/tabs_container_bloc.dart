@@ -57,7 +57,7 @@ final class TabsContainerBloc extends Bloc<TabsContainerEvent, TabsContainerStat
 
     final TabsContainerState newState = TabsContainerState(
       selectedTabIndex: _getSelectedTabIndex(),
-      selectedTabs: _repository.value.selectedTabModels,
+      selectedTabs: selectedTabs,
       hiddenTabs: KeklistConstants.availableTabModels
           .where((tab) => !_repository.value.selectedTabModels.map((tab) => tab.type).contains(tab.type))
           .toList(),

@@ -74,11 +74,10 @@ With Keklist I'm trying to resolve this kind of problems. Firstly, I'm trying to
 - Flutter
 - bloc
 - iOS/Swift
-- Supabase
+- Hive (Local Storage)
 ## Dependencies
 | Dependency                          | Reason                                                          |
 | ----------------------------------- | --------------------------------------------------------------- |
-| flutter                             | Flutter SDK                                                     |
 | adaptive_dialog                     | For using Platform dialogs                                      |
 | bloc, flutter_bloc                  | Main achitecture of app for state management                    |
 | blur                                | Blurring effect for auth background animation                   |
@@ -91,15 +90,21 @@ With Keklist I'm trying to resolve this kind of problems. Firstly, I'm trying to
 | equatable                           | Value equality                                                  |
 | fast_immutable_collections          | Immutable collections                                           |
 | fl_chart                            | Insights charts                                                 |
-| flutter_localizations               | Localization of app                                             |
+| flutter                             | Flutter SDK                                                     |
 | flutter_animate                     | Animation utilities                                             |
+| flutter_dotenv                      | For environment variables                                       |
 | flutter_easyloading                 | Blocking UI progress                                            |
 | flutter_emoji                       | Emoji rendering                                                 |
+| flutter_localizations               | Localization of app                                             |
 | flutter_simple_dependency_injection | Dependency injection                                            |
+| flutter_staggered_grid_view         | For adaptive layout wide screens                                |
 | flutter_svg                         | SVG rendering                                                   |
 | flutter_web_auth_2                  | Web authentication                                              |
 | form_field_validator                | Validation of Email on Auth                                     |
+| gap                                 | Simple spacer without thinking width or height you going to use |
 | hive, hive_flutter                  | Offline support                                                 |
+| hive, hive_flutter                  | Local database storage                                          |
+| home_widget                         | Native widgets support (iOS)                                    |
 | html                                | HTML parsing and rendering                                      |
 | intl                                | Internationalization support                                    |
 | modal_bottom_sheet                  | Modal bottom sheet                                              |
@@ -109,16 +114,11 @@ With Keklist I'm trying to resolve this kind of problems. Firstly, I'm trying to
 | scrollable_positioned_list          | For support infinitely calendar of minds                        |
 | settings_ui                         | Platform based UI for settings screen                           |
 | share_plus                          | For Sharing CSV table of minds                                  |
-| supabase_flutter                    | Supabase integration                                            |
 | syncfusion_flutter_charts           | Charting library                                                |
 | url_launcher                        | Launching URLs                                                  |
 | url_strategy                        | URL strategy                                                    |
 | uuid                                | ID generation for Entities                                      |
 | webview_flutter                     | InApp web page showing                                          |
-| gap                                 | Simple spacer without thinking width or height you going to use |
-| home_widget                         | Native widgets support (iOS)                                    |
 | workmanager                         | Background task scheduling                                      |
-| flutter_dotenv                      | For hiding private credentials from Supabase                    |
-| flutter_staggered_grid_view         | For adaptive layout wide screens                                |
 
 [Terms of use](https://sashkyn.notion.site/Rememoji-Terms-of-Use-df179704b2d149b8a5a915296f5cb78f)

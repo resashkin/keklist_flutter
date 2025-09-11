@@ -82,8 +82,6 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
             ..clear()
             ..addAll(state.values.sortedByProperty((e) => e.dayIndex));
         });
-      } else if (state is MindOperationError) {
-        _handleError(state);
       }
     })?.disposed(by: this);
   }
@@ -183,10 +181,6 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
     });
   }
 
-  void _showKeyboard() {
-    _mindCreatorFocusNode.requestFocus();
-  }
-
   void _hideKeyboard() {
     FocusScope.of(context).requestFocus(FocusNode());
   }
@@ -226,37 +220,6 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
         ],
       ),
     );
-  }
-
-  void _handleError(MindOperationError error) {
-    if (error.notCompleted == MindOperationType.create) {
-      final Mind? notCreatedMind = error.minds.firstOrNull;
-      if (notCreatedMind == null) {
-        return;
-      }
-
-      setState(() {
-        _createMindEditingController.text = notCreatedMind.note;
-        // _selectedEmoji = notCreatedMind.emoji;
-        _showKeyboard();
-      });
-    } else if (error.notCompleted == MindOperationType.edit) {
-      final Mind? notEditedMind = error.minds.firstOrNull;
-      if (notEditedMind == null) {
-        return;
-      }
-
-      final Mind? oldMind = allMinds.firstWhereOrNull((Mind mind) => mind.id == notEditedMind.id);
-      if (oldMind == null) {
-        return;
-      }
-      setState(() {
-        _editableMind = oldMind;
-        _createMindEditingController.text = notEditedMind.note;
-        // _selectedEmoji = notEditedMind.emoji;
-        _showKeyboard();
-      });
-    }
   }
 
   Future<int?> _showDateSwitcherToNewDay() async {

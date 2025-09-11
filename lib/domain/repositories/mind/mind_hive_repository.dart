@@ -28,15 +28,15 @@ final class MindHiveRepository implements MindRepository {
   Stream<Iterable<Mind>> get stream => _mindsBehaviorSubject.stream;
 
   @override
-  FutureOr<Mind> createMind({required Mind mind, required bool isUploadedToServer}) async {
-    final MindObject object = mind.toObject(isUploadedToServer: isUploadedToServer);
+  FutureOr<Mind> createMind({required Mind mind}) async {
+    final MindObject object = mind.toObject();
     await _mindHiveBox.put(mind.id, object);
     return mind;
   }
 
   @override
-  FutureOr<void> createMinds({required Iterable<Mind> minds, required bool isUploadedToServer}) {
-    final Iterable<MindObject> objects = minds.map((mind) => mind.toObject(isUploadedToServer: isUploadedToServer));
+  FutureOr<void> createMinds({required Iterable<Mind> minds}) {
+    final Iterable<MindObject> objects = minds.map((mind) => mind.toObject());
     _mindHiveBox.putAll({for (var object in objects) object.id: object});
   }
 
@@ -58,49 +58,20 @@ final class MindHiveRepository implements MindRepository {
   }
 
   @override
-  FutureOr<void> updateMind({required Mind mind, required bool isUploadedToServer}) {
-    final bool isUploadedToServer = _mindHiveBox.get(mind.id)?.isUploadedToServer ?? false;
-    final MindObject object = mind.toObject(isUploadedToServer: isUploadedToServer);
+  FutureOr<void> updateMind({required Mind mind}) {
+    final MindObject object = mind.toObject();
     return _mindHiveBox.put(mind.id, object);
   }
 
   @override
-  FutureOr<void> updateUploadedOnServerMind({required String mindId, required bool isUploadedToServer}) async {
-    final MindObject? object = _mindHiveBox.get(mindId);
-    object?.isUploadedToServer = isUploadedToServer;
-    await object?.save();
-  }
-
-  @override
-  FutureOr<void> updateMinds({required Iterable<Mind> minds, required bool isUploadedToServer}) async {
-    final mindEntries = {for (final mind in minds) mind.id: mind.toObject(isUploadedToServer: isUploadedToServer)};
-    await _mindHiveBox.putAll(mindEntries);
-  }
-
-  @override
-  FutureOr<void> updateUploadedOnServerMinds({required Iterable<Mind> minds, required bool isUploadedToServer}) async {
-    final Iterable<MindObject> mindObjects = minds.map((mind) => mind.toObject(isUploadedToServer: isUploadedToServer));
-    final Map<String, MindObject> mindEntries = Map.fromEntries(
-      mindObjects.map(
-        (mindObject) => MapEntry(
-          mindObject.id,
-          mindObject,
-        ),
-      ),
-    );
+  FutureOr<void> updateMinds({required Iterable<Mind> minds}) async {
+    final mindEntries = {for (final mind in minds) mind.id: mind.toObject()};
     await _mindHiveBox.putAll(mindEntries);
   }
 
   @override
   FutureOr<Iterable<Mind>> obtainMindsWhere(bool Function(Mind) where) {
     return _mindObjects.map((mindObject) => mindObject.toMind()).where(where);
-  }
-
-  @override
-  FutureOr<Iterable<Mind>> obtainNotUploadedToServerMinds() {
-    final Iterable<Mind> notUploadedMinds =
-        _mindObjects.where((mindObject) => !mindObject.isUploadedToServer).map((mind) => mind.toMind());
-    return notUploadedMinds;
   }
 
   @override

@@ -14,12 +14,6 @@ final class SettingsChangeMindContentVisibility extends SettingsEvent {
   const SettingsChangeMindContentVisibility({required this.isVisible});
 }
 
-final class SettingsChangeOfflineMode extends SettingsEvent {
-  final bool isOfflineMode;
-
-  const SettingsChangeOfflineMode({required this.isOfflineMode});
-}
-
 final class SettingsWhatsNewShown extends SettingsEvent {}
 
 final class SettingsUploadMindsFromCacheToServer extends SettingsEvent {}
@@ -38,8 +32,6 @@ final class SettingsChangeOpenAIKey extends SettingsEvent {
   const SettingsChangeOpenAIKey({required this.openAIToken});
 }
 
-final class SettingsLogout extends SettingsEvent {}
-
 final class SettingsGetMindCandidatesToUpload extends SettingsEvent {}
 
 final class SettingsUploadMindCandidates extends SettingsEvent {}
@@ -49,5 +41,3 @@ final class SettingsUpdateShouldShowTitlesMode extends SettingsEvent {
 
   const SettingsUpdateShouldShowTitlesMode({required this.value});
 }
-
-final class SettingsGetAuthState extends SettingsEvent {}

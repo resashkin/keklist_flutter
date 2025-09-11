@@ -47,13 +47,6 @@ final class SettingsHiveRepository implements SettingsRepository {
   }
 
   @override
-  FutureOr<void> updateOfflineMode(bool isOfflineMode) async {
-    final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.globalSettingsIndex);
-    settingsObject?.isOfflineMode = isOfflineMode;
-    await settingsObject?.save();
-  }
-
-  @override
   FutureOr<void> updateOpenAIKey(String? openAIKey) async {
     final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.globalSettingsIndex);
     settingsObject?.openAIKey = openAIKey;
