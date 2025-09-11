@@ -26,7 +26,6 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   //bool _isSensitiveContentShowed = false;
   bool _isDarkMode = false;
   bool _showTitles = true;
-  bool _clearCacheVisible = true;
   String _openAiKey = '';
   String? translateLanguageCode;
 
@@ -163,13 +162,11 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
           SettingsSection(
             title: Text('DANGER ZONE'.toUpperCase()),
             tiles: [
-              if (_clearCacheVisible) ...{
-                SettingsTile(
-                  title: const Text('Clear on-device data'),
-                  leading: const Icon(Icons.delete_outline, color: Colors.red),
-                  onPressed: (BuildContext context) async => await _clearCache(),
-                )
-              },
+              SettingsTile(
+                title: const Text('Clear on-device data'),
+                leading: const Icon(Icons.delete_outline, color: Colors.red),
+                onPressed: (BuildContext context) async => await _clearCache(),
+              )
             ],
           )
         ],
