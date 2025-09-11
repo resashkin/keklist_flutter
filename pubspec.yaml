@@ -3,7 +3,7 @@ description: Like TODO-List but Keklist
 
 publish_to: "none"
 
-version: 3.6.0+74
+version: 3.7.0+75
 
 environment:
   sdk: ">=3.5.0"
