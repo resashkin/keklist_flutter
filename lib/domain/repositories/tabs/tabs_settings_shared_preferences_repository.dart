@@ -43,9 +43,9 @@ final class TabsSettingsSharedPreferencesRepository extends TabsSettingsReposito
       );
 
   @override
-  FutureOr<void> update({required List<TabModel> selectedTabList}) => _updateSettings(
+  FutureOr<void> update({required List<TabModel> tabModels}) => _updateSettings(
         TabsSettings(
-          selectedTabModels: selectedTabList,
+          selectedTabModels: tabModels,
           defaultSelectedTabIndex: _tabsSettingsPreferences.getValue()?.defaultSelectedTabIndex ?? 0,
         ),
       );
