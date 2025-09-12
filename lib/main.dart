@@ -111,14 +111,14 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
             ),
           ),
           BlocProvider(
-            create: (context) => TabsContainerBloc(
-              repository: mainInjector.get<TabsSettingsRepository>(),
-              debugMenuRepository: mainInjector.get<DebugMenuRepository>(),
+            create: (context) => DebugMenuBloc(
+              repository: mainInjector.get<DebugMenuRepository>(),
             ),
           ),
           BlocProvider(
-            create: (context) => DebugMenuBloc(
-              repository: mainInjector.get<DebugMenuRepository>(),
+            create: (context) => TabsContainerBloc(
+              repository: mainInjector.get<TabsSettingsRepository>(),
+              debugMenuRepository: mainInjector.get<DebugMenuRepository>(),
             ),
           ),
         ],

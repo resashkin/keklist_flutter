@@ -102,7 +102,7 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
       case TabType.today:
         return MindDayCollectionScreen(initialDayIndex: MindUtils.getTodayIndex());
       case TabType.debugMenu:
-        throw DebugMenuScreen();
+        return DebugMenuScreen();
     }
   }
 }
