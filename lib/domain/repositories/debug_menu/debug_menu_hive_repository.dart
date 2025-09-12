@@ -27,7 +27,7 @@ final class DebugMenuHiveRepository implements DebugMenuRepository {
 
   void _initializeDefaultValues() {
     // Initialize default values for all debug menu items if they don't exist
-    for (final flagType in DebugMenuType.values) {
+    for (final DebugMenuType flagType in DebugMenuType.values) {
       final String key = flagType.name;
       if (!_hiveBox.containsKey(key)) {
         final defaultObject = DebugMenuObject()
@@ -42,7 +42,6 @@ final class DebugMenuHiveRepository implements DebugMenuRepository {
         DebugMenuType.chatWithAI => true,
         DebugMenuType.translation => true,
         DebugMenuType.sensitiveContent => false,
-        DebugMenuType.syncWithServer => false,
       };
 
   List<DebugMenuData> _getCurrentDebugMenuItems() =>

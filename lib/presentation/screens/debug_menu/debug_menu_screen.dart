@@ -66,7 +66,6 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
         DebugMenuType.chatWithAI => 'Chat with AI',
         DebugMenuType.translation => 'Translate content',
         DebugMenuType.sensitiveContent => 'Sensitive content',
-        DebugMenuType.syncWithServer => 'Sign In'
       };
 
   String _getDebugMenuItemDescription(DebugMenuType type) => switch (type) {
@@ -75,6 +74,5 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
           'Showing/Hiding Translate action, that just opens Alert with translation on English.',
         DebugMenuType.sensitiveContent =>
           'Showing/Hiding Eye button that allows to hide content for users when you showing phone to others.',
-        DebugMenuType.syncWithServer => 'Syncronization with remote server'
       };
 }
