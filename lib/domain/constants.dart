@@ -58,6 +58,9 @@ final class LayoutConstants {
 
 final class DateFormatters {
   static DateFormat fullDateFormat = DateFormat('dd.MM.yyyy - EEEE');
+  static DateFormat dayMonthAndYearFormat = DateFormat('dd.MM.yyyy');
+  static DateFormat dayMonthFormat = DateFormat('d MMMM');
+  static DateFormat weekDayFormat = DateFormat('EEEE');
 }
 
 final class PlatformConstants {

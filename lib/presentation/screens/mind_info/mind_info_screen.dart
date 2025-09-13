@@ -1,7 +1,10 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:keklist/domain/constants.dart';
+import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
+import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
 import 'package:keklist/presentation/core/helpers/extensions/state_extensions.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/core/widgets/overscroll_listener.dart';
@@ -38,6 +41,7 @@ final class MindInfoScreen extends StatefulWidget {
 final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
   final TextEditingController _createMindEditingController = TextEditingController(text: null);
   final FocusNode _mindCreatorFocusNode = FocusNode();
+  DebugMenuDataState? _debugMenuState;
   bool _creatorPanelHasFocus = false;
   Mind? _editableMind;
   late String _selectedEmoji = _rootMind.emoji;
@@ -75,6 +79,13 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
         });
       }
     })?.disposed(by: this);
+
+    subscribeToBloc<DebugMenuBloc>(onNewState: (state) {
+      if (state is DebugMenuDataState) {
+        _debugMenuState = state;
+      }
+    })?.disposed(by: this);
+    sendEventToBloc<DebugMenuBloc>(DebugMenuGet());
   }
 
   final ScrollController _scrollController = ScrollController();
@@ -82,7 +93,6 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('Mind'),
         actions: [
@@ -217,8 +227,14 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
       context: context,
       builder: (context) => ActionsScreen(
         actions: [
-          (ActionModel.chatWithAI(), () => _showMessageScreen(mind: mind)),
-          (ActionModel.tranlsateToEnglish(), () => _translateToEnglish(mind: mind)),
+          if (_debugMenuState?.debugMenuItems
+                  .firstWhereOrNull((element) => element.type == DebugMenuType.chatWithAI && element.value) !=
+              null)
+            (ActionModel.chatWithAI(), () => _showMessageScreen(mind: mind)),
+          if (_debugMenuState?.debugMenuItems
+                  .firstWhereOrNull((element) => element.type == DebugMenuType.translation && element.value) !=
+              null)
+            (ActionModel.tranlsateToEnglish(), () => _translateToEnglish(mind: mind)),
           (ActionModel.edit(), () => _editMind(mind)),
           (ActionModel.showAll(), () => _showAllMinds(mind)),
           (ActionModel.delete(), () => _removeMind(mind)),

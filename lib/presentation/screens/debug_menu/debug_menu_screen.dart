@@ -28,6 +28,7 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
         });
       }
     })?.disposed(by: this);
+    sendEventToBloc<DebugMenuBloc>(DebugMenuGet());
   }
 
   @override

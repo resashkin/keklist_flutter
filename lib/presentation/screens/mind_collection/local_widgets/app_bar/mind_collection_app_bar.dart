@@ -20,12 +20,16 @@ final class _MindCollectionAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      centerTitle: false,
+      centerTitle: true,
       automaticallyImplyLeading: true,
       actions: _makeAppBarActions(),
       title: GestureDetector(
         onTap: onTitle,
-        child: const Text('Minds'),
+        child: Row(children: [
+          const Icon(Icons.calendar_view_week),
+          const Gap(8.0),
+          const Text('Calendar'),
+        ]),
       ),
     );
   }

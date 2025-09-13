@@ -39,8 +39,8 @@ final class DebugMenuHiveRepository implements DebugMenuRepository {
   }
 
   bool _getDefaultValueForFlag(DebugMenuType flagType) => switch (flagType) {
-        DebugMenuType.chatWithAI => true,
-        DebugMenuType.translation => true,
+        DebugMenuType.chatWithAI => false,
+        DebugMenuType.translation => false,
         DebugMenuType.sensitiveContent => false,
       };
 
