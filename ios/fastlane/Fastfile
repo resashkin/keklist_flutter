@@ -146,6 +146,7 @@ platform :ios do
       api_key: api_key,
       readonly: false,
     )
+    sh("flutter build ios --config-only --release")
     cocoapods(
       repo_update: true, 
       use_bundle_exec: true
