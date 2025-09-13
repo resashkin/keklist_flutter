@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:collection/collection.dart';
+import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
 import 'package:gap/gap.dart';
 import 'package:keklist/domain/repositories/tabs/models/tabs_settings.dart';
 import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
@@ -197,7 +198,7 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
 
   void _showDayCollectionScreen({required int groupDayIndex}) {
     Navigator.of(context).push(
-      MaterialPageRoute(
+      BackSwipePageRoute(
         builder: (context) => MindDayCollectionScreen(initialDayIndex: groupDayIndex),
       ),
     );
@@ -370,7 +371,7 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
 
     Navigator.push(
       mountedContext!,
-      MaterialPageRoute(
+      BackSwipePageRoute(
         builder: (context) {
           return MindUniversalListScreen(
             allMinds: _minds,
@@ -402,7 +403,7 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
 
     Navigator.push(
       mountedContext!,
-      MaterialPageRoute(
+      BackSwipePageRoute(
         builder: (context) {
           bool filterFunction(mind) => mind.dayIndex >= startDayIndex && mind.dayIndex <= endDayIndex;
           return MindUniversalListScreen(
@@ -429,7 +430,7 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
   void _showSettings() {
     Navigator.push(
       context,
-      MaterialPageRoute(
+      BackSwipePageRoute(
         builder: (context) => const SettingsScreen(),
       ),
     );
@@ -438,7 +439,7 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
   void _showInsights() {
     Navigator.push(
       context,
-      MaterialPageRoute(
+      BackSwipePageRoute(
         builder: (context) => const InsightsScreen(),
       ),
     );
@@ -452,7 +453,7 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
 
   void _showMindInfo(Mind mind) {
     Navigator.of(context).push(
-      MaterialPageRoute(
+      BackSwipePageRoute(
         builder: (_) => MindInfoScreen(
           rootMind: mind,
           allMinds: _minds,

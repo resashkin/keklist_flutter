@@ -1,6 +1,7 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
 import 'package:gap/gap.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/presentation/blocs/user_profile_bloc/user_profile_bloc.dart';
@@ -114,7 +115,7 @@ final class _UserProfileScreenState extends KekWidgetState<UserProfileScreen> {
   void _showSettings() {
     Navigator.push(
       context,
-      MaterialPageRoute(
+      BackSwipePageRoute(
         builder: (context) => const SettingsScreen(),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
 import 'package:keklist/domain/constants.dart';
@@ -262,7 +263,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
 
   void _showWhatsNew() {
     Navigator.of(context).push<void>(
-      MaterialPageRoute<void>(
+      BackSwipePageRoute<void>(
         builder: (BuildContext context) => WebPageScreen(
           title: 'Whats new?',
           initialUri: Uri.parse(KeklistConstants.whatsNewURL),
@@ -281,7 +282,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
 
   void _showTabsSettings() {
     Navigator.of(context).push<void>(
-      MaterialPageRoute<void>(
+      BackSwipePageRoute<void>(
         builder: (BuildContext context) => const TabsSettingsScreen(),
       ),
     );

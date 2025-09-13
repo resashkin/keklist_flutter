@@ -2,6 +2,7 @@ import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
 import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
@@ -266,7 +267,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
 
   void _showMindInfo(Mind mind) {
     Navigator.of(context).push(
-      MaterialPageRoute(
+      BackSwipePageRoute(
         builder: (_) => MindInfoScreen(
           rootMind: mind,
           allMinds: allMinds,
@@ -338,7 +339,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
 
   void _showChatDiscussionScreen({required Mind mind}) async {
     Navigator.of(mountedContext!).push(
-      MaterialPageRoute(
+      BackSwipePageRoute(
         builder: (_) => MindChatDiscussionScreen(
           rootMind: mind,
           allMinds: allMinds,
@@ -370,7 +371,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
 
   void _showAllMinds(Mind mind) {
     Navigator.of(context).push(
-      MaterialPageRoute(
+      BackSwipePageRoute(
         builder: (_) => MindOneEmojiCollectionScreen(
           emoji: mind.emoji,
           allMinds: allMinds,

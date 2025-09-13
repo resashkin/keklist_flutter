@@ -533,6 +533,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.0"
+  full_swipe_back_gesture:
+    dependency: "direct main"
+    description:
+      name: full_swipe_back_gesture
+      sha256: "2c418bd6f7ec81385c6d3c25dc35ac8b9b30150a49255c526ec04adea0caedbe"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.2"
   gap:
     dependency: "direct main"
     description:
@@ -1491,5 +1499,5 @@ packages:
     source: hosted
     version: "3.1.3"
 sdks:
-  dart: ">=3.8.0-0 <4.0.0"
+  dart: ">=3.8.1 <4.0.0"
   flutter: ">=3.27.4"

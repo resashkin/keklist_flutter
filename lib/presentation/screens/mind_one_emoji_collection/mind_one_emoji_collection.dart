@@ -1,6 +1,7 @@
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
 import 'package:keklist/presentation/core/helpers/extensions/state_extensions.dart';
 import 'package:keklist/presentation/screens/actions/action_model.dart';
 import 'package:keklist/presentation/screens/actions/actions_screen.dart';
@@ -243,7 +244,7 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
     }
 
     Navigator.of(mountedContext!).push(
-      MaterialPageRoute(
+      BackSwipePageRoute(
         builder: (_) => MindInfoScreen(
           rootMind: mind,
           allMinds: allMinds,

@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
 import 'package:keklist/presentation/core/helpers/mind_utils.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
@@ -181,7 +182,7 @@ final class _InsightsPieWidgetState extends State<InsightsPieWidget> {
                   final PeriodType selectedPeriod = _choices[_selectedChoiceIndex];
                   final String? selectedEmoji = _selectedEmoji;
                   Navigator.of(context).push(
-                    MaterialPageRoute(
+                    BackSwipePageRoute(
                       builder: (context) => MindUniversalListScreen(
                         allMinds: widget.allMinds,
                         filterFunction: (mind) {
@@ -193,7 +194,7 @@ final class _InsightsPieWidgetState extends State<InsightsPieWidget> {
                         emptyStateMessage: 'No minds for this period',
                         onSelectMind: (mind) {
                           Navigator.of(context).push(
-                            MaterialPageRoute(
+                            BackSwipePageRoute(
                               builder: (context) => MindInfoScreen(
                                 rootMind: mind,
                                 allMinds: widget.allMinds,
