@@ -9,9 +9,14 @@ enum SupportedLanguage {
   english('en', 'English', '🇺🇸'),
   russian('ru', 'Русский', '🇷🇺'),
   serbian('sr', 'Српски', '🇷🇸'),
-  japanese('ja', '日本語', '🇯🇵'),
+  spanish('es', 'Español', '🇪🇸'),
   chinese('zh', '中文', '🇨🇳'),
-  german('de', 'Deutsch', '🇩🇪');
+  japanese('ja', '日本語', '🇯🇵'),
+  german('de', 'Deutsch', '🇩🇪'),
+  uzbek('uz', 'Oʻzbekcha', '🇺🇿'),
+  kazakh('kk', 'Қазақша', '🇰🇿'),
+  kyrgyz('ky', 'Кыргызча', '🇰🇬'),
+  italian('it', 'Italiano', '🇮🇹');
 
   const SupportedLanguage(this.code, this.displayName, this.flag);
 
@@ -30,7 +35,7 @@ enum SupportedLanguage {
 }
 
 /// Manages app language settings and provides reactive language changes
-class LanguageManager {
+final class LanguageManager {
   static const String _languageKey = 'app_language';
 
   final StreamingSharedPreferences _preferences;

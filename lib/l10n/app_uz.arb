@@ -1,0 +1,387 @@
+{
+    "settings": "Sozlamalar",
+    "@settings": {
+      "description": "Sozlamalar ekrani sarlavhasi"
+    },
+    "userData": "Foydalanuvchi ma'lumotlari",
+    "@userData": {
+      "description": "Foydalanuvchi ma'lumotlari bo'limi sarlavhasi"
+    },
+    "appearance": "Ko'rinish",
+    "@appearance": {
+      "description": "Ko'rinish bo'limi sarlavhasi"
+    },
+    "exportToCsv": "CSV ga eksport qilish",
+    "@exportToCsv": {
+      "description": "CSV ga eksport qilish tugmasi"
+    },
+    "done": "TAYYOR",
+    "@done": {
+      "description": "Tayyor tugmasi"
+    },
+    "chatWithAI": "AI bilan suhbatlashish",
+    "@chatWithAI": {
+      "description": "AI bilan suhbatlashish harakati"
+    },
+    "photosPerDay": "Kuniga rasmlar",
+    "@photosPerDay": {
+      "description": "Kuniga rasmlar harakati"
+    },
+    "extraActions": "Qo'shimcha harakatlar",
+    "@extraActions": {
+      "description": "Qo'shimcha harakatlar menyusi"
+    },
+    "mindOptions": "Fikr variantlari",
+    "@mindOptions": {
+      "description": "Fikr variantlari menyusi"
+    },
+    "edit": "Tahrirlash",
+    "@edit": {
+      "description": "Tahrirlash harakati"
+    },
+    "delete": "O'chirish",
+    "@delete": {
+      "description": "O'chirish harakati"
+    },
+    "share": "Ulashish",
+    "@share": {
+      "description": "Ulashish harakati"
+    },
+    "switchDay": "Kunni almashtirish",
+    "@switchDay": {
+      "description": "Kunni almashtirish harakati"
+    },
+    "goToDate": "Sana orqali o'tish",
+    "@goToDate": {
+      "description": "Sana orqali o'tish harakati"
+    },
+    "showDigest": "... uchun xulosa ko'rsatish",
+    "@showDigest": {
+      "description": "Xulosa ko'rsatish harakati"
+    },
+    "showAll": "Hammasini ko'rsatish",
+    "@showAll": {
+      "description": "Hammasini ko'rsatish harakati"
+    },
+    "translateToEnglish": "Ingliz tiliga tarjima qilish",
+    "@translateToEnglish": {
+      "description": "Ingliz tiliga tarjima qilish harakati"
+    },
+    "convertToStandalone": "Mustaqil qilish",
+    "@convertToStandalone": {
+      "description": "Mustaqil qilish harakati"
+    },
+    "language": "Til",
+    "@language": {
+      "description": "Til sozlamasi"
+    },
+    "selectLanguage": "Tilni tanlash",
+    "@selectLanguage": {
+      "description": "Tilni tanlash dialogi sarlavhasi"
+    },
+    "darkMode": "Qorong'u rejim",
+    "@darkMode": {
+      "description": "Qorong'u rejim sozlamasi"
+    },
+    "showDayDividers": "Kun ajratuvchilarini ko'rsatish",
+    "@showDayDividers": {
+      "description": "Kun ajratuvchilarini ko'rsatish sozlamasi"
+    },
+    "tabsSettings": "Tab sozlamalari",
+    "@tabsSettings": {
+      "description": "Tab sozlamalari navigatsiyasi"
+    },
+    "whatsNew": "Yangi nimalar?",
+    "@whatsNew": {
+      "description": "Yangi nimalar navigatsiyasi"
+    },
+    "suggestFeature": "Xususiyat taklif qilish",
+    "@suggestFeature": {
+      "description": "Xususiyat taklif qilish navigatsiyasi"
+    },
+    "sendFeedback": "Fikr-mulohaza yuborish",
+    "@sendFeedback": {
+      "description": "Fikr-mulohaza yuborish navigatsiyasi"
+    },
+    "sourceCode": "Manba kodi",
+    "@sourceCode": {
+      "description": "Manba kodi navigatsiyasi"
+    },
+    "termsOfUse": "Foydalanish shartlari",
+    "@termsOfUse": {
+      "description": "Foydalanish shartlari navigatsiyasi"
+    },
+    "privacyPolicy": "Maxfiylik siyosati",
+    "@privacyPolicy": {
+      "description": "Maxfiylik siyosati navigatsiyasi"
+    },
+    "clearOnDeviceData": "Qurilmadagi ma'lumotlarni tozalash",
+    "@clearOnDeviceData": {
+      "description": "Ma'lumotlarni tozalash navigatsiyasi"
+    },
+    "setOpenAIToken": "Open AI Token o'rnatish",
+    "@setOpenAIToken": {
+      "description": "OpenAI token dialogi sarlavhasi"
+    },
+    "cancel": "Bekor qilish",
+    "@cancel": {
+      "description": "Bekor qilish tugmasi"
+    },
+    "save": "Saqlash",
+    "@save": {
+      "description": "Saqlash tugmasi"
+    },
+    "mind": "Fikr",
+    "@mind": {
+      "description": "Fikr ekrani sarlavhasi"
+    },
+    "profile": "Profil",
+    "@profile": {
+      "description": "Profil ekrani sarlavhasi"
+    },
+    "insights": "Tahlil",
+    "@insights": {
+      "description": "Tahlil ekrani sarlavhasi"
+    },
+    "calendar": "Taqvim",
+    "@calendar": {
+      "description": "Taqvim sarlavhasi"
+    },
+    "debugMenu": "Debug menyusi",
+    "@debugMenu": {
+      "description": "Debug menyusi sarlavhasi"
+    },
+    "discussion": "Muhokama",
+    "@discussion": {
+      "description": "Muhokama ekrani sarlavhasi"
+    },
+    "about": "Haqida",
+    "@about": {
+      "description": "Haqida bo'limi sarlavhasi"
+    },
+    "dangerZone": "Xavfli zona",
+    "@dangerZone": {
+      "description": "Xavfli zona bo'limi sarlavhasi"
+    },
+    "editMind": "Fikrni tahrirlash",
+    "@editMind": {
+      "description": "Fikrni tahrirlash dialogi sarlavhasi"
+    },
+    "enterTokenHere": "Token bu yerga kiriting",
+    "@enterTokenHere": {
+      "description": "Token kiritish ko'rsatkichi"
+    },
+    "token": "Token",
+    "@token": {
+      "description": "Token kiritish yorlig'i"
+    },
+    "clearCache": "Keshni tozalash",
+    "@clearCache": {
+      "description": "Keshni tozalash tugmasi"
+    },
+    "developerModeEnabled": "🔧 Dasturchi rejimi yoqildi! Debug Menu tabi endi mavjud!",
+    "@developerModeEnabled": {
+      "description": "Dasturchi rejimi yoqilgan xabari"
+    },
+    "activeTabs": "Faol tablar",
+    "@activeTabs": {
+      "description": "Faol tablar bo'limi sarlavhasi"
+    },
+    "hiddenTabs": "Yashirin tablar",
+    "@hiddenTabs": {
+      "description": "Yashirin tablar bo'limi sarlavhasi"
+    },
+    "error": "Xatolik",
+    "@error": {
+      "description": "Xatolik dialogi sarlavhasi"
+    },
+    "startDiscussion": "Muhokamani boshlash",
+    "@startDiscussion": {
+      "description": "Muhokamani boshlash tugmasi"
+    },
+    "send": "YUBORISH",
+    "@send": {
+      "description": "Yuborish tugmasi"
+    },
+    "done": "TAYYOR",
+    "@done": {
+      "description": "Tayyor tugmasi"
+    },
+    "chatWithAI": "AI bilan suhbatlashish",
+    "@chatWithAI": {
+      "description": "AI bilan suhbatlashish debug variant"
+    },
+    "translateContent": "Kontentni tarjima qilish",
+    "@translateContent": {
+      "description": "Kontentni tarjima qilish debug variant"
+    },
+    "sensitiveContent": "Hassos kontent",
+    "@sensitiveContent": {
+      "description": "Hassos kontent debug variant"
+    },
+    "updateYourNickname": "Niknamingizni yangilash",
+    "@updateYourNickname": {
+      "description": "Niknamingizni yangilash dialogi sarlavhasi"
+    },
+    "yourNickname": "Sizning niknamingiz",
+    "@yourNickname": {
+      "description": "Nikname kiritish ko'rsatkichi"
+    },
+    "create": "Yaratish",
+    "@create": {
+      "description": "Yaratish tugmasi"
+    },
+    "yourFolderName": "Sizning papka nomingiz",
+    "@yourFolderName": {
+      "description": "Papka nomi kiritish ko'rsatkichi"
+    },
+    "noMindsInSelectedPeriod": "Tanlangan davrda fikrlar yo'q",
+    "@noMindsInSelectedPeriod": {
+      "description": "Tanlangan davrda fikrlar yo'q xabari"
+    },
+    "noMindsForPeriod": "Bu davr uchun fikrlar yo'q",
+    "@noMindsForPeriod": {
+      "description": "Bu davr uchun fikrlar yo'q xabari"
+    },
+    "selectPeriod": "Davrni tanlash ...",
+    "@selectPeriod": {
+      "description": "Davrni tanlash harakati"
+    },
+    "digest": "Xulosa",
+    "@digest": {
+      "description": "Xulosa sarlavhasi"
+    },
+    "minds": "Fikrlar",
+    "@minds": {
+      "description": "Fikrlar sarlavhasi"
+    },
+    "searchForYourNotes": "Eslatmalaringizni qidiring",
+    "@searchForYourNotes": {
+      "description": "Eslatmalarni qidirish ko'rsatkichi"
+    },
+    "searchYourEmoji": "Emojingizni qidiring...",
+    "@searchYourEmoji": {
+      "description": "Emoji qidirish ko'rsatkichi"
+    },
+    "writeSomething": "Biror narsa yozing...",
+    "@writeSomething": {
+      "description": "Biror narsa yozish ko'rsatkichi"
+    },
+    "topMinds": "Eng yaxshi fikrlar",
+    "@topMinds": {
+      "description": "Eng yaxshi fikrlar sarlavhasi"
+    },
+    "todayMinds": "Bugungi fikrlar",
+    "@todayMinds": {
+      "description": "Bugungi fikrlar sarlavhasi"
+    },
+    "randomMind": "Tasodifiy fikr",
+    "@randomMind": {
+      "description": "Tasodifiy fikr sarlavhasi"
+    },
+    "spectrum": "Spektr",
+    "@spectrum": {
+      "description": "Spektr sarlavhasi"
+    },
+    "youDidNotCollectAnyEntriesYet": "Siz hali hech qanday yozuv yig'ganingiz yo'q",
+    "@youDidNotCollectAnyEntriesYet": {
+      "description": "Hech qanday yozuv yig'ilmagan xabari"
+    },
+    "pleaseAuthenticateToShowContent": "Fikringizning kontentini ko'rsatish uchun autentifikatsiyadan o'ting",
+    "@pleaseAuthenticateToShowContent": {
+      "description": "Autentifikatsiya talab qilinadigan xabar"
+    },
+    "edit": "Tahrirlash",
+    "@edit": {
+      "description": "Tahrirlash tugmasi"
+    },
+    "areYouSure": "Ishonchingiz komilmi?",
+    "@areYouSure": {
+      "description": "Tasdiqlash dialogi sarlavhasi"
+    },
+    "cannotRemoveMainScreen": "Asosiy ekranni olib bo'lmaydi. Tab sozlamalarini yo'qotasiz.",
+    "@cannotRemoveMainScreen": {
+      "description": "Asosiy ekranni olib bo'lmasligi xatolik xabari"
+    },
+    "today": "Bugun",
+    "@today": {
+      "description": "Bugun davri sarlavhasi"
+    },
+    "yesterday": "Kecha",
+    "@yesterday": {
+      "description": "Kecha davri sarlavhasi"
+    },
+    "thisWeek": "Bu hafta",
+    "@thisWeek": {
+      "description": "Bu hafta davri sarlavhasi"
+    },
+    "lastTwoWeeks": "So'nggi 2 hafta",
+    "@lastTwoWeeks": {
+      "description": "So'nggi 2 hafta davri sarlavhasi"
+    },
+    "thisMonth": "Bu oy",
+    "@thisMonth": {
+      "description": "Bu oy davri sarlavhasi"
+    },
+    "thisYear": "Bu yil",
+    "@thisYear": {
+      "description": "Bu yil davri sarlavhasi"
+    },
+    "calendar": "Taqvim",
+    "@calendar": {
+      "description": "Taqvim tab yorlig'i"
+    },
+    "insights": "Tahlil",
+    "@insights": {
+      "description": "Tahlil tab yorlig'i"
+    },
+    "settings": "Sozlamalar",
+    "@settings": {
+      "description": "Sozlamalar tab yorlig'i"
+    },
+    "profile": "Profil",
+    "@profile": {
+      "description": "Profil tab yorlig'i"
+    },
+    "debugMenu": "Debug menyusi",
+    "@debugMenu": {
+      "description": "Debug menyusi tab yorlig'i"
+    },
+    "calendarDescription": "Yozuvlar taqvimi bilan asosiy ekran",
+    "@calendarDescription": {
+      "description": "Taqvim tab tavsifi"
+    },
+    "insightsDescription": "Barcha yozuvlaringiz statistikasi",
+    "@insightsDescription": {
+      "description": "Tahlil tab tavsifi"
+    },
+    "settingsDescription": "Barcha sozlamalar ekrani (qorong'u rejim, sinxronlash va boshqalar)",
+    "@settingsDescription": {
+      "description": "Sozlamalar tab tavsifi"
+    },
+    "profileDescription": "Profilingiz bilan ekran",
+    "@profileDescription": {
+      "description": "Profil tab tavsifi"
+    },
+    "todayDescription": "Faqat bugungi fikrlar",
+    "@todayDescription": {
+      "description": "Bugun tab tavsifi"
+    },
+    "debugMenuDescription": "Eksperimental xususiyatlarni yoqish uchun dasturchi vositalari",
+    "@debugMenuDescription": {
+      "description": "Debug menyusi tab tavsifi"
+    },
+    "noMindsForThisDay": "Bu kun uchun fikrlar yo'q",
+    "@noMindsForThisDay": {
+      "description": "Bu kun uchun fikrlar yo'q xabari"
+    },
+    "showMindsForPeriod": "{period} uchun fikrlarni ko'rsatish",
+    "@showMindsForPeriod": {
+      "description": "Davr uchun fikrlarni ko'rsatish xabari",
+      "placeholders": {
+        "period": {
+          "type": "String"
+        }
+      }
+    }
+}
