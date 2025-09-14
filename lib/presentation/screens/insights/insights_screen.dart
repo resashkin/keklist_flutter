@@ -5,6 +5,7 @@ import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/screens/insights/widgets/insights_pie_widget.dart';
 import 'package:keklist/presentation/screens/insights/widgets/insights_random_mind_widget.dart';
 import 'package:keklist/presentation/screens/insights/widgets/insights_top_chart.dart';
@@ -43,7 +44,7 @@ final class _InsightsScreenState extends KekWidgetState<InsightsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Insights')),
+      appBar: AppBar(title: Text(context.l10n.insights)),
       body: SafeArea(
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {

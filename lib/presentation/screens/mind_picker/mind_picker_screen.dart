@@ -1,6 +1,7 @@
 import 'package:keklist/presentation/core/widgets/mind_widget.dart';
 import 'package:emojis/emoji.dart';
 import 'package:flutter/material.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 
 final class MindPickerScreen extends StatefulWidget {
   final Iterable<String> suggestions;
@@ -24,6 +25,7 @@ final class MindPickerScreenState extends State<MindPickerScreen> {
     final List<String> suggestions = widget.suggestions.toList();
     return suggestions + _displayedEmojies.map((emoji) => emoji.char).toList();
   }
+
   Iterable<Emoji> get _displayedEmojies => _searchText.isEmpty ? _mainEmojies : _filteredMinds;
   Iterable<Emoji> get _mainEmojies => _emojies;
 
@@ -54,10 +56,10 @@ final class MindPickerScreenState extends State<MindPickerScreen> {
         TextField(
           autofocus: true,
           controller: _textEditingController,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             contentPadding: EdgeInsets.all(8),
             border: UnderlineInputBorder(),
-            hintText: 'Search your emoji...',
+            hintText: context.l10n.searchYourEmoji,
           ),
         ),
         Flexible(

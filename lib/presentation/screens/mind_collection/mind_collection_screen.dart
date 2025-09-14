@@ -9,6 +9,7 @@ import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bloc.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_event.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_state.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/core/helpers/extensions/state_extensions.dart';
 import 'package:keklist/presentation/core/helpers/platform_utils.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
@@ -307,8 +308,8 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
       context: context,
       builder: (context) => ActionsScreen(
         actions: [
-          (ActionModel.goToDate(), () => _showDateSwitcher()),
-          (ActionModel.showDigest(), () => _showDigestPeriodOptions()),
+          (ActionModel.goToDate(context), () => _showDateSwitcher()),
+          (ActionModel.showDigest(context), () => _showDigestPeriodOptions()),
         ],
       ),
     );
@@ -322,7 +323,7 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
           ...PeriodType.values.map((periodType) => (
                 ActionModel.custom(
                   icon: _getPeriodIcon(periodType),
-                  title: periodType.localizedTitle,
+                  title: periodType.localizedTitle(context),
                 ),
                 () async {
                   final List<Mind> periodMinds = periodType.filterMinds(_minds.toList());
@@ -332,7 +333,7 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
                 }
               )),
           (
-            ActionModel.custom(icon: const Icon(Icons.date_range), title: 'Select period ...'),
+            ActionModel.custom(icon: const Icon(Icons.date_range), title: context.l10n.selectPeriod),
             () async => _showDigestForCustomPeriod()
           ),
         ],
@@ -369,8 +370,8 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
           return MindUniversalListScreen(
             allMinds: _minds,
             filterFunction: (mind) => periodType.filterMinds([mind]).isNotEmpty,
-            title: '${periodType.localizedTitle} (${periodMinds.length} minds)',
-            emptyStateMessage: 'No minds for ${periodType.localizedTitle.toLowerCase()}',
+            title: '${periodType.localizedTitle(context)} (${periodMinds.length} ${context.l10n.minds})',
+            emptyStateMessage: '${context.l10n.noMindsForPeriod} ${periodType.localizedTitle(context).toLowerCase()}',
             onSelectMind: (mind) => _showMindInfo(mind),
           );
         },
@@ -402,8 +403,8 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
           return MindUniversalListScreen(
             allMinds: _minds,
             filterFunction: filterFunction,
-            title: 'Digest (${_minds.where(filterFunction).length} minds)',
-            emptyStateMessage: 'No minds in selected period',
+            title: '${context.l10n.digest} (${_minds.where(filterFunction).length} ${context.l10n.minds})',
+            emptyStateMessage: context.l10n.noMindsInSelectedPeriod,
             onSelectMind: (mind) => _showMindInfo(mind),
           );
         },

@@ -9,6 +9,7 @@ import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/presentation/core/widgets/bottom_navigation_bar.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:shake/shake.dart';
 import 'package:keklist/presentation/screens/tabs_settings/tabs_settings_list_item.dart';
 
@@ -40,8 +41,8 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(
-                const SnackBar(
-                  content: Text('🔧 Developer mode enabled! Debug Menu tab is now available!'),
+                SnackBar(
+                  content: Text(context.l10n.developerModeEnabled),
                   duration: Duration(seconds: 3),
                 ),
               );
@@ -119,14 +120,14 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
               ScaffoldMessenger.of(context)
                 ..hideCurrentSnackBar()
                 ..showSnackBar(
-                  const SnackBar(
-                    content: Text('🔧 Developer mode enabled! Debug Menu tab is now available!'),
+                  SnackBar(
+                    content: Text(context.l10n.developerModeEnabled),
                     duration: Duration(seconds: 3),
                   ),
                 );
             }
           },
-          child: Text('Tabs settings'),
+          child: Text(context.l10n.tabsSettings),
         ),
       ),
       body: ReorderableListView.builder(
@@ -175,8 +176,8 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
                 key: ValueKey('selected_${tab.type}'),
                 child: _TabItemWidget(
                   leadingIcon: tab.type.materialIcon,
-                  title: tab.type.label,
-                  subtitle: tab.type.description,
+                  title: tab.type.localizedLabel(context),
+                  subtitle: tab.type.localizedDescription(context),
                   trailingActionWidget: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -199,8 +200,8 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
                 key: ValueKey('unselected_${tab.type}'),
                 child: _TabItemWidget(
                   leadingIcon: tab.type.materialIcon,
-                  title: tab.type.label,
-                  subtitle: tab.type.description,
+                  title: tab.type.localizedLabel(context),
+                  subtitle: tab.type.localizedDescription(context),
                   trailingActionWidget: GestureDetector(
                     child: Icon(Icons.add),
                     onTap: () => sendEventToBloc<TabsContainerBloc>(TabsContainerSelectTab(tabType: tab.type)),
@@ -234,11 +235,11 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
 
   List<TabsSettingsListItem> _buildListItems() {
     final List<TabsSettingsListItem> items = [];
-    items.add(SectionHeaderItem('Active tabs'));
+    items.add(SectionHeaderItem(context.l10n.activeTabs));
     items.addAll(_selectedTabModels.map((tab) => SelectedTabItem(tab)));
     if (_hiddenTabModels.isNotEmpty) {
       items.add(DividerItem());
-      items.add(SectionHeaderItem('Hidden tabs'));
+      items.add(SectionHeaderItem(context.l10n.hiddenTabs));
       items.addAll(_hiddenTabModels.map((tab) => HiddenTabItem(tab)));
     }
     return items;
@@ -248,8 +249,8 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(
-        const SnackBar(
-          content: Text('Cannot remove main screen. You will loose option to setup tabs.'),
+        SnackBar(
+          content: Text(context.l10n.cannotRemoveMainScreen),
         ),
       );
   }

@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/presentation/core/helpers/mind_utils.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 
 enum PeriodType {
   today,
@@ -11,20 +13,20 @@ enum PeriodType {
 }
 
 extension PeriodTypeExtension on PeriodType {
-  String get localizedTitle {
+  String localizedTitle(BuildContext context) {
     switch (this) {
       case PeriodType.today:
-        return 'Today';
+        return context.l10n.today;
       case PeriodType.yesterday:
-        return 'Yesterday';
+        return context.l10n.yesterday;
       case PeriodType.thisWeek:
-        return 'This week';
+        return context.l10n.thisWeek;
       case PeriodType.lastTwoWeeks:
-        return 'Last 2 weeks';
+        return context.l10n.lastTwoWeeks;
       case PeriodType.thisMonth:
-        return 'This month';
+        return context.l10n.thisMonth;
       case PeriodType.thisYear:
-        return 'This year';
+        return context.l10n.thisYear;
     }
   }
 

@@ -154,6 +154,7 @@ Future<void> _initHive() async {
   await Hive.initFlutter();
   final Box<SettingsObject> settingsBox = await Hive.openBox<SettingsObject>(HiveConstants.settingsBoxName);
   if (settingsBox.get(HiveConstants.globalSettingsIndex) == null) {
+    // First launch - detect device locale and create initial settings
     settingsBox.put(HiveConstants.globalSettingsIndex, KeklistSettings.initial().toObject());
   }
   await Hive.openBox<MindObject>(HiveConstants.mindBoxName);

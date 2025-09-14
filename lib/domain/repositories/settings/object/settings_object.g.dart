@@ -22,13 +22,14 @@ class SettingsObjectAdapter extends TypeAdapter<SettingsObject> {
       ..isDarkMode = fields[3] == null ? true : fields[3] as bool
       ..openAIKey = fields[4] as String?
       ..shouldShowTitles = fields[5] == null ? true : fields[5] as bool
-      ..userName = fields[6] as String?;
+      ..userName = fields[6] as String?
+      ..language = fields[7] == null ? 'en' : fields[7] as String;
   }
 
   @override
   void write(BinaryWriter writer, SettingsObject obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.isMindContentVisible)
       ..writeByte(1)
@@ -40,7 +41,9 @@ class SettingsObjectAdapter extends TypeAdapter<SettingsObject> {
       ..writeByte(5)
       ..write(obj.shouldShowTitles)
       ..writeByte(6)
-      ..write(obj.userName);
+      ..write(obj.userName)
+      ..writeByte(7)
+      ..write(obj.language);
   }
 
   @override

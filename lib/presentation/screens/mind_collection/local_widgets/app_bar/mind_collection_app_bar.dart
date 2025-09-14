@@ -28,7 +28,7 @@ final class _MindCollectionAppBar extends StatelessWidget {
         child: Row(children: [
           const Icon(Icons.calendar_view_week),
           const Gap(8.0),
-          const Text('Calendar'),
+          Text(context.l10n.calendar),
         ]),
       ),
     );

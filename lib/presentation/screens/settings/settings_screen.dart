@@ -10,6 +10,8 @@ import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/screens/tabs_settings/tabs_settings_screen.dart';
 import 'package:keklist/presentation/screens/web_page/web_page_screen.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
+import 'package:keklist/presentation/screens/language_selection/language_picker_screen.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -60,11 +62,11 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
+      appBar: AppBar(title: Text(context.l10n.settings)),
       body: SettingsList(
         sections: [
           SettingsSection(
-            title: Text('USER DATA'.toUpperCase()),
+            title: Text(context.l10n.userData.toUpperCase()),
             tiles: [
               // NOTE: Open AI is temporary disabled.
               // SettingsTile(
@@ -75,7 +77,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
               //   },
               // ),
               SettingsTile(
-                title: const Text('Export to CSV'),
+                title: Text(context.l10n.exportToCsv),
                 leading: const Icon(Icons.file_download, color: Colors.brown),
                 onPressed: (BuildContext context) {
                   // TODO: Add loading
@@ -85,18 +87,29 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
             ],
           ),
           SettingsSection(
-            title: Text('Appearance'.toUpperCase()),
+            title: Text(context.l10n.appearance.toUpperCase()),
             tiles: [
+              SettingsTile.navigation(
+                leading: const Icon(Icons.language),
+                title: Text(context.l10n.language),
+                onPressed: (BuildContext context) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const LanguagePickerScreen(),
+                    ),
+                  );
+                },
+              ),
               SettingsTile.switchTile(
                 initialValue: _isDarkMode,
                 leading: const Icon(Icons.dark_mode, color: Colors.grey),
-                title: const Text('Dark mode'),
+                title: Text(context.l10n.darkMode),
                 onToggle: (bool value) => _switchDarkMode(value),
               ),
               SettingsTile.switchTile(
                 initialValue: _showTitles,
                 leading: const Icon(Icons.title, color: Colors.grey),
-                title: const Text('Show day dividers'),
+                title: Text(context.l10n.showDayDividers),
                 onToggle: (bool value) => _switchShowTitles(value),
               ),
               // SettingsTile.switchTile(
@@ -111,60 +124,60 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
               //   onPressed: (BuildContext context) => _showFeatureFlags(),
               // ),
               SettingsTile.navigation(
-                title: const Text('Tabs settings'),
+                title: Text(context.l10n.tabsSettings),
                 leading: const Icon(Icons.dashboard, color: Colors.blue),
                 onPressed: (BuildContext context) => _showTabsSettings(),
               ),
             ],
           ),
           SettingsSection(
-            title: Text('About'.toUpperCase()),
+            title: Text(context.l10n.about.toUpperCase()),
             tiles: [
               SettingsTile.navigation(
-                title: const Text('Whats new?'),
+                title: Text(context.l10n.whatsNew),
                 leading: const Icon(Icons.new_releases, color: Colors.purple),
                 onPressed: (BuildContext context) {
                   _showWhatsNew();
                 },
               ),
               SettingsTile.navigation(
-                title: const Text('Suggest a feature'),
+                title: Text(context.l10n.suggestFeature),
                 leading: const Icon(Icons.handyman, color: Colors.yellow),
                 onPressed: (BuildContext context) {
                   _openFeatureSuggestion();
                 },
               ),
               SettingsTile.navigation(
-                title: const Text('Send feedback'),
+                title: Text(context.l10n.sendFeedback),
                 leading: const Icon(Icons.feedback, color: Colors.blue),
                 onPressed: (BuildContext context) async {
                   await _openEmailFeedbackForm();
                 },
               ),
               SettingsTile.navigation(
-                title: const Text('Source code'),
+                title: Text(context.l10n.sourceCode),
                 leading: const Icon(Icons.code, color: Colors.yellow),
                 onPressed: (BuildContext context) async {
                   await _openSourceCode();
                 },
               ),
               SettingsTile.navigation(
-                title: const Text('Terms Of Use'),
+                title: Text(context.l10n.termsOfUse),
                 leading: const Icon(Icons.verified_user, color: Colors.grey),
                 onPressed: (BuildContext context) => _openTermsOfUse(),
               ),
               SettingsTile.navigation(
-                title: const Text('Privacy Policy'),
+                title: Text(context.l10n.privacyPolicy),
                 leading: const Icon(Icons.privacy_tip, color: Colors.grey),
                 onPressed: (BuildContext context) => _openPrivacyPolicy(),
               ),
             ],
           ),
           SettingsSection(
-            title: Text('DANGER ZONE'.toUpperCase()),
+            title: Text(context.l10n.dangerZone.toUpperCase()),
             tiles: [
               SettingsTile(
-                title: const Text('Clear on-device data'),
+                title: Text(context.l10n.clearOnDeviceData),
                 leading: const Icon(Icons.delete_outline, color: Colors.red),
                 onPressed: (BuildContext context) async => await _clearCache(),
               )
@@ -221,7 +234,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Set Open AI Token'),
+          title: Text(context.l10n.setOpenAIToken),
           content: TextField(
             onChanged: (value) => openAiToken = value,
             decoration: const InputDecoration(
@@ -233,7 +246,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
+              child: Text(context.l10n.cancel),
             ),
             TextButton(
               onPressed: () {
@@ -241,16 +254,12 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
                 Navigator.of(context).pop();
                 sendEventToBloc<SettingsBloc>(SettingsChangeOpenAIKey(openAIToken: openAiToken));
               },
-              child: const Text('Save'),
+              child: Text(context.l10n.save),
             ),
           ],
         );
       },
     );
-  }
-
-  void _switchSensitiveContentVisibility(bool value) {
-    sendEventToBloc<SettingsBloc>(SettingsChangeMindContentVisibility(isVisible: value));
   }
 
   void _switchDarkMode(bool value) {
@@ -291,10 +300,10 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   Future<void> _clearCache() async {
     final OkCancelResult result = await showOkCancelAlertDialog(
       context: context,
-      title: 'Are you sure?',
+      title: context.l10n.areYouSure,
       message: 'All your offline data will be deleted. Make sure that you have already exported it.',
-      cancelLabel: 'Cancel',
-      okLabel: 'Clear cache',
+      cancelLabel: context.l10n.cancel,
+      okLabel: context.l10n.clearCache,
       isDestructiveAction: true,
     );
     switch (result) {

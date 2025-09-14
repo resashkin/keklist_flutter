@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/core/widgets/mind_widget.dart';
 
 final class MindCollectionEmptyDayWidget extends StatelessWidget {
@@ -11,10 +12,17 @@ final class MindCollectionEmptyDayWidget extends StatelessWidget {
     required this.text,
   });
 
-  factory MindCollectionEmptyDayWidget.noMinds({String? text}) {
+  factory MindCollectionEmptyDayWidget.noMinds({required BuildContext context, String? text}) {
     return MindCollectionEmptyDayWidget(
       emoji: '😔',
-      text: text ?? 'No minds',
+      text: text ?? context.l10n.noMindsForPeriod,
+    );
+  }
+
+  factory MindCollectionEmptyDayWidget.noMindsForDay({String? text}) {
+    return MindCollectionEmptyDayWidget(
+      emoji: '😔',
+      text: text ?? 'No minds for this day',
     );
   }
 

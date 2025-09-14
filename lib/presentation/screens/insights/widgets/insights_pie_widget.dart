@@ -10,6 +10,7 @@ import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/presentation/core/widgets/my_chip_widget.dart';
 import 'package:keklist/presentation/core/widgets/rounded_container.dart';
 import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_collection_empty_day_widget.dart';
 import 'package:keklist/domain/period.dart';
 import 'package:keklist/presentation/screens/digest/mind_universal_list_screen.dart';
@@ -60,10 +61,10 @@ final class _InsightsPieWidgetState extends State<InsightsPieWidget> {
       child: RoundedContainer(
         child: Column(
           children: [
-            const Padding(
+            Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
-                'Spectrum',
+                context.l10n.spectrum,
                 style: TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.w500,
@@ -89,7 +90,7 @@ final class _InsightsPieWidgetState extends State<InsightsPieWidget> {
                         selectedColor: Theme.of(context).colorScheme.primary,
                         child: SensitiveWidget(
                           child: Text(
-                            _choices[index].localizedTitle,
+                            _choices[index].localizedTitle(context),
                             style: TextStyle(
                                 fontSize: 14.0,
                                 color: _selectedChoiceIndex == index
@@ -141,7 +142,12 @@ final class _InsightsPieWidgetState extends State<InsightsPieWidget> {
                     curve: Curves.bounceInOut,
                   ),
                 ),
-                falseChild: Center(child: MindCollectionEmptyDayWidget.noMinds(text: 'No minds for this period')),
+                falseChild: Center(
+                  child: MindCollectionEmptyDayWidget.noMinds(
+                    context: context,
+                    text: context.l10n.noMindsForPeriod,
+                  ),
+                ),
               ),
             ),
             SingleChildScrollView(
@@ -190,8 +196,8 @@ final class _InsightsPieWidgetState extends State<InsightsPieWidget> {
                           final bool emojiMatch = selectedEmoji == null || mind.emoji == selectedEmoji;
                           return periodMatch && emojiMatch;
                         },
-                        title: 'Minds',
-                        emptyStateMessage: 'No minds for this period',
+                        title: context.l10n.minds,
+                        emptyStateMessage: context.l10n.noMindsForPeriod,
                         onSelectMind: (mind) {
                           Navigator.of(context).push(
                             BackSwipePageRoute(
@@ -207,7 +213,7 @@ final class _InsightsPieWidgetState extends State<InsightsPieWidget> {
                   );
                 },
                 child: Text(
-                  'Show ${_selectedEmoji != null ? '${_selectedEmoji!} ' : 'all '}minds for ${_choices[_selectedChoiceIndex].localizedTitle.toLowerCase()} (${_getFilteredMindsCount()})',
+                  '${context.l10n.showMindsForPeriod(_choices[_selectedChoiceIndex].localizedTitle(context).toLowerCase())} (${_getFilteredMindsCount()})',
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 16.0,

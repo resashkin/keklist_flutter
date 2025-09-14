@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 
 sealed class ActionModel {
   final String title;
@@ -13,19 +14,19 @@ sealed class ActionModel {
 
   factory ActionModel.custom({required String title, required Icon icon}) =>
       CustomActionModel(title: title, icon: icon);
-  factory ActionModel.chatWithAI() => const ChatWithAIActionModel();
-  factory ActionModel.photosPerDay() => const PhotosPerDayActionModel();
-  factory ActionModel.extraActions() => const ExtraActionsMenuActionModel();
-  factory ActionModel.mindOptions() => const MindOptionsMenuActionModel();
-  factory ActionModel.edit() => const EditMenuActionModel();
-  factory ActionModel.delete() => const DeleteMenuActionModel();
-  factory ActionModel.share() => const ShareMenuActionModel();
-  factory ActionModel.switchDay() => const SwitchDayMenuActionModel();
-  factory ActionModel.showDigest() => const ShowDigestActionModel();
-  factory ActionModel.goToDate() => const GoToDateMenuActionModel();
-  factory ActionModel.showAll() => const ShowAllMenuActionModel();
-  factory ActionModel.tranlsateToEnglish() => const TranslateToEnglishMenuActionModel();
-  factory ActionModel.convertToStandalone() => const ConvertToStandaloneMenuActionModel();
+  factory ActionModel.chatWithAI(BuildContext context) => ChatWithAIActionModel(context: context);
+  factory ActionModel.photosPerDay(BuildContext context) => PhotosPerDayActionModel(context: context);
+  factory ActionModel.extraActions(BuildContext context) => ExtraActionsMenuActionModel(context: context);
+  factory ActionModel.mindOptions(BuildContext context) => MindOptionsMenuActionModel(context: context);
+  factory ActionModel.edit(BuildContext context) => EditMenuActionModel(context: context);
+  factory ActionModel.delete(BuildContext context) => DeleteMenuActionModel(context: context);
+  factory ActionModel.share(BuildContext context) => ShareMenuActionModel(context: context);
+  factory ActionModel.switchDay(BuildContext context) => SwitchDayMenuActionModel(context: context);
+  factory ActionModel.showDigest(BuildContext context) => ShowDigestActionModel(context: context);
+  factory ActionModel.goToDate(BuildContext context) => GoToDateMenuActionModel(context: context);
+  factory ActionModel.showAll(BuildContext context) => ShowAllMenuActionModel(context: context);
+  factory ActionModel.tranlsateToEnglish(BuildContext context) => TranslateToEnglishMenuActionModel(context: context);
+  factory ActionModel.convertToStandalone(BuildContext context) => ConvertToStandaloneMenuActionModel(context: context);
 }
 
 final class CustomActionModel extends ActionModel {
@@ -33,106 +34,105 @@ final class CustomActionModel extends ActionModel {
 }
 
 final class ChatWithAIActionModel extends ActionModel {
-  const ChatWithAIActionModel()
+  ChatWithAIActionModel({required BuildContext context})
       : super(
-          title: 'Chat with AI',
+          title: context.l10n.chatWithAI,
           icon: const Icon(Icons.chat),
         );
 }
 
 final class PhotosPerDayActionModel extends ActionModel {
-  const PhotosPerDayActionModel()
+  PhotosPerDayActionModel({required BuildContext context})
       : super(
-          title: 'Photos per day',
+          title: context.l10n.photosPerDay,
           icon: const Icon(Icons.photo),
         );
 }
 
 final class ExtraActionsMenuActionModel extends ActionModel {
-  const ExtraActionsMenuActionModel()
+  ExtraActionsMenuActionModel({required BuildContext context})
       : super(
-          title: 'Extra actions',
+          title: context.l10n.extraActions,
           icon: const Icon(Icons.read_more),
         );
 }
 
 final class MindOptionsMenuActionModel extends ActionModel {
-  const MindOptionsMenuActionModel()
+  MindOptionsMenuActionModel({required BuildContext context})
       : super(
-          title: 'Mind options',
+          title: context.l10n.mindOptions,
           icon: const Icon(Icons.more_vert),
         );
 }
 
 final class EditMenuActionModel extends ActionModel {
-  const EditMenuActionModel()
+  EditMenuActionModel({required BuildContext context})
       : super(
-          title: 'Edit',
+          title: context.l10n.edit,
           icon: const Icon(Icons.edit),
         );
 }
 
 final class DeleteMenuActionModel extends ActionModel {
-  const DeleteMenuActionModel()
+  DeleteMenuActionModel({required BuildContext context})
       : super(
-          title: 'Delete',
+          title: context.l10n.delete,
           icon: const Icon(Icons.delete),
         );
 }
 
 final class ShareMenuActionModel extends ActionModel {
-  const ShareMenuActionModel()
+  ShareMenuActionModel({required BuildContext context})
       : super(
-          title: 'Share',
+          title: context.l10n.share,
           icon: const Icon(Icons.share),
         );
 }
 
 final class SwitchDayMenuActionModel extends ActionModel {
-  const SwitchDayMenuActionModel()
+  SwitchDayMenuActionModel({required BuildContext context})
       : super(
-          title: 'Switch day',
+          title: context.l10n.switchDay,
           icon: const Icon(Icons.calendar_today),
         );
 }
 
 final class GoToDateMenuActionModel extends ActionModel {
-  const GoToDateMenuActionModel()
+  GoToDateMenuActionModel({required BuildContext context})
       : super(
-          title: 'Go to date',
+          title: context.l10n.goToDate,
           icon: const Icon(Icons.calendar_today),
         );
 }
 
 final class ShowDigestActionModel extends ActionModel {
-  const ShowDigestActionModel()
+  ShowDigestActionModel({required BuildContext context})
       : super(
-          title: 'Show digest for ...',
+          title: context.l10n.showDigest,
           icon: const Icon(Icons.filter_center_focus),
         );
 }
 
 final class ShowAllMenuActionModel extends ActionModel {
-  const ShowAllMenuActionModel()
+  ShowAllMenuActionModel({required BuildContext context})
       : super(
-          title: 'Show all',
+          title: context.l10n.showAll,
           icon: const Icon(Icons.show_chart),
         );
 }
 
 final class TranslateToEnglishMenuActionModel extends ActionModel {
-  const TranslateToEnglishMenuActionModel()
+  TranslateToEnglishMenuActionModel({required BuildContext context})
       : super(
-          title: 'Translate to English',
+          title: context.l10n.translateToEnglish,
           icon: const Icon(Icons.translate),
         );
 }
 
 final class ConvertToStandaloneMenuActionModel extends ActionModel {
-  const ConvertToStandaloneMenuActionModel()
+  ConvertToStandaloneMenuActionModel({required BuildContext context})
       : super(
-          title: 'Convert to standalone entry',
-          icon: const Icon(Icons.move_up),
+          title: context.l10n.convertToStandalone,
+          icon: const Icon(Icons.transform),
         );
 }
-

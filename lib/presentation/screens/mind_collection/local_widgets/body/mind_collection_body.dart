@@ -31,9 +31,10 @@ final class _MindCollectionBody extends StatelessWidget {
     required this.monthGridObserverController,
   });
 
-  static final DateFormat _dayFormatter = DateFormat('dd.MM.yyyy - EEEE');
-  static final DateFormat _yearTitleFormatter = DateFormat.y();
-  static final DateFormat _monthTitleFormatter = DateFormat.MMMM().addPattern('').addPattern('yyyy', '');
+  static DateFormat _yearTitleFormatter(BuildContext context) =>
+      DateFormat.y(Localizations.localeOf(context).languageCode);
+  static DateFormat _monthTitleFormatter(BuildContext context) =>
+      DateFormat.MMMM(Localizations.localeOf(context).languageCode).addPattern('').addPattern('yyyy', '');
 
   @override
   Widget build(BuildContext context) {
@@ -59,10 +60,10 @@ final class _MindCollectionBody extends StatelessWidget {
               final bool isToday = dayIndex == getNowDayIndex();
               final DateTime currentDayDateIndex = DateUtils.getDateFromDayIndex(dayIndex);
               final DateTime previousDayDateIndex = currentDayDateIndex.subtract(const Duration(days: 1));
-              final String currentDayYearTitle = _yearTitleFormatter.format(currentDayDateIndex);
-              final String previousDayYearTitle = _yearTitleFormatter.format(previousDayDateIndex);
-              final String currentDayMonthTitle = _monthTitleFormatter.format(currentDayDateIndex);
-              final String previousDayMonthTitle = _monthTitleFormatter.format(previousDayDateIndex);
+              final String currentDayYearTitle = _yearTitleFormatter(context).format(currentDayDateIndex);
+              final String previousDayYearTitle = _yearTitleFormatter(context).format(previousDayDateIndex);
+              final String currentDayMonthTitle = _monthTitleFormatter(context).format(currentDayDateIndex);
+              final String previousDayMonthTitle = _monthTitleFormatter(context).format(previousDayDateIndex);
               final int currentDayWeekNumber = _getWeekNumber(currentDayDateIndex);
               final int previousDayWeekNumber = _getWeekNumber(previousDayDateIndex);
               return Column(
@@ -105,7 +106,7 @@ final class _MindCollectionBody extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    _dayFormatter.format(currentDayDateIndex),
+                    DateFormatters.formatFullDate(currentDayDateIndex, Localizations.localeOf(context)),
                     textAlign: TextAlign.center,
                     style: TextStyle(fontWeight: isToday ? FontWeight.bold : FontWeight.normal),
                   ),
@@ -123,7 +124,7 @@ final class _MindCollectionBody extends StatelessWidget {
                             : null,
                         child: BoolWidget(
                           condition: dayMinds.isEmpty,
-                          trueChild: MindCollectionEmptyDayWidget.noMinds(),
+                          trueChild: MindCollectionEmptyDayWidget.noMinds(context: context),
                           falseChild: MindRowWidget(minds: dayMinds),
                         ),
                       ),

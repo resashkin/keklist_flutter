@@ -1,6 +1,7 @@
 import 'package:keklist/presentation/core/helpers/platform_utils.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/presentation/core/widgets/mind_widget.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
 
@@ -220,8 +221,8 @@ class _TextFieldWidget extends StatelessWidget {
                       foregroundColor: WidgetStateProperty.all(Colors.blueAccent),
                     ),
                     onPressed: onDone,
-                    child: const Text(
-                      'DONE',
+                    child: Text(
+                      context.l10n.done,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),

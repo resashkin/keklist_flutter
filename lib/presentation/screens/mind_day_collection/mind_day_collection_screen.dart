@@ -8,6 +8,7 @@ import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dar
 import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
 import 'package:keklist/presentation/core/widgets/overscroll_listener.dart';
 import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/screens/actions/action_model.dart';
 import 'package:keklist/presentation/screens/actions/actions_screen.dart';
 import 'package:keklist/presentation/screens/mind_chat_discussion/mind_chat_discussion_screen.dart';
@@ -113,14 +114,14 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
           children: [
             Text(
               // TODO: refactor it
-              '${DateFormatters.dayMonthFormat.format(DateUtils.getDateFromDayIndex(dayIndex))}${DateUtils.getDateFromDayIndex(dayIndex).year != DateTime.now().year ? ' ${DateUtils.getDateFromDayIndex(dayIndex).year}' : ''}',
+              '${DateFormatters.dayMonthFormat(Localizations.localeOf(context)).format(DateUtils.getDateFromDayIndex(dayIndex))}${DateUtils.getDateFromDayIndex(dayIndex).year != DateTime.now().year ? ' ${DateUtils.getDateFromDayIndex(dayIndex).year}' : ''}',
               style: const TextStyle(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w500,
               ),
             ),
             Text(
-              DateFormatters.weekDayFormat.format(DateUtils.getDateFromDayIndex(dayIndex)),
+              DateFormatters.formatWeekday(DateUtils.getDateFromDayIndex(dayIndex), Localizations.localeOf(context)),
               style: const TextStyle(
                 fontSize: 14.0,
                 fontWeight: FontWeight.w300,
@@ -165,14 +166,16 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
         childScrollController: _scrollController,
         topOverscrollChild: Column(
           children: [
-            Text(DateFormatters.fullDateFormat.format(DateUtils.getDateFromDayIndex(dayIndex - 1))),
+            Text(DateFormatters.formatFullDate(
+                DateUtils.getDateFromDayIndex(dayIndex - 1), Localizations.localeOf(context))),
             const Icon(Icons.arrow_upward),
           ],
         ),
         bottomOverscrollChild: Column(
           children: [
             const Icon(Icons.arrow_downward),
-            Text(DateFormatters.fullDateFormat.format(DateUtils.getDateFromDayIndex(dayIndex + 1))),
+            Text(DateFormatters.formatFullDate(
+                DateUtils.getDateFromDayIndex(dayIndex + 1), Localizations.localeOf(context))),
           ],
         ),
         child: SingleChildScrollView(
@@ -187,7 +190,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
               onOptions: (Mind mind) => _showActions(context, mind),
               mindIdsToChildren: _mindIdsToChildren,
             ),
-            falseChild: MindCollectionEmptyDayWidget.noMinds(),
+            falseChild: MindCollectionEmptyDayWidget.noMinds(context: context),
           ),
         ),
       ),
@@ -197,8 +200,8 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
         child: FloatingActionButton.extended(
           icon: const Icon(Icons.add),
           onPressed: () => _showMindCreator(),
-          label: const Text(
-            'Create',
+          label: Text(
+            context.l10n.create,
             style: TextStyle(
               fontSize: 18.0,
               fontWeight: FontWeight.w500,
@@ -226,7 +229,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
         final bool canAuthenticate = canAuthenticateWithBiometrics || await auth.isDeviceSupported();
         if (canAuthenticate) {
           final bool didAuthenticate = await auth.authenticate(
-              localizedReason: 'Please authenticate to show content of your mind',
+              localizedReason: context.l10n.pleaseAuthenticateToShowContent,
               options: const AuthenticationOptions(useErrorDialogs: false));
           if (didAuthenticate) {
             setState(() {
@@ -322,12 +325,12 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
           if (_debugMenuState?.debugMenuItems
                   .firstWhereOrNull((element) => element.type == DebugMenuType.chatWithAI && element.value) !=
               null)
-            (ActionModel.chatWithAI(), () => _showChatDiscussionScreen(mind: mind)),
-          if (mind.rootId != null) (ActionModel.convertToStandalone(), () => _convertToStandalone(mind)),
-          (ActionModel.edit(), () => _editMind(mind)),
-          (ActionModel.switchDay(), () => _updateMindDay(mind)),
-          (ActionModel.showAll(), () => _showAllMinds(mind)),
-          (ActionModel.delete(), () => _removeMind(mind)),
+            (ActionModel.chatWithAI(context), () => _showChatDiscussionScreen(mind: mind)),
+          if (mind.rootId != null) (ActionModel.convertToStandalone(context), () => _convertToStandalone(mind)),
+          (ActionModel.edit(context), () => _editMind(mind)),
+          (ActionModel.switchDay(context), () => _updateMindDay(mind)),
+          (ActionModel.showAll(context), () => _showAllMinds(mind)),
+          (ActionModel.delete(context), () => _removeMind(mind)),
         ],
       ),
     );
@@ -391,7 +394,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
       builder: (_) {
         return MindCreatorScreen(
           buttonIcon: initialEmoji == null ? const Icon(Icons.add) : const Icon(Icons.edit),
-          buttonText: initialEmoji == null ? 'Create' : 'Edit',
+          buttonText: initialEmoji == null ? context.l10n.create : context.l10n.edit,
           initialEmoji: initialEmoji,
           initialText: initialText,
           shouldSuggestEmoji: true,

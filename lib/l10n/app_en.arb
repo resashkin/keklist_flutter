@@ -1,6 +1,387 @@
 {
-    "helloWorld": "Hello World!",
-    "@helloWorld": {
-      "description": "The conventional newborn programmer greeting"
+    "settings": "Settings",
+    "@settings": {
+      "description": "Settings screen title"
+    },
+    "userData": "User Data",
+    "@userData": {
+      "description": "User data section title"
+    },
+    "appearance": "Appearance",
+    "@appearance": {
+      "description": "Appearance section title"
+    },
+    "exportToCsv": "Export to CSV",
+    "@exportToCsv": {
+      "description": "Export to CSV button"
+    },
+    "done": "DONE",
+    "@done": {
+      "description": "Done button"
+    },
+    "chatWithAI": "Chat with AI",
+    "@chatWithAI": {
+      "description": "Chat with AI action"
+    },
+    "photosPerDay": "Photos per day",
+    "@photosPerDay": {
+      "description": "Photos per day action"
+    },
+    "extraActions": "Extra actions",
+    "@extraActions": {
+      "description": "Extra actions menu"
+    },
+    "mindOptions": "Mind options",
+    "@mindOptions": {
+      "description": "Mind options menu"
+    },
+    "edit": "Edit",
+    "@edit": {
+      "description": "Edit action"
+    },
+    "delete": "Delete",
+    "@delete": {
+      "description": "Delete action"
+    },
+    "share": "Share",
+    "@share": {
+      "description": "Share action"
+    },
+    "switchDay": "Switch day",
+    "@switchDay": {
+      "description": "Switch day action"
+    },
+    "goToDate": "Go to date",
+    "@goToDate": {
+      "description": "Go to date action"
+    },
+    "showDigest": "Show digest for ...",
+    "@showDigest": {
+      "description": "Show digest action"
+    },
+    "showAll": "Show all",
+    "@showAll": {
+      "description": "Show all action"
+    },
+    "translateToEnglish": "Translate to English",
+    "@translateToEnglish": {
+      "description": "Translate to English action"
+    },
+    "convertToStandalone": "Convert to standalone",
+    "@convertToStandalone": {
+      "description": "Convert to standalone action"
+    },
+    "language": "Language",
+    "@language": {
+      "description": "Language setting"
+    },
+    "selectLanguage": "Select Language",
+    "@selectLanguage": {
+      "description": "Language selection dialog title"
+    },
+    "darkMode": "Dark mode",
+    "@darkMode": {
+      "description": "Dark mode setting"
+    },
+    "showDayDividers": "Show day dividers",
+    "@showDayDividers": {
+      "description": "Show day dividers setting"
+    },
+    "tabsSettings": "Tabs settings",
+    "@tabsSettings": {
+      "description": "Tabs settings navigation"
+    },
+    "whatsNew": "What's new?",
+    "@whatsNew": {
+      "description": "What's new navigation"
+    },
+    "suggestFeature": "Suggest a feature",
+    "@suggestFeature": {
+      "description": "Suggest feature navigation"
+    },
+    "sendFeedback": "Send feedback",
+    "@sendFeedback": {
+      "description": "Send feedback navigation"
+    },
+    "sourceCode": "Source code",
+    "@sourceCode": {
+      "description": "Source code navigation"
+    },
+    "termsOfUse": "Terms Of Use",
+    "@termsOfUse": {
+      "description": "Terms of use navigation"
+    },
+    "privacyPolicy": "Privacy Policy",
+    "@privacyPolicy": {
+      "description": "Privacy policy navigation"
+    },
+    "clearOnDeviceData": "Clear on-device data",
+    "@clearOnDeviceData": {
+      "description": "Clear data navigation"
+    },
+    "setOpenAIToken": "Set Open AI Token",
+    "@setOpenAIToken": {
+      "description": "OpenAI token dialog title"
+    },
+    "cancel": "Cancel",
+    "@cancel": {
+      "description": "Cancel button"
+    },
+    "save": "Save",
+    "@save": {
+      "description": "Save button"
+    },
+    "mind": "Mind",
+    "@mind": {
+      "description": "Mind screen title"
+    },
+    "profile": "Profile",
+    "@profile": {
+      "description": "Profile screen title"
+    },
+    "insights": "Insights",
+    "@insights": {
+      "description": "Insights screen title"
+    },
+    "calendar": "Calendar",
+    "@calendar": {
+      "description": "Calendar title"
+    },
+    "debugMenu": "Debug Menu",
+    "@debugMenu": {
+      "description": "Debug menu title"
+    },
+    "discussion": "Discussion",
+    "@discussion": {
+      "description": "Discussion screen title"
+    },
+    "about": "About",
+    "@about": {
+      "description": "About section title"
+    },
+    "dangerZone": "Danger Zone",
+    "@dangerZone": {
+      "description": "Danger zone section title"
+    },
+    "editMind": "Edit mind",
+    "@editMind": {
+      "description": "Edit mind dialog title"
+    },
+    "enterTokenHere": "Enter token here",
+    "@enterTokenHere": {
+      "description": "Token input hint"
+    },
+    "token": "Token",
+    "@token": {
+      "description": "Token input label"
+    },
+    "clearCache": "Clear cache",
+    "@clearCache": {
+      "description": "Clear cache button"
+    },
+    "developerModeEnabled": "🔧 Developer mode enabled! Debug Menu tab is now available!",
+    "@developerModeEnabled": {
+      "description": "Developer mode enabled message"
+    },
+    "activeTabs": "Active tabs",
+    "@activeTabs": {
+      "description": "Active tabs section header"
+    },
+    "hiddenTabs": "Hidden tabs",
+    "@hiddenTabs": {
+      "description": "Hidden tabs section header"
+    },
+    "error": "Error",
+    "@error": {
+      "description": "Error dialog title"
+    },
+    "startDiscussion": "Start discussion",
+    "@startDiscussion": {
+      "description": "Start discussion button"
+    },
+    "send": "SEND",
+    "@send": {
+      "description": "Send button"
+    },
+    "done": "DONE",
+    "@done": {
+      "description": "Done button"
+    },
+    "chatWithAI": "Chat with AI",
+    "@chatWithAI": {
+      "description": "Chat with AI debug option"
+    },
+    "translateContent": "Translate content",
+    "@translateContent": {
+      "description": "Translate content debug option"
+    },
+    "sensitiveContent": "Sensitive content",
+    "@sensitiveContent": {
+      "description": "Sensitive content debug option"
+    },
+    "updateYourNickname": "Update your nickname",
+    "@updateYourNickname": {
+      "description": "Update nickname dialog title"
+    },
+    "yourNickname": "Your nickname",
+    "@yourNickname": {
+      "description": "Nickname input hint"
+    },
+    "create": "Create",
+    "@create": {
+      "description": "Create button"
+    },
+    "yourFolderName": "Your folder name",
+    "@yourFolderName": {
+      "description": "Folder name input hint"
+    },
+    "noMindsInSelectedPeriod": "No minds in selected period",
+    "@noMindsInSelectedPeriod": {
+      "description": "No minds in period message"
+    },
+    "noMindsForPeriod": "No minds for this period",
+    "@noMindsForPeriod": {
+      "description": "No minds for period message"
+    },
+    "selectPeriod": "Select period ...",
+    "@selectPeriod": {
+      "description": "Select period action"
+    },
+    "digest": "Digest",
+    "@digest": {
+      "description": "Digest title"
+    },
+    "minds": "Minds",
+    "@minds": {
+      "description": "Minds title"
+    },
+    "searchForYourNotes": "Search for your notes",
+    "@searchForYourNotes": {
+      "description": "Search notes hint"
+    },
+    "searchYourEmoji": "Search your emoji...",
+    "@searchYourEmoji": {
+      "description": "Search emoji hint"
+    },
+    "writeSomething": "Write something...",
+    "@writeSomething": {
+      "description": "Write something hint"
+    },
+    "topMinds": "Top minds",
+    "@topMinds": {
+      "description": "Top minds title"
+    },
+    "todayMinds": "Today minds",
+    "@todayMinds": {
+      "description": "Today minds title"
+    },
+    "randomMind": "Random mind",
+    "@randomMind": {
+      "description": "Random mind title"
+    },
+    "spectrum": "Spectrum",
+    "@spectrum": {
+      "description": "Spectrum title"
+    },
+    "youDidNotCollectAnyEntriesYet": "You did not collect any entries yet",
+    "@youDidNotCollectAnyEntriesYet": {
+      "description": "No entries collected message"
+    },
+    "pleaseAuthenticateToShowContent": "Please authenticate to show content of your mind",
+    "@pleaseAuthenticateToShowContent": {
+      "description": "Authentication required message"
+    },
+    "edit": "Edit",
+    "@edit": {
+      "description": "Edit button"
+    },
+    "areYouSure": "Are you sure?",
+    "@areYouSure": {
+      "description": "Confirmation dialog title"
+    },
+    "cannotRemoveMainScreen": "Cannot remove main screen. You will loose option to setup tabs.",
+    "@cannotRemoveMainScreen": {
+      "description": "Cannot remove main screen error message"
+    },
+    "today": "Today",
+    "@today": {
+      "description": "Today period title"
+    },
+    "yesterday": "Yesterday",
+    "@yesterday": {
+      "description": "Yesterday period title"
+    },
+    "thisWeek": "This week",
+    "@thisWeek": {
+      "description": "This week period title"
+    },
+    "lastTwoWeeks": "Last 2 weeks",
+    "@lastTwoWeeks": {
+      "description": "Last 2 weeks period title"
+    },
+    "thisMonth": "This month",
+    "@thisMonth": {
+      "description": "This month period title"
+    },
+    "thisYear": "This year",
+    "@thisYear": {
+      "description": "This year period title"
+    },
+    "calendar": "Calendar",
+    "@calendar": {
+      "description": "Calendar tab label"
+    },
+    "insights": "Insights",
+    "@insights": {
+      "description": "Insights tab label"
+    },
+    "settings": "Settings",
+    "@settings": {
+      "description": "Settings tab label"
+    },
+    "profile": "Profile",
+    "@profile": {
+      "description": "Profile tab label"
+    },
+    "debugMenu": "Debug Menu",
+    "@debugMenu": {
+      "description": "Debug Menu tab label"
+    },
+    "calendarDescription": "Main screen with Calendar of entries",
+    "@calendarDescription": {
+      "description": "Calendar tab description"
+    },
+    "insightsDescription": "Statistics all yours entries",
+    "@insightsDescription": {
+      "description": "Insights tab description"
+    },
+    "settingsDescription": "Screen with all settings (dark mode, sync and etc.)",
+    "@settingsDescription": {
+      "description": "Settings tab description"
+    },
+    "profileDescription": "Screen with your profile",
+    "@profileDescription": {
+      "description": "Profile tab description"
+    },
+    "todayDescription": "Only today minds",
+    "@todayDescription": {
+      "description": "Today tab description"
+    },
+    "debugMenuDescription": "Developer tools for toggling experimental features",
+    "@debugMenuDescription": {
+      "description": "Debug Menu tab description"
+    },
+    "noMindsForThisDay": "No minds for this day",
+    "@noMindsForThisDay": {
+      "description": "No minds for this day message"
+    },
+    "showMindsForPeriod": "Show minds for {period}",
+    "@showMindsForPeriod": {
+      "description": "Show minds for period message",
+      "placeholders": {
+        "period": {
+          "type": "String"
+        }
+      }
     }
 }

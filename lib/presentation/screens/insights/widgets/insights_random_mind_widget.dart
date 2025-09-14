@@ -5,6 +5,7 @@ import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/presentation/core/widgets/rounded_container.dart';
 import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 
 // TODO: добавить дату
 // TODO: возможность перехода на источник
@@ -59,10 +60,10 @@ final class _InsightsRandomMindWidgetState extends State<InsightsRandomMindWidge
           child: RoundedContainer(
             child: Column(
               children: [
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text(
-                    'Random mind',
+                    context.l10n.randomMind,
                     style: TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.w500,

@@ -3,16 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
 import 'package:gap/gap.dart';
-import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/presentation/blocs/user_profile_bloc/user_profile_bloc.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
-import 'package:keklist/presentation/core/widgets/my_chip_widget.dart';
-import 'package:keklist/presentation/screens/mind_creator_screen.dart';
 import 'package:keklist/presentation/screens/settings/settings_screen.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 // TODO: fill empty sections
 
@@ -46,7 +43,7 @@ final class _UserProfileScreenState extends KekWidgetState<UserProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Profile"),
+        title: Text(context.l10n.profile),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
@@ -94,12 +91,12 @@ final class _UserProfileScreenState extends KekWidgetState<UserProfileScreen> {
   void _showChangeUserName() async {
     final List<String>? dialogValues = await showTextInputDialog(
       context: context,
-      title: 'Update your nickname',
+      title: context.l10n.updateYourNickname,
       autoSubmit: true,
       textFields: [
         DialogTextField(
           initialText: _userProfileState.nickname,
-          hintText: 'Your nickname',
+          hintText: context.l10n.yourNickname,
           prefixText: '@',
           autocorrect: false,
           keyboardType: TextInputType.text,
@@ -118,29 +115,6 @@ final class _UserProfileScreenState extends KekWidgetState<UserProfileScreen> {
       BackSwipePageRoute(
         builder: (context) => const SettingsScreen(),
       ),
-    );
-  }
-
-  void _showMindCreator({required String initialEmoji}) {
-    showCupertinoModalBottomSheet(
-      context: context,
-      builder: (_) {
-        return MindCreatorScreen(
-          buttonIcon: const Icon(Icons.add),
-          buttonText: 'Create',
-          initialEmoji: initialEmoji,
-          shouldSuggestEmoji: false,
-          hintText: 'Your folder name',
-          onDone: (String text, String emoji) {
-            sendEventToBloc<UserProfileBloc>(
-              UserProfileAddFolderMind(
-                emoji: emoji,
-                note: text,
-              ),
-            );
-          },
-        );
-      },
     );
   }
 }
@@ -184,55 +158,6 @@ final class _UserAvatarPlaceholder extends StatelessWidget {
           style: const TextStyle(fontSize: 64.0),
         ),
       ],
-    );
-  }
-}
-
-final class _MindsChipsWidget extends StatelessWidget {
-  final List<Mind> _minds;
-  final Function() _onCreate;
-
-  const _MindsChipsWidget({
-    required List<Mind> minds,
-    required void Function() onCreate,
-  })  : _onCreate = onCreate,
-        _minds = minds;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: Wrap(
-        alignment: WrapAlignment.center,
-        spacing: 4.0,
-        runSpacing: 0.0,
-        children: [
-          ..._minds.map(
-            (mind) => MyChipWidget(
-              isSelected: false,
-              onSelect: (_) => print('didSelect'),
-              selectedColor: Theme.of(context).colorScheme.primary,
-              child: Text(
-                '${mind.emoji} ${mind.note}',
-                style: const TextStyle(fontSize: 16.0),
-              ),
-            ),
-          ),
-          MyChipWidget(
-            isSelected: false,
-            onSelect: (_) => {
-              // TODO: show picker with suggestions
-              //_showMindCreator(initialEmoji: '🙂')
-              _onCreate()
-            },
-            selectedColor: Theme.of(context).colorScheme.primary,
-            child: const Text(
-              '+ ADD',
-              style: TextStyle(fontSize: 14.0),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

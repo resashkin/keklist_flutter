@@ -6,6 +6,7 @@ import 'package:csv/csv.dart';
 import 'package:dart_openai/dart_openai.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
+import 'package:keklist/domain/services/language_manager.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
@@ -37,6 +38,7 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     on<SettingsChangeIsDarkMode>(_changeSettingsDarkMode);
     on<SettingsChangeOpenAIKey>(_changeOpenAIKey);
     on<SettingsUpdateShouldShowTitlesMode>(_updateShouldShowTitlesMode);
+    on<SettingsChangeLanguage>(_changeLanguage);
 
     _repository.stream.listen((settings) => add(SettingsGet())).disposed(by: this);
   }
@@ -109,5 +111,9 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
   FutureOr<void> _updateShouldShowTitlesMode(
       SettingsUpdateShouldShowTitlesMode event, Emitter<SettingsState> emit) async {
     await _repository.updateShouldShowTitles(event.value);
+  }
+
+  FutureOr<void> _changeLanguage(SettingsChangeLanguage event, Emitter<SettingsState> emit) async {
+    await _repository.updateLanguage(event.language);
   }
 }

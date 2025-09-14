@@ -12,6 +12,7 @@ import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/mind_utils.dart';
 import 'package:keklist/presentation/core/helpers/date_utils.dart';
 import 'package:keklist/presentation/core/widgets/creator_bottom_bar/mind_creator_bottom_bar.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/screens/mind_info/mind_info_screen.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -149,7 +150,7 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
                     suggestionMinds: const [],
                     selectedEmoji: emoji,
                     onTapEmoji: () {},
-                    doneTitle: 'DONE',
+                    doneTitle: context.l10n.done,
                     onTapCancelEdit: () {
                       _resetMindCreator();
                     },
@@ -189,7 +190,7 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
       builder: (context) => ActionsScreen(
         actions: [
           (
-            ActionModel.edit(),
+            ActionModel.edit(context),
             () {
               setState(() {
                 _editableMind = mind;
@@ -200,7 +201,7 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
             }
           ),
           (
-            ActionModel.switchDay(),
+            ActionModel.switchDay(context),
             () async {
               final int? switchedDay = await _showDateSwitcherToNewDay();
               if (switchedDay != null) {
@@ -214,7 +215,7 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
               }
             }
           ),
-          (ActionModel.delete(), () => sendEventToBloc<MindBloc>(MindDelete(mind: mind))),
+          (ActionModel.delete(context), () => sendEventToBloc<MindBloc>(MindDelete(mind: mind))),
         ],
       ),
     );

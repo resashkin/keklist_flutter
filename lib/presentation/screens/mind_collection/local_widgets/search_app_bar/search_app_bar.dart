@@ -50,9 +50,9 @@ class _SearchAppBarTextField extends StatelessWidget {
           child: TextField(
             controller: textController,
             autofocus: true,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               border: InputBorder.none,
-              hintText: 'Search for your notes',
+              hintText: context.l10n.searchForYourNotes,
             ),
           ),
         ),

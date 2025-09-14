@@ -41,3 +41,9 @@ final class SettingsUpdateShouldShowTitlesMode extends SettingsEvent {
 
   const SettingsUpdateShouldShowTitlesMode({required this.value});
 }
+
+final class SettingsChangeLanguage extends SettingsEvent {
+  final SupportedLanguage language;
+
+  const SettingsChangeLanguage({required this.language});
+}

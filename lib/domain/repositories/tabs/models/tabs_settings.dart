@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 
 part 'tabs_settings.g.dart';
 
@@ -70,6 +71,24 @@ enum TabType implements Equatable {
         TabType.profile => 'Screen with your profile',
         TabType.today => 'Only today minds',
         TabType.debugMenu => 'Developer tools for toggling experimental features'
+      };
+
+  String localizedLabel(BuildContext context) => switch (this) {
+        TabType.calendar => context.l10n.calendar,
+        TabType.insights => context.l10n.insights,
+        TabType.settings => context.l10n.settings,
+        TabType.profile => context.l10n.profile,
+        TabType.today => context.l10n.today,
+        TabType.debugMenu => context.l10n.debugMenu
+      };
+
+  String localizedDescription(BuildContext context) => switch (this) {
+        TabType.calendar => context.l10n.calendarDescription,
+        TabType.insights => context.l10n.insightsDescription,
+        TabType.settings => context.l10n.settingsDescription,
+        TabType.profile => context.l10n.profileDescription,
+        TabType.today => context.l10n.todayDescription,
+        TabType.debugMenu => context.l10n.debugMenuDescription
       };
 
   Icon get materialIcon => switch (this) {

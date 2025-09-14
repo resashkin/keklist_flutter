@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:keklist/presentation/blocs/message_bloc/message_bloc.dart';
 import 'package:keklist/presentation/core/helpers/mind_utils.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/core/widgets/creator_bottom_bar/mind_creator_bottom_bar.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/bulleted_list/mind_bullet_list_widget.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/bulleted_list/mind_bullet_widget.dart';
@@ -82,14 +83,14 @@ final class _MindChatDiscussionScreenState extends KekWidgetState<MindChatDiscus
             setState(() => _isLoading = false);
             showOkAlertDialog(
               context: context,
-              title: 'Error',
+              title: context.l10n.error,
               message: errorState.message,
             );
         }
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Discussion'),
+          title: Text(context.l10n.discussion),
           actions: [
             IconButton(
               icon: const Icon(Icons.update),
@@ -130,8 +131,8 @@ final class _MindChatDiscussionScreenState extends KekWidgetState<MindChatDiscus
                           padding: const EdgeInsets.symmetric(horizontal: 48.0, vertical: 16.0),
                           backgroundColor: Colors.red,
                         ),
-                        child: const Text(
-                          'Start discussion',
+                        child: Text(
+                          context.l10n.startDiscussion,
                           style: TextStyle(
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold,
@@ -191,7 +192,7 @@ final class _MindChatDiscussionScreenState extends KekWidgetState<MindChatDiscus
                       selectedEmoji: null,
                       onTapSuggestionEmoji: (_) {},
                       onTapEmoji: () {},
-                      doneTitle: 'SEND',
+                      doneTitle: context.l10n.send,
                       onTapCancelEdit: () => _resetBottomBar(),
                     ),
                   ],
