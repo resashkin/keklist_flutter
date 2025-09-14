@@ -55,24 +55,6 @@ enum TabType implements Equatable {
   today,
   debugMenu;
 
-  String get label => switch (this) {
-        TabType.calendar => 'Calendar',
-        TabType.insights => 'Insights',
-        TabType.settings => 'Settings',
-        TabType.profile => 'Profile',
-        TabType.today => 'Today',
-        TabType.debugMenu => 'Debug Menu'
-      };
-
-  String get description => switch (this) {
-        TabType.calendar => 'Main screen with Calendar of entries',
-        TabType.insights => 'Statistics all yours entries',
-        TabType.settings => 'Screen with all settings (dark mode, sync and etc.)',
-        TabType.profile => 'Screen with your profile',
-        TabType.today => 'Only today minds',
-        TabType.debugMenu => 'Developer tools for toggling experimental features'
-      };
-
   String localizedLabel(BuildContext context) => switch (this) {
         TabType.calendar => context.l10n.calendar,
         TabType.insights => context.l10n.insights,

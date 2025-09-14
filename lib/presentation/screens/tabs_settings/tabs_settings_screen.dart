@@ -68,7 +68,7 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
           final Iterable<BottomNavigationBarItem> items = state.selectedTabs.map(
             (item) => BottomNavigationBarItem(
               icon: item.type.materialIcon,
-              label: item.type.label,
+              label: item.type.localizedLabel(context),
             ),
           );
           _tabItems
@@ -225,11 +225,11 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
   List<BottomNavigationBarItem> _buildFakeItems() => [
         BottomNavigationBarItem(
           icon: TabType.calendar.materialIcon,
-          label: TabType.calendar.label,
+          label: TabType.calendar.localizedLabel(context),
         ),
         BottomNavigationBarItem(
           icon: TabType.settings.materialIcon,
-          label: TabType.settings.label,
+          label: TabType.settings.localizedLabel(context),
         )
       ];
 

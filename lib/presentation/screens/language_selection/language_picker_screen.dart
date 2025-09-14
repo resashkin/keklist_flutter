@@ -3,15 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keklist/domain/services/language_manager.dart';
 import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
+import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 
-class LanguagePickerScreen extends StatefulWidget {
+final class LanguagePickerScreen extends StatefulWidget {
   const LanguagePickerScreen({super.key});
 
   @override
   State<LanguagePickerScreen> createState() => _LanguagePickerScreenState();
 }
 
-class _LanguagePickerScreenState extends State<LanguagePickerScreen> {
+final class _LanguagePickerScreenState extends State<LanguagePickerScreen> {
   SupportedLanguage _currentLanguage = SupportedLanguage.english;
 
   @override
@@ -27,15 +28,11 @@ class _LanguagePickerScreenState extends State<LanguagePickerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(context.l10n.selectLanguage),
-      ),
+      appBar: AppBar(title: Text(context.l10n.selectLanguage)),
       body: BlocListener<SettingsBloc, SettingsState>(
         listener: (context, state) {
           if (state is SettingsDataState) {
-            setState(() {
-              _currentLanguage = state.settings.language;
-            });
+            setState(() => _currentLanguage = state.settings.language);
           }
         },
         child: ListView.builder(
@@ -53,11 +50,8 @@ class _LanguagePickerScreenState extends State<LanguagePickerScreen> {
               trailing: isSelected ? const Icon(Icons.check) : null,
               onTap: () {
                 if (!isSelected) {
-                  context.read<SettingsBloc>().add(
-                        SettingsChangeLanguage(language: language),
-                      );
+                  sendEventToBloc<SettingsBloc>(SettingsChangeLanguage(language: language));
                 }
-                Navigator.of(context).pop();
               },
             );
           },

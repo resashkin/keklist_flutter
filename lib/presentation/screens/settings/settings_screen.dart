@@ -274,20 +274,12 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     Navigator.of(context).push<void>(
       BackSwipePageRoute<void>(
         builder: (BuildContext context) => WebPageScreen(
-          title: 'Whats new?',
+          title: context.l10n.whatsNew,
           initialUri: Uri.parse(KeklistConstants.whatsNewURL),
         ),
       ),
     );
   }
-
-  // void _showFeatureFlags() {
-  //   Navigator.of(context).push<void>(
-  //     MaterialPageRoute<void>(
-  //       builder: (BuildContext context) => const FeatureFlagScreen(),
-  //     ),
-  //   );
-  // }
 
   void _showTabsSettings() {
     Navigator.of(context).push<void>(

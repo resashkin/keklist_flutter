@@ -38,7 +38,7 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
           final Iterable<BottomNavigationBarItem> items = state.selectedTabs.map(
             (item) => BottomNavigationBarItem(
               icon: item.type.materialIcon,
-              label: item.type.label,
+              label: item.type.localizedLabel(context),
             ),
           );
           _items
@@ -85,8 +85,14 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
       );
 
   List<BottomNavigationBarItem> _getFakeItems() => [
-        BottomNavigationBarItem(icon: TabType.calendar.materialIcon, label: TabType.calendar.label),
-        BottomNavigationBarItem(icon: TabType.settings.materialIcon, label: TabType.settings.label)
+        BottomNavigationBarItem(
+          icon: TabType.calendar.materialIcon,
+          label: TabType.calendar.localizedLabel(context),
+        ),
+        BottomNavigationBarItem(
+          icon: TabType.settings.materialIcon,
+          label: TabType.settings.localizedLabel(context),
+        )
       ];
 
   Widget _bodyWidgetByType(TabType type) {
