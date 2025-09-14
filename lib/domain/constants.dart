@@ -26,6 +26,7 @@ final class Themes {
     cupertinoOverrideTheme: const CupertinoThemeData(
       textTheme: CupertinoTextThemeData(), // This is required for Dialog Inputs
     ),
+    splashFactory: NoSplash.splashFactory, // Remove ripple effect on iOS
   );
 
   static final ThemeData dark = ThemeData(
@@ -49,6 +50,7 @@ final class Themes {
     cupertinoOverrideTheme: const CupertinoThemeData(
       textTheme: CupertinoTextThemeData(), // This is required for Dialog Inputs
     ),
+    splashFactory: NoSplash.splashFactory, // Remove ripple effect on iOS
   );
 }
 

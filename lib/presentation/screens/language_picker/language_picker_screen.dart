@@ -18,7 +18,6 @@ final class _LanguagePickerScreenState extends State<LanguagePickerScreen> {
   @override
   void initState() {
     super.initState();
-    // Get current language from settings
     final settingsBloc = context.read<SettingsBloc>();
     if (settingsBloc.state is SettingsDataState) {
       _currentLanguage = (settingsBloc.state as SettingsDataState).settings.language;

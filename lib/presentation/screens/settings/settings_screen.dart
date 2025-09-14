@@ -11,7 +11,7 @@ import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/screens/tabs_settings/tabs_settings_screen.dart';
 import 'package:keklist/presentation/screens/web_page/web_page_screen.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
-import 'package:keklist/presentation/screens/language_selection/language_picker_screen.dart';
+import 'package:keklist/presentation/screens/language_picker/language_picker_screen.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -92,13 +92,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
               SettingsTile.navigation(
                 leading: const Icon(Icons.language),
                 title: Text(context.l10n.language),
-                onPressed: (BuildContext context) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const LanguagePickerScreen(),
-                    ),
-                  );
-                },
+                onPressed: (_) => _showLanguagePicker(),
               ),
               SettingsTile.switchTile(
                 initialValue: _isDarkMode,
@@ -126,7 +120,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
               SettingsTile.navigation(
                 title: Text(context.l10n.tabsSettings),
                 leading: const Icon(Icons.dashboard, color: Colors.blue),
-                onPressed: (BuildContext context) => _showTabsSettings(),
+                onPressed: (_) => _showTabsSettings(),
               ),
             ],
           ),
@@ -184,6 +178,14 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
             ],
           )
         ],
+      ),
+    );
+  }
+
+  void _showLanguagePicker() {
+    Navigator.of(context).push(
+      BackSwipePageRoute(
+        builder: (context) => const LanguagePickerScreen(),
       ),
     );
   }
