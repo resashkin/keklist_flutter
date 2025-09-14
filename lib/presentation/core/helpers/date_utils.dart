@@ -25,4 +25,10 @@ final class DateUtils {
     final DateTime thisWeekStart = getWeekStart(date);
     return thisWeekStart.subtract(const Duration(days: 7));
   }
+
+  static DateTime getLastDayOfWeek(DateTime date) {
+    int currentWeekday = date.weekday;
+    int daysToLastDay = DateTime.sunday - currentWeekday;
+    return date.add(Duration(days: daysToLastDay));
+  }
 }

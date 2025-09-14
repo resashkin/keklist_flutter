@@ -314,14 +314,6 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
     );
   }
 
-  // TODO: move to DateUtils
-
-  DateTime _getLastDayOfWeek(DateTime date) {
-    int currentWeekday = date.weekday;
-    int daysToLastDay = DateTime.sunday - currentWeekday;
-    return date.add(Duration(days: daysToLastDay));
-  }
-
   void _showDigestPeriodOptions() {
     showBarModalBottomSheet(
       context: context,
