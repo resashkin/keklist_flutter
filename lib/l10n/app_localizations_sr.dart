@@ -277,3 +277,277 @@ class AppLocalizationsSr extends AppLocalizations {
     return 'Прикажи белешке за $period';
   }
 }
+
+/// The translations for Serbian, using the Latin script (`sr_Latn`).
+class AppLocalizationsSrLatn extends AppLocalizationsSr {
+  AppLocalizationsSrLatn() : super('sr_Latn');
+
+  @override
+  String get settings => 'Podešavanja';
+
+  @override
+  String get userData => 'Korisnički podaci';
+
+  @override
+  String get appearance => 'Izgled';
+
+  @override
+  String get exportToCsv => 'Izvezi u CSV';
+
+  @override
+  String get done => 'GOTOVO';
+
+  @override
+  String get chatWithAI => 'Ćaskanje sa AI';
+
+  @override
+  String get photosPerDay => 'Fotografije po danu';
+
+  @override
+  String get extraActions => 'Dodatne akcije';
+
+  @override
+  String get mindOptions => 'Opcije uma';
+
+  @override
+  String get edit => 'Uredi';
+
+  @override
+  String get delete => 'Obriši';
+
+  @override
+  String get share => 'Podeli';
+
+  @override
+  String get switchDay => 'Promeni dan';
+
+  @override
+  String get goToDate => 'Idi na datum';
+
+  @override
+  String get showDigest => 'Prikaži sažetak za ...';
+
+  @override
+  String get showAll => 'Prikaži sve';
+
+  @override
+  String get translateToEnglish => 'Prevedi na engleski';
+
+  @override
+  String get convertToStandalone => 'Konvertuj u samostalno';
+
+  @override
+  String get language => 'Jezik';
+
+  @override
+  String get selectLanguage => 'Izaberi jezik';
+
+  @override
+  String get darkMode => 'Tamni režim';
+
+  @override
+  String get showDayDividers => 'Prikaži razdelnike dana';
+
+  @override
+  String get tabsSettings => 'Podešavanja tabova';
+
+  @override
+  String get whatsNew => 'Šta je novo?';
+
+  @override
+  String get suggestFeature => 'Predloži funkciju';
+
+  @override
+  String get sendFeedback => 'Pošalji povratnu informaciju';
+
+  @override
+  String get sourceCode => 'Izvorni kod';
+
+  @override
+  String get termsOfUse => 'Uslovi korišćenja';
+
+  @override
+  String get privacyPolicy => 'Politika privatnosti';
+
+  @override
+  String get clearOnDeviceData => 'Obriši podatke na uređaju';
+
+  @override
+  String get setOpenAIToken => 'Postavi Open AI Token';
+
+  @override
+  String get cancel => 'Otkaži';
+
+  @override
+  String get save => 'Sačuvaj';
+
+  @override
+  String get mind => 'Um';
+
+  @override
+  String get profile => 'Profil';
+
+  @override
+  String get insights => 'Uvid';
+
+  @override
+  String get calendar => 'Kalendar';
+
+  @override
+  String get debugMenu => 'Debug meni';
+
+  @override
+  String get discussion => 'Diskusija';
+
+  @override
+  String get about => 'O aplikaciji';
+
+  @override
+  String get dangerZone => 'Zona opasnosti';
+
+  @override
+  String get editMind => 'Uredi um';
+
+  @override
+  String get enterTokenHere => 'Unesite token ovde';
+
+  @override
+  String get token => 'Token';
+
+  @override
+  String get clearCache => 'Obriši keš';
+
+  @override
+  String get developerModeEnabled =>
+      '🔧 Režim programera omogućen! Debug Menu tab je sada dostupan!';
+
+  @override
+  String get activeTabs => 'Aktivni tabovi';
+
+  @override
+  String get hiddenTabs => 'Skriveni tabovi';
+
+  @override
+  String get error => 'Greška';
+
+  @override
+  String get startDiscussion => 'Započni diskusiju';
+
+  @override
+  String get send => 'POŠALJI';
+
+  @override
+  String get translateContent => 'Prevedi sadržaj';
+
+  @override
+  String get sensitiveContent => 'Osetljiv sadržaj';
+
+  @override
+  String get updateYourNickname => 'Ažuriraj svoj nadimak';
+
+  @override
+  String get yourNickname => 'Tvoj nadimak';
+
+  @override
+  String get create => 'Kreiraj';
+
+  @override
+  String get yourFolderName => 'Ime tvoje fascikle';
+
+  @override
+  String get noMindsInSelectedPeriod => 'Nema uma u izabranom periodu';
+
+  @override
+  String get noMindsForPeriod => 'Nema uma za ovaj period';
+
+  @override
+  String get selectPeriod => 'Izaberi period ...';
+
+  @override
+  String get digest => 'Sažetak';
+
+  @override
+  String get minds => 'Umovi';
+
+  @override
+  String get searchForYourNotes => 'Pretraži svoje beleške';
+
+  @override
+  String get searchYourEmoji => 'Pretraži svoj emoji...';
+
+  @override
+  String get writeSomething => 'Napiši nešto...';
+
+  @override
+  String get topMinds => 'Najbolji umovi';
+
+  @override
+  String get todayMinds => 'Današnji umovi';
+
+  @override
+  String get randomMind => 'Slučajni um';
+
+  @override
+  String get spectrum => 'Spektar';
+
+  @override
+  String get youDidNotCollectAnyEntriesYet =>
+      'Još uvek niste prikupili nijedan unos';
+
+  @override
+  String get pleaseAuthenticateToShowContent =>
+      'Molimo autentifikujte se da biste videli sadržaj svog uma';
+
+  @override
+  String get areYouSure => 'Da li ste sigurni?';
+
+  @override
+  String get cannotRemoveMainScreen =>
+      'Ne možete ukloniti glavni ekran. Izgubićete opciju za podešavanje tabova.';
+
+  @override
+  String get today => 'Danas';
+
+  @override
+  String get yesterday => 'Juče';
+
+  @override
+  String get thisWeek => 'Ova nedelja';
+
+  @override
+  String get lastTwoWeeks => 'Poslednje 2 nedelje';
+
+  @override
+  String get thisMonth => 'Ovaj mesec';
+
+  @override
+  String get thisYear => 'Ova godina';
+
+  @override
+  String get calendarDescription => 'Glavni ekran sa kalendarom unosa';
+
+  @override
+  String get insightsDescription => 'Statistike svih vaših unosa';
+
+  @override
+  String get settingsDescription =>
+      'Ekran sa svim podešavanjima (tamni režim, sinhronizacija i sl.)';
+
+  @override
+  String get profileDescription => 'Ekran sa vašim profilom';
+
+  @override
+  String get todayDescription => 'Samo današnji umovi';
+
+  @override
+  String get debugMenuDescription =>
+      'Alati za programere za uključivanje eksperimentalnih funkcija';
+
+  @override
+  String get noMindsForThisDay => 'Nema uma za ovaj dan';
+
+  @override
+  String showMindsForPeriod(String period) {
+    return 'Prikaži umove za $period';
+  }
+}

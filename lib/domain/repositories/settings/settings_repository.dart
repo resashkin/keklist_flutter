@@ -59,6 +59,16 @@ final class KeklistSettings {
   static SupportedLanguage _detectDeviceLocale() {
     final deviceLocale = PlatformDispatcher.instance.locale;
     final deviceLanguageCode = deviceLocale.languageCode;
+    final deviceScriptCode = deviceLocale.scriptCode;
+
+    // Special handling for Serbian with script detection
+    if (deviceLanguageCode == 'sr') {
+      if (deviceScriptCode == 'Latn') {
+        return SupportedLanguage.serbianLatin;
+      } else {
+        return SupportedLanguage.serbian;
+      }
+    }
 
     // Try to find exact match
     for (final language in SupportedLanguage.values) {
