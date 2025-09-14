@@ -1,6 +1,6 @@
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide DateUtils;
 import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
 import 'package:keklist/presentation/core/helpers/extensions/state_extensions.dart';
 import 'package:keklist/presentation/screens/actions/action_model.dart';
@@ -10,6 +10,7 @@ import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/mind_utils.dart';
+import 'package:keklist/presentation/core/helpers/date_utils.dart';
 import 'package:keklist/presentation/core/widgets/creator_bottom_bar/mind_creator_bottom_bar.dart';
 import 'package:keklist/presentation/screens/mind_info/mind_info_screen.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
@@ -130,7 +131,7 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
                       if (_editableMind == null) {
                         sendEventToBloc<MindBloc>(
                           MindCreate(
-                            dayIndex: MindUtils.getTodayIndex(),
+                            dayIndex: DateUtils.getTodayIndex(),
                             note: data.text,
                             emoji: data.emoji,
                             rootId: null,
@@ -223,7 +224,7 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
     final List<DateTime?>? dates = await showCalendarDatePicker2Dialog(
       context: context,
       value: [
-        MindUtils.getDateFromDayIndex(MindUtils.getTodayIndex()),
+        DateUtils.getDateFromDayIndex(DateUtils.getTodayIndex()),
       ],
       config: CalendarDatePicker2WithActionButtonsConfig(firstDayOfWeek: 1),
       dialogSize: const Size(325, 400),
@@ -234,7 +235,7 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
       return null;
     }
 
-    final int dayIndex = MindUtils.getDayIndex(from: dates!.first!);
+    final int dayIndex = DateUtils.getDayIndex(from: dates!.first!);
     return dayIndex;
   }
 

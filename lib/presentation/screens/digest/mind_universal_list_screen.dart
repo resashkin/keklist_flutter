@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide DateUtils;
 import 'package:intl/intl.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/helpers/mind_utils.dart';
+import 'package:keklist/presentation/core/helpers/date_utils.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_collection_empty_day_widget.dart';
@@ -76,7 +77,7 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
             itemBuilder: (context, index) {
               final bool shouldShowTitle =
                   index == 0 || _filteredMinds[index].dayIndex != _filteredMinds[index - 1].dayIndex;
-              final String title = _formatter.format(MindUtils.getDateFromDayIndex(_filteredMinds[index].dayIndex));
+              final String title = _formatter.format(DateUtils.getDateFromDayIndex(_filteredMinds[index].dayIndex));
               final Mind mind = _filteredMinds[index];
               return Padding(
                 padding: const EdgeInsets.all(8.0),

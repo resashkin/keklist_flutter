@@ -1,6 +1,6 @@
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide DateUtils;
 import 'package:flutter/services.dart';
 import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
@@ -23,6 +23,7 @@ import 'package:keklist/domain/constants.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/mind_utils.dart';
+import 'package:keklist/presentation/core/helpers/date_utils.dart';
 import 'package:keklist/presentation/screens/mind_info/mind_info_screen.dart';
 import 'package:keklist/presentation/screens/mind_one_emoji_collection/mind_one_emoji_collection.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
@@ -112,14 +113,14 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
           children: [
             Text(
               // TODO: refactor it
-              '${DateFormatters.dayMonthFormat.format(MindUtils.getDateFromDayIndex(dayIndex))}${MindUtils.getDateFromDayIndex(dayIndex).year != DateTime.now().year ? ' ${MindUtils.getDateFromDayIndex(dayIndex).year}' : ''}',
+              '${DateFormatters.dayMonthFormat.format(DateUtils.getDateFromDayIndex(dayIndex))}${DateUtils.getDateFromDayIndex(dayIndex).year != DateTime.now().year ? ' ${DateUtils.getDateFromDayIndex(dayIndex).year}' : ''}',
               style: const TextStyle(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w500,
               ),
             ),
             Text(
-              DateFormatters.weekDayFormat.format(MindUtils.getDateFromDayIndex(dayIndex)),
+              DateFormatters.weekDayFormat.format(DateUtils.getDateFromDayIndex(dayIndex)),
               style: const TextStyle(
                 fontSize: 14.0,
                 fontWeight: FontWeight.w300,
@@ -164,14 +165,14 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
         childScrollController: _scrollController,
         topOverscrollChild: Column(
           children: [
-            Text(DateFormatters.fullDateFormat.format(MindUtils.getDateFromDayIndex(dayIndex - 1))),
+            Text(DateFormatters.fullDateFormat.format(DateUtils.getDateFromDayIndex(dayIndex - 1))),
             const Icon(Icons.arrow_upward),
           ],
         ),
         bottomOverscrollChild: Column(
           children: [
             const Icon(Icons.arrow_downward),
-            Text(DateFormatters.fullDateFormat.format(MindUtils.getDateFromDayIndex(dayIndex + 1))),
+            Text(DateFormatters.fullDateFormat.format(DateUtils.getDateFromDayIndex(dayIndex + 1))),
           ],
         ),
         child: SingleChildScrollView(
@@ -249,7 +250,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
     final List<DateTime?>? dates = await showCalendarDatePicker2Dialog(
       context: context,
       value: [
-        MindUtils.getDateFromDayIndex(this.dayIndex),
+        DateUtils.getDateFromDayIndex(this.dayIndex),
       ],
       config: CalendarDatePicker2WithActionButtonsConfig(firstDayOfWeek: 1),
       dialogSize: const Size(325, 400),
@@ -261,7 +262,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
       return null;
     }
 
-    final int dayIndex = MindUtils.getDayIndex(from: selectedDateTime);
+    final int dayIndex = DateUtils.getDayIndex(from: selectedDateTime);
     return dayIndex;
   }
 

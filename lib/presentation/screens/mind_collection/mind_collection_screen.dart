@@ -30,10 +30,11 @@ import 'package:keklist/domain/constants.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/mind_utils.dart';
+import 'package:keklist/presentation/core/helpers/date_utils.dart';
 import 'package:keklist/presentation/screens/mind_picker/mind_picker_screen.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/mind_day_collection_screen.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide DateUtils;
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -241,7 +242,7 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
 
   void _hideKeyboard() => FocusScope.of(context).requestFocus(FocusNode());
 
-  int _getNowDayIndex() => MindUtils.getDayIndex(from: DateTime.now());
+  int _getNowDayIndex() => DateUtils.getDayIndex(from: DateTime.now());
 
   // void _enableDemoMode() {
   //   if (_isDemoMode) {
@@ -275,7 +276,7 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
       return;
     }
 
-    final int dayIndex = MindUtils.getDayIndex(from: dates.first!);
+    final int dayIndex = DateUtils.getDayIndex(from: dates.first!);
     _scrollToDayIndex(dayIndex);
   }
 
@@ -295,8 +296,8 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
       return null;
     }
 
-    final int startDayIndex = MindUtils.getDayIndex(from: dates[0]!);
-    final int endDayIndex = MindUtils.getDayIndex(from: dates[1]!);
+    final int startDayIndex = DateUtils.getDayIndex(from: dates[0]!);
+    final int endDayIndex = DateUtils.getDayIndex(from: dates[1]!);
 
     return (startDayIndex, endDayIndex);
   }

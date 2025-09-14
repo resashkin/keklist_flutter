@@ -6,6 +6,7 @@ import 'package:collection/collection.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/services.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
+import 'package:keklist/presentation/core/helpers/date_utils.dart';
 import 'package:uuid/uuid.dart';
 import 'package:keklist/presentation/core/helpers/enum_utils.dart';
 import 'package:keklist/presentation/core/helpers/mind_utils.dart';
@@ -84,13 +85,13 @@ final class AppleWatchCommunicationManager implements WatchCommunicationManager 
     required String mindText,
     required String emoji,
   }) async {
-    final int dayIndex = MindUtils.getDayIndex(from: DateTime.now());
+    final int dayIndex = DateUtils.getDayIndex(from: DateTime.now());
     final Iterable<Mind> mindList = await mindRepository.obtainMindsWhere((element) => element.dayIndex == dayIndex);
     final int sortIndex = mindList.length;
 
     final Mind mind = Mind(
       id: const Uuid().v4(),
-      dayIndex: MindUtils.getDayIndex(from: DateTime.now()),
+      dayIndex: DateUtils.getDayIndex(from: DateTime.now()),
       note: mindText,
       emoji: emoji,
       creationDate: DateTime.now(),
@@ -113,7 +114,7 @@ final class AppleWatchCommunicationManager implements WatchCommunicationManager 
 
   Future<void> _showMindList() async {
     final Iterable<Mind> mindList =
-        await mindRepository.obtainMindsWhere((element) => element.dayIndex == MindUtils.getTodayIndex());
+        await mindRepository.obtainMindsWhere((element) => element.dayIndex == DateUtils.getTodayIndex());
     final Iterable<Mind> todayMindList = MindUtils.findTodayMinds(allMinds: mindList.toList());
     final List<String> mindJSONList = todayMindList
         .map(
@@ -165,12 +166,12 @@ final class AppleWatchCommunicationManager implements WatchCommunicationManager 
     );
   }
 
-  Future<void> _showError({required WatchError error}) async => _sendToWatch(
-        outputMethod: WatchOutputMethod.showError,
-        arguments: {
-          WatchMethodArgumentKey.error: EnumUtils.stringFromEnum(error),
-        },
-      );
+  // Future<void> _showError({required WatchError error}) async => _sendToWatch(
+  //       outputMethod: WatchOutputMethod.showError,
+  //       arguments: {
+  //         WatchMethodArgumentKey.error: EnumUtils.stringFromEnum(error),
+  //       },
+  //     );
 }
 
 enum WatchInputMethod {

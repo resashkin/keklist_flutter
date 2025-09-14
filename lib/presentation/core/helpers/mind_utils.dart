@@ -1,16 +1,7 @@
 import 'package:keklist/domain/services/entities/mind.dart';
+import 'package:keklist/presentation/core/helpers/date_utils.dart';
 
 final class MindUtils {
-  static const int millisecondsInDay = 1000 * 60 * 60 * 24;
-
-  static int getDayIndex({required DateTime from}) =>
-      (from.millisecondsSinceEpoch + from.timeZoneOffset.inMilliseconds) ~/ millisecondsInDay;
-
-  static int getTodayIndex() => MindUtils.getDayIndex(from: DateTime.now());
-
-  static DateTime getDateFromDayIndex(int dayIndex) =>
-      DateTime.fromMillisecondsSinceEpoch(millisecondsInDay * dayIndex);
-
   static List<Mind> findMindsByDayIndex({
     required int dayIndex,
     required Iterable<Mind> allMinds,
@@ -23,7 +14,7 @@ final class MindUtils {
 
   static List<Mind> findTodayMinds({required List<Mind> allMinds}) {
     return findMindsByDayIndex(
-      dayIndex: getTodayIndex(),
+      dayIndex: DateUtils.getTodayIndex(),
       allMinds: allMinds,
     );
   }
@@ -38,7 +29,7 @@ final class MindUtils {
       allMinds.where((item) => rootId == item.rootId).sortedByProperty((it) => it.sortIndex);
 
   static List<Mind> findYesterdayMinds({required List<Mind> allMinds}) {
-    final int yesterdayIndex = MindUtils.getDayIndex(from: DateTime.now()) - 1;
+    final int yesterdayIndex = DateUtils.getDayIndex(from: DateTime.now()) - 1;
     return findMindsByDayIndex(
       dayIndex: yesterdayIndex,
       allMinds: allMinds,
@@ -47,25 +38,25 @@ final class MindUtils {
 
   static List<Mind> findThisWeekMinds({required List<Mind> allMinds}) {
     final DateTime now = DateTime.now();
-    final int todayIndex = getDayIndex(from: now);
-    final DateTime weekStart = now.subtract(Duration(days: now.weekday - 1)); // Monday
-    final int weekStartIndex = getDayIndex(from: weekStart);
+    final int todayIndex = DateUtils.getDayIndex(from: now);
+    final DateTime weekStart = DateUtils.getWeekStart(now);
+    final int weekStartIndex = DateUtils.getDayIndex(from: weekStart);
     return allMinds.where((item) => item.dayIndex >= weekStartIndex && item.dayIndex <= todayIndex).toList();
   }
 
   static List<Mind> findThisMonthMinds({required List<Mind> allMinds}) {
     final DateTime now = DateTime.now();
-    final int todayIndex = getDayIndex(from: now);
-    final DateTime monthStart = DateTime(now.year, now.month, 1);
-    final int monthStartIndex = getDayIndex(from: monthStart);
+    final int todayIndex = DateUtils.getDayIndex(from: now);
+    final DateTime monthStart = DateUtils.getMonthStart(now);
+    final int monthStartIndex = DateUtils.getDayIndex(from: monthStart);
     return allMinds.where((item) => item.dayIndex >= monthStartIndex && item.dayIndex <= todayIndex).toList();
   }
 
   static List<Mind> findThisYearMinds({required List<Mind> allMinds}) {
     final DateTime now = DateTime.now();
-    final int todayIndex = getDayIndex(from: now);
-    final DateTime yearStart = DateTime(now.year, 1, 1);
-    final int yearStartIndex = getDayIndex(from: yearStart);
+    final int todayIndex = DateUtils.getDayIndex(from: now);
+    final DateTime yearStart = DateUtils.getYearStart(now);
+    final int yearStartIndex = DateUtils.getDayIndex(from: yearStart);
     return allMinds.where((item) => item.dayIndex >= yearStartIndex && item.dayIndex <= todayIndex).toList();
   }
 
@@ -120,11 +111,10 @@ final class MindUtils {
 
   static List<Mind> findLastTwoWeeksMinds({required List<Mind> allMinds}) {
     final DateTime now = DateTime.now();
-    final int todayIndex = getDayIndex(from: now);
+    final int todayIndex = DateUtils.getDayIndex(from: now);
     // Start from Monday two weeks ago
-    final DateTime thisWeekStart = now.subtract(Duration(days: now.weekday - 1));
-    final DateTime twoWeeksAgoMonday = thisWeekStart.subtract(const Duration(days: 7));
-    final int twoWeeksAgoMondayIndex = getDayIndex(from: twoWeeksAgoMonday);
+    final DateTime twoWeeksAgoMonday = DateUtils.getTwoWeeksAgoMonday(now);
+    final int twoWeeksAgoMondayIndex = DateUtils.getDayIndex(from: twoWeeksAgoMonday);
     return allMinds.where((item) => item.dayIndex >= twoWeeksAgoMondayIndex && item.dayIndex <= todayIndex).toList();
   }
 }
