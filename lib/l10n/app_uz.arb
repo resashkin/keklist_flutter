@@ -219,7 +219,7 @@
     "@yourNickname": {
         "description": "Nikname kiritish ko'rsatkichi"
     },
-    "create": "Yaratish",
+    "create": "Yozish",
     "@create": {
         "description": "Yaratish tugmasi"
     },

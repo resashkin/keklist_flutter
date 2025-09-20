@@ -175,7 +175,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get yourNickname => 'あなたのニックネーム';
 
   @override
-  String get create => '作成';
+  String get create => '書く';
 
   @override
   String get yourFolderName => 'フォルダ名';

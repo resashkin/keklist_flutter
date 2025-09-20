@@ -175,7 +175,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get yourNickname => 'Your nickname';
 
   @override
-  String get create => 'Create';
+  String get create => 'Write';
 
   @override
   String get yourFolderName => 'Your folder name';

@@ -175,7 +175,7 @@ class AppLocalizationsSr extends AppLocalizations {
   String get yourNickname => 'Ваш надимак';
 
   @override
-  String get create => 'Креирај';
+  String get create => 'Напиши';
 
   @override
   String get yourFolderName => 'Име ваше фасцикле';
@@ -452,7 +452,7 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
   String get yourNickname => 'Tvoj nadimak';
 
   @override
-  String get create => 'Kreiraj';
+  String get create => 'Napiši';
 
   @override
   String get yourFolderName => 'Ime tvoje fascikle';

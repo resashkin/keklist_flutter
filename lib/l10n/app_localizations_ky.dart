@@ -175,7 +175,7 @@ class AppLocalizationsKy extends AppLocalizations {
   String get yourNickname => 'Сиздин никнэмиңиз';
 
   @override
-  String get create => 'Жаратуу';
+  String get create => 'Жазуу';
 
   @override
   String get yourFolderName => 'Сиздин папка атыңыз';

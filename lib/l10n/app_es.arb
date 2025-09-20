@@ -219,7 +219,7 @@
     "@yourNickname": {
         "description": "Sugerencia de entrada de apodo"
     },
-    "create": "Crear",
+    "create": "Escribir",
     "@create": {
         "description": "Botón crear"
     },

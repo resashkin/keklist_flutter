@@ -175,7 +175,7 @@ class AppLocalizationsKk extends AppLocalizations {
   String get yourNickname => 'Сіздің никнейміңіз';
 
   @override
-  String get create => 'Жасау';
+  String get create => 'Жазу';
 
   @override
   String get yourFolderName => 'Сіздің бума атауыңыз';

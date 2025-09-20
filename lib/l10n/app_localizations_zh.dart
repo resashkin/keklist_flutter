@@ -174,7 +174,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get yourNickname => '您的昵称';
 
   @override
-  String get create => '创建';
+  String get create => '写';
 
   @override
   String get yourFolderName => '您的文件夹名称';

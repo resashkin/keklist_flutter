@@ -175,7 +175,7 @@ class AppLocalizationsUz extends AppLocalizations {
   String get yourNickname => 'Sizning niknamingiz';
 
   @override
-  String get create => 'Yaratish';
+  String get create => 'Yozish';
 
   @override
   String get yourFolderName => 'Sizning papka nomingiz';

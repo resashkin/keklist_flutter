@@ -219,7 +219,7 @@
     "@yourNickname": {
         "description": "Никнэм киргизүү көрсөткүчү"
     },
-    "create": "Жаратуу",
+    "create": "Жазуу",
     "@create": {
         "description": "Жаратуу баскычы"
     },

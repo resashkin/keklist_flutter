@@ -219,7 +219,7 @@
     "@yourNickname": {
         "description": "Nickname input hint"
     },
-    "create": "Create",
+    "create": "Write",
     "@create": {
         "description": "Create button"
     },

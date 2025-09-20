@@ -14,6 +14,7 @@ import 'package:keklist/presentation/screens/actions/actions_screen.dart';
 import 'package:keklist/presentation/screens/mind_chat_discussion/mind_chat_discussion_screen.dart';
 import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_collection_empty_day_widget.dart';
 import 'package:keklist/presentation/screens/mind_creator_screen.dart';
+import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:keklist/presentation/core/helpers/extensions/state_extensions.dart';
@@ -197,17 +198,32 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: SensitiveWidget(
         mode: SensitiveMode.blurredAndNonTappable,
-        child: FloatingActionButton.extended(
-          icon: const Icon(Icons.add),
-          onPressed: () => _showMindCreator(),
-          label: Text(
-            context.l10n.create,
-            style: TextStyle(
-              fontSize: 18.0,
-              fontWeight: FontWeight.w500,
-            ),
+        child: LiquidGlass(
+          settings: LiquidGlassSettings(
+            glassColor: Theme.of(context).colorScheme.secondary.withAlpha(25),
+            thickness: 10.0,
           ),
-          enableFeedback: true,
+          shape: LiquidRoundedSuperellipse(
+            borderRadius: Radius.circular(50),
+          ),
+          child: FloatingActionButton.extended(
+            extendedPadding: const EdgeInsets.symmetric(horizontal: 24.0),
+            backgroundColor: Colors.transparent,
+            icon: Icon(
+              Icons.add_box_outlined,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            onPressed: () => _showMindCreator(),
+            label: Text(
+              context.l10n.create,
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.w500,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            enableFeedback: true,
+          ),
         ),
       ),
     );

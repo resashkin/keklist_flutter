@@ -219,7 +219,7 @@
     "@yourNickname": {
         "description": "Никнейм енгізу көрсеткіші"
     },
-    "create": "Жасау",
+    "create": "Жазу",
     "@create": {
         "description": "Жасау батырмасы"
     },

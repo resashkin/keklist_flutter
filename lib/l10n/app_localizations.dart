@@ -450,7 +450,7 @@ abstract class AppLocalizations {
   /// Create button
   ///
   /// In en, this message translates to:
-  /// **'Create'**
+  /// **'Write'**
   String get create;
 
   /// Folder name input hint

@@ -71,6 +71,7 @@ dependencies:
   json_serializable: ^6.8.0
   json_annotation: ^4.9.0
   full_swipe_back_gesture: ^0.1.0
+  liquid_glass_renderer: ^0.1.1-dev.10
 
 dev_dependencies:
   flutter_launcher_icons: ^0.14.3 # To generate icons - "flutter pub run flutter_launcher_icons"

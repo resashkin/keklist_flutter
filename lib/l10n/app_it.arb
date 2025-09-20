@@ -219,7 +219,7 @@
     "@yourNickname": {
         "description": "Suggerimento input nickname"
     },
-    "create": "Crea",
+    "create": "Scrivi",
     "@create": {
         "description": "Pulsante crea"
     },

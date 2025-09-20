@@ -219,7 +219,7 @@
     "@yourNickname": {
         "description": "Savet za unos nadimka"
     },
-    "create": "Kreiraj",
+    "create": "Napiši",
     "@create": {
         "description": "Dugme kreiraj"
     },

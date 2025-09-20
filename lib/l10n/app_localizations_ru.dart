@@ -45,7 +45,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get share => 'Поделиться';
 
   @override
-  String get switchDay => 'Переключить день';
+  String get switchDay => 'Поменять день';
 
   @override
   String get goToDate => 'Перейти к дате';
@@ -175,7 +175,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get yourNickname => 'Ваш никнейм';
 
   @override
-  String get create => 'Создать';
+  String get create => 'Написать';
 
   @override
   String get yourFolderName => 'Название вашей папки';
