@@ -276,4 +276,7 @@ class AppLocalizationsKy extends AppLocalizations {
   String showMindsForPeriod(String period) {
     return '$period үчүн ойлорду көрсөтүү';
   }
+
+  @override
+  String get week => 'Жума';
 }

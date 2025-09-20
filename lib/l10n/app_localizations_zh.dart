@@ -270,4 +270,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String showMindsForPeriod(String period) {
     return '显示$period的笔记';
   }
+
+  @override
+  String get week => '周';
 }

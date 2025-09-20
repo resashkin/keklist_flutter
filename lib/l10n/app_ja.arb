@@ -50,8 +50,6 @@
     "error": "エラー",
     "startDiscussion": "ディスカッションを開始",
     "send": "送信",
-    "done": "完了",
-    "chatWithAI": "AIとチャット",
     "translateContent": "コンテンツを翻訳",
     "sensitiveContent": "機密コンテンツ",
     "updateYourNickname": "ニックネームを更新",
@@ -72,7 +70,6 @@
     "spectrum": "スペクトラム",
     "youDidNotCollectAnyEntriesYet": "まだエントリを収集していません",
     "pleaseAuthenticateToShowContent": "メモの内容を表示するには認証してください",
-    "edit": "編集",
     "areYouSure": "本当によろしいですか？",
     "cannotRemoveMainScreen": "メイン画面を削除することはできません。タブの設定オプションが失われます。",
     "today": "今日",
@@ -81,11 +78,6 @@
     "lastTwoWeeks": "過去2週間",
     "thisMonth": "今月",
     "thisYear": "今年",
-    "calendar": "カレンダー",
-    "insights": "インサイト",
-    "settings": "設定",
-    "profile": "プロフィール",
-    "debugMenu": "デバッグメニュー",
     "calendarDescription": "エントリのカレンダーがあるメイン画面",
     "insightsDescription": "すべてのエントリの統計",
     "settingsDescription": "すべての設定画面（ダークモード、同期など）",
@@ -93,5 +85,6 @@
     "todayDescription": "今日のメモのみ",
     "debugMenuDescription": "実験的機能を切り替える開発者ツール",
     "noMindsForThisDay": "この日のメモはありません",
-    "showMindsForPeriod": "{period}のメモを表示"
+    "showMindsForPeriod": "{period}のメモを表示",
+    "week": "週"
 }

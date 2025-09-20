@@ -278,4 +278,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String showMindsForPeriod(String period) {
     return 'Mostrar mentes para $period';
   }
+
+  @override
+  String get week => 'Semana';
 }

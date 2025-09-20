@@ -1,4 +1,4 @@
-class HiveConstants {
+final class HiveConstants {
   static const String settingsBoxName = 'settings_box';
   static const String globalSettingsIndex = 'global_settings';
   static const String tabsSettingsBoxName = 'tabs_settings_box';

@@ -194,7 +194,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     final Uri uri = Uri(
       scheme: 'mailto',
       path: KeklistConstants.feedbackEmail,
-      query: 'subject=Feedback about Keklist',
+      query: 'subject=Feedback about keklist',
     );
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);

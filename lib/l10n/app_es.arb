@@ -1,387 +1,356 @@
 {
     "settings": "Configuración",
     "@settings": {
-      "description": "Título de pantalla de configuración"
+        "description": "Etiqueta de pestaña configuración"
     },
     "userData": "Datos de usuario",
     "@userData": {
-      "description": "Título de sección de datos de usuario"
+        "description": "Título de sección de datos de usuario"
     },
     "appearance": "Apariencia",
     "@appearance": {
-      "description": "Título de sección de apariencia"
+        "description": "Título de sección de apariencia"
     },
     "exportToCsv": "Exportar a CSV",
     "@exportToCsv": {
-      "description": "Botón exportar a CSV"
+        "description": "Botón exportar a CSV"
     },
     "done": "HECHO",
     "@done": {
-      "description": "Botón hecho"
+        "description": "Botón hecho"
     },
     "chatWithAI": "Chatear con IA",
     "@chatWithAI": {
-      "description": "Acción chatear con IA"
+        "description": "Opción debug chatear con IA"
     },
     "photosPerDay": "Fotos por día",
     "@photosPerDay": {
-      "description": "Acción fotos por día"
+        "description": "Acción fotos por día"
     },
     "extraActions": "Acciones extra",
     "@extraActions": {
-      "description": "Menú de acciones extra"
+        "description": "Menú de acciones extra"
     },
     "mindOptions": "Opciones de mente",
     "@mindOptions": {
-      "description": "Menú de opciones de mente"
+        "description": "Menú de opciones de mente"
     },
     "edit": "Editar",
     "@edit": {
-      "description": "Acción editar"
+        "description": "Botón editar"
     },
     "delete": "Eliminar",
     "@delete": {
-      "description": "Acción eliminar"
+        "description": "Acción eliminar"
     },
     "share": "Compartir",
     "@share": {
-      "description": "Acción compartir"
+        "description": "Acción compartir"
     },
     "switchDay": "Cambiar día",
     "@switchDay": {
-      "description": "Acción cambiar día"
+        "description": "Acción cambiar día"
     },
     "goToDate": "Ir a fecha",
     "@goToDate": {
-      "description": "Acción ir a fecha"
+        "description": "Acción ir a fecha"
     },
     "showDigest": "Mostrar resumen para ...",
     "@showDigest": {
-      "description": "Acción mostrar resumen"
+        "description": "Acción mostrar resumen"
     },
     "showAll": "Mostrar todo",
     "@showAll": {
-      "description": "Acción mostrar todo"
+        "description": "Acción mostrar todo"
     },
     "translateToEnglish": "Traducir al inglés",
     "@translateToEnglish": {
-      "description": "Acción traducir al inglés"
+        "description": "Acción traducir al inglés"
     },
     "convertToStandalone": "Convertir a independiente",
     "@convertToStandalone": {
-      "description": "Acción convertir a independiente"
+        "description": "Acción convertir a independiente"
     },
     "language": "Idioma",
     "@language": {
-      "description": "Configuración de idioma"
+        "description": "Configuración de idioma"
     },
     "selectLanguage": "Seleccionar Idioma",
     "@selectLanguage": {
-      "description": "Título de diálogo de selección de idioma"
+        "description": "Título de diálogo de selección de idioma"
     },
     "darkMode": "Modo oscuro",
     "@darkMode": {
-      "description": "Configuración de modo oscuro"
+        "description": "Configuración de modo oscuro"
     },
     "showDayDividers": "Mostrar divisores de día",
     "@showDayDividers": {
-      "description": "Configuración mostrar divisores de día"
+        "description": "Configuración mostrar divisores de día"
     },
     "tabsSettings": "Configuración de pestañas",
     "@tabsSettings": {
-      "description": "Navegación de configuración de pestañas"
+        "description": "Navegación de configuración de pestañas"
     },
     "whatsNew": "¿Qué hay de nuevo?",
     "@whatsNew": {
-      "description": "Navegación qué hay de nuevo"
+        "description": "Navegación qué hay de nuevo"
     },
     "suggestFeature": "Sugerir una función",
     "@suggestFeature": {
-      "description": "Navegación sugerir función"
+        "description": "Navegación sugerir función"
     },
     "sendFeedback": "Enviar comentarios",
     "@sendFeedback": {
-      "description": "Navegación enviar comentarios"
+        "description": "Navegación enviar comentarios"
     },
     "sourceCode": "Código fuente",
     "@sourceCode": {
-      "description": "Navegación código fuente"
+        "description": "Navegación código fuente"
     },
     "termsOfUse": "Términos de Uso",
     "@termsOfUse": {
-      "description": "Navegación términos de uso"
+        "description": "Navegación términos de uso"
     },
     "privacyPolicy": "Política de Privacidad",
     "@privacyPolicy": {
-      "description": "Navegación política de privacidad"
+        "description": "Navegación política de privacidad"
     },
     "clearOnDeviceData": "Limpiar datos del dispositivo",
     "@clearOnDeviceData": {
-      "description": "Navegación limpiar datos"
+        "description": "Navegación limpiar datos"
     },
     "setOpenAIToken": "Establecer Token Open AI",
     "@setOpenAIToken": {
-      "description": "Título de diálogo de token OpenAI"
+        "description": "Título de diálogo de token OpenAI"
     },
     "cancel": "Cancelar",
     "@cancel": {
-      "description": "Botón cancelar"
+        "description": "Botón cancelar"
     },
     "save": "Guardar",
     "@save": {
-      "description": "Botón guardar"
+        "description": "Botón guardar"
     },
     "mind": "Mente",
     "@mind": {
-      "description": "Título de pantalla de mente"
+        "description": "Título de pantalla de mente"
     },
     "profile": "Perfil",
     "@profile": {
-      "description": "Título de pantalla de perfil"
+        "description": "Etiqueta de pestaña perfil"
     },
     "insights": "Perspectivas",
     "@insights": {
-      "description": "Título de pantalla de perspectivas"
+        "description": "Etiqueta de pestaña perspectivas"
     },
     "calendar": "Calendario",
     "@calendar": {
-      "description": "Título de calendario"
+        "description": "Etiqueta de pestaña calendario"
     },
     "debugMenu": "Menú Debug",
     "@debugMenu": {
-      "description": "Título de menú debug"
+        "description": "Etiqueta de pestaña menú debug"
     },
     "discussion": "Discusión",
     "@discussion": {
-      "description": "Título de pantalla de discusión"
+        "description": "Título de pantalla de discusión"
     },
     "about": "Acerca de",
     "@about": {
-      "description": "Título de sección acerca de"
+        "description": "Título de sección acerca de"
     },
     "dangerZone": "Zona de Peligro",
     "@dangerZone": {
-      "description": "Título de sección zona de peligro"
+        "description": "Título de sección zona de peligro"
     },
     "editMind": "Editar mente",
     "@editMind": {
-      "description": "Título de diálogo editar mente"
+        "description": "Título de diálogo editar mente"
     },
     "enterTokenHere": "Ingresa token aquí",
     "@enterTokenHere": {
-      "description": "Sugerencia de entrada de token"
+        "description": "Sugerencia de entrada de token"
     },
     "token": "Token",
     "@token": {
-      "description": "Etiqueta de entrada de token"
+        "description": "Etiqueta de entrada de token"
     },
     "clearCache": "Limpiar caché",
     "@clearCache": {
-      "description": "Botón limpiar caché"
+        "description": "Botón limpiar caché"
     },
     "developerModeEnabled": "🔧 ¡Modo desarrollador habilitado! ¡La pestaña Menú Debug ahora está disponible!",
     "@developerModeEnabled": {
-      "description": "Mensaje de modo desarrollador habilitado"
+        "description": "Mensaje de modo desarrollador habilitado"
     },
     "activeTabs": "Pestañas activas",
     "@activeTabs": {
-      "description": "Encabezado de sección de pestañas activas"
+        "description": "Encabezado de sección de pestañas activas"
     },
     "hiddenTabs": "Pestañas ocultas",
     "@hiddenTabs": {
-      "description": "Encabezado de sección de pestañas ocultas"
+        "description": "Encabezado de sección de pestañas ocultas"
     },
     "error": "Error",
     "@error": {
-      "description": "Título de diálogo de error"
+        "description": "Título de diálogo de error"
     },
     "startDiscussion": "Iniciar discusión",
     "@startDiscussion": {
-      "description": "Botón iniciar discusión"
+        "description": "Botón iniciar discusión"
     },
     "send": "ENVIAR",
     "@send": {
-      "description": "Botón enviar"
-    },
-    "done": "HECHO",
-    "@done": {
-      "description": "Botón hecho"
-    },
-    "chatWithAI": "Chatear con IA",
-    "@chatWithAI": {
-      "description": "Opción debug chatear con IA"
+        "description": "Botón enviar"
     },
     "translateContent": "Traducir contenido",
     "@translateContent": {
-      "description": "Opción debug traducir contenido"
+        "description": "Opción debug traducir contenido"
     },
     "sensitiveContent": "Contenido sensible",
     "@sensitiveContent": {
-      "description": "Opción debug contenido sensible"
+        "description": "Opción debug contenido sensible"
     },
     "updateYourNickname": "Actualizar tu apodo",
     "@updateYourNickname": {
-      "description": "Título de diálogo actualizar apodo"
+        "description": "Título de diálogo actualizar apodo"
     },
     "yourNickname": "Tu apodo",
     "@yourNickname": {
-      "description": "Sugerencia de entrada de apodo"
+        "description": "Sugerencia de entrada de apodo"
     },
     "create": "Crear",
     "@create": {
-      "description": "Botón crear"
+        "description": "Botón crear"
     },
     "yourFolderName": "Nombre de tu carpeta",
     "@yourFolderName": {
-      "description": "Sugerencia de entrada de nombre de carpeta"
+        "description": "Sugerencia de entrada de nombre de carpeta"
     },
     "noMindsInSelectedPeriod": "No hay mentes en el período seleccionado",
     "@noMindsInSelectedPeriod": {
-      "description": "Mensaje no hay mentes en el período"
+        "description": "Mensaje no hay mentes en el período"
     },
     "noMindsForPeriod": "No hay mentes para este período",
     "@noMindsForPeriod": {
-      "description": "Mensaje no hay mentes para el período"
+        "description": "Mensaje no hay mentes para el período"
     },
     "selectPeriod": "Seleccionar período ...",
     "@selectPeriod": {
-      "description": "Acción seleccionar período"
+        "description": "Acción seleccionar período"
     },
     "digest": "Resumen",
     "@digest": {
-      "description": "Título de resumen"
+        "description": "Título de resumen"
     },
     "minds": "Mentes",
     "@minds": {
-      "description": "Título de mentes"
+        "description": "Título de mentes"
     },
     "searchForYourNotes": "Buscar tus notas",
     "@searchForYourNotes": {
-      "description": "Sugerencia de búsqueda de notas"
+        "description": "Sugerencia de búsqueda de notas"
     },
     "searchYourEmoji": "Buscar tu emoji...",
     "@searchYourEmoji": {
-      "description": "Sugerencia de búsqueda de emoji"
+        "description": "Sugerencia de búsqueda de emoji"
     },
     "writeSomething": "Escribe algo...",
     "@writeSomething": {
-      "description": "Sugerencia escribe algo"
+        "description": "Sugerencia escribe algo"
     },
     "topMinds": "Mentes principales",
     "@topMinds": {
-      "description": "Título de mentes principales"
+        "description": "Título de mentes principales"
     },
     "todayMinds": "Mentes de hoy",
     "@todayMinds": {
-      "description": "Título de mentes de hoy"
+        "description": "Título de mentes de hoy"
     },
     "randomMind": "Mente aleatoria",
     "@randomMind": {
-      "description": "Título de mente aleatoria"
+        "description": "Título de mente aleatoria"
     },
     "spectrum": "Espectro",
     "@spectrum": {
-      "description": "Título de espectro"
+        "description": "Título de espectro"
     },
     "youDidNotCollectAnyEntriesYet": "Aún no has recopilado ninguna entrada",
     "@youDidNotCollectAnyEntriesYet": {
-      "description": "Mensaje ninguna entrada recopilada"
+        "description": "Mensaje ninguna entrada recopilada"
     },
     "pleaseAuthenticateToShowContent": "Por favor autentícate para mostrar el contenido de tu mente",
     "@pleaseAuthenticateToShowContent": {
-      "description": "Mensaje de autenticación requerida"
-    },
-    "edit": "Editar",
-    "@edit": {
-      "description": "Botón editar"
+        "description": "Mensaje de autenticación requerida"
     },
     "areYouSure": "¿Estás seguro?",
     "@areYouSure": {
-      "description": "Título de diálogo de confirmación"
+        "description": "Título de diálogo de confirmación"
     },
     "cannotRemoveMainScreen": "No se puede eliminar la pantalla principal. Perderás la opción de configurar pestañas.",
     "@cannotRemoveMainScreen": {
-      "description": "Mensaje de error no se puede eliminar pantalla principal"
+        "description": "Mensaje de error no se puede eliminar pantalla principal"
     },
     "today": "Hoy",
     "@today": {
-      "description": "Título de período hoy"
+        "description": "Título de período hoy"
     },
     "yesterday": "Ayer",
     "@yesterday": {
-      "description": "Título de período ayer"
+        "description": "Título de período ayer"
     },
     "thisWeek": "Esta semana",
     "@thisWeek": {
-      "description": "Título de período esta semana"
+        "description": "Título de período esta semana"
     },
     "lastTwoWeeks": "Últimas 2 semanas",
     "@lastTwoWeeks": {
-      "description": "Título de período últimas 2 semanas"
+        "description": "Título de período últimas 2 semanas"
     },
     "thisMonth": "Este mes",
     "@thisMonth": {
-      "description": "Título de período este mes"
+        "description": "Título de período este mes"
     },
     "thisYear": "Este año",
     "@thisYear": {
-      "description": "Título de período este año"
-    },
-    "calendar": "Calendario",
-    "@calendar": {
-      "description": "Etiqueta de pestaña calendario"
-    },
-    "insights": "Perspectivas",
-    "@insights": {
-      "description": "Etiqueta de pestaña perspectivas"
-    },
-    "settings": "Configuración",
-    "@settings": {
-      "description": "Etiqueta de pestaña configuración"
-    },
-    "profile": "Perfil",
-    "@profile": {
-      "description": "Etiqueta de pestaña perfil"
-    },
-    "debugMenu": "Menú Debug",
-    "@debugMenu": {
-      "description": "Etiqueta de pestaña menú debug"
+        "description": "Título de período este año"
     },
     "calendarDescription": "Pantalla principal con Calendario de entradas",
     "@calendarDescription": {
-      "description": "Descripción de pestaña calendario"
+        "description": "Descripción de pestaña calendario"
     },
     "insightsDescription": "Estadísticas de todas tus entradas",
     "@insightsDescription": {
-      "description": "Descripción de pestaña perspectivas"
+        "description": "Descripción de pestaña perspectivas"
     },
     "settingsDescription": "Pantalla con toda la configuración (modo oscuro, sincronización, etc.)",
     "@settingsDescription": {
-      "description": "Descripción de pestaña configuración"
+        "description": "Descripción de pestaña configuración"
     },
     "profileDescription": "Pantalla con tu perfil",
     "@profileDescription": {
-      "description": "Descripción de pestaña perfil"
+        "description": "Descripción de pestaña perfil"
     },
     "todayDescription": "Solo mentes de hoy",
     "@todayDescription": {
-      "description": "Descripción de pestaña hoy"
+        "description": "Descripción de pestaña hoy"
     },
     "debugMenuDescription": "Herramientas de desarrollador para activar funciones experimentales",
     "@debugMenuDescription": {
-      "description": "Descripción de pestaña menú debug"
+        "description": "Descripción de pestaña menú debug"
     },
     "noMindsForThisDay": "No hay mentes para este día",
     "@noMindsForThisDay": {
-      "description": "Mensaje no hay mentes para este día"
+        "description": "Mensaje no hay mentes para este día"
     },
     "showMindsForPeriod": "Mostrar mentes para {period}",
     "@showMindsForPeriod": {
-      "description": "Mensaje mostrar mentes para período",
-      "placeholders": {
-        "period": {
-          "type": "String"
+        "description": "Mensaje mostrar mentes para período",
+        "placeholders": {
+            "period": {
+                "type": "String"
+            }
         }
-      }
-    }
+    },
+    "week": "Semana"
 }

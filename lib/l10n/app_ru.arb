@@ -50,8 +50,6 @@
     "error": "Ошибка",
     "startDiscussion": "Начать обсуждение",
     "send": "ОТПРАВИТЬ",
-    "done": "ГОТОВО",
-    "chatWithAI": "Чат с ИИ",
     "translateContent": "Перевести содержимое",
     "sensitiveContent": "Конфиденциальный контент",
     "updateYourNickname": "Обновить ваш никнейм",
@@ -72,7 +70,6 @@
     "spectrum": "Спектр",
     "youDidNotCollectAnyEntriesYet": "Вы еще не собрали ни одной записи",
     "pleaseAuthenticateToShowContent": "Пожалуйста, аутентифицируйтесь, чтобы показать содержимое вашей заметки",
-    "edit": "Редактировать",
     "areYouSure": "Вы уверены?",
     "cannotRemoveMainScreen": "Нельзя удалить главный экран. Вы потеряете возможность настройки вкладок.",
     "today": "Сегодня",
@@ -81,11 +78,6 @@
     "lastTwoWeeks": "За последние 2 недели",
     "thisMonth": "В этом месяце",
     "thisYear": "В этом году",
-    "calendar": "Календарь",
-    "insights": "Аналитика",
-    "settings": "Настройки",
-    "profile": "Профиль",
-    "debugMenu": "Меню отладки",
     "calendarDescription": "Главный экран с календарем записей",
     "insightsDescription": "Статистика всех ваших записей",
     "settingsDescription": "Экран со всеми настройками (темный режим, синхронизация и т.д.)",
@@ -93,5 +85,6 @@
     "todayDescription": "Только сегодняшние заметки",
     "debugMenuDescription": "Инструменты разработчика для переключения экспериментальных функций",
     "noMindsForThisDay": "Нет заметок на этот день",
-    "showMindsForPeriod": "Показать заметки за {period}"
+    "showMindsForPeriod": "Показать заметки за {period}",
+    "week": "Неделя"
 }

@@ -1,387 +1,356 @@
 {
     "settings": "Podešavanja",
     "@settings": {
-      "description": "Naslov ekrana podešavanja"
+        "description": "Oznaka taba podešavanja"
     },
     "userData": "Korisnički podaci",
     "@userData": {
-      "description": "Naslov sekcije korisničkih podataka"
+        "description": "Naslov sekcije korisničkih podataka"
     },
     "appearance": "Izgled",
     "@appearance": {
-      "description": "Naslov sekcije izgleda"
+        "description": "Naslov sekcije izgleda"
     },
     "exportToCsv": "Izvezi u CSV",
     "@exportToCsv": {
-      "description": "Dugme za izvoz u CSV"
+        "description": "Dugme za izvoz u CSV"
     },
     "done": "GOTOVO",
     "@done": {
-      "description": "Dugme gotovo"
+        "description": "Dugme gotovo"
     },
     "chatWithAI": "Ćaskanje sa AI",
     "@chatWithAI": {
-      "description": "Akcija ćaskanja sa AI"
+        "description": "Debug opcija ćaskanja sa AI"
     },
     "photosPerDay": "Fotografije po danu",
     "@photosPerDay": {
-      "description": "Akcija fotografija po danu"
+        "description": "Akcija fotografija po danu"
     },
     "extraActions": "Dodatne akcije",
     "@extraActions": {
-      "description": "Meni dodatnih akcija"
+        "description": "Meni dodatnih akcija"
     },
     "mindOptions": "Opcije uma",
     "@mindOptions": {
-      "description": "Meni opcija uma"
+        "description": "Meni opcija uma"
     },
     "edit": "Uredi",
     "@edit": {
-      "description": "Akcija uređivanja"
+        "description": "Dugme uredi"
     },
     "delete": "Obriši",
     "@delete": {
-      "description": "Akcija brisanja"
+        "description": "Akcija brisanja"
     },
     "share": "Podeli",
     "@share": {
-      "description": "Akcija deljenja"
+        "description": "Akcija deljenja"
     },
     "switchDay": "Promeni dan",
     "@switchDay": {
-      "description": "Akcija promene dana"
+        "description": "Akcija promene dana"
     },
     "goToDate": "Idi na datum",
     "@goToDate": {
-      "description": "Akcija prelaska na datum"
+        "description": "Akcija prelaska na datum"
     },
     "showDigest": "Prikaži sažetak za ...",
     "@showDigest": {
-      "description": "Akcija prikazivanja sažetka"
+        "description": "Akcija prikazivanja sažetka"
     },
     "showAll": "Prikaži sve",
     "@showAll": {
-      "description": "Akcija prikazivanja svega"
+        "description": "Akcija prikazivanja svega"
     },
     "translateToEnglish": "Prevedi na engleski",
     "@translateToEnglish": {
-      "description": "Akcija prevođenja na engleski"
+        "description": "Akcija prevođenja na engleski"
     },
     "convertToStandalone": "Konvertuj u samostalno",
     "@convertToStandalone": {
-      "description": "Akcija konvertovanja u samostalno"
+        "description": "Akcija konvertovanja u samostalno"
     },
     "language": "Jezik",
     "@language": {
-      "description": "Podešavanje jezika"
+        "description": "Podešavanje jezika"
     },
     "selectLanguage": "Izaberi jezik",
     "@selectLanguage": {
-      "description": "Naslov dijaloga za izbor jezika"
+        "description": "Naslov dijaloga za izbor jezika"
     },
     "darkMode": "Tamni režim",
     "@darkMode": {
-      "description": "Podešavanje tamnog režima"
+        "description": "Podešavanje tamnog režima"
     },
     "showDayDividers": "Prikaži razdelnike dana",
     "@showDayDividers": {
-      "description": "Podešavanje prikazivanja razdelnika dana"
+        "description": "Podešavanje prikazivanja razdelnika dana"
     },
     "tabsSettings": "Podešavanja tabova",
     "@tabsSettings": {
-      "description": "Navigacija podešavanja tabova"
+        "description": "Navigacija podešavanja tabova"
     },
     "whatsNew": "Šta je novo?",
     "@whatsNew": {
-      "description": "Navigacija šta je novo"
+        "description": "Navigacija šta je novo"
     },
     "suggestFeature": "Predloži funkciju",
     "@suggestFeature": {
-      "description": "Navigacija predlaganja funkcije"
+        "description": "Navigacija predlaganja funkcije"
     },
     "sendFeedback": "Pošalji povratnu informaciju",
     "@sendFeedback": {
-      "description": "Navigacija slanja povratne informacije"
+        "description": "Navigacija slanja povratne informacije"
     },
     "sourceCode": "Izvorni kod",
     "@sourceCode": {
-      "description": "Navigacija izvornog koda"
+        "description": "Navigacija izvornog koda"
     },
     "termsOfUse": "Uslovi korišćenja",
     "@termsOfUse": {
-      "description": "Navigacija uslova korišćenja"
+        "description": "Navigacija uslova korišćenja"
     },
     "privacyPolicy": "Politika privatnosti",
     "@privacyPolicy": {
-      "description": "Navigacija politike privatnosti"
+        "description": "Navigacija politike privatnosti"
     },
     "clearOnDeviceData": "Obriši podatke na uređaju",
     "@clearOnDeviceData": {
-      "description": "Navigacija brisanja podataka"
+        "description": "Navigacija brisanja podataka"
     },
     "setOpenAIToken": "Postavi Open AI Token",
     "@setOpenAIToken": {
-      "description": "Naslov dijaloga OpenAI tokena"
+        "description": "Naslov dijaloga OpenAI tokena"
     },
     "cancel": "Otkaži",
     "@cancel": {
-      "description": "Dugme otkaži"
+        "description": "Dugme otkaži"
     },
     "save": "Sačuvaj",
     "@save": {
-      "description": "Dugme sačuvaj"
+        "description": "Dugme sačuvaj"
     },
     "mind": "Um",
     "@mind": {
-      "description": "Naslov ekrana uma"
+        "description": "Naslov ekrana uma"
     },
     "profile": "Profil",
     "@profile": {
-      "description": "Naslov ekrana profila"
+        "description": "Oznaka taba profila"
     },
     "insights": "Uvid",
     "@insights": {
-      "description": "Naslov ekrana uvida"
+        "description": "Oznaka taba uvida"
     },
     "calendar": "Kalendar",
     "@calendar": {
-      "description": "Naslov kalendara"
+        "description": "Oznaka taba kalendara"
     },
     "debugMenu": "Debug meni",
     "@debugMenu": {
-      "description": "Naslov debug menija"
+        "description": "Oznaka taba debug menija"
     },
     "discussion": "Diskusija",
     "@discussion": {
-      "description": "Naslov ekrana diskusije"
+        "description": "Naslov ekrana diskusije"
     },
     "about": "O aplikaciji",
     "@about": {
-      "description": "Naslov sekcije o aplikaciji"
+        "description": "Naslov sekcije o aplikaciji"
     },
     "dangerZone": "Zona opasnosti",
     "@dangerZone": {
-      "description": "Naslov sekcije zone opasnosti"
+        "description": "Naslov sekcije zone opasnosti"
     },
     "editMind": "Uredi um",
     "@editMind": {
-      "description": "Naslov dijaloga uređivanja uma"
+        "description": "Naslov dijaloga uređivanja uma"
     },
     "enterTokenHere": "Unesite token ovde",
     "@enterTokenHere": {
-      "description": "Savet za unos tokena"
+        "description": "Savet za unos tokena"
     },
     "token": "Token",
     "@token": {
-      "description": "Oznaka za unos tokena"
+        "description": "Oznaka za unos tokena"
     },
     "clearCache": "Obriši keš",
     "@clearCache": {
-      "description": "Dugme za brisanje keša"
+        "description": "Dugme za brisanje keša"
     },
     "developerModeEnabled": "🔧 Režim programera omogućen! Debug Menu tab je sada dostupan!",
     "@developerModeEnabled": {
-      "description": "Poruka o omogućenom režimu programera"
+        "description": "Poruka o omogućenom režimu programera"
     },
     "activeTabs": "Aktivni tabovi",
     "@activeTabs": {
-      "description": "Zaglavlje sekcije aktivnih tabova"
+        "description": "Zaglavlje sekcije aktivnih tabova"
     },
     "hiddenTabs": "Skriveni tabovi",
     "@hiddenTabs": {
-      "description": "Zaglavlje sekcije skrivenih tabova"
+        "description": "Zaglavlje sekcije skrivenih tabova"
     },
     "error": "Greška",
     "@error": {
-      "description": "Naslov dijaloga greške"
+        "description": "Naslov dijaloga greške"
     },
     "startDiscussion": "Započni diskusiju",
     "@startDiscussion": {
-      "description": "Dugme za početak diskusije"
+        "description": "Dugme za početak diskusije"
     },
     "send": "POŠALJI",
     "@send": {
-      "description": "Dugme pošalji"
-    },
-    "done": "GOTOVO",
-    "@done": {
-      "description": "Dugme gotovo"
-    },
-    "chatWithAI": "Ćaskanje sa AI",
-    "@chatWithAI": {
-      "description": "Debug opcija ćaskanja sa AI"
+        "description": "Dugme pošalji"
     },
     "translateContent": "Prevedi sadržaj",
     "@translateContent": {
-      "description": "Debug opcija prevođenja sadržaja"
+        "description": "Debug opcija prevođenja sadržaja"
     },
     "sensitiveContent": "Osetljiv sadržaj",
     "@sensitiveContent": {
-      "description": "Debug opcija osetljivog sadržaja"
+        "description": "Debug opcija osetljivog sadržaja"
     },
     "updateYourNickname": "Ažuriraj svoj nadimak",
     "@updateYourNickname": {
-      "description": "Naslov dijaloga ažuriranja nadimka"
+        "description": "Naslov dijaloga ažuriranja nadimka"
     },
     "yourNickname": "Tvoj nadimak",
     "@yourNickname": {
-      "description": "Savet za unos nadimka"
+        "description": "Savet za unos nadimka"
     },
     "create": "Kreiraj",
     "@create": {
-      "description": "Dugme kreiraj"
+        "description": "Dugme kreiraj"
     },
     "yourFolderName": "Ime tvoje fascikle",
     "@yourFolderName": {
-      "description": "Savet za unos imena fascikle"
+        "description": "Savet za unos imena fascikle"
     },
     "noMindsInSelectedPeriod": "Nema uma u izabranom periodu",
     "@noMindsInSelectedPeriod": {
-      "description": "Poruka nema uma u periodu"
+        "description": "Poruka nema uma u periodu"
     },
     "noMindsForPeriod": "Nema uma za ovaj period",
     "@noMindsForPeriod": {
-      "description": "Poruka nema uma za period"
+        "description": "Poruka nema uma za period"
     },
     "selectPeriod": "Izaberi period ...",
     "@selectPeriod": {
-      "description": "Akcija izbora perioda"
+        "description": "Akcija izbora perioda"
     },
     "digest": "Sažetak",
     "@digest": {
-      "description": "Naslov sažetka"
+        "description": "Naslov sažetka"
     },
     "minds": "Umovi",
     "@minds": {
-      "description": "Naslov umova"
+        "description": "Naslov umova"
     },
     "searchForYourNotes": "Pretraži svoje beleške",
     "@searchForYourNotes": {
-      "description": "Savet za pretragu beleški"
+        "description": "Savet za pretragu beleški"
     },
     "searchYourEmoji": "Pretraži svoj emoji...",
     "@searchYourEmoji": {
-      "description": "Savet za pretragu emoji-ja"
+        "description": "Savet za pretragu emoji-ja"
     },
     "writeSomething": "Napiši nešto...",
     "@writeSomething": {
-      "description": "Savet za pisanje nečega"
+        "description": "Savet za pisanje nečega"
     },
     "topMinds": "Najbolji umovi",
     "@topMinds": {
-      "description": "Naslov najboljih umova"
+        "description": "Naslov najboljih umova"
     },
     "todayMinds": "Današnji umovi",
     "@todayMinds": {
-      "description": "Naslov današnjih umova"
+        "description": "Naslov današnjih umova"
     },
     "randomMind": "Slučajni um",
     "@randomMind": {
-      "description": "Naslov slučajnog uma"
+        "description": "Naslov slučajnog uma"
     },
     "spectrum": "Spektar",
     "@spectrum": {
-      "description": "Naslov spektra"
+        "description": "Naslov spektra"
     },
     "youDidNotCollectAnyEntriesYet": "Još uvek niste prikupili nijedan unos",
     "@youDidNotCollectAnyEntriesYet": {
-      "description": "Poruka nijedan unos nije prikupljen"
+        "description": "Poruka nijedan unos nije prikupljen"
     },
     "pleaseAuthenticateToShowContent": "Molimo autentifikujte se da biste videli sadržaj svog uma",
     "@pleaseAuthenticateToShowContent": {
-      "description": "Poruka o potrebi autentifikacije"
-    },
-    "edit": "Uredi",
-    "@edit": {
-      "description": "Dugme uredi"
+        "description": "Poruka o potrebi autentifikacije"
     },
     "areYouSure": "Da li ste sigurni?",
     "@areYouSure": {
-      "description": "Naslov dijaloga potvrde"
+        "description": "Naslov dijaloga potvrde"
     },
     "cannotRemoveMainScreen": "Ne možete ukloniti glavni ekran. Izgubićete opciju za podešavanje tabova.",
     "@cannotRemoveMainScreen": {
-      "description": "Poruka greške ne možete ukloniti glavni ekran"
+        "description": "Poruka greške ne možete ukloniti glavni ekran"
     },
     "today": "Danas",
     "@today": {
-      "description": "Naslov perioda danas"
+        "description": "Naslov perioda danas"
     },
     "yesterday": "Juče",
     "@yesterday": {
-      "description": "Naslov perioda juče"
+        "description": "Naslov perioda juče"
     },
     "thisWeek": "Ova nedelja",
     "@thisWeek": {
-      "description": "Naslov perioda ova nedelja"
+        "description": "Naslov perioda ova nedelja"
     },
     "lastTwoWeeks": "Poslednje 2 nedelje",
     "@lastTwoWeeks": {
-      "description": "Naslov perioda poslednje 2 nedelje"
+        "description": "Naslov perioda poslednje 2 nedelje"
     },
     "thisMonth": "Ovaj mesec",
     "@thisMonth": {
-      "description": "Naslov perioda ovaj mesec"
+        "description": "Naslov perioda ovaj mesec"
     },
     "thisYear": "Ova godina",
     "@thisYear": {
-      "description": "Naslov perioda ova godina"
-    },
-    "calendar": "Kalendar",
-    "@calendar": {
-      "description": "Oznaka taba kalendara"
-    },
-    "insights": "Uvid",
-    "@insights": {
-      "description": "Oznaka taba uvida"
-    },
-    "settings": "Podešavanja",
-    "@settings": {
-      "description": "Oznaka taba podešavanja"
-    },
-    "profile": "Profil",
-    "@profile": {
-      "description": "Oznaka taba profila"
-    },
-    "debugMenu": "Debug meni",
-    "@debugMenu": {
-      "description": "Oznaka taba debug menija"
+        "description": "Naslov perioda ova godina"
     },
     "calendarDescription": "Glavni ekran sa kalendarom unosa",
     "@calendarDescription": {
-      "description": "Opis taba kalendara"
+        "description": "Opis taba kalendara"
     },
     "insightsDescription": "Statistike svih vaših unosa",
     "@insightsDescription": {
-      "description": "Opis taba uvida"
+        "description": "Opis taba uvida"
     },
     "settingsDescription": "Ekran sa svim podešavanjima (tamni režim, sinhronizacija i sl.)",
     "@settingsDescription": {
-      "description": "Opis taba podešavanja"
+        "description": "Opis taba podešavanja"
     },
     "profileDescription": "Ekran sa vašim profilom",
     "@profileDescription": {
-      "description": "Opis taba profila"
+        "description": "Opis taba profila"
     },
     "todayDescription": "Samo današnji umovi",
     "@todayDescription": {
-      "description": "Opis taba danas"
+        "description": "Opis taba danas"
     },
     "debugMenuDescription": "Alati za programere za uključivanje eksperimentalnih funkcija",
     "@debugMenuDescription": {
-      "description": "Opis taba debug menija"
+        "description": "Opis taba debug menija"
     },
     "noMindsForThisDay": "Nema uma za ovaj dan",
     "@noMindsForThisDay": {
-      "description": "Poruka nema uma za ovaj dan"
+        "description": "Poruka nema uma za ovaj dan"
     },
     "showMindsForPeriod": "Prikaži umove za {period}",
     "@showMindsForPeriod": {
-      "description": "Poruka prikazivanja umova za period",
-      "placeholders": {
-        "period": {
-          "type": "String"
+        "description": "Poruka prikazivanja umova za period",
+        "placeholders": {
+            "period": {
+                "type": "String"
+            }
         }
-      }
-    }
+    },
+    "week": "Nedelja"
 }

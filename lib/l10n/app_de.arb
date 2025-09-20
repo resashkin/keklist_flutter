@@ -50,8 +50,6 @@
     "error": "Fehler",
     "startDiscussion": "Diskussion starten",
     "send": "SENDEN",
-    "done": "FERTIG",
-    "chatWithAI": "Mit KI chatten",
     "translateContent": "Inhalt übersetzen",
     "sensitiveContent": "Sensible Inhalte",
     "updateYourNickname": "Ihren Spitznamen aktualisieren",
@@ -72,7 +70,6 @@
     "spectrum": "Spektrum",
     "youDidNotCollectAnyEntriesYet": "Sie haben noch keine Einträge gesammelt",
     "pleaseAuthenticateToShowContent": "Bitte authentifizieren Sie sich, um den Inhalt Ihrer Notiz anzuzeigen",
-    "edit": "Bearbeiten",
     "areYouSure": "Sind Sie sicher?",
     "cannotRemoveMainScreen": "Hauptbildschirm kann nicht entfernt werden. Sie verlieren die Möglichkeit, Tabs einzurichten.",
     "today": "Heute",
@@ -81,11 +78,6 @@
     "lastTwoWeeks": "Letzte 2 Wochen",
     "thisMonth": "Diesen Monat",
     "thisYear": "Dieses Jahr",
-    "calendar": "Kalender",
-    "insights": "Einblicke",
-    "settings": "Einstellungen",
-    "profile": "Profil",
-    "debugMenu": "Debug-Menü",
     "calendarDescription": "Hauptbildschirm mit Kalender der Einträge",
     "insightsDescription": "Statistiken aller Ihrer Einträge",
     "settingsDescription": "Bildschirm mit allen Einstellungen (Dunkelmodus, Sync usw.)",
@@ -93,5 +85,6 @@
     "todayDescription": "Nur heutige Notizen",
     "debugMenuDescription": "Entwicklertools zum Umschalten experimenteller Funktionen",
     "noMindsForThisDay": "Keine Notizen für diesen Tag",
-    "showMindsForPeriod": "Notizen für {period} anzeigen"
+    "showMindsForPeriod": "Notizen für {period} anzeigen",
+    "week": "Woche"
 }

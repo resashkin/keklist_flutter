@@ -117,7 +117,7 @@ abstract class AppLocalizations {
     Locale('zh')
   ];
 
-  /// Settings tab label
+  /// Settings screen title
   ///
   /// In en, this message translates to:
   /// **'Settings'**
@@ -147,7 +147,7 @@ abstract class AppLocalizations {
   /// **'DONE'**
   String get done;
 
-  /// Chat with AI debug option
+  /// Chat with AI action
   ///
   /// In en, this message translates to:
   /// **'Chat with AI'**
@@ -171,7 +171,7 @@ abstract class AppLocalizations {
   /// **'Mind options'**
   String get mindOptions;
 
-  /// Edit button
+  /// Edit action
   ///
   /// In en, this message translates to:
   /// **'Edit'**
@@ -321,25 +321,25 @@ abstract class AppLocalizations {
   /// **'Mind'**
   String get mind;
 
-  /// Profile tab label
+  /// Profile screen title
   ///
   /// In en, this message translates to:
   /// **'Profile'**
   String get profile;
 
-  /// Insights tab label
+  /// Insights screen title
   ///
   /// In en, this message translates to:
   /// **'Insights'**
   String get insights;
 
-  /// Calendar tab label
+  /// Calendar title
   ///
   /// In en, this message translates to:
   /// **'Calendar'**
   String get calendar;
 
-  /// Debug Menu tab label
+  /// Debug menu title
   ///
   /// In en, this message translates to:
   /// **'Debug Menu'**
@@ -638,6 +638,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Show minds for {period}'**
   String showMindsForPeriod(String period);
+
+  /// Week label
+  ///
+  /// In en, this message translates to:
+  /// **'Week'**
+  String get week;
 }
 
 class _AppLocalizationsDelegate

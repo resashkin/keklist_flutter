@@ -276,4 +276,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String showMindsForPeriod(String period) {
     return 'Показать заметки за $period';
   }
+
+  @override
+  String get week => 'Неделя';
 }

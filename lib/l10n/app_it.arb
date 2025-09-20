@@ -1,387 +1,356 @@
 {
     "settings": "Impostazioni",
     "@settings": {
-      "description": "Titolo schermata impostazioni"
+        "description": "Etichetta tab impostazioni"
     },
     "userData": "Dati utente",
     "@userData": {
-      "description": "Titolo sezione dati utente"
+        "description": "Titolo sezione dati utente"
     },
     "appearance": "Aspetto",
     "@appearance": {
-      "description": "Titolo sezione aspetto"
+        "description": "Titolo sezione aspetto"
     },
     "exportToCsv": "Esporta in CSV",
     "@exportToCsv": {
-      "description": "Pulsante esporta in CSV"
+        "description": "Pulsante esporta in CSV"
     },
     "done": "FATTO",
     "@done": {
-      "description": "Pulsante fatto"
+        "description": "Pulsante fatto"
     },
     "chatWithAI": "Chatta con AI",
     "@chatWithAI": {
-      "description": "Azione chatta con AI"
+        "description": "Opzione debug chatta con AI"
     },
     "photosPerDay": "Foto al giorno",
     "@photosPerDay": {
-      "description": "Azione foto al giorno"
+        "description": "Azione foto al giorno"
     },
     "extraActions": "Azioni extra",
     "@extraActions": {
-      "description": "Menu azioni extra"
+        "description": "Menu azioni extra"
     },
     "mindOptions": "Opzioni mente",
     "@mindOptions": {
-      "description": "Menu opzioni mente"
+        "description": "Menu opzioni mente"
     },
     "edit": "Modifica",
     "@edit": {
-      "description": "Azione modifica"
+        "description": "Pulsante modifica"
     },
     "delete": "Elimina",
     "@delete": {
-      "description": "Azione elimina"
+        "description": "Azione elimina"
     },
     "share": "Condividi",
     "@share": {
-      "description": "Azione condividi"
+        "description": "Azione condividi"
     },
     "switchDay": "Cambia giorno",
     "@switchDay": {
-      "description": "Azione cambia giorno"
+        "description": "Azione cambia giorno"
     },
     "goToDate": "Vai alla data",
     "@goToDate": {
-      "description": "Azione vai alla data"
+        "description": "Azione vai alla data"
     },
     "showDigest": "Mostra riassunto per ...",
     "@showDigest": {
-      "description": "Azione mostra riassunto"
+        "description": "Azione mostra riassunto"
     },
     "showAll": "Mostra tutto",
     "@showAll": {
-      "description": "Azione mostra tutto"
+        "description": "Azione mostra tutto"
     },
     "translateToEnglish": "Traduci in inglese",
     "@translateToEnglish": {
-      "description": "Azione traduci in inglese"
+        "description": "Azione traduci in inglese"
     },
     "convertToStandalone": "Converti in standalone",
     "@convertToStandalone": {
-      "description": "Azione converti in standalone"
+        "description": "Azione converti in standalone"
     },
     "language": "Lingua",
     "@language": {
-      "description": "Impostazione lingua"
+        "description": "Impostazione lingua"
     },
     "selectLanguage": "Seleziona Lingua",
     "@selectLanguage": {
-      "description": "Titolo dialogo selezione lingua"
+        "description": "Titolo dialogo selezione lingua"
     },
     "darkMode": "Modalità scura",
     "@darkMode": {
-      "description": "Impostazione modalità scura"
+        "description": "Impostazione modalità scura"
     },
     "showDayDividers": "Mostra divisori giorno",
     "@showDayDividers": {
-      "description": "Impostazione mostra divisori giorno"
+        "description": "Impostazione mostra divisori giorno"
     },
     "tabsSettings": "Impostazioni tab",
     "@tabsSettings": {
-      "description": "Navigazione impostazioni tab"
+        "description": "Navigazione impostazioni tab"
     },
     "whatsNew": "Cosa c'è di nuovo?",
     "@whatsNew": {
-      "description": "Navigazione cosa c'è di nuovo"
+        "description": "Navigazione cosa c'è di nuovo"
     },
     "suggestFeature": "Suggerisci una funzione",
     "@suggestFeature": {
-      "description": "Navigazione suggerisci funzione"
+        "description": "Navigazione suggerisci funzione"
     },
     "sendFeedback": "Invia feedback",
     "@sendFeedback": {
-      "description": "Navigazione invia feedback"
+        "description": "Navigazione invia feedback"
     },
     "sourceCode": "Codice sorgente",
     "@sourceCode": {
-      "description": "Navigazione codice sorgente"
+        "description": "Navigazione codice sorgente"
     },
     "termsOfUse": "Termini di Utilizzo",
     "@termsOfUse": {
-      "description": "Navigazione termini di utilizzo"
+        "description": "Navigazione termini di utilizzo"
     },
     "privacyPolicy": "Politica sulla Privacy",
     "@privacyPolicy": {
-      "description": "Navigazione politica sulla privacy"
+        "description": "Navigazione politica sulla privacy"
     },
     "clearOnDeviceData": "Cancella dati sul dispositivo",
     "@clearOnDeviceData": {
-      "description": "Navigazione cancella dati"
+        "description": "Navigazione cancella dati"
     },
     "setOpenAIToken": "Imposta Token Open AI",
     "@setOpenAIToken": {
-      "description": "Titolo dialogo token OpenAI"
+        "description": "Titolo dialogo token OpenAI"
     },
     "cancel": "Annulla",
     "@cancel": {
-      "description": "Pulsante annulla"
+        "description": "Pulsante annulla"
     },
     "save": "Salva",
     "@save": {
-      "description": "Pulsante salva"
+        "description": "Pulsante salva"
     },
     "mind": "Mente",
     "@mind": {
-      "description": "Titolo schermata mente"
+        "description": "Titolo schermata mente"
     },
     "profile": "Profilo",
     "@profile": {
-      "description": "Titolo schermata profilo"
+        "description": "Etichetta tab profilo"
     },
     "insights": "Approfondimenti",
     "@insights": {
-      "description": "Titolo schermata approfondimenti"
+        "description": "Etichetta tab approfondimenti"
     },
     "calendar": "Calendario",
     "@calendar": {
-      "description": "Titolo calendario"
+        "description": "Etichetta tab calendario"
     },
     "debugMenu": "Menu Debug",
     "@debugMenu": {
-      "description": "Titolo menu debug"
+        "description": "Etichetta tab menu debug"
     },
     "discussion": "Discussione",
     "@discussion": {
-      "description": "Titolo schermata discussione"
+        "description": "Titolo schermata discussione"
     },
     "about": "Informazioni",
     "@about": {
-      "description": "Titolo sezione informazioni"
+        "description": "Titolo sezione informazioni"
     },
     "dangerZone": "Zona Pericolo",
     "@dangerZone": {
-      "description": "Titolo sezione zona pericolo"
+        "description": "Titolo sezione zona pericolo"
     },
     "editMind": "Modifica mente",
     "@editMind": {
-      "description": "Titolo dialogo modifica mente"
+        "description": "Titolo dialogo modifica mente"
     },
     "enterTokenHere": "Inserisci token qui",
     "@enterTokenHere": {
-      "description": "Suggerimento input token"
+        "description": "Suggerimento input token"
     },
     "token": "Token",
     "@token": {
-      "description": "Etichetta input token"
+        "description": "Etichetta input token"
     },
     "clearCache": "Cancella cache",
     "@clearCache": {
-      "description": "Pulsante cancella cache"
+        "description": "Pulsante cancella cache"
     },
     "developerModeEnabled": "🔧 Modalità sviluppatore abilitata! Il tab Debug Menu è ora disponibile!",
     "@developerModeEnabled": {
-      "description": "Messaggio modalità sviluppatore abilitata"
+        "description": "Messaggio modalità sviluppatore abilitata"
     },
     "activeTabs": "Tab attivi",
     "@activeTabs": {
-      "description": "Intestazione sezione tab attivi"
+        "description": "Intestazione sezione tab attivi"
     },
     "hiddenTabs": "Tab nascosti",
     "@hiddenTabs": {
-      "description": "Intestazione sezione tab nascosti"
+        "description": "Intestazione sezione tab nascosti"
     },
     "error": "Errore",
     "@error": {
-      "description": "Titolo dialogo errore"
+        "description": "Titolo dialogo errore"
     },
     "startDiscussion": "Avvia discussione",
     "@startDiscussion": {
-      "description": "Pulsante avvia discussione"
+        "description": "Pulsante avvia discussione"
     },
     "send": "INVIA",
     "@send": {
-      "description": "Pulsante invia"
-    },
-    "done": "FATTO",
-    "@done": {
-      "description": "Pulsante fatto"
-    },
-    "chatWithAI": "Chatta con AI",
-    "@chatWithAI": {
-      "description": "Opzione debug chatta con AI"
+        "description": "Pulsante invia"
     },
     "translateContent": "Traduci contenuto",
     "@translateContent": {
-      "description": "Opzione debug traduci contenuto"
+        "description": "Opzione debug traduci contenuto"
     },
     "sensitiveContent": "Contenuto sensibile",
     "@sensitiveContent": {
-      "description": "Opzione debug contenuto sensibile"
+        "description": "Opzione debug contenuto sensibile"
     },
     "updateYourNickname": "Aggiorna il tuo nickname",
     "@updateYourNickname": {
-      "description": "Titolo dialogo aggiorna nickname"
+        "description": "Titolo dialogo aggiorna nickname"
     },
     "yourNickname": "Il tuo nickname",
     "@yourNickname": {
-      "description": "Suggerimento input nickname"
+        "description": "Suggerimento input nickname"
     },
     "create": "Crea",
     "@create": {
-      "description": "Pulsante crea"
+        "description": "Pulsante crea"
     },
     "yourFolderName": "Nome della tua cartella",
     "@yourFolderName": {
-      "description": "Suggerimento input nome cartella"
+        "description": "Suggerimento input nome cartella"
     },
     "noMindsInSelectedPeriod": "Nessuna mente nel periodo selezionato",
     "@noMindsInSelectedPeriod": {
-      "description": "Messaggio nessuna mente nel periodo"
+        "description": "Messaggio nessuna mente nel periodo"
     },
     "noMindsForPeriod": "Nessuna mente per questo periodo",
     "@noMindsForPeriod": {
-      "description": "Messaggio nessuna mente per il periodo"
+        "description": "Messaggio nessuna mente per il periodo"
     },
     "selectPeriod": "Seleziona periodo ...",
     "@selectPeriod": {
-      "description": "Azione seleziona periodo"
+        "description": "Azione seleziona periodo"
     },
     "digest": "Riassunto",
     "@digest": {
-      "description": "Titolo riassunto"
+        "description": "Titolo riassunto"
     },
     "minds": "Menti",
     "@minds": {
-      "description": "Titolo menti"
+        "description": "Titolo menti"
     },
     "searchForYourNotes": "Cerca le tue note",
     "@searchForYourNotes": {
-      "description": "Suggerimento cerca note"
+        "description": "Suggerimento cerca note"
     },
     "searchYourEmoji": "Cerca il tuo emoji...",
     "@searchYourEmoji": {
-      "description": "Suggerimento cerca emoji"
+        "description": "Suggerimento cerca emoji"
     },
     "writeSomething": "Scrivi qualcosa...",
     "@writeSomething": {
-      "description": "Suggerimento scrivi qualcosa"
+        "description": "Suggerimento scrivi qualcosa"
     },
     "topMinds": "Menti principali",
     "@topMinds": {
-      "description": "Titolo menti principali"
+        "description": "Titolo menti principali"
     },
     "todayMinds": "Menti di oggi",
     "@todayMinds": {
-      "description": "Titolo menti di oggi"
+        "description": "Titolo menti di oggi"
     },
     "randomMind": "Mente casuale",
     "@randomMind": {
-      "description": "Titolo mente casuale"
+        "description": "Titolo mente casuale"
     },
     "spectrum": "Spettro",
     "@spectrum": {
-      "description": "Titolo spettro"
+        "description": "Titolo spettro"
     },
     "youDidNotCollectAnyEntriesYet": "Non hai ancora raccolto nessuna voce",
     "@youDidNotCollectAnyEntriesYet": {
-      "description": "Messaggio nessuna voce raccolta"
+        "description": "Messaggio nessuna voce raccolta"
     },
     "pleaseAuthenticateToShowContent": "Autenticati per mostrare il contenuto della tua mente",
     "@pleaseAuthenticateToShowContent": {
-      "description": "Messaggio autenticazione richiesta"
-    },
-    "edit": "Modifica",
-    "@edit": {
-      "description": "Pulsante modifica"
+        "description": "Messaggio autenticazione richiesta"
     },
     "areYouSure": "Sei sicuro?",
     "@areYouSure": {
-      "description": "Titolo dialogo conferma"
+        "description": "Titolo dialogo conferma"
     },
     "cannotRemoveMainScreen": "Non puoi rimuovere la schermata principale. Perderai l'opzione per configurare i tab.",
     "@cannotRemoveMainScreen": {
-      "description": "Messaggio errore non puoi rimuovere schermata principale"
+        "description": "Messaggio errore non puoi rimuovere schermata principale"
     },
     "today": "Oggi",
     "@today": {
-      "description": "Titolo periodo oggi"
+        "description": "Titolo periodo oggi"
     },
     "yesterday": "Ieri",
     "@yesterday": {
-      "description": "Titolo periodo ieri"
+        "description": "Titolo periodo ieri"
     },
     "thisWeek": "Questa settimana",
     "@thisWeek": {
-      "description": "Titolo periodo questa settimana"
+        "description": "Titolo periodo questa settimana"
     },
     "lastTwoWeeks": "Ultime 2 settimane",
     "@lastTwoWeeks": {
-      "description": "Titolo periodo ultime 2 settimane"
+        "description": "Titolo periodo ultime 2 settimane"
     },
     "thisMonth": "Questo mese",
     "@thisMonth": {
-      "description": "Titolo periodo questo mese"
+        "description": "Titolo periodo questo mese"
     },
     "thisYear": "Quest'anno",
     "@thisYear": {
-      "description": "Titolo periodo quest'anno"
-    },
-    "calendar": "Calendario",
-    "@calendar": {
-      "description": "Etichetta tab calendario"
-    },
-    "insights": "Approfondimenti",
-    "@insights": {
-      "description": "Etichetta tab approfondimenti"
-    },
-    "settings": "Impostazioni",
-    "@settings": {
-      "description": "Etichetta tab impostazioni"
-    },
-    "profile": "Profilo",
-    "@profile": {
-      "description": "Etichetta tab profilo"
-    },
-    "debugMenu": "Menu Debug",
-    "@debugMenu": {
-      "description": "Etichetta tab menu debug"
+        "description": "Titolo periodo quest'anno"
     },
     "calendarDescription": "Schermata principale con Calendario delle voci",
     "@calendarDescription": {
-      "description": "Descrizione tab calendario"
+        "description": "Descrizione tab calendario"
     },
     "insightsDescription": "Statistiche di tutte le tue voci",
     "@insightsDescription": {
-      "description": "Descrizione tab approfondimenti"
+        "description": "Descrizione tab approfondimenti"
     },
     "settingsDescription": "Schermata con tutte le impostazioni (modalità scura, sincronizzazione e altro)",
     "@settingsDescription": {
-      "description": "Descrizione tab impostazioni"
+        "description": "Descrizione tab impostazioni"
     },
     "profileDescription": "Schermata con il tuo profilo",
     "@profileDescription": {
-      "description": "Descrizione tab profilo"
+        "description": "Descrizione tab profilo"
     },
     "todayDescription": "Solo menti di oggi",
     "@todayDescription": {
-      "description": "Descrizione tab oggi"
+        "description": "Descrizione tab oggi"
     },
     "debugMenuDescription": "Strumenti per sviluppatori per attivare funzionalità sperimentali",
     "@debugMenuDescription": {
-      "description": "Descrizione tab menu debug"
+        "description": "Descrizione tab menu debug"
     },
     "noMindsForThisDay": "Nessuna mente per questo giorno",
     "@noMindsForThisDay": {
-      "description": "Messaggio nessuna mente per questo giorno"
+        "description": "Messaggio nessuna mente per questo giorno"
     },
     "showMindsForPeriod": "Mostra menti per {period}",
     "@showMindsForPeriod": {
-      "description": "Messaggio mostra menti per periodo",
-      "placeholders": {
-        "period": {
-          "type": "String"
+        "description": "Messaggio mostra menti per periodo",
+        "placeholders": {
+            "period": {
+                "type": "String"
+            }
         }
-      }
-    }
+    },
+    "week": "Settimana"
 }

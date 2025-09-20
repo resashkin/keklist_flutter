@@ -276,4 +276,7 @@ class AppLocalizationsUz extends AppLocalizations {
   String showMindsForPeriod(String period) {
     return '$period uchun fikrlarni ko\'rsatish';
   }
+
+  @override
+  String get week => 'Hafta';
 }

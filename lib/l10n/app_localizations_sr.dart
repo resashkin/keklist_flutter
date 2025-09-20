@@ -276,6 +276,9 @@ class AppLocalizationsSr extends AppLocalizations {
   String showMindsForPeriod(String period) {
     return 'Прикажи белешке за $period';
   }
+
+  @override
+  String get week => 'Недеља';
 }
 
 /// The translations for Serbian, using the Latin script (`sr_Latn`).
@@ -550,4 +553,7 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
   String showMindsForPeriod(String period) {
     return 'Prikaži umove za $period';
   }
+
+  @override
+  String get week => 'Nedelja';
 }

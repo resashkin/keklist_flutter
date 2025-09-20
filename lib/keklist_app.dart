@@ -45,7 +45,7 @@ final class KeklistAppState extends KekWidgetState<KeklistApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Keklist',
+      title: 'keklist',
       home: const TabsContainerScreen(),
       theme: _isDarkMode ? Themes.dark : Themes.light,
       darkTheme: Themes.dark,

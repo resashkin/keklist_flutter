@@ -50,8 +50,6 @@
     "error": "错误",
     "startDiscussion": "开始讨论",
     "send": "发送",
-    "done": "完成",
-    "chatWithAI": "与AI聊天",
     "translateContent": "翻译内容",
     "sensitiveContent": "敏感内容",
     "updateYourNickname": "更新您的昵称",
@@ -72,7 +70,6 @@
     "spectrum": "光谱",
     "youDidNotCollectAnyEntriesYet": "您还没有收集任何条目",
     "pleaseAuthenticateToShowContent": "请验证身份以显示您的笔记内容",
-    "edit": "编辑",
     "areYouSure": "您确定吗？",
     "cannotRemoveMainScreen": "无法删除主屏幕。您将失去设置标签页的选项。",
     "today": "今天",
@@ -81,11 +78,6 @@
     "lastTwoWeeks": "过去2周",
     "thisMonth": "本月",
     "thisYear": "今年",
-    "calendar": "日历",
-    "insights": "洞察",
-    "settings": "设置",
-    "profile": "个人资料",
-    "debugMenu": "调试菜单",
     "calendarDescription": "带有条目日历的主屏幕",
     "insightsDescription": "所有条目的统计",
     "settingsDescription": "包含所有设置的屏幕（深色模式、同步等）",
@@ -93,5 +85,6 @@
     "todayDescription": "仅今日笔记",
     "debugMenuDescription": "用于切换实验功能的开发工具",
     "noMindsForThisDay": "今天没有笔记",
-    "showMindsForPeriod": "显示{period}的笔记"
+    "showMindsForPeriod": "显示{period}的笔记",
+    "week": "周"
 }

@@ -277,4 +277,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String showMindsForPeriod(String period) {
     return 'Notizen für $period anzeigen';
   }
+
+  @override
+  String get week => 'Woche';
 }
