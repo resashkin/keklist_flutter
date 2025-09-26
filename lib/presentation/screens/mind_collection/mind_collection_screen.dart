@@ -99,7 +99,7 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
         switch (state) {
           case SettingsDataState settingsDataState:
             _settingsDataState = settingsDataState;
-          case SettingsNeedToShowWhatsNew _:
+          case SettingsShowWhatsNew _:
             _showWhatsNew();
             sendEventToBloc<SettingsBloc>(SettingsWhatsNewShown());
         }

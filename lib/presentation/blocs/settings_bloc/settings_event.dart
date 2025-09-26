@@ -10,6 +10,8 @@ final class SettingsExportAllMindsToCSV extends SettingsEvent {}
 
 final class SettingsExportAllMindsToEncryptedImage extends SettingsEvent {}
 
+final class SettingsImportAllMindsFromEncryptedImage extends SettingsEvent {}
+
 final class SettingsChangeMindContentVisibility extends SettingsEvent {
   final bool isVisible;
 

@@ -1,6 +1,10 @@
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:keklist/domain/repositories/mind/object/mind_object.dart';
 
+part 'mind.g.dart';
+
+@JsonSerializable()
 final class Mind with EquatableMixin {
   final String id;
   final String emoji;
@@ -20,6 +24,10 @@ final class Mind with EquatableMixin {
     required this.rootId,
   });
 
+  // JsonSerializable
+  factory Mind.fromJson(Map<String, dynamic> json) => _$MindFromJson(json);
+  Map<String, dynamic> toJson() => _$MindToJson(this);
+
   @override
   bool? get stringify => true;
 
@@ -30,6 +38,7 @@ final class Mind with EquatableMixin {
         note,
         sortIndex,
         dayIndex,
+        rootId,
         creationDate.millisecondsSinceEpoch,
       ];
 

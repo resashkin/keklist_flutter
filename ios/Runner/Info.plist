@@ -64,7 +64,5 @@
 	<false/>
 	<key>NSFaceIDUsageDescription</key>
 	<string>For showing/hiding sensetive data for other users by current user</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>keklist needs access to photo library to save images and videos from your notes into library</string>
 </dict>
 </plist>

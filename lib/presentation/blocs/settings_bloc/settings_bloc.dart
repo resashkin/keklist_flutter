@@ -1,13 +1,16 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:bloc/bloc.dart';
 import 'package:csv/csv.dart';
 import 'package:dart_openai/dart_openai.dart';
 import 'package:flutter/services.dart';
 import 'package:gallery_saver_plus/gallery_saver.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
+import 'package:keklist/domain/services/entities/user_content.dart';
 import 'package:keklist/domain/services/language_manager.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -43,6 +46,7 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     on<SettingsUpdateShouldShowTitlesMode>(_updateShouldShowTitlesMode);
     on<SettingsChangeLanguage>(_changeLanguage);
     on<SettingsExportAllMindsToEncryptedImage>(_exportToEncryptedImage);
+    on<SettingsImportAllMindsFromEncryptedImage>(_importFromEncryptedImage);
 
     _repository.stream.listen((settings) => add(SettingsGet())).disposed(by: this);
   }
@@ -103,7 +107,7 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     final String appVersion = '${packageInfo.version} ${packageInfo.buildNumber}';
     final bool needToShowWhatsNewOnStart = previousAppVersion != appVersion;
     if (needToShowWhatsNewOnStart) {
-      emit(SettingsNeedToShowWhatsNew());
+      emit(SettingsShowWhatsNew());
     }
   }
 
@@ -120,22 +124,61 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
   FutureOr<void> _changeLanguage(SettingsChangeLanguage event, Emitter<SettingsState> emit) async {
     await _repository.updateLanguage(event.language);
   }
-   
+
+  // TODO: extract to another bloc?
+
   FutureOr<void> _exportToEncryptedImage(
     SettingsExportAllMindsToEncryptedImage event,
     Emitter<SettingsState> emit,
   ) async {
+    final Iterable<Mind> allUserMinds = _mindRepository.values;
+    final UserContent userContent = UserContent(minds: allUserMinds.toList());
+    final String userContentMessage = userContent.toBase64Message();
+
     final File tempImageFile = await _assetToTempFile(
       'assets/steganograph_image/steganograph_image.png',
-      filename: 'carrier.png',
+      filename: 'image_with_content.png',
     );
     final File? stegoImageFile = await Steganograph.cloak(
       image: tempImageFile,
-      message: 'kek)))))',
-      //outputFilePath: 'steganograph_image_result.png',
+      message: userContentMessage,
     );
     if (stegoImageFile == null) return;
-    GallerySaver.saveImage(stegoImageFile.path);
+    final params = ShareParams(
+      files: [XFile(stegoImageFile.path)],
+      sharePositionOrigin: Rect.fromLTWH(0, 0, 1, 1),
+    );
+    await SharePlus.instance.share(params);
+  }
+
+  FutureOr<void> _importFromEncryptedImage(
+    SettingsImportAllMindsFromEncryptedImage event,
+    Emitter<SettingsState> emit,
+  ) async {
+    final ImagePicker picker = ImagePicker();
+    return picker.pickImage(source: ImageSource.gallery).then(
+      (XFile? image) async {
+        if (image == null) return;
+        final String? message = await Steganograph.uncloak(File(image.path));
+        if (message == null) {
+          emit(
+            SettingsShowMessage(
+              title: 'Error!',
+              message: 'Failed to import',
+            ),
+          );
+          return;
+        }
+        final UserContent userContent = UserContent.fromBase64Message(message);
+        await _mindRepository.createMinds(minds: userContent.minds);
+        emit(
+          SettingsShowMessage(
+            title: 'Success',
+            message: 'Imported ${userContent.minds.length} minds',
+          ),
+        );
+      },
+    );
   }
 
   Future<File> _assetToTempFile(String assetPath, {String? filename}) async {

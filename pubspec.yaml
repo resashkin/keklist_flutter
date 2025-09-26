@@ -43,7 +43,7 @@ dependencies:
   scrollable_positioned_list: ^0.3.5
   settings_ui: ^2.0.2
   shake: ^2.2.0
-  share_plus: ^10.0.0
+  share_plus: ^12.0.0
   syncfusion_flutter_charts: ^30.1.41
   url_launcher: ^6.1.9
   uuid: ^4.2.1
@@ -70,7 +70,7 @@ dependencies:
   json_annotation: ^4.9.0
   full_swipe_back_gesture: ^0.1.0
   steganograph: ^2.0.0
-  gallery_saver_plus: ^3.2.9
+  image_picker: ^1.2.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.14.3 # To generate icons - "flutter pub run flutter_launcher_icons"

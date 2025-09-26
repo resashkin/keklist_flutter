@@ -46,6 +46,20 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
             _showTitles = state.settings.shouldShowTitles;
           });
           break;
+        case SettingsShowMessage state:
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text(state.title),
+              content: Text(state.message),
+              actions: [
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ],
+            ),
+          );
         case SettingsLoadingState state:
           if (state.isLoading) {
             EasyLoading.show();
@@ -95,7 +109,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
                 title: const Text('Import from encrypted image'),
                 leading: const Icon(Icons.key, color: Colors.greenAccent),
                 onPressed: (BuildContext context) {
-                  sendEventToBloc<SettingsBloc>(SettingsExportAllMindsToEncryptedImage());
+                  sendEventToBloc<SettingsBloc>(SettingsImportAllMindsFromEncryptedImage());
                 },
               )
             ],
