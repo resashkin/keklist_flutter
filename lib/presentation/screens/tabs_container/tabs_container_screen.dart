@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide DateUtils;
 import 'package:keklist/domain/repositories/tabs/models/tabs_settings.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bloc.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_event.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_state.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
-import 'package:keklist/presentation/core/helpers/mind_utils.dart';
+import 'package:keklist/presentation/core/helpers/date_utils.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/presentation/core/widgets/bottom_navigation_bar.dart';
 import 'package:keklist/presentation/screens/insights/insights_screen.dart';
@@ -13,6 +13,7 @@ import 'package:keklist/presentation/screens/mind_collection/mind_collection_scr
 import 'package:keklist/presentation/screens/mind_day_collection/mind_day_collection_screen.dart';
 import 'package:keklist/presentation/screens/settings/settings_screen.dart';
 import 'package:keklist/presentation/screens/user_profile/user_profile_screen.dart';
+import 'package:keklist/presentation/screens/debug_menu/debug_menu_screen.dart';
 
 final class TabsContainerScreen extends StatefulWidget {
   const TabsContainerScreen({super.key});
@@ -37,7 +38,7 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
           final Iterable<BottomNavigationBarItem> items = state.selectedTabs.map(
             (item) => BottomNavigationBarItem(
               icon: item.type.materialIcon,
-              label: item.type.label,
+              label: item.type.localizedLabel(context),
             ),
           );
           _items
@@ -84,8 +85,14 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
       );
 
   List<BottomNavigationBarItem> _getFakeItems() => [
-        BottomNavigationBarItem(icon: TabType.calendar.materialIcon, label: TabType.calendar.label),
-        BottomNavigationBarItem(icon: TabType.settings.materialIcon, label: TabType.settings.label)
+        BottomNavigationBarItem(
+          icon: TabType.calendar.materialIcon,
+          label: TabType.calendar.localizedLabel(context),
+        ),
+        BottomNavigationBarItem(
+          icon: TabType.settings.materialIcon,
+          label: TabType.settings.localizedLabel(context),
+        )
       ];
 
   Widget _bodyWidgetByType(TabType type) {
@@ -99,7 +106,9 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
       case TabType.settings:
         return SettingsScreen();
       case TabType.today:
-        return MindDayCollectionScreen(initialDayIndex: MindUtils.getTodayIndex());
+        return MindDayCollectionScreen(initialDayIndex: DateUtils.getTodayIndex());
+      case TabType.debugMenu:
+        return DebugMenuScreen();
     }
   }
 }

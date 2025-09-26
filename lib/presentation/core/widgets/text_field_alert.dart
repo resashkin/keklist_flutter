@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/services/entities/mind.dart';
+import '../extensions/localization_extensions.dart';
 
 class TextFieldAlert extends StatefulWidget {
   final String title;
@@ -34,11 +35,11 @@ class TextFieldAlertState extends State<TextFieldAlert> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Edit mind'),
+      title: Text(context.l10n.editMind),
       content: TextField(controller: _textEditingController),
       actions: <Widget>[
         TextButton(
-          child: const Text('Save'),
+          child: Text(context.l10n.save),
           onPressed: () {
             Navigator.of(context).pop(_textEditingController.text);
           },
@@ -53,7 +54,7 @@ extension ShowEditMindAlert on State {
     return await showDialog<String>(
       context: context,
       builder: (BuildContext context) => TextFieldAlert(
-        title: 'Edit mind - ${mind.emoji}',
+        title: '${context.l10n.editMind} - ${mind.emoji}',
         initialText: mind.note,
       ),
     );

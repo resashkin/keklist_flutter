@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/presentation/core/widgets/rounded_container.dart';
 import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class InsightsTopChartWidget extends StatelessWidget {
@@ -37,10 +38,10 @@ class InsightsTopChartWidget extends StatelessWidget {
       child: RoundedContainer(
         child: Column(
           children: [
-            const Padding(
+            Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
-                'Top minds',
+                context.l10n.topMinds,
                 style: TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.w500,

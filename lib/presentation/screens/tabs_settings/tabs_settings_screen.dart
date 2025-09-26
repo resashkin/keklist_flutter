@@ -4,10 +4,13 @@ import 'package:keklist/domain/repositories/tabs/models/tabs_settings.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bloc.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_event.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_state.dart';
+import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/presentation/core/widgets/bottom_navigation_bar.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
+import 'package:shake/shake.dart';
 import 'package:keklist/presentation/screens/tabs_settings/tabs_settings_list_item.dart';
 
 final class TabsSettingsScreen extends StatefulWidget {
@@ -22,10 +25,35 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
   final List<TabModel> _selectedTabModels = [];
   final List<TabModel> _hiddenTabModels = [];
   final List<BottomNavigationBarItem> _tabItems = [];
+  bool _isDeveloperModeEnabled = false;
+  ShakeDetector? _shakeDetector;
 
   @override
   void initState() {
     super.initState();
+
+    // Initialize shake detector with error handling
+    try {
+      _shakeDetector = ShakeDetector.autoStart(
+        onPhoneShake: () {
+          if (!_isDeveloperModeEnabled) {
+            sendEventToBloc<DebugMenuBloc>(DebugMenuEnableDeveloperMode());
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  content: Text(context.l10n.developerModeEnabled),
+                  duration: Duration(seconds: 3),
+                ),
+              );
+          }
+        },
+      );
+    } catch (e) {
+      // Shake detection not available on this platform
+      // Developer mode can still be enabled manually via debug menu if needed
+      print('Shake detection not available: $e');
+    }
 
     subscribeToBloc<TabsContainerBloc>(onNewState: (state) {
       if (state is TabsContainerState) {
@@ -36,11 +64,11 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
             ..addAll(state.selectedTabs);
           _hiddenTabModels
             ..clear()
-            ..addAll(state.hiddenTabs);
+            ..addAll(state.hiddenTabs.where((tab) => tab.type != TabType.debugMenu || _isDeveloperModeEnabled));
           final Iterable<BottomNavigationBarItem> items = state.selectedTabs.map(
             (item) => BottomNavigationBarItem(
               icon: item.type.materialIcon,
-              label: item.type.label,
+              label: item.type.localizedLabel(context),
             ),
           );
           _tabItems
@@ -49,11 +77,23 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
         });
       }
     })?.disposed(by: this);
+
+    subscribeToBloc<DebugMenuBloc>(onNewState: (state) {
+      if (state is DebugMenuDataState) {
+        setState(() {
+          _isDeveloperModeEnabled = state.isDeveloperModeEnabled;
+        });
+        // Refresh tabs when developer mode state changes
+        sendEventToBloc<TabsContainerBloc>(TabsContainerGetCurrentState());
+      }
+    })?.disposed(by: this);
+
     sendEventToBloc<TabsContainerBloc>(TabsContainerGetCurrentState());
   }
 
   @override
   void dispose() {
+    _shakeDetector?.stopListening();
     super.dispose();
     cancelSubscriptions();
   }
@@ -71,7 +111,25 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
           onTap: (int index) => setState(() => _selectedIndex = index),
         ),
       ),
-      appBar: AppBar(title: Text('Tabs settings')),
+      appBar: AppBar(
+        title: GestureDetector(
+          onLongPress: () {
+            // Alternative way to enable developer mode if shake detection fails
+            if (!_isDeveloperModeEnabled) {
+              sendEventToBloc<DebugMenuBloc>(DebugMenuEnableDeveloperMode());
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  SnackBar(
+                    content: Text(context.l10n.developerModeEnabled),
+                    duration: Duration(seconds: 3),
+                  ),
+                );
+            }
+          },
+          child: Text(context.l10n.tabsSettings),
+        ),
+      ),
       body: ReorderableListView.builder(
         itemCount: listItems.length,
         onReorder: (oldIndex, newIndex) {
@@ -118,8 +176,8 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
                 key: ValueKey('selected_${tab.type}'),
                 child: _TabItemWidget(
                   leadingIcon: tab.type.materialIcon,
-                  title: tab.type.label,
-                  subtitle: tab.type.description,
+                  title: tab.type.localizedLabel(context),
+                  subtitle: tab.type.localizedDescription(context),
                   trailingActionWidget: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -142,8 +200,8 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
                 key: ValueKey('unselected_${tab.type}'),
                 child: _TabItemWidget(
                   leadingIcon: tab.type.materialIcon,
-                  title: tab.type.label,
-                  subtitle: tab.type.description,
+                  title: tab.type.localizedLabel(context),
+                  subtitle: tab.type.localizedDescription(context),
                   trailingActionWidget: GestureDetector(
                     child: Icon(Icons.add),
                     onTap: () => sendEventToBloc<TabsContainerBloc>(TabsContainerSelectTab(tabType: tab.type)),
@@ -167,21 +225,21 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
   List<BottomNavigationBarItem> _buildFakeItems() => [
         BottomNavigationBarItem(
           icon: TabType.calendar.materialIcon,
-          label: TabType.calendar.label,
+          label: TabType.calendar.localizedLabel(context),
         ),
         BottomNavigationBarItem(
           icon: TabType.settings.materialIcon,
-          label: TabType.settings.label,
+          label: TabType.settings.localizedLabel(context),
         )
       ];
 
   List<TabsSettingsListItem> _buildListItems() {
     final List<TabsSettingsListItem> items = [];
-    items.add(SectionHeaderItem('Active tabs'));
+    items.add(SectionHeaderItem(context.l10n.activeTabs));
     items.addAll(_selectedTabModels.map((tab) => SelectedTabItem(tab)));
     if (_hiddenTabModels.isNotEmpty) {
       items.add(DividerItem());
-      items.add(SectionHeaderItem('Hidden tabs'));
+      items.add(SectionHeaderItem(context.l10n.hiddenTabs));
       items.addAll(_hiddenTabModels.map((tab) => HiddenTabItem(tab)));
     }
     return items;
@@ -191,8 +249,8 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(
-        const SnackBar(
-          content: Text('Cannot remove main screen. You will loose option to setup tabs.'),
+        SnackBar(
+          content: Text(context.l10n.cannotRemoveMainScreen),
         ),
       );
   }

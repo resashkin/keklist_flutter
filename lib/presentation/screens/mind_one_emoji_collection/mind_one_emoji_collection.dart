@@ -1,6 +1,7 @@
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide DateUtils;
+import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
 import 'package:keklist/presentation/core/helpers/extensions/state_extensions.dart';
 import 'package:keklist/presentation/screens/actions/action_model.dart';
 import 'package:keklist/presentation/screens/actions/actions_screen.dart';
@@ -9,14 +10,12 @@ import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/mind_utils.dart';
+import 'package:keklist/presentation/core/helpers/date_utils.dart';
 import 'package:keklist/presentation/core/widgets/creator_bottom_bar/mind_creator_bottom_bar.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/screens/mind_info/mind_info_screen.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-
-// TODO: сделать пробелы в днях между
-// TODO: переделать Monolog на ListView
-// TODO: подсветить сегодня
 
 final class MindOneEmojiCollectionScreen extends StatefulWidget {
   final String emoji;
@@ -82,8 +81,6 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
             ..clear()
             ..addAll(state.values.sortedByProperty((e) => e.dayIndex));
         });
-      } else if (state is MindOperationError) {
-        _handleError(state);
       }
     })?.disposed(by: this);
   }
@@ -135,7 +132,7 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
                       if (_editableMind == null) {
                         sendEventToBloc<MindBloc>(
                           MindCreate(
-                            dayIndex: MindUtils.getTodayIndex(),
+                            dayIndex: DateUtils.getTodayIndex(),
                             note: data.text,
                             emoji: data.emoji,
                             rootId: null,
@@ -153,7 +150,7 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
                     suggestionMinds: const [],
                     selectedEmoji: emoji,
                     onTapEmoji: () {},
-                    doneTitle: 'DONE',
+                    doneTitle: context.l10n.done,
                     onTapCancelEdit: () {
                       _resetMindCreator();
                     },
@@ -183,10 +180,6 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
     });
   }
 
-  void _showKeyboard() {
-    _mindCreatorFocusNode.requestFocus();
-  }
-
   void _hideKeyboard() {
     FocusScope.of(context).requestFocus(FocusNode());
   }
@@ -197,7 +190,7 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
       builder: (context) => ActionsScreen(
         actions: [
           (
-            ActionModel.edit(),
+            ActionModel.edit(context),
             () {
               setState(() {
                 _editableMind = mind;
@@ -208,7 +201,7 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
             }
           ),
           (
-            ActionModel.switchDay(),
+            ActionModel.switchDay(context),
             () async {
               final int? switchedDay = await _showDateSwitcherToNewDay();
               if (switchedDay != null) {
@@ -222,48 +215,17 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
               }
             }
           ),
-          (ActionModel.delete(), () => sendEventToBloc<MindBloc>(MindDelete(mind: mind))),
+          (ActionModel.delete(context), () => sendEventToBloc<MindBloc>(MindDelete(mind: mind))),
         ],
       ),
     );
-  }
-
-  void _handleError(MindOperationError error) {
-    if (error.notCompleted == MindOperationType.create) {
-      final Mind? notCreatedMind = error.minds.firstOrNull;
-      if (notCreatedMind == null) {
-        return;
-      }
-
-      setState(() {
-        _createMindEditingController.text = notCreatedMind.note;
-        // _selectedEmoji = notCreatedMind.emoji;
-        _showKeyboard();
-      });
-    } else if (error.notCompleted == MindOperationType.edit) {
-      final Mind? notEditedMind = error.minds.firstOrNull;
-      if (notEditedMind == null) {
-        return;
-      }
-
-      final Mind? oldMind = allMinds.firstWhereOrNull((Mind mind) => mind.id == notEditedMind.id);
-      if (oldMind == null) {
-        return;
-      }
-      setState(() {
-        _editableMind = oldMind;
-        _createMindEditingController.text = notEditedMind.note;
-        // _selectedEmoji = notEditedMind.emoji;
-        _showKeyboard();
-      });
-    }
   }
 
   Future<int?> _showDateSwitcherToNewDay() async {
     final List<DateTime?>? dates = await showCalendarDatePicker2Dialog(
       context: context,
       value: [
-        MindUtils.getDateFromDayIndex(MindUtils.getTodayIndex()),
+        DateUtils.getDateFromDayIndex(DateUtils.getTodayIndex()),
       ],
       config: CalendarDatePicker2WithActionButtonsConfig(firstDayOfWeek: 1),
       dialogSize: const Size(325, 400),
@@ -274,7 +236,7 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
       return null;
     }
 
-    final int dayIndex = MindUtils.getDayIndex(from: dates!.first!);
+    final int dayIndex = DateUtils.getDayIndex(from: dates!.first!);
     return dayIndex;
   }
 
@@ -284,7 +246,7 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
     }
 
     Navigator.of(mountedContext!).push(
-      MaterialPageRoute(
+      BackSwipePageRoute(
         builder: (_) => MindInfoScreen(
           rootMind: mind,
           allMinds: allMinds,

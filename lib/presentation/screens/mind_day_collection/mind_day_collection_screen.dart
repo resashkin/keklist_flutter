@@ -1,10 +1,14 @@
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide DateUtils;
 import 'package:flutter/services.dart';
+import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
+import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
+import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
 import 'package:keklist/presentation/core/widgets/overscroll_listener.dart';
 import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/screens/actions/action_model.dart';
 import 'package:keklist/presentation/screens/actions/actions_screen.dart';
 import 'package:keklist/presentation/screens/mind_chat_discussion/mind_chat_discussion_screen.dart';
@@ -20,22 +24,20 @@ import 'package:keklist/domain/constants.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/mind_utils.dart';
+import 'package:keklist/presentation/core/helpers/date_utils.dart';
 import 'package:keklist/presentation/screens/mind_info/mind_info_screen.dart';
 import 'package:keklist/presentation/screens/mind_one_emoji_collection/mind_one_emoji_collection.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
-import 'package:translator/translator.dart';
 
 final class MindDayCollectionScreen extends StatefulWidget {
   final int initialDayIndex;
-  final MindOperationError? initialError;
   // final Iterable<Mind> allMinds;
 
   const MindDayCollectionScreen({
     super.key,
     // required this.allMinds,
     required this.initialDayIndex,
-    this.initialError,
   });
 
   @override
@@ -58,10 +60,11 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
       );
 
   Map<String, List<Mind>> get _mindIdsToChildren => MindUtils.convertToMindChildren(minds: allMinds);
-  final Map<String, String> mindIdsToTranslations = {};
 
   bool _isMindContentVisible = false;
   Mind? _editableMind;
+
+  DebugMenuDataState? _debugMenuState;
 
   _MindDayCollectionScreenState({
     required this.dayIndex,
@@ -72,12 +75,6 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      if (widget.initialError != null) {
-        _handleError(widget.initialError!);
-      }
-    });
-
     subscribeToBloc<MindBloc>(onNewState: (state) async {
       if (state is MindList) {
         setState(() {
@@ -85,8 +82,6 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
             ..clear()
             ..addAll(state.values.sortedBySortIndex());
         });
-      } else if (state is MindOperationError) {
-        _handleError(state);
       }
     })?.disposed(by: this);
 
@@ -98,32 +93,42 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
       }
     })?.disposed(by: this);
 
+    subscribeToBloc<DebugMenuBloc>(onNewState: (state) {
+      if (state is DebugMenuDataState) {
+        _debugMenuState = state;
+      }
+    });
+
     sendEventToBloc<MindBloc>(MindGetList());
     sendEventToBloc<SettingsBloc>(SettingsGet());
+    sendEventToBloc<DebugMenuBloc>(DebugMenuGet());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: SensitiveWidget(
-        mode: SensitiveMode.blurredAndNonTappable,
-        child: FloatingActionButton.extended(
-          icon: const Icon(Icons.add),
-          onPressed: () => _showMindCreator(),
-          label: const Text(
-            'Create',
-            style: TextStyle(
-              fontSize: 18.0,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          enableFeedback: true,
-        ),
-      ),
       appBar: AppBar(
-        title: Text(DateFormatters.fullDateFormat.format(MindUtils.getDateFromDayIndex(dayIndex))),
+        centerTitle: true,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              // TODO: refactor it
+              '${DateFormatters.dayMonthFormat(Localizations.localeOf(context)).format(DateUtils.getDateFromDayIndex(dayIndex))}${DateUtils.getDateFromDayIndex(dayIndex).year != DateTime.now().year ? ' ${DateUtils.getDateFromDayIndex(dayIndex).year}' : ''}',
+              style: const TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            Text(
+              DateFormatters.formatWeekday(DateUtils.getDateFromDayIndex(dayIndex), Localizations.localeOf(context)),
+              style: const TextStyle(
+                fontSize: 14.0,
+                fontWeight: FontWeight.w300,
+              ),
+            ),
+          ],
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.calendar_month),
@@ -135,13 +140,19 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
               _switchToDayIndex(selectedDayIndex);
             },
           ),
-          IconButton(
-            icon: BoolWidget(
-              condition: _isMindContentVisible,
-              trueChild: const Icon(Icons.visibility_off_outlined),
-              falseChild: const Icon(Icons.visibility),
+          BoolWidget(
+            condition: _debugMenuState?.debugMenuItems
+                    .firstWhereOrNull((element) => element.type == DebugMenuType.sensitiveContent && element.value) !=
+                null,
+            trueChild: IconButton(
+              icon: BoolWidget(
+                condition: _isMindContentVisible,
+                trueChild: const Icon(Icons.visibility_off_outlined),
+                falseChild: const Icon(Icons.visibility),
+              ),
+              onPressed: () => _changeContentVisibility(),
             ),
-            onPressed: () => _changeContentVisibility(),
+            falseChild: SizedBox.shrink(),
           ),
         ],
       ),
@@ -155,14 +166,16 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
         childScrollController: _scrollController,
         topOverscrollChild: Column(
           children: [
-            Text(DateFormatters.fullDateFormat.format(MindUtils.getDateFromDayIndex(dayIndex - 1))),
+            Text(DateFormatters.formatFullDate(
+                DateUtils.getDateFromDayIndex(dayIndex - 1), Localizations.localeOf(context))),
             const Icon(Icons.arrow_upward),
           ],
         ),
         bottomOverscrollChild: Column(
           children: [
             const Icon(Icons.arrow_downward),
-            Text(DateFormatters.fullDateFormat.format(MindUtils.getDateFromDayIndex(dayIndex + 1))),
+            Text(DateFormatters.formatFullDate(
+                DateUtils.getDateFromDayIndex(dayIndex + 1), Localizations.localeOf(context))),
           ],
         ),
         child: SingleChildScrollView(
@@ -177,8 +190,24 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
               onOptions: (Mind mind) => _showActions(context, mind),
               mindIdsToChildren: _mindIdsToChildren,
             ),
-            falseChild: MindCollectionEmptyDayWidget.noMinds(),
+            falseChild: MindCollectionEmptyDayWidget.noMinds(context: context),
           ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: SensitiveWidget(
+        mode: SensitiveMode.blurredAndNonTappable,
+        child: FloatingActionButton.extended(
+          icon: const Icon(Icons.add),
+          onPressed: () => _showMindCreator(),
+          label: Text(
+            context.l10n.create,
+            style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          enableFeedback: true,
         ),
       ),
     );
@@ -200,7 +229,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
         final bool canAuthenticate = canAuthenticateWithBiometrics || await auth.isDeviceSupported();
         if (canAuthenticate) {
           final bool didAuthenticate = await auth.authenticate(
-              localizedReason: 'Please authenticate to show content of your mind',
+              localizedReason: context.l10n.pleaseAuthenticateToShowContent,
               options: const AuthenticationOptions(useErrorDialogs: false));
           if (didAuthenticate) {
             setState(() {
@@ -220,15 +249,11 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
     }
   }
 
-  void _handleError(MindOperationError error) {
-    // TODO: handle error if needed
-  }
-
   Future<int?> _showDateSwitcherToNewDay() async {
     final List<DateTime?>? dates = await showCalendarDatePicker2Dialog(
       context: context,
       value: [
-        MindUtils.getDateFromDayIndex(this.dayIndex),
+        DateUtils.getDateFromDayIndex(this.dayIndex),
       ],
       config: CalendarDatePicker2WithActionButtonsConfig(firstDayOfWeek: 1),
       dialogSize: const Size(325, 400),
@@ -240,13 +265,13 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
       return null;
     }
 
-    final int dayIndex = MindUtils.getDayIndex(from: selectedDateTime);
+    final int dayIndex = DateUtils.getDayIndex(from: selectedDateTime);
     return dayIndex;
   }
 
   void _showMindInfo(Mind mind) {
     Navigator.of(context).push(
-      MaterialPageRoute(
+      BackSwipePageRoute(
         builder: (_) => MindInfoScreen(
           rootMind: mind,
           allMinds: allMinds,
@@ -290,17 +315,6 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
     Haptics.vibrate(HapticsType.heavy);
   }
 
-  // void _showNerdActions(BuildContext context, Mind mind) {
-  //   showBarModalBottomSheet(
-  //     context: context,
-  //     builder: (context) => ActionsScreen(
-  //       actions: [
-  //         (ActionModel.tranlsateToEnglish(), () => _translateToEnglish(mind: mind)),
-  //       ],
-  //     ),
-  //   );
-  // }
-
   // TODO: extract to some navigator
 
   void _showActions(BuildContext context, Mind mind) {
@@ -308,12 +322,15 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
       context: context,
       builder: (context) => ActionsScreen(
         actions: [
-          (ActionModel.chatWithAI(), () => _showChatDiscussionScreen(mind: mind)),
-          if (mind.rootId != null) (ActionModel.convertToStandalone(), () => _convertToStandalone(mind)),
-          (ActionModel.edit(), () => _editMind(mind)),
-          (ActionModel.switchDay(), () => _updateMindDay(mind)),
-          (ActionModel.showAll(), () => _showAllMinds(mind)),
-          (ActionModel.delete(), () => _removeMind(mind)),
+          if (_debugMenuState?.debugMenuItems
+                  .firstWhereOrNull((element) => element.type == DebugMenuType.chatWithAI && element.value) !=
+              null)
+            (ActionModel.chatWithAI(context), () => _showChatDiscussionScreen(mind: mind)),
+          if (mind.rootId != null) (ActionModel.convertToStandalone(context), () => _convertToStandalone(mind)),
+          (ActionModel.edit(context), () => _editMind(mind)),
+          (ActionModel.switchDay(context), () => _updateMindDay(mind)),
+          (ActionModel.showAll(context), () => _showAllMinds(mind)),
+          (ActionModel.delete(context), () => _removeMind(mind)),
         ],
       ),
     );
@@ -326,7 +343,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
 
   void _showChatDiscussionScreen({required Mind mind}) async {
     Navigator.of(mountedContext!).push(
-      MaterialPageRoute(
+      BackSwipePageRoute(
         builder: (_) => MindChatDiscussionScreen(
           rootMind: mind,
           allMinds: allMinds,
@@ -358,7 +375,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
 
   void _showAllMinds(Mind mind) {
     Navigator.of(context).push(
-      MaterialPageRoute(
+      BackSwipePageRoute(
         builder: (_) => MindOneEmojiCollectionScreen(
           emoji: mind.emoji,
           allMinds: allMinds,
@@ -377,7 +394,7 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
       builder: (_) {
         return MindCreatorScreen(
           buttonIcon: initialEmoji == null ? const Icon(Icons.add) : const Icon(Icons.edit),
-          buttonText: initialEmoji == null ? 'Create' : 'Edit',
+          buttonText: initialEmoji == null ? context.l10n.create : context.l10n.edit,
           initialEmoji: initialEmoji,
           initialText: initialText,
           shouldSuggestEmoji: true,
@@ -402,19 +419,5 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
         );
       },
     );
-  }
-
-  void _translateToEnglish({required Mind mind}) async {
-    if (mindIdsToTranslations.containsKey(mind.id)) {
-      print('Mind already translated.');
-      return;
-    }
-
-    final GoogleTranslator translator = GoogleTranslator();
-    final Translation translation = await translator.translate(mind.note, to: 'en');
-
-    setState(() {
-      mindIdsToTranslations[mind.id] = translation.text;
-    });
   }
 }

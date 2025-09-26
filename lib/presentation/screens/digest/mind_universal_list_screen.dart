@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter/material.dart' hide DateUtils;
+import 'package:keklist/domain/constants.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/helpers/mind_utils.dart';
+import 'package:keklist/presentation/core/helpers/date_utils.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_collection_empty_day_widget.dart';
@@ -33,8 +34,6 @@ final class MindUniversalListScreen extends StatefulWidget {
 final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalListScreen> {
   final List<Mind> _allMinds = [];
   final List<Mind> _filteredMinds = [];
-
-  static final DateFormat _formatter = DateFormat('dd.MM.yyyy (E)');
 
   @override
   void initState() {
@@ -69,14 +68,18 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
       body: BoolWidget(
         condition: _filteredMinds.isNotEmpty,
         falseChild: Center(
-          child: MindCollectionEmptyDayWidget.noMinds(text: widget.emptyStateMessage),
+          child: MindCollectionEmptyDayWidget.noMinds(
+            context: context,
+            text: widget.emptyStateMessage,
+          ),
         ),
         trueChild: Scrollbar(
           child: ListView.builder(
             itemBuilder: (context, index) {
               final bool shouldShowTitle =
                   index == 0 || _filteredMinds[index].dayIndex != _filteredMinds[index - 1].dayIndex;
-              final String title = _formatter.format(MindUtils.getDateFromDayIndex(_filteredMinds[index].dayIndex));
+              final String title = DateFormatters.formatFullDate(
+                  DateUtils.getDateFromDayIndex(_filteredMinds[index].dayIndex), Localizations.localeOf(context));
               final Mind mind = _filteredMinds[index];
               return Padding(
                 padding: const EdgeInsets.all(8.0),

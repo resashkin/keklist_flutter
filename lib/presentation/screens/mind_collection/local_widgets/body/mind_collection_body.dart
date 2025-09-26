@@ -31,9 +31,10 @@ final class _MindCollectionBody extends StatelessWidget {
     required this.monthGridObserverController,
   });
 
-  static final DateFormat _dayFormatter = DateFormat('dd.MM.yyyy - EEEE');
-  static final DateFormat _yearTitleFormatter = DateFormat.y();
-  static final DateFormat _monthTitleFormatter = DateFormat.MMMM().addPattern('').addPattern('yyyy', '');
+  // static DateFormat _yearTitleFormatter(BuildContext context) =>
+  //     DateFormat.y(Localizations.localeOf(context).languageCode);
+  // static DateFormat _monthTitleFormatter(BuildContext context) =>
+  //     DateFormat.MMMM(Localizations.localeOf(context).languageCode).addPattern('').addPattern('yyyy', '');
 
   @override
   Widget build(BuildContext context) {
@@ -57,12 +58,12 @@ final class _MindCollectionBody extends StatelessWidget {
             itemBuilder: (_, int dayIndex) {
               final Iterable<Mind> dayMinds = mindsByDayIndex[dayIndex]?.sortedBySortIndex() ?? [];
               final bool isToday = dayIndex == getNowDayIndex();
-              final DateTime currentDayDateIndex = MindUtils.getDateFromDayIndex(dayIndex);
+              final DateTime currentDayDateIndex = DateUtils.getDateFromDayIndex(dayIndex);
               final DateTime previousDayDateIndex = currentDayDateIndex.subtract(const Duration(days: 1));
-              final String currentDayYearTitle = _yearTitleFormatter.format(currentDayDateIndex);
-              final String previousDayYearTitle = _yearTitleFormatter.format(previousDayDateIndex);
-              final String currentDayMonthTitle = _monthTitleFormatter.format(currentDayDateIndex);
-              final String previousDayMonthTitle = _monthTitleFormatter.format(previousDayDateIndex);
+              // final String currentDayYearTitle = _yearTitleFormatter(context).format(currentDayDateIndex);
+              // final String previousDayYearTitle = _yearTitleFormatter(context).format(previousDayDateIndex);
+              // final String currentDayMonthTitle = _monthTitleFormatter(context).format(currentDayDateIndex);
+              // final String previousDayMonthTitle = _monthTitleFormatter(context).format(previousDayDateIndex);
               final int currentDayWeekNumber = _getWeekNumber(currentDayDateIndex);
               final int previousDayWeekNumber = _getWeekNumber(previousDayDateIndex);
               return Column(
@@ -75,27 +76,32 @@ final class _MindCollectionBody extends StatelessWidget {
                       condition: shouldShowTitles,
                       trueChild: Column(
                         children: [
-                          BoolWidget(
-                            condition: currentDayYearTitle != previousDayYearTitle,
-                            trueChild: Text(
-                              currentDayYearTitle,
-                              style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
-                            ),
-                            falseChild: const SizedBox.shrink(),
-                          ),
-                          BoolWidget(
-                            condition: currentDayMonthTitle != previousDayMonthTitle,
-                            trueChild: Text(
-                              currentDayMonthTitle,
-                              style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
-                            ),
-                            falseChild: const SizedBox.shrink(),
-                          ),
+                          // BoolWidget(
+                          //   condition: currentDayYearTitle != previousDayYearTitle,
+                          //   trueChild: Text(
+                          //     currentDayYearTitle,
+                          //     style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                          //   ),
+                          //   falseChild: const SizedBox.shrink(),
+                          // ),
+                          // BoolWidget(
+                          //   condition: currentDayMonthTitle != previousDayMonthTitle,
+                          //   trueChild: Text(
+                          //     '${currentDayMonthTitle[0].toUpperCase()}${currentDayMonthTitle.substring(1)}',
+                          //     style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                          //   ),
+                          //   falseChild: const SizedBox.shrink(),
+                          // ),
                           BoolWidget(
                             condition: currentDayWeekNumber != previousDayWeekNumber,
-                            trueChild: Text(
-                              'Week #${_getWeekNumber(currentDayDateIndex)}',
-                              style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+                            trueChild: Column(
+                              children: [
+                                const SizedBox(height: 12.0),
+                                Text(
+                                  '${context.l10n.week} #${_getWeekNumber(currentDayDateIndex)}',
+                                  style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
                             falseChild: const SizedBox.shrink(),
                           ),
@@ -105,7 +111,7 @@ final class _MindCollectionBody extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    _dayFormatter.format(currentDayDateIndex),
+                    DateFormatters.formatFullDate(currentDayDateIndex, Localizations.localeOf(context)),
                     textAlign: TextAlign.center,
                     style: TextStyle(fontWeight: isToday ? FontWeight.bold : FontWeight.normal),
                   ),
@@ -123,7 +129,7 @@ final class _MindCollectionBody extends StatelessWidget {
                             : null,
                         child: BoolWidget(
                           condition: dayMinds.isEmpty,
-                          trueChild: MindCollectionEmptyDayWidget.noMinds(),
+                          trueChild: MindCollectionEmptyDayWidget.noMinds(context: context),
                           falseChild: MindRowWidget(minds: dayMinds),
                         ),
                       ),

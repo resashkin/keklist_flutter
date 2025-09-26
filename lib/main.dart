@@ -9,9 +9,9 @@ import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:keklist/domain/repositories/tabs/tabs_settings_repository.dart';
+import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
 // import 'package:home_widget/home_widget.dart';
 // import 'package:home_widget/home_widget.dart';
-import 'package:keklist/domain/services/auth/auth_service.dart';
 import 'package:keklist/domain/repositories/mind/object/mind_object.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
@@ -19,13 +19,13 @@ import 'package:keklist/keklist_app.dart';
 import 'package:keklist/domain/hive_constants.dart';
 import 'package:keklist/domain/repositories/message/message/message_object.dart';
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
+import 'package:keklist/domain/repositories/debug_menu/object/debug_menu_object.dart';
 import 'package:keklist/native/web/telegram/telegram_web_initializer.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bloc.dart';
 import 'package:keklist/presentation/blocs/user_profile_bloc/user_profile_bloc.dart';
+import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:keklist/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,7 +33,6 @@ import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
 import 'package:keklist/presentation/cubits/mind_searcher/mind_searcher_cubit.dart';
 import 'package:keklist/di/containers.dart';
-import 'package:keklist/domain/services/mind_service/main_service.dart';
 
 import 'presentation/native/ios/watch/watch_communication_manager.dart';
 
@@ -49,7 +48,6 @@ Future<void> main() async {
 
   usePathUrlStrategy();
   await _initHive();
-  await _initSupabase();
 
   final StreamingSharedPreferences streamingSharedPreferences = await StreamingSharedPreferences.instance;
 
@@ -71,15 +69,6 @@ Future<void> main() async {
 void _configureOpenAI() {
   OpenAI.showLogs = !kReleaseMode;
   OpenAI.requestsTimeOut = const Duration(seconds: 40);
-}
-
-Future<void> _initSupabase() async {
-  await Supabase.initialize(
-    url: dotenv.get('SUPABASE_URL'),
-    anonKey: dotenv.get('SUPABASE_ANON_KEY'),
-    authOptions: const FlutterAuthClientOptions(autoRefreshToken: true),
-    debug: !kReleaseMode,
-  );
 }
 
 void _enableDebugBLOCLogs() {
@@ -104,26 +93,15 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
         providers: [
           BlocProvider(
             create: (context) => MindBloc(
-              mainService: mainInjector.get<MindService>(),
               mindSearcherCubit: mainInjector.get<MindSearcherCubit>(),
               mindRepository: mainInjector.get<MindRepository>(),
-              settingsRepository: mainInjector.get<SettingsRepository>(),
-              authService: mainInjector.get<AuthService>(),
             ),
           ),
           BlocProvider(create: (context) => mainInjector.get<MindSearcherCubit>()),
           BlocProvider(
-            create: (context) => AuthBloc(
-              mainService: mainInjector.get<MindService>(),
-              authService: mainInjector.get<AuthService>(),
-            ),
-          ),
-          BlocProvider(
             create: (context) => SettingsBloc(
               repository: mainInjector.get<SettingsRepository>(),
-              authService: mainInjector.get<AuthService>(),
               mindRepository: mainInjector.get<MindRepository>(),
-              mindService: mainInjector.get<MindService>(),
             ),
           ),
           BlocProvider(
@@ -133,8 +111,14 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
             ),
           ),
           BlocProvider(
+            create: (context) => DebugMenuBloc(
+              repository: mainInjector.get<DebugMenuRepository>(),
+            ),
+          ),
+          BlocProvider(
             create: (context) => TabsContainerBloc(
               repository: mainInjector.get<TabsSettingsRepository>(),
+              debugMenuRepository: mainInjector.get<DebugMenuRepository>(),
             ),
           ),
         ],
@@ -166,13 +150,16 @@ Future<void> _initHive() async {
   Hive.registerAdapter<SettingsObject>(SettingsObjectAdapter());
   Hive.registerAdapter<MindObject>(MindObjectAdapter());
   Hive.registerAdapter<MessageObject>(MessageObjectAdapter());
+  Hive.registerAdapter<DebugMenuObject>(DebugMenuObjectAdapter());
   await Hive.initFlutter();
   final Box<SettingsObject> settingsBox = await Hive.openBox<SettingsObject>(HiveConstants.settingsBoxName);
   if (settingsBox.get(HiveConstants.globalSettingsIndex) == null) {
+    // First launch - detect device locale and create initial settings
     settingsBox.put(HiveConstants.globalSettingsIndex, KeklistSettings.initial().toObject());
   }
   await Hive.openBox<MindObject>(HiveConstants.mindBoxName);
   await Hive.openBox<MessageObject>(HiveConstants.messageChatBoxName);
+  await Hive.openBox<DebugMenuObject>(HiveConstants.debugMenuBoxName);
 }
 
 final class _LoggerBlocObserver extends BlocObserver {

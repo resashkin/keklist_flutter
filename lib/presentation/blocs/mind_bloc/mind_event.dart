@@ -86,8 +86,6 @@ final class MindEnterSearchText extends MindEvent {
 
 final class MindStopSearch extends MindEvent {}
 
-final class MindDeleteAllMinds extends MindEvent {}
-
 final class MindClearCache extends MindEvent {}
 
 final class MindInternalGetListFromCache extends MindEvent {}

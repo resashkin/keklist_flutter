@@ -23,8 +23,8 @@ class MindObject extends HiveObject {
   @HiveField(5)
   late int sortIndex;
 
-  @HiveField(6, defaultValue: false)
-  late bool isUploadedToServer;
+  // @HiveField(6, defaultValue: false)
+  // late bool isUploadedToServer;
 
   @HiveField(7, defaultValue: null)
   late String? rootId;

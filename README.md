@@ -1,4 +1,4 @@
-<h1 align="center" style="font-size:24px; line-height:1"><b>Keklist</b></h1>
+<h1 align="center" style="font-size:24px; line-height:1"><b>keklist</b></h1>
 
 <div align="center">
   <a href="https://apps.apple.com/app/keklist/id1592891224">
@@ -19,13 +19,13 @@ Contents:
 - Stack
 
 # What
-Keklist is app for collection minds of any types. It could be emotion, mind, something fun, spark, inspiration, achievement and even kek or lol. 
+keklist is app for collection minds of any types. It could be emotion, mind, something fun, spark, inspiration, achievement and even kek or lol. 
 
-The main idea of Keklist to provide easy-to-use collector of minds at the moment and analyze in the future.
+The main idea of keklist to provide easy-to-use collector of minds at the moment and analyze in the future.
 
 Way of providing of mind it is simple - you need to have only Text and Emoji.
 
-# Why is Keklist exist?
+# Why is keklist exist?
 Time is most important thing that we have in our lives because it's limited. I was woundering how can I track importance of each day.
 
 The first thing that comes to mind is writing a diary for it. This way has a lot of problems. Main is if you do it by hand with paper and pen - it's not convenient. There are also lack of security, privacy and other problems that paper has.
@@ -34,7 +34,7 @@ Of course we have a lot modern ways to do it from a many apps in mobile stores t
 
 My personal opinion that these kind of tools should be open-source for let to users be aware that you use their data properly and if said something about security and privacy you can proove it by your actions (by code for an instance).
 
-With Keklist I'm trying to resolve this kind of problems. Firstly, I'm trying to do it for myself and I will be happy if I be able to do it for society as well.
+With keklist I'm trying to resolve this kind of problems. Firstly, I'm trying to do it for myself and I will be happy if I be able to do it for society as well.
 
 ## Screenshots
 
@@ -65,7 +65,7 @@ With Keklist I'm trying to resolve this kind of problems. Firstly, I'm trying to
 // TODO: write an instruction
 
 # How to support?
-- Reach me in [Telegram](https://t.me/sashkyn) or by email sashkn2@gmail.com
+- Reach me in [Telegram](https://t.me/resashkin) or by email sashkn2@gmail.com
 - You are more than welcome for issues, proposals and PRs
 
 # Stack
@@ -74,11 +74,10 @@ With Keklist I'm trying to resolve this kind of problems. Firstly, I'm trying to
 - Flutter
 - bloc
 - iOS/Swift
-- Supabase
+- Hive (Local Storage)
 ## Dependencies
 | Dependency                          | Reason                                                          |
 | ----------------------------------- | --------------------------------------------------------------- |
-| flutter                             | Flutter SDK                                                     |
 | adaptive_dialog                     | For using Platform dialogs                                      |
 | bloc, flutter_bloc                  | Main achitecture of app for state management                    |
 | blur                                | Blurring effect for auth background animation                   |
@@ -91,15 +90,20 @@ With Keklist I'm trying to resolve this kind of problems. Firstly, I'm trying to
 | equatable                           | Value equality                                                  |
 | fast_immutable_collections          | Immutable collections                                           |
 | fl_chart                            | Insights charts                                                 |
-| flutter_localizations               | Localization of app                                             |
+| flutter                             | Flutter SDK                                                     |
 | flutter_animate                     | Animation utilities                                             |
+| flutter_dotenv                      | For environment variables                                       |
 | flutter_easyloading                 | Blocking UI progress                                            |
 | flutter_emoji                       | Emoji rendering                                                 |
+| flutter_localizations               | Localization of app                                             |
 | flutter_simple_dependency_injection | Dependency injection                                            |
+| flutter_staggered_grid_view         | For adaptive layout wide screens                                |
 | flutter_svg                         | SVG rendering                                                   |
-| flutter_web_auth_2                  | Web authentication                                              |
 | form_field_validator                | Validation of Email on Auth                                     |
+| gap                                 | Simple spacer without thinking width or height you going to use |
 | hive, hive_flutter                  | Offline support                                                 |
+| hive, hive_flutter                  | Local database storage                                          |
+| home_widget                         | Native widgets support (iOS)                                    |
 | html                                | HTML parsing and rendering                                      |
 | intl                                | Internationalization support                                    |
 | modal_bottom_sheet                  | Modal bottom sheet                                              |
@@ -109,16 +113,10 @@ With Keklist I'm trying to resolve this kind of problems. Firstly, I'm trying to
 | scrollable_positioned_list          | For support infinitely calendar of minds                        |
 | settings_ui                         | Platform based UI for settings screen                           |
 | share_plus                          | For Sharing CSV table of minds                                  |
-| supabase_flutter                    | Supabase integration                                            |
 | syncfusion_flutter_charts           | Charting library                                                |
 | url_launcher                        | Launching URLs                                                  |
 | url_strategy                        | URL strategy                                                    |
 | uuid                                | ID generation for Entities                                      |
 | webview_flutter                     | InApp web page showing                                          |
-| gap                                 | Simple spacer without thinking width or height you going to use |
-| home_widget                         | Native widgets support (iOS)                                    |
-| workmanager                         | Background task scheduling                                      |
-| flutter_dotenv                      | For hiding private credentials from Supabase                    |
-| flutter_staggered_grid_view         | For adaptive layout wide screens                                |
 
 [Terms of use](https://sashkyn.notion.site/Rememoji-Terms-of-Use-df179704b2d149b8a5a915296f5cb78f)

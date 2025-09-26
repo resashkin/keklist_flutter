@@ -8,6 +8,8 @@ import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
 import 'package:keklist/presentation/screens/tabs_container/tabs_container_screen.dart';
+import 'package:keklist/l10n/app_localizations.dart';
+import 'package:keklist/domain/services/language_manager.dart';
 
 final class KeklistApp extends StatefulWidget {
   const KeklistApp({super.key});
@@ -18,6 +20,7 @@ final class KeklistApp extends StatefulWidget {
 
 final class KeklistAppState extends KekWidgetState<KeklistApp> {
   bool _isDarkMode = true;
+  SupportedLanguage _currentLanguage = SupportedLanguage.english;
 
   @override
   void initState() {
@@ -31,6 +34,7 @@ final class KeklistAppState extends KekWidgetState<KeklistApp> {
           }
           setState(() {
             _isDarkMode = state.settings.isDarkMode;
+            _currentLanguage = state.settings.language;
             SensitiveWidget.isProtected = !state.settings.isMindContentVisible;
           });
         }
@@ -41,11 +45,14 @@ final class KeklistAppState extends KekWidgetState<KeklistApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Keklist',
+      title: 'keklist',
       home: const TabsContainerScreen(),
       theme: _isDarkMode ? Themes.dark : Themes.light,
       darkTheme: Themes.dark,
       themeMode: ThemeMode.light,
+      locale: _currentLanguage.locale,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       builder: EasyLoading.init(),
     );
   }

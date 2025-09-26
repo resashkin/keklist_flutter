@@ -1,13 +1,14 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 
 part 'tabs_settings.g.dart';
 
 @JsonSerializable()
 final class TabsSettings with EquatableMixin {
   final List<TabModel> selectedTabModels;
-  final int defaultSelectedTabIndex; // selected index when user login
+  final int defaultSelectedTabIndex; // selected index when app starts
 
   TabsSettings({
     required this.selectedTabModels,
@@ -51,31 +52,35 @@ enum TabType implements Equatable {
   insights,
   settings,
   profile,
-  today;
+  today,
+  debugMenu;
 
-  String get label => switch (this) {
-      TabType.calendar => 'Calendar',
-      TabType.insights => 'Insights',
-      TabType.settings => 'Settings',
-      TabType.profile => 'Profile',
-      TabType.today => 'Today'
-    };
+  String localizedLabel(BuildContext context) => switch (this) {
+        TabType.calendar => context.l10n.calendar,
+        TabType.insights => context.l10n.insights,
+        TabType.settings => context.l10n.settings,
+        TabType.profile => context.l10n.profile,
+        TabType.today => context.l10n.today,
+        TabType.debugMenu => context.l10n.debugMenu
+      };
 
-  String get description => switch (this) {
-      TabType.calendar => 'Main screen with Calendar of entries',
-      TabType.insights => 'Statistics all yours entries',
-      TabType.settings => 'Screen with all settings (dark mode, sync and etc.)',
-      TabType.profile => 'Screen with your profile',
-      TabType.today => 'Only today minds'
-    };
+  String localizedDescription(BuildContext context) => switch (this) {
+        TabType.calendar => context.l10n.calendarDescription,
+        TabType.insights => context.l10n.insightsDescription,
+        TabType.settings => context.l10n.settingsDescription,
+        TabType.profile => context.l10n.profileDescription,
+        TabType.today => context.l10n.todayDescription,
+        TabType.debugMenu => context.l10n.debugMenuDescription
+      };
 
   Icon get materialIcon => switch (this) {
-      TabType.calendar => Icon(Icons.calendar_month),
-      TabType.insights => Icon(Icons.insights),
-      TabType.profile => Icon(Icons.person),
-      TabType.settings => Icon(Icons.settings),
-      TabType.today => Icon(Icons.today)
-    };
+        TabType.calendar => Icon(Icons.calendar_month),
+        TabType.insights => Icon(Icons.insights),
+        TabType.profile => Icon(Icons.person),
+        TabType.settings => Icon(Icons.settings),
+        TabType.today => Icon(Icons.today),
+        TabType.debugMenu => Icon(Icons.bug_report)
+      };
 
   @override
   List<Object?> get props => [this];

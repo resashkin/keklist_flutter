@@ -6,14 +6,11 @@ import 'package:csv/csv.dart';
 import 'package:dart_openai/dart_openai.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
-import 'package:keklist/domain/services/auth/auth_service.dart';
-import 'package:keklist/domain/services/auth/kek_user.dart';
-import 'package:keklist/domain/services/mind_service/main_service.dart';
+import 'package:keklist/domain/services/language_manager.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:share_plus/share_plus.dart';
 
 part 'settings_event.dart';
@@ -22,45 +19,28 @@ part 'settings_state.dart';
 final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with DisposeBag {
   final SettingsRepository _repository;
   final MindRepository _mindRepository;
-  final MindService _mindService;
-  final AuthService _authService;
 
   SettingsBloc({
-    required AuthService authService,
     required SettingsRepository repository,
     required MindRepository mindRepository,
-    required MindService mindService,
-  })  : _authService = authService,
-        _mindService = mindService,
-        _repository = repository,
+  })  : _repository = repository,
         _mindRepository = mindRepository,
         super(
           SettingsDataState(
-            isLoggedIn: authService.currentUser != null,
-            offlineMinds: const [],
             settings: KeklistSettings.initial(),
           ),
         ) {
     on<SettingsExportAllMindsToCSV>(_shareCSVFileWithMinds);
     on<SettingsChangeMindContentVisibility>(_changeMindContentVisibility);
-    on<SettingsChangeOfflineMode>(_changeOfflineMode);
     on<SettingsWhatsNewShown>(_disableShowingWhatsNewUntillNewVersion);
     on<SettingsGet>(_getSettings);
     on<SettingGetWhatsNew>(_sendWhatsNewIfNeeded);
     on<SettingsChangeIsDarkMode>(_changeSettingsDarkMode);
     on<SettingsChangeOpenAIKey>(_changeOpenAIKey);
-    on<SettingsLogout>(_logout);
-    on<SettingsGetMindCandidatesToUpload>(_getMindUploadCandidates);
-    on<SettingsUploadMindCandidates>(_uploadMindCandidates);
     on<SettingsUpdateShouldShowTitlesMode>(_updateShouldShowTitlesMode);
+    on<SettingsChangeLanguage>(_changeLanguage);
 
     _repository.stream.listen((settings) => add(SettingsGet())).disposed(by: this);
-    _authService.currentUserStream.listen((_) => add(SettingsGet())).disposed(by: this);
-    Rx.combineLatest2(
-      _authService.currentUserStream,
-      _repository.stream.map((settings) => settings.isOfflineMode),
-      (KekUser? currentUser, bool offlineMode) => currentUser != null || !offlineMode,
-    ).listen((event) => add(SettingsGet())).disposed(by: this);
   }
 
   @override
@@ -84,12 +64,9 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
   }
 
   FutureOr _getSettings(SettingsGet event, Emitter<SettingsState> emit) async {
-    final Iterable<Mind> offlineMinds = await _mindRepository.obtainNotUploadedToServerMinds();
     emit(
       SettingsDataState(
-        offlineMinds: offlineMinds,
         settings: _repository.value,
-        isLoggedIn: _authService.currentUser != null,
       ),
     );
   }
@@ -109,13 +86,6 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     Emitter<SettingsState> emit,
   ) async {
     await _repository.updateMindContentVisibility(event.isVisible);
-  }
-
-  FutureOr<void> _changeOfflineMode(
-    SettingsChangeOfflineMode event,
-    Emitter<SettingsState> emit,
-  ) async {
-    await _repository.updateOfflineMode(event.isOfflineMode);
   }
 
   FutureOr<void> _changeSettingsDarkMode(SettingsChangeIsDarkMode event, Emitter<SettingsState> emit) async {
@@ -138,48 +108,12 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     _repository.updateOpenAIKey(event.openAIToken);
   }
 
-  FutureOr<void> _logout(SettingsLogout event, Emitter<SettingsState> emit) async {
-    await _authService.logout();
-  }
-
-  FutureOr<void> _getMindUploadCandidates(
-    SettingsGetMindCandidatesToUpload event,
-    Emitter<SettingsState> emit,
-  ) async {
-    final Iterable<Mind> uploadCandidates = await _mindRepository.obtainNotUploadedToServerMinds();
-    emit(SettingsOfflineMindsState(uploadCandidates));
-  }
-
-  Future<void> _uploadMindCandidates(
-    SettingsUploadMindCandidates event,
-    Emitter<SettingsState> emit,
-  ) async {
-    final Iterable<Mind> offlineMinds = await _mindRepository.obtainNotUploadedToServerMinds();
-    emit(SettingsLoadingState(true));
-
-    final Iterable<Mind> rootOfflineMinds = offlineMinds.where((Mind mind) => mind.rootId == null);
-    final Future<void> uploadRootMind = _mindService.addAllMinds(values: rootOfflineMinds);
-    final Iterable<Mind> childOfflineMinds = offlineMinds.where((Mind mind) => mind.rootId != null);
-    final Future<void> uploadChildMinds = _mindService.addAllMinds(values: childOfflineMinds);
-
-    await uploadRootMind.then((_) async {
-      await uploadChildMinds.then((_) async {
-        await _mindRepository
-            .deleteMindsWhere((Mind mind) => offlineMinds.any((Mind candidate) => candidate.id == mind.id));
-        await _mindRepository.updateMinds(
-          minds: offlineMinds,
-          isUploadedToServer: true,
-        );
-      });
-    }).onError((error, stackTrace) {
-      emit(SettingsUploadOfflineMindsErrorState());
-    });
-    emit(SettingsUploadOfflineMindsCompletedState());
-    emit(SettingsLoadingState(false));
-  }
-
   FutureOr<void> _updateShouldShowTitlesMode(
       SettingsUpdateShouldShowTitlesMode event, Emitter<SettingsState> emit) async {
     await _repository.updateShouldShowTitles(event.value);
+  }
+
+  FutureOr<void> _changeLanguage(SettingsChangeLanguage event, Emitter<SettingsState> emit) async {
+    await _repository.updateLanguage(event.language);
   }
 }

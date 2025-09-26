@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide DateUtils;
 import 'package:intl/intl.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
-import 'package:keklist/presentation/core/helpers/mind_utils.dart';
+import 'package:keklist/presentation/core/helpers/date_utils.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:scrollview_observer/scrollview_observer.dart';
 
@@ -60,7 +60,7 @@ class _DayOfMonthWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final date = MindUtils.getDateFromDayIndex(dayIndex);
+    final date = DateUtils.getDateFromDayIndex(dayIndex);
     final dateText = _dayFormatter.format(date);
     return AutoSizeText(
       dateText,

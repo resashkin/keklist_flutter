@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 import 'package:keklist/presentation/blocs/mind_creator_bloc/mind_creator_bloc.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/screens/mind_picker/mind_picker_screen.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
@@ -22,7 +23,7 @@ final class MindCreatorScreen extends StatefulWidget {
     this.initialText,
     this.initialEmoji,
     required this.buttonIcon,
-    this.hintText = 'Write something...',
+    this.hintText,
     this.shouldSuggestEmoji = true,
   });
 
@@ -132,7 +133,7 @@ final class _MindCreatorScreenState extends KekWidgetState<MindCreatorScreen> {
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.all(12.0),
                   border: InputBorder.none,
-                  hintText: widget.hintText,
+                  hintText: widget.hintText ?? context.l10n.writeSomething,
                 ),
               ),
             ],

@@ -26,6 +26,7 @@ final class Themes {
     cupertinoOverrideTheme: const CupertinoThemeData(
       textTheme: CupertinoTextThemeData(), // This is required for Dialog Inputs
     ),
+    splashFactory: NoSplash.splashFactory, // Remove ripple effect on iOS
   );
 
   static final ThemeData dark = ThemeData(
@@ -49,6 +50,7 @@ final class Themes {
     cupertinoOverrideTheme: const CupertinoThemeData(
       textTheme: CupertinoTextThemeData(), // This is required for Dialog Inputs
     ),
+    splashFactory: NoSplash.splashFactory, // Remove ripple effect on iOS
   );
 }
 
@@ -57,7 +59,32 @@ final class LayoutConstants {
 }
 
 final class DateFormatters {
-  static DateFormat fullDateFormat = DateFormat('dd.MM.yyyy - EEEE');
+  static DateFormat fullDateFormat(Locale locale) => DateFormat('dd.MM.yyyy - EEEE', locale.languageCode);
+  static DateFormat dayMonthAndYearFormat(Locale locale) => DateFormat('dd.MM.yyyy', locale.languageCode);
+  static DateFormat dayMonthFormat(Locale locale) => DateFormat('d MMMM', locale.languageCode);
+  static DateFormat weekDayFormat(Locale locale) => DateFormat('EEEE', locale.languageCode);
+
+  /// Format weekday with proper capitalization (first letter uppercase)
+  static String formatWeekday(DateTime date, Locale locale) {
+    final formatter = weekDayFormat(locale);
+    final weekday = formatter.format(date);
+    return weekday.isNotEmpty ? '${weekday[0].toUpperCase()}${weekday.substring(1).toLowerCase()}' : weekday;
+  }
+
+  /// Format full date with proper weekday capitalization
+  static String formatFullDate(DateTime date, Locale locale) {
+    final formatter = fullDateFormat(locale);
+    final fullDate = formatter.format(date);
+    // Extract weekday part and capitalize it
+    final parts = fullDate.split(' - ');
+    if (parts.length == 2) {
+      final weekday = parts[1];
+      final capitalizedWeekday =
+          weekday.isNotEmpty ? '${weekday[0].toUpperCase()}${weekday.substring(1).toLowerCase()}' : weekday;
+      return '${parts[0]} - $capitalizedWeekday';
+    }
+    return fullDate;
+  }
 }
 
 final class PlatformConstants {
@@ -88,6 +115,7 @@ final class KeklistConstants {
     //TabModel(type: TabType.profile),
     TabModel(type: TabType.settings),
     TabModel(type: TabType.today),
+    TabModel(type: TabType.debugMenu),
   ];
 
   // Available list of Tabs that can be reached after first launch.

@@ -81,7 +81,6 @@ final class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> wit
         sortIndex: 0,
         rootId: null,
       ),
-      isUploadedToServer: false,
     );
     emit(
       UserProfileState(

@@ -1,7 +1,11 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:keklist/domain/constants.dart';
+import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
+import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
 import 'package:keklist/presentation/core/helpers/extensions/state_extensions.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/core/widgets/overscroll_listener.dart';
@@ -15,6 +19,7 @@ import 'package:keklist/presentation/screens/mind_day_collection/widgets/message
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/core/helpers/mind_utils.dart';
 import 'package:keklist/presentation/core/widgets/creator_bottom_bar/mind_creator_bottom_bar.dart';
 import 'package:keklist/presentation/screens/mind_picker/mind_picker_screen.dart';
@@ -38,6 +43,7 @@ final class MindInfoScreen extends StatefulWidget {
 final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
   final TextEditingController _createMindEditingController = TextEditingController(text: null);
   final FocusNode _mindCreatorFocusNode = FocusNode();
+  DebugMenuDataState? _debugMenuState;
   bool _creatorPanelHasFocus = false;
   Mind? _editableMind;
   late String _selectedEmoji = _rootMind.emoji;
@@ -75,6 +81,13 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
         });
       }
     })?.disposed(by: this);
+
+    subscribeToBloc<DebugMenuBloc>(onNewState: (state) {
+      if (state is DebugMenuDataState) {
+        _debugMenuState = state;
+      }
+    })?.disposed(by: this);
+    sendEventToBloc<DebugMenuBloc>(DebugMenuGet());
   }
 
   final ScrollController _scrollController = ScrollController();
@@ -82,9 +95,8 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text('Mind'),
+        title: Text(context.l10n.mind),
         actions: [
           SensitiveWidget(
             mode: SensitiveMode.blurredAndNonTappable,
@@ -179,7 +191,7 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
                         },
                       );
                     },
-                    doneTitle: 'DONE',
+                    doneTitle: context.l10n.done,
                     onTapCancelEdit: () {
                       _resetMindCreator();
                     },
@@ -217,11 +229,17 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
       context: context,
       builder: (context) => ActionsScreen(
         actions: [
-          (ActionModel.chatWithAI(), () => _showMessageScreen(mind: mind)),
-          (ActionModel.tranlsateToEnglish(), () => _translateToEnglish(mind: mind)),
-          (ActionModel.edit(), () => _editMind(mind)),
-          (ActionModel.showAll(), () => _showAllMinds(mind)),
-          (ActionModel.delete(), () => _removeMind(mind)),
+          if (_debugMenuState?.debugMenuItems
+                  .firstWhereOrNull((element) => element.type == DebugMenuType.chatWithAI && element.value) !=
+              null)
+            (ActionModel.chatWithAI(context), () => _showMessageScreen(mind: mind)),
+          if (_debugMenuState?.debugMenuItems
+                  .firstWhereOrNull((element) => element.type == DebugMenuType.translation && element.value) !=
+              null)
+            (ActionModel.tranlsateToEnglish(context), () => _translateToEnglish(mind: mind)),
+          (ActionModel.edit(context), () => _editMind(mind)),
+          (ActionModel.showAll(context), () => _showAllMinds(mind)),
+          (ActionModel.delete(context), () => _removeMind(mind)),
         ],
       ),
     );
@@ -239,7 +257,7 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
 
   void _showMessageScreen({required Mind mind}) async {
     Navigator.of(mountedContext!).push(
-      MaterialPageRoute(
+      BackSwipePageRoute(
         builder: (_) => MindChatDiscussionScreen(
           rootMind: mind,
           allMinds: _allMinds,
@@ -259,7 +277,7 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
 
   void _showAllMinds(Mind mind) {
     Navigator.of(context).push(
-      MaterialPageRoute(
+      BackSwipePageRoute(
         builder: (_) => MindOneEmojiCollectionScreen(
           emoji: mind.emoji,
           allMinds: _allMinds,

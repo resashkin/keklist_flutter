@@ -3,6 +3,7 @@ import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/presentation/core/widgets/rounded_container.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 
 // TODO: добавить дату
 // TODO: возможность перехода на источник
@@ -35,10 +36,10 @@ class _InsightsTodayMindsWidgetState extends State<InsightsTodayMindsWidget> {
         child: RoundedContainer(
           child: Column(
             children: [
-              const Padding(
+              Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text(
-                  'Today minds',
+                  context.l10n.todayMinds,
                   style: TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w500,

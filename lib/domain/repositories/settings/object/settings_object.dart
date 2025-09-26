@@ -1,5 +1,6 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
+import 'package:keklist/domain/services/language_manager.dart';
 
 part 'settings_object.g.dart';
 
@@ -11,8 +12,7 @@ final class SettingsObject extends HiveObject {
   @HiveField(1, defaultValue: null)
   late String? previousAppVersion;
 
-  @HiveField(2, defaultValue: false)
-  late bool isOfflineMode;
+  // @HiveField(2, defaultValue: false)
 
   @HiveField(3, defaultValue: true)
   late bool isDarkMode;
@@ -26,15 +26,18 @@ final class SettingsObject extends HiveObject {
   @HiveField(6, defaultValue: null)
   late String? userName;
 
+  @HiveField(7, defaultValue: 'en')
+  late String language;
+
   SettingsObject();
 
   KeklistSettings toSettings() => KeklistSettings(
         isMindContentVisible: isMindContentVisible,
         previousAppVersion: previousAppVersion,
-        isOfflineMode: isOfflineMode,
         openAIKey: openAIKey,
         shouldShowTitles: shouldShowTitles,
         isDarkMode: isDarkMode,
         userName: userName,
+        language: SupportedLanguage.fromCode(language),
       );
 }

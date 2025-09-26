@@ -4,6 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:keklist/domain/hive_constants.dart';
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
+import 'package:keklist/domain/services/language_manager.dart';
 import 'package:rxdart/rxdart.dart';
 
 final class SettingsHiveRepository implements SettingsRepository {
@@ -47,16 +48,16 @@ final class SettingsHiveRepository implements SettingsRepository {
   }
 
   @override
-  FutureOr<void> updateOfflineMode(bool isOfflineMode) async {
+  FutureOr<void> updateOpenAIKey(String? openAIKey) async {
     final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.globalSettingsIndex);
-    settingsObject?.isOfflineMode = isOfflineMode;
+    settingsObject?.openAIKey = openAIKey;
     await settingsObject?.save();
   }
 
   @override
-  FutureOr<void> updateOpenAIKey(String? openAIKey) async {
+  FutureOr<void> updateLanguage(SupportedLanguage language) async {
     final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.globalSettingsIndex);
-    settingsObject?.openAIKey = openAIKey;
+    settingsObject?.language = language.code;
     await settingsObject?.save();
   }
 
