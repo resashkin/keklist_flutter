@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:isolate';
 
 import 'package:bloc/bloc.dart';
 import 'package:csv/csv.dart';
 import 'package:dart_openai/dart_openai.dart';
 import 'package:flutter/services.dart';
-import 'package:gallery_saver_plus/gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
