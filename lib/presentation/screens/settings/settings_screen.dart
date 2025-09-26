@@ -83,6 +83,20 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
                   // TODO: Add loading
                   sendEventToBloc<SettingsBloc>(SettingsExportAllMindsToCSV());
                 },
+              ),
+              SettingsTile(
+                title: const Text('Export to encrypted image'),
+                leading: const Icon(Icons.lock, color: Colors.brown),
+                onPressed: (BuildContext context) {
+                  sendEventToBloc<SettingsBloc>(SettingsExportAllMindsToEncryptedImage());
+                },
+              ),
+              SettingsTile(
+                title: const Text('Import from encrypted image'),
+                leading: const Icon(Icons.key, color: Colors.greenAccent),
+                onPressed: (BuildContext context) {
+                  sendEventToBloc<SettingsBloc>(SettingsExportAllMindsToEncryptedImage());
+                },
               )
             ],
           ),

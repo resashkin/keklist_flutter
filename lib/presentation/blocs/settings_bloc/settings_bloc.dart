@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:csv/csv.dart';
 import 'package:dart_openai/dart_openai.dart';
+import 'package:flutter/services.dart';
+import 'package:gallery_saver_plus/gallery_saver.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
 import 'package:keklist/domain/services/language_manager.dart';
@@ -12,6 +14,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:steganograph/steganograph.dart';
 
 part 'settings_event.dart';
 part 'settings_state.dart';
@@ -39,6 +42,7 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     on<SettingsChangeOpenAIKey>(_changeOpenAIKey);
     on<SettingsUpdateShouldShowTitlesMode>(_updateShouldShowTitlesMode);
     on<SettingsChangeLanguage>(_changeLanguage);
+    on<SettingsExportAllMindsToEncryptedImage>(_exportToEncryptedImage);
 
     _repository.stream.listen((settings) => add(SettingsGet())).disposed(by: this);
   }
@@ -115,5 +119,34 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
 
   FutureOr<void> _changeLanguage(SettingsChangeLanguage event, Emitter<SettingsState> emit) async {
     await _repository.updateLanguage(event.language);
+  }
+   
+  FutureOr<void> _exportToEncryptedImage(
+    SettingsExportAllMindsToEncryptedImage event,
+    Emitter<SettingsState> emit,
+  ) async {
+    final File tempImageFile = await _assetToTempFile(
+      'assets/steganograph_image/steganograph_image.png',
+      filename: 'carrier.png',
+    );
+    final File? stegoImageFile = await Steganograph.cloak(
+      image: tempImageFile,
+      message: 'kek)))))',
+      //outputFilePath: 'steganograph_image_result.png',
+    );
+    if (stegoImageFile == null) return;
+    GallerySaver.saveImage(stegoImageFile.path);
+  }
+
+  Future<File> _assetToTempFile(String assetPath, {String? filename}) async {
+    final ByteData data = await rootBundle.load(assetPath);
+    final Directory tempDirectory = await getTemporaryDirectory();
+    final String outPath = '${tempDirectory.path}/${filename ?? assetPath.split('/').last}';
+    final File file = File(outPath);
+    await file.writeAsBytes(
+      data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes),
+      flush: true,
+    );
+    return file;
   }
 }
