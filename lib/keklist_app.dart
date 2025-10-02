@@ -1,4 +1,5 @@
 import 'package:dart_openai/dart_openai.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
@@ -10,6 +11,29 @@ import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
 import 'package:keklist/presentation/screens/tabs_container/tabs_container_screen.dart';
 import 'package:keklist/l10n/app_localizations.dart';
 import 'package:keklist/domain/services/language_manager.dart';
+import 'package:logarte/logarte.dart';
+import 'package:share_plus/share_plus.dart';
+
+final Logarte logarte = Logarte(
+  // Protect with password
+  password: '1234',
+
+  // Skip password in debug mode
+  ignorePassword: kDebugMode,
+
+  // Share network request
+  onShare: (String content) {
+    SharePlus.instance.share(ShareParams(text: content));
+  },
+
+  // To have logs in IDE's debug console (default is false)
+  disableDebugConsoleLogs: false,
+
+  // Add shortcut actions (optional)
+  onRocketLongPressed: (context) {
+    // e.g: toggle theme mode
+  },
+);
 
 final class KeklistApp extends StatefulWidget {
   const KeklistApp({super.key});
@@ -40,6 +64,11 @@ final class KeklistAppState extends KekWidgetState<KeklistApp> {
         }
       },
     )?.disposed(by: this);
+
+    logarte.attach(
+      context: context,
+      visible: kDebugMode,
+    );
   }
 
   @override

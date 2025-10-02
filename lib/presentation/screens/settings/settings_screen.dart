@@ -2,6 +2,7 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
+import 'package:keklist/keklist_app.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
 import 'package:keklist/domain/constants.dart';
@@ -76,7 +77,12 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(context.l10n.settings)),
+      appBar: AppBar(
+        title: GestureDetector(
+          child: Text(context.l10n.settings),
+          onTap: () => logarte.openConsole(context),
+        ),
+      ),
       body: SettingsList(
         sections: [
           SettingsSection(

@@ -71,6 +71,7 @@ dependencies:
   full_swipe_back_gesture: ^0.1.0
   steganograph: ^2.0.0
   image_picker: ^1.2.0
+  logarte: ^1.4.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.14.3 # To generate icons - "flutter pub run flutter_launcher_icons"

@@ -1,6 +1,10 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:isolate';
+import 'dart:math';
+import 'dart:ui' as ui;
 
+import 'package:keklist/keklist_app.dart';
 import 'package:bloc/bloc.dart';
 import 'package:csv/csv.dart';
 import 'package:dart_openai/dart_openai.dart';
@@ -65,8 +69,9 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     final String formattedDateString = DateTime.now().toString().replaceAll('.', '-');
     final File csvFile = File('${temporaryDirectory.path}/keklist_backup_data_$formattedDateString.csv');
     await csvFile.writeAsString(csv);
-    final XFile fileToShare = XFile(csvFile.path);
-    await Share.shareXFiles([fileToShare]);
+    SharePlus.instance.share(ShareParams(
+      files: [XFile(csvFile.path)],
+    ));
   }
 
   FutureOr _getSettings(SettingsGet event, Emitter<SettingsState> emit) async {
@@ -133,20 +138,107 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     final UserContent userContent = UserContent(minds: allUserMinds.toList());
     final String userContentMessage = userContent.toBase64Message();
 
-    final File tempImageFile = await _assetToTempFile(
-      'assets/steganograph_image/steganograph_image.png',
-      filename: 'image_with_content.png',
+    try {
+      final Directory tempDirectory = await getTemporaryDirectory();
+      final File tempImageFile = await _createRandomPngFile(
+        outputPath: '${tempDirectory.path}/random_image_for_export.png',
+        totalPixels: userContentMessage.length + 10000,
+      );
+
+      // final File tempImageFile = await Isolate.run(
+      //   () async {
+      //     final Directory tempDirectory = await getTemporaryDirectory();
+      //     return _createRandomPngFile(
+      //       outputPath: '${tempDirectory.path}/random_image_for_export.png',
+      //       totalPixels: userContentMessage.length + 10000,
+      //     );
+      //   },
+      // );
+
+      final File? stegoImageFile = await Steganograph.cloak(
+        image: tempImageFile,
+        message: userContentMessage,
+      );
+      if (stegoImageFile == null) return;
+      final params = ShareParams(
+        files: [XFile(stegoImageFile.path)],
+        sharePositionOrigin: Rect.fromLTWH(0, 0, 1, 1),
+      );
+      await SharePlus.instance.share(params);
+    } catch (e) {
+      emit(
+        SettingsShowMessage(
+          title: 'Error',
+          message: e.toString(),
+        ),
+      );
+      rethrow;
+    }
+  }
+
+  Future<File> _createRandomPngFile({
+    String? outputPath,
+    int? width,
+    int? height,
+    int? totalPixels,
+  }) async {
+    // ---- pick dimensions ----
+    late final int w;
+    late final int h;
+
+    if (width != null && height != null) {
+      w = width;
+      h = height;
+    } else if (totalPixels != null) {
+      final dims = _nearSquareDims(totalPixels);
+      w = dims.$1;
+      h = dims.$2;
+    } else {
+      throw ArgumentError('Provide width & height OR totalPixels.');
+    }
+
+    // ---- generate random RGBA bytes ----
+    final rnd = Random();
+    final Uint8List rgba = Uint8List(w * h * 4);
+    for (int i = 0; i < rgba.length; i += 4) {
+      logarte.log('progress = ${i / rgba.length * 100}');
+      rgba[i] = rnd.nextInt(256); // R
+      rgba[i + 1] = rnd.nextInt(256); // G
+      rgba[i + 2] = rnd.nextInt(256); // B
+      rgba[i + 3] = 255; // A
+    }
+
+    // ---- build an image off-screen ----
+    final buffer = await ui.ImmutableBuffer.fromUint8List(rgba);
+    final descriptor = ui.ImageDescriptor.raw(
+      buffer,
+      width: w,
+      height: h,
+      pixelFormat: ui.PixelFormat.rgba8888,
     );
-    final File? stegoImageFile = await Steganograph.cloak(
-      image: tempImageFile,
-      message: userContentMessage,
-    );
-    if (stegoImageFile == null) return;
-    final params = ShareParams(
-      files: [XFile(stegoImageFile.path)],
-      sharePositionOrigin: Rect.fromLTWH(0, 0, 1, 1),
-    );
-    await SharePlus.instance.share(params);
+    final codec = await descriptor.instantiateCodec();
+    final frame = await codec.getNextFrame();
+    final ui.Image image = frame.image;
+
+    // ---- encode to PNG ----
+    final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    final bytes = byteData!.buffer.asUint8List();
+
+    // ---- write to file ----
+    final String path = outputPath ?? '${Directory.systemTemp.path}/random_$w x $h.png';
+    final file = File(path);
+    await file.writeAsBytes(bytes, flush: true);
+    return file;
+  }
+
+  /// Find width/height close to a square for a given total pixel count.
+  (int, int) _nearSquareDims(int total) {
+    final s = sqrt(total).floor();
+    for (int w = s; w >= 1; w--) {
+      if (total % w == 0) return (w, total ~/ w);
+    }
+    // Fallback (shouldn’t happen): make it Wx1
+    return (total, 1);
   }
 
   FutureOr<void> _importFromEncryptedImage(
