@@ -2,6 +2,7 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
+import 'package:keklist/domain/period.dart';
 import 'package:keklist/keklist_app.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
@@ -108,7 +109,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
                 title: const Text('Export to encrypted image'),
                 leading: const Icon(Icons.lock, color: Colors.brown),
                 onPressed: (BuildContext context) {
-                  sendEventToBloc<SettingsBloc>(SettingsExportAllMindsToEncryptedImage());
+                  sendEventToBloc<SettingsBloc>(SettingsExportMindsToEncryptedImage(periodType: PeriodType.thisMonth));
                 },
               ),
               SettingsTile(

@@ -52,6 +52,14 @@ final class MindUtils {
     return allMinds.where((item) => item.dayIndex >= monthStartIndex && item.dayIndex <= todayIndex).toList();
   }
 
+  static List<Mind> findLast30DaysMinds({required List<Mind> allMinds}) {
+    final DateTime now = DateTime.now();
+    final DateTime threeMonthAgo = now.subtract(const Duration(days: 30));
+    final int thirtyDaysAgoIndex = DateUtils.getDayIndex(from: threeMonthAgo);
+    final int todayIndex = DateUtils.getDayIndex(from: now);
+    return allMinds.where((item) => item.dayIndex >= thirtyDaysAgoIndex && item.dayIndex <= todayIndex).toList();
+  }
+
   static List<Mind> findThisYearMinds({required List<Mind> allMinds}) {
     final DateTime now = DateTime.now();
     final int todayIndex = DateUtils.getDayIndex(from: now);

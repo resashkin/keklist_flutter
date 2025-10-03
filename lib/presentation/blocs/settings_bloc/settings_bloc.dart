@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:isolate';
-import 'dart:math';
-import 'dart:ui' as ui;
+import 'dart:math' as math;
+import 'dart:ui' as dartUI;
 
-import 'package:keklist/keklist_app.dart';
+import 'package:flutter/material.dart';
+import 'package:keklist/domain/period.dart';
 import 'package:bloc/bloc.dart';
 import 'package:csv/csv.dart';
 import 'package:dart_openai/dart_openai.dart';
@@ -15,6 +15,7 @@ import 'package:keklist/domain/repositories/settings/settings_repository.dart';
 import 'package:keklist/domain/services/entities/user_content.dart';
 import 'package:keklist/domain/services/language_manager.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
+import 'package:keklist/presentation/core/helpers/mind_utils.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
@@ -47,7 +48,7 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     on<SettingsChangeOpenAIKey>(_changeOpenAIKey);
     on<SettingsUpdateShouldShowTitlesMode>(_updateShouldShowTitlesMode);
     on<SettingsChangeLanguage>(_changeLanguage);
-    on<SettingsExportAllMindsToEncryptedImage>(_exportToEncryptedImage);
+    on<SettingsExportMindsToEncryptedImage>(_exportToEncryptedImage);
     on<SettingsImportAllMindsFromEncryptedImage>(_importFromEncryptedImage);
 
     _repository.stream.listen((settings) => add(SettingsGet())).disposed(by: this);
@@ -128,32 +129,19 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     await _repository.updateLanguage(event.language);
   }
 
-  // TODO: extract to another bloc?
-
   FutureOr<void> _exportToEncryptedImage(
-    SettingsExportAllMindsToEncryptedImage event,
+    SettingsExportMindsToEncryptedImage event,
     Emitter<SettingsState> emit,
   ) async {
-    final Iterable<Mind> allUserMinds = _mindRepository.values;
-    final UserContent userContent = UserContent(minds: allUserMinds.toList());
+    final List<Mind> periodedUserMinds = MindUtils.findLast30DaysMinds(allMinds: _mindRepository.values.toList());
+    final UserContent userContent = UserContent(minds: periodedUserMinds);
     final String userContentMessage = userContent.toBase64Message();
 
     try {
-      final Directory tempDirectory = await getTemporaryDirectory();
-      final File tempImageFile = await _createRandomPngFile(
-        outputPath: '${tempDirectory.path}/random_image_for_export.png',
-        totalPixels: userContentMessage.length + 10000,
+      final File tempImageFile = await createSolidSquareImageFileSkia(
+        totalPixels: userContentMessage.length * 8,
+        color: Colors.black,
       );
-
-      // final File tempImageFile = await Isolate.run(
-      //   () async {
-      //     final Directory tempDirectory = await getTemporaryDirectory();
-      //     return _createRandomPngFile(
-      //       outputPath: '${tempDirectory.path}/random_image_for_export.png',
-      //       totalPixels: userContentMessage.length + 10000,
-      //     );
-      //   },
-      // );
 
       final File? stegoImageFile = await Steganograph.cloak(
         image: tempImageFile,
@@ -176,69 +164,34 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     }
   }
 
-  Future<File> _createRandomPngFile({
-    String? outputPath,
-    int? width,
-    int? height,
-    int? totalPixels,
+  Future<File> createSolidSquareImageFileSkia({
+    required int totalPixels,
+    required Color color,
+    String filename = 'solid.png',
   }) async {
-    // ---- pick dimensions ----
-    late final int w;
-    late final int h;
-
-    if (width != null && height != null) {
-      w = width;
-      h = height;
-    } else if (totalPixels != null) {
-      final dims = _nearSquareDims(totalPixels);
-      w = dims.$1;
-      h = dims.$2;
-    } else {
-      throw ArgumentError('Provide width & height OR totalPixels.');
-    }
-
-    // ---- generate random RGBA bytes ----
-    final rnd = Random();
-    final Uint8List rgba = Uint8List(w * h * 4);
-    for (int i = 0; i < rgba.length; i += 4) {
-      logarte.log('progress = ${i / rgba.length * 100}');
-      rgba[i] = rnd.nextInt(256); // R
-      rgba[i + 1] = rnd.nextInt(256); // G
-      rgba[i + 2] = rnd.nextInt(256); // B
-      rgba[i + 3] = 255; // A
-    }
-
-    // ---- build an image off-screen ----
-    final buffer = await ui.ImmutableBuffer.fromUint8List(rgba);
-    final descriptor = ui.ImageDescriptor.raw(
-      buffer,
-      width: w,
-      height: h,
-      pixelFormat: ui.PixelFormat.rgba8888,
+    final int side = math.sqrt(totalPixels).ceil();
+    final dartUI.PictureRecorder recorder = dartUI.PictureRecorder();
+    final Canvas canvas = Canvas(
+      recorder,
+      Rect.fromLTWH(0, 0, side.toDouble(), side.toDouble()),
     );
-    final codec = await descriptor.instantiateCodec();
-    final frame = await codec.getNextFrame();
-    final ui.Image image = frame.image;
 
-    // ---- encode to PNG ----
-    final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-    final bytes = byteData!.buffer.asUint8List();
+    final Paint paint = Paint()..color = color;
+    canvas.drawRect(Rect.fromLTWH(0, 0, side.toDouble(), side.toDouble()), paint);
 
-    // ---- write to file ----
-    final String path = outputPath ?? '${Directory.systemTemp.path}/random_$w x $h.png';
-    final file = File(path);
+    final dartUI.Picture picture = recorder.endRecording();
+    final dartUI.Image image = await picture.toImage(side, side);
+
+    final ByteData? byteData = await image.toByteData(format: dartUI.ImageByteFormat.png);
+    if (byteData == null) {
+      throw StateError('Failed to encode PNG.');
+    }
+
+    final Uint8List bytes = byteData.buffer.asUint8List();
+    final Directory dir = await getTemporaryDirectory();
+    final File file = File('${dir.path}/$filename');
     await file.writeAsBytes(bytes, flush: true);
     return file;
-  }
-
-  /// Find width/height close to a square for a given total pixel count.
-  (int, int) _nearSquareDims(int total) {
-    final s = sqrt(total).floor();
-    for (int w = s; w >= 1; w--) {
-      if (total % w == 0) return (w, total ~/ w);
-    }
-    // Fallback (shouldn’t happen): make it Wx1
-    return (total, 1);
   }
 
   FutureOr<void> _importFromEncryptedImage(

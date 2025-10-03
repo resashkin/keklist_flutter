@@ -8,7 +8,11 @@ final class SettingsGet extends SettingsEvent {}
 
 final class SettingsExportAllMindsToCSV extends SettingsEvent {}
 
-final class SettingsExportAllMindsToEncryptedImage extends SettingsEvent {}
+final class SettingsExportMindsToEncryptedImage extends SettingsEvent {
+  final PeriodType periodType;
+
+  SettingsExportMindsToEncryptedImage({required this.periodType});
+}
 
 final class SettingsImportAllMindsFromEncryptedImage extends SettingsEvent {}
 
