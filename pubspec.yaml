@@ -74,7 +74,7 @@ dependencies:
   logarte: ^1.4.0
 
 dev_dependencies:
-  flutter_launcher_icons: ^0.14.3 # To generate icons - "flutter pub run flutter_launcher_icons"
+  flutter_launcher_icons: ^0.14.4 # To generate icons - "flutter pub run flutter_launcher_icons"
   flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
@@ -88,7 +88,7 @@ dependency_overrides:
   sensors_plus_platform_interface: '1.1.3'
 
 flutter_icons:
-  image_path: "assets/app_icons/app_icon_4.png"
+  image_path: "assets/app_icons/app_icon_5.png"
   # iOS
   ios: true
   remove_alpha_ios: true
