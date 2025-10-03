@@ -10,7 +10,6 @@ import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/presentation/core/widgets/bottom_navigation_bar.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
-import 'package:shake/shake.dart';
 import 'package:keklist/presentation/screens/tabs_settings/tabs_settings_list_item.dart';
 
 final class TabsSettingsScreen extends StatefulWidget {
@@ -26,34 +25,10 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
   final List<TabModel> _hiddenTabModels = [];
   final List<BottomNavigationBarItem> _tabItems = [];
   bool _isDeveloperModeEnabled = false;
-  ShakeDetector? _shakeDetector;
 
   @override
   void initState() {
     super.initState();
-
-    // Initialize shake detector with error handling
-    try {
-      _shakeDetector = ShakeDetector.autoStart(
-        onPhoneShake: () {
-          if (!_isDeveloperModeEnabled) {
-            sendEventToBloc<DebugMenuBloc>(DebugMenuEnableDeveloperMode());
-            ScaffoldMessenger.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                SnackBar(
-                  content: Text(context.l10n.developerModeEnabled),
-                  duration: Duration(seconds: 3),
-                ),
-              );
-          }
-        },
-      );
-    } catch (e) {
-      // Shake detection not available on this platform
-      // Developer mode can still be enabled manually via debug menu if needed
-      print('Shake detection not available: $e');
-    }
 
     subscribeToBloc<TabsContainerBloc>(onNewState: (state) {
       if (state is TabsContainerState) {
@@ -93,7 +68,6 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
 
   @override
   void dispose() {
-    _shakeDetector?.stopListening();
     super.dispose();
     cancelSubscriptions();
   }
@@ -114,7 +88,6 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
       appBar: AppBar(
         title: GestureDetector(
           onLongPress: () {
-            // Alternative way to enable developer mode if shake detection fails
             if (!_isDeveloperModeEnabled) {
               sendEventToBloc<DebugMenuBloc>(DebugMenuEnableDeveloperMode());
               ScaffoldMessenger.of(context)
