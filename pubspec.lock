@@ -1137,7 +1137,7 @@ packages:
     dependency: "direct main"
     description:
       name: scrollview_observer
-      sha256: c2f713509f18f88f637b2084b47a90c91fb1ef066d5d82d2cf3194d8509dc6ab
+      sha256: "174d4efe7b79459a07662175c4db42c9862dcf78d3978e6e9c2d6c0d8137f4ca"
       url: "https://pub.dev"
     source: hosted
     version: "1.26.1"
