@@ -36,6 +36,7 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   intl: ^0.20.2
+  file_picker: ^8.0.5
   modal_bottom_sheet: ^3.0.0-pre
   package_info_plus: ^9.0.0
   path_provider: ^2.0.12
@@ -83,15 +84,19 @@ dev_dependencies:
   intl_utils: ^2.8.2
   benchmarking: ^0.6.1
 
-flutter_icons:
+flutter_launcher_icons:
+  image_path: "assets/icon/icon.png"
   # iOS
   ios: true
   remove_alpha_ios: true
   # Android
-  android: false
+  android: true
+  adaptive_icon_background: "assets/icon/icon_background.png"
+  adaptive_icon_foreground: "assets/icon/icon_foreground.png"
   min_sdk_android: 21
-  # adaptive_icon_background: "#ffffff"
-  # adaptive_icon_foreground: "#ffffff"
+  # Web
+  web:
+    generate: true
 
 flutter:
   generate: true

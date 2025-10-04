@@ -6,15 +6,31 @@ sealed class SettingsEvent {
 
 final class SettingsGet extends SettingsEvent {}
 
-final class SettingsExportAllMindsToCSV extends SettingsEvent {}
+final class SettingsExport extends SettingsEvent {
+  final SettingsExportType type;
 
-final class SettingsExportMindsToEncryptedImage extends SettingsEvent {
-  final PeriodType periodType;
-
-  SettingsExportMindsToEncryptedImage({required this.periodType});
+  SettingsExport({required this.type});
 }
 
-final class SettingsImportAllMindsFromEncryptedImage extends SettingsEvent {}
+final class SettingsImport extends SettingsEvent {
+  final SettingsImportType type;
+
+  SettingsImport({required this.type});
+}
+
+enum SettingsExportType { csv }
+
+enum SettingsImportType { csv }
+
+final class SettingsExportAllMindsToCSV extends SettingsEvent {}
+
+// final class SettingsExportMindsToEncryptedImage extends SettingsEvent {
+//   final PeriodType periodType;
+
+//   SettingsExportMindsToEncryptedImage({required this.periodType});
+// }
+
+// final class SettingsImportAllMindsFromEncryptedImage extends SettingsEvent {}
 
 final class SettingsChangeMindContentVisibility extends SettingsEvent {
   final bool isVisible;

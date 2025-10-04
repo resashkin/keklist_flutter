@@ -97,26 +97,26 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
               //     await _showOpenAITokenChanger();
               //   },
               // ),
+              // SettingsTile(
+              //   title: Text(context.l10n.exportToCsv),
+              //   leading: const Icon(Icons.file_download, color: Colors.brown),
+              //   onPressed: (BuildContext context) {
+              //     // TODO: Add loading
+              //     sendEventToBloc<SettingsBloc>(SettingsExportAllMindsToCSV());
+              //   },
+              // ),
               SettingsTile(
-                title: Text(context.l10n.exportToCsv),
-                leading: const Icon(Icons.file_download, color: Colors.brown),
+                title: const Text('Export data'),
+                leading: const Icon(Icons.upload, color: Colors.redAccent),
                 onPressed: (BuildContext context) {
-                  // TODO: Add loading
-                  sendEventToBloc<SettingsBloc>(SettingsExportAllMindsToCSV());
+                  sendEventToBloc<SettingsBloc>(SettingsExport(type: SettingsExportType.csv));
                 },
               ),
               SettingsTile(
-                title: const Text('Export to encrypted image'),
-                leading: const Icon(Icons.lock, color: Colors.brown),
+                title: const Text('Import data'),
+                leading: const Icon(Icons.download, color: Colors.greenAccent),
                 onPressed: (BuildContext context) {
-                  sendEventToBloc<SettingsBloc>(SettingsExportMindsToEncryptedImage(periodType: PeriodType.thisMonth));
-                },
-              ),
-              SettingsTile(
-                title: const Text('Import from encrypted image'),
-                leading: const Icon(Icons.key, color: Colors.greenAccent),
-                onPressed: (BuildContext context) {
-                  sendEventToBloc<SettingsBloc>(SettingsImportAllMindsFromEncryptedImage());
+                  sendEventToBloc<SettingsBloc>(SettingsImport(type: SettingsImportType.csv));
                 },
               )
             ],
