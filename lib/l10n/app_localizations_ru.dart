@@ -21,6 +21,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get exportToCsv => 'Экспорт в CSV';
 
   @override
+  String get exportData => 'Экспорт данных';
+
+  @override
+  String get importData => 'Импорт данных';
+
+  @override
   String get done => 'ГОТОВО';
 
   @override

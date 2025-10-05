@@ -3,6 +3,8 @@
     "userData": "Данные пользователя",
     "appearance": "Внешний вид",
     "exportToCsv": "Экспорт в CSV",
+    "exportData": "Экспорт данных",
+    "importData": "Импорт данных",
     "done": "ГОТОВО",
     "chatWithAI": "Чат с ИИ",
     "photosPerDay": "Фото в день",

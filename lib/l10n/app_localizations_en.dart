@@ -21,6 +21,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get exportToCsv => 'Export to CSV';
 
   @override
+  String get exportData => 'Export data';
+
+  @override
+  String get importData => 'Import data';
+
+  @override
   String get done => 'DONE';
 
   @override

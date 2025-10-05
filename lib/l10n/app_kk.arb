@@ -12,6 +12,8 @@
         "description": "Көрініс бөлімінің атауы"
     },
     "exportToCsv": "CSV-ға экспорттау",
+    "exportData": "Деректерді экспорттау",
+    "importData": "Деректерді импорттау",
     "@exportToCsv": {
         "description": "CSV-ға экспорттау батырмасы"
     },

@@ -3,6 +3,8 @@
     "userData": "Кориснички подаци",
     "appearance": "Изглед",
     "exportToCsv": "Извоз у CSV",
+    "exportData": "Извоз података",
+    "importData": "Увоз података",
     "done": "ГОТОВО",
     "chatWithAI": "Чет са AI",
     "photosPerDay": "Фотографије дневно",

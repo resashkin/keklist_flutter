@@ -106,14 +106,14 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
               //   },
               // ),
               SettingsTile(
-                title: const Text('Export data'),
+                title: Text(context.l10n.exportData),
                 leading: const Icon(Icons.upload, color: Colors.redAccent),
                 onPressed: (BuildContext context) {
                   sendEventToBloc<SettingsBloc>(SettingsExport(type: SettingsExportType.csv));
                 },
               ),
               SettingsTile(
-                title: const Text('Import data'),
+                title: Text(context.l10n.importData),
                 leading: const Icon(Icons.download, color: Colors.greenAccent),
                 onPressed: (BuildContext context) {
                   sendEventToBloc<SettingsBloc>(SettingsImport(type: SettingsImportType.csv));

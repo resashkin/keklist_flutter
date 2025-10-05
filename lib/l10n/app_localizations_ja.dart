@@ -21,6 +21,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get exportToCsv => 'CSVにエクスポート';
 
   @override
+  String get exportData => 'データをエクスポート';
+
+  @override
+  String get importData => 'データをインポート';
+
+  @override
   String get done => '完了';
 
   @override

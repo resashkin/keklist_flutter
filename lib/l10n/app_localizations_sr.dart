@@ -21,6 +21,12 @@ class AppLocalizationsSr extends AppLocalizations {
   String get exportToCsv => 'Извоз у CSV';
 
   @override
+  String get exportData => 'Извоз података';
+
+  @override
+  String get importData => 'Увоз података';
+
+  @override
   String get done => 'ГОТОВО';
 
   @override

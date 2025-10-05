@@ -3,6 +3,8 @@
     "userData": "Benutzerdaten",
     "appearance": "Erscheinungsbild",
     "exportToCsv": "In CSV exportieren",
+    "exportData": "Daten exportieren",
+    "importData": "Daten importieren",
     "done": "FERTIG",
     "chatWithAI": "Mit KI chatten",
     "photosPerDay": "Fotos pro Tag",

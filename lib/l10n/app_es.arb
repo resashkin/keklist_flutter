@@ -12,6 +12,8 @@
         "description": "Título de sección de apariencia"
     },
     "exportToCsv": "Exportar a CSV",
+    "exportData": "Exportar datos",
+    "importData": "Importar datos",
     "@exportToCsv": {
         "description": "Botón exportar a CSV"
     },

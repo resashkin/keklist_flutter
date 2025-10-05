@@ -21,6 +21,12 @@ class AppLocalizationsUz extends AppLocalizations {
   String get exportToCsv => 'CSV ga eksport qilish';
 
   @override
+  String get exportData => 'Ma\'lumotlarni eksport qilish';
+
+  @override
+  String get importData => 'Ma\'lumotlarni import qilish';
+
+  @override
   String get done => 'TAYYOR';
 
   @override

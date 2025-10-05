@@ -12,6 +12,8 @@
         "description": "Ko'rinish bo'limi sarlavhasi"
     },
     "exportToCsv": "CSV ga eksport qilish",
+    "exportData": "Ma'lumotlarni eksport qilish",
+    "importData": "Ma'lumotlarni import qilish",
     "@exportToCsv": {
         "description": "CSV ga eksport qilish tugmasi"
     },
