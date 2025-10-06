@@ -1290,14 +1290,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.12.1"
-  steganograph:
-    dependency: "direct main"
-    description:
-      name: steganograph
-      sha256: "3286dad1b9f90a2f290ad20d7164f78b281b0cfa6f0135eb64efdca2d3f49914"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
   stream_channel:
     dependency: transitive
     description:

@@ -69,7 +69,7 @@ dependencies:
   json_serializable: ^6.8.0
   json_annotation: ^4.9.0
   full_swipe_back_gesture: ^0.1.0
-  steganograph: ^2.0.0
+  # steganograph: ^2.0.0
   image_picker: ^1.2.0
   logarte: ^1.4.0
 
