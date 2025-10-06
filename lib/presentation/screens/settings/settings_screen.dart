@@ -65,7 +65,6 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
             EasyLoading.dismiss();
           }
           break;
-        // Offline mode removed - no upload states needed
       }
     })?.disposed(by: this);
     sendEventToBloc<SettingsBloc>(SettingsGet());
