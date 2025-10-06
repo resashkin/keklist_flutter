@@ -3,6 +3,8 @@
     "userData": "用户数据",
     "appearance": "外观",
     "exportToCsv": "导出到CSV",
+    "exportData": "导出数据",
+    "importData": "导入数据",
     "done": "完成",
     "chatWithAI": "与AI聊天",
     "photosPerDay": "每日照片",

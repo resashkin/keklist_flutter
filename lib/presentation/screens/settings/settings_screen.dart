@@ -28,8 +28,7 @@ final class SettingsScreen extends StatefulWidget {
 final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   //bool _isSensitiveContentShowed = false;
   bool _isDarkMode = false;
-  bool _showTitles = true;
-  String _openAiKey = '';
+  // String _openAiKey = '';
   String? translateLanguageCode;
 
   @override
@@ -42,10 +41,23 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
           setState(() {
             // _isSensitiveContentShowed = state.settings.isMindContentVisible;
             _isDarkMode = state.settings.isDarkMode;
-            _openAiKey = state.settings.openAIKey ?? '';
-            _showTitles = state.settings.shouldShowTitles;
+            // _openAiKey = state.settings.openAIKey ?? '';
           });
           break;
+        case SettingsShowMessage state:
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text(state.title),
+              content: Text(state.message),
+              actions: [
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ],
+            ),
+          );
         case SettingsLoadingState state:
           if (state.isLoading) {
             EasyLoading.show();
@@ -53,7 +65,6 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
             EasyLoading.dismiss();
           }
           break;
-        // Offline mode removed - no upload states needed
       }
     })?.disposed(by: this);
     sendEventToBloc<SettingsBloc>(SettingsGet());
@@ -77,11 +88,17 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
               //   },
               // ),
               SettingsTile(
-                title: Text(context.l10n.exportToCsv),
-                leading: const Icon(Icons.file_download, color: Colors.brown),
+                title: Text(context.l10n.exportData),
+                leading: const Icon(Icons.upload, color: Colors.redAccent),
                 onPressed: (BuildContext context) {
-                  // TODO: Add loading
-                  sendEventToBloc<SettingsBloc>(SettingsExportAllMindsToCSV());
+                  sendEventToBloc<SettingsBloc>(SettingsExport(type: SettingsExportType.csv));
+                },
+              ),
+              SettingsTile(
+                title: Text(context.l10n.importData),
+                leading: const Icon(Icons.download, color: Colors.greenAccent),
+                onPressed: (BuildContext context) {
+                  sendEventToBloc<SettingsBloc>(SettingsImport(type: SettingsImportType.csv));
                 },
               )
             ],
@@ -100,12 +117,12 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
                 title: Text(context.l10n.darkMode),
                 onToggle: (bool value) => _switchDarkMode(value),
               ),
-              SettingsTile.switchTile(
-                initialValue: _showTitles,
-                leading: const Icon(Icons.title, color: Colors.grey),
-                title: Text(context.l10n.showDayDividers),
-                onToggle: (bool value) => _switchShowTitles(value),
-              ),
+              // SettingsTile.switchTile(
+              //   initialValue: _showTitles,
+              //   leading: const Icon(Icons.title, color: Colors.grey),
+              //   title: Text(context.l10n.showDayDividers),
+              //   onToggle: (bool value) => _switchShowTitles(value),
+              // ),
               // SettingsTile.switchTile(
               //   initialValue: !_isSensitiveContentShowed,
               //   leading: const Icon(Icons.visibility_off, color: Colors.grey),
@@ -229,48 +246,48 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     }
   }
 
-  Future<void> _showOpenAITokenChanger() async {
-    String openAiToken = '';
+  // Future<void> _showOpenAITokenChanger() async {
+  //   String openAiToken = '';
 
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(context.l10n.setOpenAIToken),
-          content: TextField(
-            onChanged: (value) => openAiToken = value,
-            decoration: const InputDecoration(
-              hintText: 'Enter token here',
-              labelText: 'Token',
-            ),
-            controller: TextEditingController(text: _openAiKey),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text(context.l10n.cancel),
-            ),
-            TextButton(
-              onPressed: () {
-                _openAiKey = openAiToken;
-                Navigator.of(context).pop();
-                sendEventToBloc<SettingsBloc>(SettingsChangeOpenAIKey(openAIToken: openAiToken));
-              },
-              child: Text(context.l10n.save),
-            ),
-          ],
-        );
-      },
-    );
-  }
+  //   await showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Text(context.l10n.setOpenAIToken),
+  //         content: TextField(
+  //           onChanged: (value) => openAiToken = value,
+  //           decoration: const InputDecoration(
+  //             hintText: 'Enter token here',
+  //             labelText: 'Token',
+  //           ),
+  //           controller: TextEditingController(text: _openAiKey),
+  //         ),
+  //         actions: [
+  //           TextButton(
+  //             onPressed: () => Navigator.of(context).pop(),
+  //             child: Text(context.l10n.cancel),
+  //           ),
+  //           TextButton(
+  //             onPressed: () {
+  //               _openAiKey = openAiToken;
+  //               Navigator.of(context).pop();
+  //               sendEventToBloc<SettingsBloc>(SettingsChangeOpenAIKey(openAIToken: openAiToken));
+  //             },
+  //             child: Text(context.l10n.save),
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
   void _switchDarkMode(bool value) {
     sendEventToBloc<SettingsBloc>(SettingsChangeIsDarkMode(isDarkMode: value));
   }
 
-  void _switchShowTitles(bool value) {
-    sendEventToBloc<SettingsBloc>(SettingsUpdateShouldShowTitlesMode(value: value));
-  }
+  // void _switchShowTitles(bool value) {
+  //   sendEventToBloc<SettingsBloc>(SettingsUpdateShouldShowTitlesMode(value: value));
+  // }
 
   void _showWhatsNew() {
     Navigator.of(context).push<void>(

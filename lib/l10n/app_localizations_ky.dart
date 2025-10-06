@@ -21,6 +21,12 @@ class AppLocalizationsKy extends AppLocalizations {
   String get exportToCsv => 'CSVга экспорттоо';
 
   @override
+  String get exportData => 'Маалыматтарды экспорттоо';
+
+  @override
+  String get importData => 'Маалыматтарды импорттоо';
+
+  @override
   String get done => 'ДАЙЫН';
 
   @override

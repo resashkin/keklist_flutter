@@ -21,6 +21,12 @@ class AppLocalizationsSr extends AppLocalizations {
   String get exportToCsv => 'Извоз у CSV';
 
   @override
+  String get exportData => 'Извоз података';
+
+  @override
+  String get importData => 'Увоз података';
+
+  @override
   String get done => 'ГОТОВО';
 
   @override
@@ -296,6 +302,12 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
 
   @override
   String get exportToCsv => 'Izvezi u CSV';
+
+  @override
+  String get exportData => 'Izvoz podataka';
+
+  @override
+  String get importData => 'Uvoz podataka';
 
   @override
   String get done => 'GOTOVO';

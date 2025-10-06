@@ -12,6 +12,8 @@
         "description": "Көрүнүш бөлүмүнүн аталышы"
     },
     "exportToCsv": "CSVга экспорттоо",
+    "exportData": "Маалыматтарды экспорттоо",
+    "importData": "Маалыматтарды импорттоо",
     "@exportToCsv": {
         "description": "CSVга экспорттоо баскычы"
     },

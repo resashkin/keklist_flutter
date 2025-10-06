@@ -3,6 +3,8 @@
     "userData": "ユーザーデータ",
     "appearance": "外観",
     "exportToCsv": "CSVにエクスポート",
+    "exportData": "データをエクスポート",
+    "importData": "データをインポート",
     "done": "完了",
     "chatWithAI": "AIとチャット",
     "photosPerDay": "1日の写真数",

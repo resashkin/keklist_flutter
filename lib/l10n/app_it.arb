@@ -12,6 +12,8 @@
         "description": "Titolo sezione aspetto"
     },
     "exportToCsv": "Esporta in CSV",
+    "exportData": "Esporta dati",
+    "importData": "Importa dati",
     "@exportToCsv": {
         "description": "Pulsante esporta in CSV"
     },

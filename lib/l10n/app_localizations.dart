@@ -141,6 +141,18 @@ abstract class AppLocalizations {
   /// **'Export to CSV'**
   String get exportToCsv;
 
+  /// Export data button
+  ///
+  /// In en, this message translates to:
+  /// **'Export data'**
+  String get exportData;
+
+  /// Import data button
+  ///
+  /// In en, this message translates to:
+  /// **'Import data'**
+  String get importData;
+
   /// Done button
   ///
   /// In en, this message translates to:

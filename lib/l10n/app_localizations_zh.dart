@@ -21,6 +21,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get exportToCsv => '导出到CSV';
 
   @override
+  String get exportData => '导出数据';
+
+  @override
+  String get importData => '导入数据';
+
+  @override
   String get done => '完成';
 
   @override

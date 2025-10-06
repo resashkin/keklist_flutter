@@ -15,6 +15,14 @@
     "@exportToCsv": {
         "description": "Export to CSV button"
     },
+    "exportData": "Export data",
+    "@exportData": {
+        "description": "Export data button"
+    },
+    "importData": "Import data",
+    "@importData": {
+        "description": "Import data button"
+    },
     "done": "DONE",
     "@done": {
         "description": "Done button"
