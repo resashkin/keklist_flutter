@@ -352,5 +352,7 @@
             }
         }
     },
-    "week": "Nedelja"
+    "week": "Nedelja",
+    "exportData": "Izvoz podataka",
+    "importData": "Uvoz podataka"
 }

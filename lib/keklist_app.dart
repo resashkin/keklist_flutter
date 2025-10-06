@@ -15,25 +15,10 @@ import 'package:logarte/logarte.dart';
 import 'package:share_plus/share_plus.dart';
 
 final Logarte logarte = Logarte(
-  // Protect with password
-  password: '1234',
-
-  // Skip password in debug mode
-  ignorePassword: kDebugMode,
-
-  // Share network request
-  onShare: (String content) {
-    SharePlus.instance.share(ShareParams(text: content));
-  },
-
-  // To have logs in IDE's debug console (default is false)
-  disableDebugConsoleLogs: false,
-
-  // Add shortcut actions (optional)
-  onRocketLongPressed: (context) {
-    // e.g: toggle theme mode
-  },
-);
+    password: null,
+    ignorePassword: kDebugMode,
+    onShare: (final String content) => SharePlus.instance.share(ShareParams(text: content)),
+    disableDebugConsoleLogs: false);
 
 final class KeklistApp extends StatefulWidget {
   const KeklistApp({super.key});
@@ -65,10 +50,12 @@ final class KeklistAppState extends KekWidgetState<KeklistApp> {
       },
     )?.disposed(by: this);
 
-    logarte.attach(
-      context: context,
-      visible: kDebugMode,
-    );
+    if (kDebugMode) {
+      logarte.attach(
+        context: context,
+        visible: kDebugMode,
+      );
+    }
   }
 
   @override

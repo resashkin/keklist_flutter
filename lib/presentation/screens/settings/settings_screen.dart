@@ -2,8 +2,6 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
-import 'package:keklist/domain/period.dart';
-import 'package:keklist/keklist_app.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
 import 'package:keklist/domain/constants.dart';
@@ -30,8 +28,7 @@ final class SettingsScreen extends StatefulWidget {
 final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   //bool _isSensitiveContentShowed = false;
   bool _isDarkMode = false;
-  bool _showTitles = true;
-  String _openAiKey = '';
+  // String _openAiKey = '';
   String? translateLanguageCode;
 
   @override
@@ -44,8 +41,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
           setState(() {
             // _isSensitiveContentShowed = state.settings.isMindContentVisible;
             _isDarkMode = state.settings.isDarkMode;
-            _openAiKey = state.settings.openAIKey ?? '';
-            _showTitles = state.settings.shouldShowTitles;
+            // _openAiKey = state.settings.openAIKey ?? '';
           });
           break;
         case SettingsShowMessage state:
@@ -78,12 +74,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: GestureDetector(
-          child: Text(context.l10n.settings),
-          onTap: () => logarte.openConsole(context),
-        ),
-      ),
+      appBar: AppBar(title: Text(context.l10n.settings)),
       body: SettingsList(
         sections: [
           SettingsSection(
@@ -95,14 +86,6 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
               //   leading: const Icon(Icons.chat, color: Colors.greenAccent),
               //   onPressed: (BuildContext context) async {
               //     await _showOpenAITokenChanger();
-              //   },
-              // ),
-              // SettingsTile(
-              //   title: Text(context.l10n.exportToCsv),
-              //   leading: const Icon(Icons.file_download, color: Colors.brown),
-              //   onPressed: (BuildContext context) {
-              //     // TODO: Add loading
-              //     sendEventToBloc<SettingsBloc>(SettingsExportAllMindsToCSV());
               //   },
               // ),
               SettingsTile(
@@ -135,12 +118,12 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
                 title: Text(context.l10n.darkMode),
                 onToggle: (bool value) => _switchDarkMode(value),
               ),
-              SettingsTile.switchTile(
-                initialValue: _showTitles,
-                leading: const Icon(Icons.title, color: Colors.grey),
-                title: Text(context.l10n.showDayDividers),
-                onToggle: (bool value) => _switchShowTitles(value),
-              ),
+              // SettingsTile.switchTile(
+              //   initialValue: _showTitles,
+              //   leading: const Icon(Icons.title, color: Colors.grey),
+              //   title: Text(context.l10n.showDayDividers),
+              //   onToggle: (bool value) => _switchShowTitles(value),
+              // ),
               // SettingsTile.switchTile(
               //   initialValue: !_isSensitiveContentShowed,
               //   leading: const Icon(Icons.visibility_off, color: Colors.grey),
@@ -264,48 +247,48 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     }
   }
 
-  Future<void> _showOpenAITokenChanger() async {
-    String openAiToken = '';
+  // Future<void> _showOpenAITokenChanger() async {
+  //   String openAiToken = '';
 
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(context.l10n.setOpenAIToken),
-          content: TextField(
-            onChanged: (value) => openAiToken = value,
-            decoration: const InputDecoration(
-              hintText: 'Enter token here',
-              labelText: 'Token',
-            ),
-            controller: TextEditingController(text: _openAiKey),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text(context.l10n.cancel),
-            ),
-            TextButton(
-              onPressed: () {
-                _openAiKey = openAiToken;
-                Navigator.of(context).pop();
-                sendEventToBloc<SettingsBloc>(SettingsChangeOpenAIKey(openAIToken: openAiToken));
-              },
-              child: Text(context.l10n.save),
-            ),
-          ],
-        );
-      },
-    );
-  }
+  //   await showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Text(context.l10n.setOpenAIToken),
+  //         content: TextField(
+  //           onChanged: (value) => openAiToken = value,
+  //           decoration: const InputDecoration(
+  //             hintText: 'Enter token here',
+  //             labelText: 'Token',
+  //           ),
+  //           controller: TextEditingController(text: _openAiKey),
+  //         ),
+  //         actions: [
+  //           TextButton(
+  //             onPressed: () => Navigator.of(context).pop(),
+  //             child: Text(context.l10n.cancel),
+  //           ),
+  //           TextButton(
+  //             onPressed: () {
+  //               _openAiKey = openAiToken;
+  //               Navigator.of(context).pop();
+  //               sendEventToBloc<SettingsBloc>(SettingsChangeOpenAIKey(openAIToken: openAiToken));
+  //             },
+  //             child: Text(context.l10n.save),
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
   void _switchDarkMode(bool value) {
     sendEventToBloc<SettingsBloc>(SettingsChangeIsDarkMode(isDarkMode: value));
   }
 
-  void _switchShowTitles(bool value) {
-    sendEventToBloc<SettingsBloc>(SettingsUpdateShouldShowTitlesMode(value: value));
-  }
+  // void _switchShowTitles(bool value) {
+  //   sendEventToBloc<SettingsBloc>(SettingsUpdateShouldShowTitlesMode(value: value));
+  // }
 
   void _showWhatsNew() {
     Navigator.of(context).push<void>(

@@ -214,6 +214,7 @@ final class _InsightsPieWidgetState extends State<InsightsPieWidget> {
                 },
                 child: Text(
                   '${context.l10n.showMindsForPeriod(_choices[_selectedChoiceIndex].localizedTitle(context).toLowerCase())} (${_getFilteredMindsCount()})',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 16.0,
