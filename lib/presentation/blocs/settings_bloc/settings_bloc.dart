@@ -88,6 +88,8 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     ));
   }
 
+  // TODO: add parsing one row to init of Mind
+
   FutureOr<void> _importCSVFileWithMinds() async {
     final FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,

@@ -1,6 +1,6 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:keklist/domain/constants.dart';
+// import 'package:keklist/domain/constants.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
@@ -43,13 +43,13 @@ final class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> wit
   // On-Events
 
   Future<void> _getUserProfile(UserProfileGet event, Emitter<UserProfileState> emit) async {
-    final List<Mind> folders =
-        (await _mindRepository.obtainMindsWhere((mind) => mind.dayIndex == KeklistConstants.foldersDayIndex))
-            .toList(growable: false);
+    // final List<Mind> folders =
+    //     (await _mindRepository.obtainMindsWhere((mind) => mind.dayIndex == KeklistConstants.foldersDayIndex))
+    //         .toList(growable: false);
     emit(
       UserProfileState(
         nickname: _settingsRepository.value.userName,
-        folders: folders,
+        folders: [],
       ),
     );
   }

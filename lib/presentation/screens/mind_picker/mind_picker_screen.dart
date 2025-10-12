@@ -1,3 +1,7 @@
+import 'package:keklist/presentation/blocs/mind_creator_bloc/mind_creator_bloc.dart';
+import 'package:keklist/presentation/core/dispose_bag.dart';
+import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
+import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/core/widgets/mind_widget.dart';
 import 'package:emojis/emoji.dart';
 import 'package:flutter/material.dart';
@@ -17,13 +21,14 @@ final class MindPickerScreen extends StatefulWidget {
   MindPickerScreenState createState() => MindPickerScreenState();
 }
 
-final class MindPickerScreenState extends State<MindPickerScreen> {
+final class MindPickerScreenState extends KekWidgetState<MindPickerScreen> {
   final List<Emoji> _emojies = Emoji.all();
   String _searchText = '';
   Iterable<Emoji> _filteredMinds = [];
+  Iterable<String> _suggestions = [];
   List<String> get _displayedEmojiCharacters {
     final List<String> suggestions = widget.suggestions.toList();
-    return suggestions + _displayedEmojies.map((emoji) => emoji.char).toList();
+    return _suggestions.toList() + suggestions + _displayedEmojies.map((emoji) => emoji.char).toList();
   }
 
   Iterable<Emoji> get _displayedEmojies => _searchText.isEmpty ? _mainEmojies : _filteredMinds;
@@ -41,12 +46,18 @@ final class MindPickerScreenState extends State<MindPickerScreen> {
         _filteredMinds = _mainEmojies.where((mind) => mind.keywords.join().contains(_searchText)).toList();
       });
     });
+
+    subscribeToBloc<MindCreatorBloc>(onNewState: (state) {
+      setState(() => _suggestions = state.suggestions);
+    })?.disposed(by: this);
+
+    sendEventToBloc<MindCreatorBloc>(MindCreatorGetSuggestions(text: ''));
   }
 
   @override
   void dispose() {
-    _textEditingController.dispose();
     super.dispose();
+    _textEditingController.dispose();
   }
 
   @override

@@ -2,18 +2,22 @@ import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart' hide DateUtils;
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
+import 'package:gap/gap.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
 import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
+import 'package:keklist/presentation/blocs/mind_creator_bloc/mind_creator_bloc.dart';
+import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
+import 'package:keklist/presentation/core/widgets/mind_widget.dart';
 import 'package:keklist/presentation/core/widgets/overscroll_listener.dart';
 import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/screens/actions/action_model.dart';
 import 'package:keklist/presentation/screens/actions/actions_screen.dart';
 import 'package:keklist/presentation/screens/mind_chat_discussion/mind_chat_discussion_screen.dart';
-import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_collection_empty_day_widget.dart';
-import 'package:keklist/presentation/screens/mind_creator_screen.dart';
+import 'package:keklist/presentation/screens/mind_creator/mind_creator_screen.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:keklist/presentation/core/helpers/extensions/state_extensions.dart';
@@ -32,23 +36,18 @@ import 'package:keklist/domain/services/entities/mind.dart';
 
 final class MindDayCollectionScreen extends StatefulWidget {
   final int initialDayIndex;
-  // final Iterable<Mind> allMinds;
 
   const MindDayCollectionScreen({
     super.key,
-    // required this.allMinds,
     required this.initialDayIndex,
   });
 
   @override
   // ignore: no_logic_in_create_state
-  State<MindDayCollectionScreen> createState() => _MindDayCollectionScreenState(
-        dayIndex: initialDayIndex,
-        // allMinds: allMinds.sortedBySortIndex(),
-      );
+  State<MindDayCollectionScreen> createState() => _MindDayCollectionScreenState(dayIndex: initialDayIndex);
 }
 
-final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen> with DisposeBag {
+final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollectionScreen> {
   int dayIndex;
   final List<Mind> allMinds = [];
 
@@ -66,10 +65,9 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
 
   DebugMenuDataState? _debugMenuState;
 
-  _MindDayCollectionScreenState({
-    required this.dayIndex,
-    //required this.allMinds,
-  });
+  Iterable<String> suggestions = KeklistConstants.defaultEmojiesToPick;
+
+  _MindDayCollectionScreenState({required this.dayIndex});
 
   @override
   void initState() {
@@ -97,11 +95,16 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
       if (state is DebugMenuDataState) {
         _debugMenuState = state;
       }
-    });
+    })?.disposed(by: this);
+
+    subscribeToBloc<MindCreatorBloc>(onNewState: (state) {
+      setState(() => suggestions = state.suggestions.take(5));
+    })?.disposed(by: this);
 
     sendEventToBloc<MindBloc>(MindGetList());
     sendEventToBloc<SettingsBloc>(SettingsGet());
     sendEventToBloc<DebugMenuBloc>(DebugMenuGet());
+    sendEventToBloc<MindCreatorBloc>(MindCreatorGetSuggestions(text: ''));
   }
 
   @override
@@ -190,7 +193,26 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
               onOptions: (Mind mind) => _showActions(context, mind),
               mindIdsToChildren: _mindIdsToChildren,
             ),
-            falseChild: MindCollectionEmptyDayWidget.noMinds(context: context),
+            falseChild: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Gap(32.0),
+                if (suggestions.isNotEmpty) const Text('Pick emoji to write a new note...'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: 8.0,
+                  children: suggestions
+                      .map(
+                        (emoji) => GestureDetector(
+                          child: MindWidget.justEmoji(emoji: emoji).animate().fadeIn(),
+                          onTap: () => _showMindCreator(initialEmoji: emoji),
+                        ),
+                      )
+                      .toList(),
+                ),
+                Gap(32.0),
+              ],
+            ),
           ),
         ),
       ),
@@ -397,7 +419,6 @@ final class _MindDayCollectionScreenState extends State<MindDayCollectionScreen>
           buttonText: initialEmoji == null ? context.l10n.create : context.l10n.edit,
           initialEmoji: initialEmoji,
           initialText: initialText,
-          shouldSuggestEmoji: true,
           onDone: (String text, String emoji) {
             if (_editableMind == null) {
               final MindCreate event = MindCreate(

@@ -21,6 +21,7 @@ import 'package:keklist/domain/repositories/message/message/message_object.dart'
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
 import 'package:keklist/domain/repositories/debug_menu/object/debug_menu_object.dart';
 import 'package:keklist/native/web/telegram/telegram_web_initializer.dart';
+import 'package:keklist/presentation/blocs/mind_creator_bloc/mind_creator_bloc.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bloc.dart';
 import 'package:keklist/presentation/blocs/user_profile_bloc/user_profile_bloc.dart';
 import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
@@ -98,6 +99,7 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
             ),
           ),
           BlocProvider(create: (context) => mainInjector.get<MindSearcherCubit>()),
+          BlocProvider(create: (context) => MindCreatorBloc(mindRepository: mainInjector.get<MindRepository>())),
           BlocProvider(
             create: (context) => SettingsBloc(
               repository: mainInjector.get<SettingsRepository>(),
