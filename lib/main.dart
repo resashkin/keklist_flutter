@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:dart_openai/dart_openai.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
@@ -25,6 +26,7 @@ import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bl
 import 'package:keklist/presentation/blocs/user_profile_bloc/user_profile_bloc.dart';
 import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +62,26 @@ Future<void> main() async {
   _enableDebugBLOCLogs();
   _configureOpenAI();
 
-  TelegramWebInitializer.init();
+  //TelegramWebInitializer.init();
+
+  // Init purchases.
+  final String revenueCatApiKey = () {
+    if (kDebugMode) {
+      return dotenv.env['REVENUE_CAT_TEST_API_KEY']!;
+    } else {
+      return dotenv.env['REVENUE_CAT_PROD_API_KEY']!;
+    }
+  }();
+  await Purchases.configure(PurchasesConfiguration(revenueCatApiKey));
+
+  try {
+    CustomerInfo customerInfo = await Purchases.getCustomerInfo();
+    print('heheh $customerInfo');
+    // access latest customerInfo
+  } on PlatformException catch (error) {
+    // Error fetching customer info
+    print('heheh $error');
+  }
 
   final Widget application = _getApplication(mainInjector);
   runApp(application);

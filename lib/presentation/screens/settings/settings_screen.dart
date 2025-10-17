@@ -14,6 +14,10 @@ import 'package:keklist/presentation/core/extensions/localization_extensions.dar
 import 'package:keklist/presentation/screens/language_picker/language_picker_screen.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
+
+import 'dart:async';
+import 'dart:developer';
 
 // TODO: move methods from MindBloc to SettingsBloc
 // TODO: darkmode: add system mode
@@ -145,32 +149,29 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
             title: Text(context.l10n.about.toUpperCase()),
             tiles: [
               SettingsTile.navigation(
+                title: Text('Become a friend'),
+                leading: const Icon(Icons.handshake, color: Colors.yellowAccent),
+                onPressed: (BuildContext context) => openPaywall(),
+              ),
+              SettingsTile.navigation(
                 title: Text(context.l10n.whatsNew),
                 leading: const Icon(Icons.new_releases, color: Colors.purple),
-                onPressed: (BuildContext context) {
-                  _showWhatsNew();
-                },
+                onPressed: (BuildContext context) => _showWhatsNew(),
               ),
               SettingsTile.navigation(
                 title: Text(context.l10n.suggestFeature),
                 leading: const Icon(Icons.handyman, color: Colors.yellow),
-                onPressed: (BuildContext context) {
-                  _openFeatureSuggestion();
-                },
+                onPressed: (BuildContext context) => _openFeatureSuggestion(),
               ),
               SettingsTile.navigation(
                 title: Text(context.l10n.sendFeedback),
                 leading: const Icon(Icons.feedback, color: Colors.blue),
-                onPressed: (BuildContext context) async {
-                  await _openEmailFeedbackForm();
-                },
+                onPressed: (BuildContext context) async => await _openEmailFeedbackForm(),
               ),
               SettingsTile.navigation(
                 title: Text(context.l10n.sourceCode),
                 leading: const Icon(Icons.code, color: Colors.yellow),
-                onPressed: (BuildContext context) async {
-                  await _openSourceCode();
-                },
+                onPressed: (BuildContext context) async => await _openSourceCode(),
               ),
               SettingsTile.navigation(
                 title: Text(context.l10n.termsOfUse),
@@ -244,6 +245,11 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);
     }
+  }
+
+  void openPaywall() async {
+    final paywallResult = await RevenueCatUI.presentPaywall();
+    log('Paywall result: $paywallResult');
   }
 
   // Future<void> _showOpenAITokenChanger() async {
