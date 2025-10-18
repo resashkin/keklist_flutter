@@ -147,10 +147,6 @@ platform :ios do
       readonly: false,
     )
     sh("flutter build ios --config-only --release")
-    cocoapods(
-      repo_update: true, 
-      use_bundle_exec: true
-    )
     build_app(
       workspace: "Runner.xcworkspace", 
       scheme: "Runner",

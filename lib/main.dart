@@ -21,7 +21,6 @@ import 'package:keklist/domain/hive_constants.dart';
 import 'package:keklist/domain/repositories/message/message/message_object.dart';
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
 import 'package:keklist/domain/repositories/debug_menu/object/debug_menu_object.dart';
-import 'package:keklist/native/web/telegram/telegram_web_initializer.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bloc.dart';
 import 'package:keklist/presentation/blocs/user_profile_bloc/user_profile_bloc.dart';
 import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
@@ -76,11 +75,9 @@ Future<void> main() async {
 
   try {
     CustomerInfo customerInfo = await Purchases.getCustomerInfo();
-    print('heheh $customerInfo');
     // access latest customerInfo
   } on PlatformException catch (error) {
     // Error fetching customer info
-    print('heheh $error');
   }
 
   final Widget application = _getApplication(mainInjector);
