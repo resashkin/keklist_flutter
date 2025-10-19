@@ -127,9 +127,7 @@ Runner.app.dSYM.zip
 Runner.ipa
 
 # Fastlane Android
-**/android/fastlane
 **/android/.env
-**/android/Gemfile
 
 # dotenv
 .env
@@ -142,3 +140,5 @@ firebase.json
 
 # FVM Version Cache
 .fvm/
+
+fastlane-play-store.json
