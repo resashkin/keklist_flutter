@@ -5,10 +5,10 @@ abstract class MindCreatorEvent with EquatableMixin {
   List<Object?> get props => [];
 }
 
-final class MindCreatorChangeText extends MindCreatorEvent {
+final class MindCreatorGetSuggestions extends MindCreatorEvent {
   final String text;
 
-  MindCreatorChangeText({required this.text});
+  MindCreatorGetSuggestions({required this.text});
 
   @override
   List<Object?> get props => [text];
