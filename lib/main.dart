@@ -78,7 +78,7 @@ Future<void> main() async {
   try {
     CustomerInfo customerInfo = await Purchases.getCustomerInfo();
     // access latest customerInfo
-  } on PlatformException catch (error) {
+  } on PlatformException {
     // Error fetching customer info
   }
 

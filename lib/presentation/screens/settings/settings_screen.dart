@@ -1,24 +1,27 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
+import 'package:gap/gap.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
 import 'package:keklist/domain/constants.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
+import 'package:keklist/presentation/screens/settings/widgets/stories_widget.dart';
 import 'package:keklist/presentation/screens/tabs_settings/tabs_settings_screen.dart';
 import 'package:keklist/presentation/screens/web_page/web_page_screen.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/screens/language_picker/language_picker_screen.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 // TODO: move methods from MindBloc to SettingsBloc
 // TODO: darkmode: add system mode
 
@@ -76,10 +79,61 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    const stories = [
+      Story(id: '1', title: 'Planner'),
+      Story(id: '2', title: 'Focus'),
+      Story(id: '3', title: 'Sync'),
+      Story(id: '4', title: 'Cache'),
+      Story(id: '5', title: 'Notes'),
+    ];
+
+    // final lightSettingsListBackground = Color.fromRGBO(242, 242, 247, 1);
+    // final darkSettingsListBackground = CupertinoColors.black;
+
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.settings)),
       body: SettingsList(
         sections: [
+          SettingsSection(
+            title: Text('Developer block'),
+            tiles: [
+              SettingsTile.navigation(
+                title: Text('Last features'),
+                enabled: false,
+                trailing: Gap(0),
+              ),
+              CustomSettingsTile(
+                child: Container(
+                  color: Color.fromRGBO(27, 27, 27, 1),
+                  child: Column(
+                    children: [
+                      StoriesWidget(stories: stories),
+                    ],
+                  ),
+                ),
+              ),
+              SettingsTile.navigation(
+                title: Text('keklist PRO'),
+                leading: const Icon(Icons.handshake, color: Colors.yellowAccent),
+                onPressed: (BuildContext context) => openPaywall(),
+              ),
+              SettingsTile.navigation(
+                title: Text('Chat with developer'),
+                leading: const Icon(Icons.chat, color: Colors.blue),
+                onPressed: (BuildContext context) => openPaywall(),
+              ),
+              SettingsTile.navigation(
+                title: Text(context.l10n.suggestFeature),
+                leading: const Icon(Icons.handyman, color: Colors.green),
+                onPressed: (BuildContext context) => _openFeatureSuggestion(),
+              ),
+              SettingsTile.navigation(
+                title: Text('Send feedback email'),
+                leading: const Icon(Icons.feedback, color: Colors.blueGrey),
+                onPressed: (BuildContext context) async => await _openEmailFeedbackForm(),
+              ),
+            ],
+          ),
           SettingsSection(
             title: Text(context.l10n.userData.toUpperCase()),
             tiles: [
@@ -149,24 +203,9 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
             title: Text(context.l10n.about.toUpperCase()),
             tiles: [
               SettingsTile.navigation(
-                title: Text('keklist PRO'),
-                leading: const Icon(Icons.handshake, color: Colors.yellowAccent),
-                onPressed: (BuildContext context) => openPaywall(),
-              ),
-              SettingsTile.navigation(
                 title: Text(context.l10n.whatsNew),
                 leading: const Icon(Icons.new_releases, color: Colors.purple),
                 onPressed: (BuildContext context) => _showWhatsNew(),
-              ),
-              SettingsTile.navigation(
-                title: Text(context.l10n.suggestFeature),
-                leading: const Icon(Icons.handyman, color: Colors.yellow),
-                onPressed: (BuildContext context) => _openFeatureSuggestion(),
-              ),
-              SettingsTile.navigation(
-                title: Text(context.l10n.sendFeedback),
-                leading: const Icon(Icons.feedback, color: Colors.blue),
-                onPressed: (BuildContext context) async => await _openEmailFeedbackForm(),
               ),
               SettingsTile.navigation(
                 title: Text(context.l10n.sourceCode),
@@ -249,7 +288,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
 
   void openPaywall() async {
     final paywallResult = await RevenueCatUI.presentPaywall();
-    log('Paywall result: $paywallResult');
+    //log('Paywall result: $paywallResult');
   }
 
   // Future<void> _showOpenAITokenChanger() async {
