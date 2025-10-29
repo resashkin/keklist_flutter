@@ -149,7 +149,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
             title: Text(context.l10n.about.toUpperCase()),
             tiles: [
               SettingsTile.navigation(
-                title: Text('Become a friend'),
+                title: Text('keklist PRO'),
                 leading: const Icon(Icons.handshake, color: Colors.yellowAccent),
                 onPressed: (BuildContext context) => openPaywall(),
               ),
