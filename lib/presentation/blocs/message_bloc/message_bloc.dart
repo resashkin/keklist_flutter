@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import, unused_element
+
 import 'dart:async';
 
 import 'package:equatable/equatable.dart';
@@ -21,7 +23,7 @@ part 'message_state.dart';
 // TODO: extract _hiveBox to Repository
 
 final class MessageBloc extends Bloc<MessageEvent, MessageState> with DisposeBag {
-  final MessageService _messageService = MessageOpenAIService();
+  // final MessageService _messageService = MessageOpenAIService();
   final Box<MessageObject> _hiveBox = Hive.box<MessageObject>(HiveConstants.messageChatBoxName);
   Iterable<MessageObject> get _hiveObjects => _hiveBox.values;
   Stream<MessageObject?> get _hiveObjectsStream =>
@@ -68,65 +70,65 @@ final class MessageBloc extends Bloc<MessageEvent, MessageState> with DisposeBag
   }
 
   FutureOr<void> _startNewDiscussion(MessageStartDiscussion event, Emitter emit) async {
-    emit(MessageLoadingStatus(isLoading: true));
-    try {
-      await _hiveBox.deleteAll(
-        _hiveObjects.where((element) => element.rootMindId == event.mind.id).map((object) => object.id),
-      );
-    } catch (error) {
-      emit(MessageError(message: '$error'));
-      return;
-    }
-    try {
-      final MessageHistory messageHistory = await _messageService.initializeDiscussion(
-        rootMind: event.mind,
-        rootMindChildren: event.mindChildren,
-        initMessageText: _makeInitialSystemPromt(
-          mind: event.mind,
-          mindChildren: event.mindChildren,
-        ),
-      );
-      final Map<String, MessageObject> messageObjects = {};
-      for (final Message message in messageHistory.messages) {
-        final MessageObject messageObject = message.toObject();
-        messageObjects[messageObject.id] = messageObject;
-      }
-      await _hiveBox.putAll(messageObjects);
-    } catch (error) {
-      emit(MessageError(message: '$error'));
-    }
-    emit(MessageLoadingStatus(isLoading: false));
+    // emit(MessageLoadingStatus(isLoading: true));
+    // try {
+    //   await _hiveBox.deleteAll(
+    //     _hiveObjects.where((element) => element.rootMindId == event.mind.id).map((object) => object.id),
+    //   );
+    // } catch (error) {
+    //   emit(MessageError(message: '$error'));
+    //   return;
+    // }
+    // try {
+    //   final MessageHistory messageHistory = await _messageService.initializeDiscussion(
+    //     rootMind: event.mind,
+    //     rootMindChildren: event.mindChildren,
+    //     initMessageText: _makeInitialSystemPromt(
+    //       mind: event.mind,
+    //       mindChildren: event.mindChildren,
+    //     ),
+    //   );
+    //   final Map<String, MessageObject> messageObjects = {};
+    //   for (final Message message in messageHistory.messages) {
+    //     final MessageObject messageObject = message.toObject();
+    //     messageObjects[messageObject.id] = messageObject;
+    //   }
+    //   await _hiveBox.putAll(messageObjects);
+    // } catch (error) {
+    //   emit(MessageError(message: '$error'));
+    // }
+    // emit(MessageLoadingStatus(isLoading: false));
   }
 
   FutureOr<void> _sendMessage(MessageSend event, Emitter emit) async {
-    emit(MessageLoadingStatus(isLoading: true));
-    final Message userMessage = Message(
-      id: const Uuid().v4(),
-      text: event.message,
-      rootMindId: event.rootMindId,
-      timestamp: DateTime.now(),
-      sender: MessageSender.user,
-    );
-    final MessageObject userMessageObject = userMessage.toObject();
-    try {
-      await _hiveBox.put(userMessageObject.id, userMessageObject);
-    } catch (error) {
-      emit(MessageError(message: '$error'));
-    }
+    // emit(MessageLoadingStatus(isLoading: true));
+    // final Message userMessage = Message(
+    //   id: const Uuid().v4(),
+    //   text: event.message,
+    //   rootMindId: event.rootMindId,
+    //   timestamp: DateTime.now(),
+    //   sender: MessageSender.user,
+    // );
+    // final MessageObject userMessageObject = userMessage.toObject();
+    // try {
+    //   await _hiveBox.put(userMessageObject.id, userMessageObject);
+    // } catch (error) {
+    //   emit(MessageError(message: '$error'));
+    // }
 
-    final Message openAIAnswerMessage = await _messageService.requestAnswer(
-      history: MessageHistory(
-        messages: _hiveObjects.map((object) => object.toMessage()).sortedByProperty((object) => object.timestamp),
-        rootMindId: event.rootMindId,
-      ),
-    );
+    // final Message openAIAnswerMessage = await _messageService.requestAnswer(
+    //   history: MessageHistory(
+    //     messages: _hiveObjects.map((object) => object.toMessage()).sortedByProperty((object) => object.timestamp),
+    //     rootMindId: event.rootMindId,
+    //   ),
+    // );
 
-    try {
-      await _hiveBox.put(openAIAnswerMessage.id, openAIAnswerMessage.toObject());
-    } catch (error) {
-      emit(MessageError(message: '$error'));
-    }
-    emit(MessageLoadingStatus(isLoading: false));
+    // try {
+    //   await _hiveBox.put(openAIAnswerMessage.id, openAIAnswerMessage.toObject());
+    // } catch (error) {
+    //   emit(MessageError(message: '$error'));
+    // }
+    // emit(MessageLoadingStatus(isLoading: false));
   }
 
   String _makeInitialSystemPromt({

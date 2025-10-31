@@ -2,7 +2,6 @@
 
 import 'dart:io';
 
-import 'package:dart_openai/dart_openai.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -59,7 +58,6 @@ Future<void> main() async {
 
   _connectToWatchCommunicationManager(mainInjector);
   _enableDebugBLOCLogs();
-  _configureOpenAI();
 
   //TelegramWebInitializer.init();
 
@@ -82,11 +80,6 @@ Future<void> main() async {
 
   final Widget application = _getApplication(mainInjector);
   runApp(application);
-}
-
-void _configureOpenAI() {
-  OpenAI.showLogs = !kReleaseMode;
-  OpenAI.requestsTimeOut = const Duration(seconds: 40);
 }
 
 void _enableDebugBLOCLogs() {

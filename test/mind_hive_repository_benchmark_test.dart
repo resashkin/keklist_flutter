@@ -1,4 +1,3 @@
-import 'package:benchmarking/benchmarking.dart';
 import 'package:hive/hive.dart';
 import 'package:keklist/domain/hive_constants.dart';
 import 'package:keklist/domain/repositories/mind/object/mind_object.dart';
@@ -28,19 +27,19 @@ Future<void> main() async {
     growable: false,
   );
 
-  syncBenchmark(
-    'update minds in repository',
-    settings: const BenchmarkSettings(minimumRunTime: Duration(seconds: 1)),
-    () async {
-      await repository.updateMinds(minds: minds);
-    },
-  ).report();
+  // syncBenchmark(
+  //   'update minds in repository',
+  //   settings: const BenchmarkSettings(minimumRunTime: Duration(seconds: 1)),
+  //   () async {
+  //     await repository.updateMinds(minds: minds);
+  //   },
+  // ).report();
 
-  syncBenchmark(
-    'obtrain minds from repository',
-    settings: const BenchmarkSettings(minimumRunTime: Duration(seconds: 1)),
-    () async {
-      await repository.obtainMinds();
-    },
-  ).report();
+  // syncBenchmark(
+  //   'obtrain minds from repository',
+  //   settings: const BenchmarkSettings(minimumRunTime: Duration(seconds: 1)),
+  //   () async {
+  //     await repository.obtainMinds();
+  //   },
+  // ).report();
 }

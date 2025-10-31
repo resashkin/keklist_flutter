@@ -53,8 +53,6 @@ dependencies:
   #workmanager: ^0.5.2
   flutter_dotenv: ^6.0.0
   flutter_staggered_grid_view: ^0.7.0
-  crypto: ^3.0.3
-  dart_openai: ^5.1.0
   bottom_sheet: ^4.0.0
   action_sheet: ^1.0.4
   haptic_feedback: ^0.5.1+1
@@ -69,7 +67,6 @@ dependencies:
   json_serializable: ^6.8.0
   json_annotation: ^4.9.0
   full_swipe_back_gesture: ^0.1.0
-  # steganograph: ^2.0.0
   image_picker: ^1.2.0
   logarte: ^1.4.0
   purchases_flutter: ^9.8.0
@@ -84,7 +81,6 @@ dev_dependencies:
   hive_generator: ^2.0.0
   build_runner: ^2.3.3 #dart run build_runner build --delete-conflicting-outputs
   intl_utils: ^2.8.2
-  benchmarking: ^0.6.1
 
 flutter_launcher_icons:
   image_path: "assets/icon/icon.png"

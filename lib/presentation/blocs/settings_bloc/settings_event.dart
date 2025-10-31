@@ -24,14 +24,6 @@ enum SettingsImportType { csv }
 
 final class SettingsExportAllMindsToCSV extends SettingsEvent {}
 
-// final class SettingsExportMindsToEncryptedImage extends SettingsEvent {
-//   final PeriodType periodType;
-
-//   SettingsExportMindsToEncryptedImage({required this.periodType});
-// }
-
-// final class SettingsImportAllMindsFromEncryptedImage extends SettingsEvent {}
-
 final class SettingsChangeMindContentVisibility extends SettingsEvent {
   final bool isVisible;
 
