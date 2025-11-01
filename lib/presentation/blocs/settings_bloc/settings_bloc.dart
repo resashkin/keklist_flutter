@@ -5,7 +5,6 @@ import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
 import 'package:csv/csv.dart';
-import 'package:dart_openai/dart_openai.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
@@ -33,7 +32,6 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
             settings: KeklistSettings.initial(),
           ),
         ) {
-    //on<SettingsExportAllMindsToCSV>(_shareCSVFileWithMinds);
     on<SettingsExport>(_export);
     on<SettingsImport>(_import);
     on<SettingsChangeMindContentVisibility>(_changeMindContentVisibility);
@@ -44,8 +42,6 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     on<SettingsChangeOpenAIKey>(_changeOpenAIKey);
     on<SettingsUpdateShouldShowTitlesMode>(_updateShouldShowTitlesMode);
     on<SettingsChangeLanguage>(_changeLanguage);
-    //on<SettingsExportMindsToEncryptedImage>(_exportToEncryptedImage);
-    //on<SettingsImportAllMindsFromEncryptedImage>(_importFromEncryptedImage);
 
     _repository.stream.listen((settings) => add(SettingsGet())).disposed(by: this);
   }
@@ -203,8 +199,8 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
   }
 
   FutureOr<void> _changeOpenAIKey(SettingsChangeOpenAIKey event, Emitter<SettingsState> emit) {
-    OpenAI.apiKey = event.openAIToken;
-    _repository.updateOpenAIKey(event.openAIToken);
+    // OpenAI.apiKey = event.openAIToken;
+    // _repository.updateOpenAIKey(event.openAIToken);
   }
 
   FutureOr<void> _updateShouldShowTitlesMode(
