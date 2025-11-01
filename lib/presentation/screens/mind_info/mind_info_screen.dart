@@ -6,13 +6,11 @@ import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:keklist/domain/constants.dart';
 import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
 import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
-import 'package:keklist/presentation/core/helpers/extensions/state_extensions.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/core/widgets/overscroll_listener.dart';
 import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
 import 'package:keklist/presentation/screens/actions/action_model.dart';
 import 'package:keklist/presentation/screens/actions/actions_screen.dart';
-import 'package:keklist/presentation/screens/mind_chat_discussion/mind_chat_discussion_screen.dart';
 import 'package:keklist/presentation/screens/mind_one_emoji_collection/mind_one_emoji_collection.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/messaged_list/mind_message_widget.dart';
@@ -24,6 +22,7 @@ import 'package:keklist/presentation/core/helpers/mind_utils.dart';
 import 'package:keklist/presentation/core/widgets/creator_bottom_bar/mind_creator_bottom_bar.dart';
 import 'package:keklist/presentation/screens/mind_picker/mind_picker_screen.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
+import 'package:keklist/domain/services/entities/mind_note_content.dart';
 import 'package:translator/translator.dart';
 
 final class MindInfoScreen extends StatefulWidget {
@@ -164,10 +163,13 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
                     placeholder: 'Comment mind...',
                     onDone: (CreateMindData data) {
                       if (_editableMind == null) {
+                        final String normalizedText = data.text.trim();
+                        final MindNoteContent content =
+                            normalizedText.isEmpty ? MindNoteContent.empty() : MindNoteContent.parse(normalizedText);
                         sendEventToBloc<MindBloc>(
                           MindCreate(
                             dayIndex: _rootMind.dayIndex,
-                            note: data.text,
+                            mindContent: content.pieces,
                             emoji: _selectedEmoji,
                             rootId: _rootMind.id,
                           ),
@@ -181,6 +183,49 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
                       }
                       _resetMindCreator();
                     },
+                    onAudioRecordDone: (AudioCreateMindData audio) async {
+                      final String trimmedPath = audio.path.trim();
+                      if (trimmedPath.isEmpty) {
+                        return;
+                      }
+                      final String currentText = _createMindEditingController.text;
+
+                      if (_editableMind == null) {
+                        final String normalizedText = currentText.trim();
+                        MindNoteContent content =
+                            normalizedText.isEmpty ? MindNoteContent.empty() : MindNoteContent.parse(normalizedText);
+                        final bool needsLineBreak = content.pieces.isNotEmpty &&
+                            content.pieces.last.map(
+                              text: (MindNoteText textPiece) =>
+                                  textPiece.value.isNotEmpty && !textPiece.value.endsWith('\n'),
+                              audio: (_) => false,
+                            );
+                        content = content.appendAudio(trimmedPath, separator: needsLineBreak ? '\n' : null);
+                        sendEventToBloc<MindBloc>(
+                          MindCreate(
+                            dayIndex: _rootMind.dayIndex,
+                            mindContent: content.pieces,
+                            emoji: _selectedEmoji,
+                            rootId: _rootMind.id,
+                          ),
+                        );
+                      } else {
+                        MindNoteContent content =
+                            currentText.trim().isEmpty ? MindNoteContent.empty() : MindNoteContent.parse(currentText);
+                        final bool needsLineBreak = content.pieces.isNotEmpty &&
+                            content.pieces.last.map(
+                              text: (MindNoteText textPiece) =>
+                                  textPiece.value.isNotEmpty && !textPiece.value.endsWith('\n'),
+                              audio: (_) => false,
+                            );
+                        content = content.appendAudio(trimmedPath, separator: needsLineBreak ? '\n' : null);
+                        final Mind updatedMind =
+                            _editableMind!.copyWithNoteContent(content).copyWith(emoji: _selectedEmoji);
+                        sendEventToBloc<MindBloc>(MindEdit(mind: updatedMind));
+                      }
+
+                      _resetMindCreator();
+                    },
                     suggestionMinds: const [],
                     selectedEmoji: _selectedEmoji,
                     onTapSuggestionEmoji: (_) {},
@@ -191,7 +236,7 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
                         },
                       );
                     },
-                    doneTitle: context.l10n.done,
+                    doneTitle: 'Save', // TODO: localize and translate
                     onTapCancelEdit: () {
                       _resetMindCreator();
                     },
@@ -230,10 +275,6 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
       builder: (context) => ActionsScreen(
         actions: [
           if (_debugMenuState?.debugMenuItems
-                  .firstWhereOrNull((element) => element.type == DebugMenuType.chatWithAI && element.value) !=
-              null)
-            (ActionModel.chatWithAI(context), () => _showMessageScreen(mind: mind)),
-          if (_debugMenuState?.debugMenuItems
                   .firstWhereOrNull((element) => element.type == DebugMenuType.translation && element.value) !=
               null)
             (ActionModel.tranlsateToEnglish(context), () => _translateToEnglish(mind: mind)),
@@ -252,17 +293,6 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
     await showOkAlertDialog(
       context: context,
       message: translation.text,
-    );
-  }
-
-  void _showMessageScreen({required Mind mind}) async {
-    Navigator.of(mountedContext!).push(
-      BackSwipePageRoute(
-        builder: (_) => MindChatDiscussionScreen(
-          rootMind: mind,
-          allMinds: _allMinds,
-        ),
-      ),
     );
   }
 

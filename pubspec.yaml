@@ -71,6 +71,7 @@ dependencies:
   logarte: ^1.4.0
   purchases_flutter: ^9.8.0
   purchases_ui_flutter: ^9.8.0
+  record: ^6.1.2
 
 dev_dependencies:
   flutter_launcher_icons: ^0.14.4 # To generate icons - "flutter pub run flutter_launcher_icons"

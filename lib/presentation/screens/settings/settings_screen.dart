@@ -1,5 +1,4 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
@@ -19,8 +18,6 @@ import 'package:settings_ui/settings_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'dart:async';
-import 'dart:developer';
-
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 // TODO: move methods from MindBloc to SettingsBloc
 // TODO: darkmode: add system mode
@@ -35,7 +32,6 @@ final class SettingsScreen extends StatefulWidget {
 final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   //bool _isSensitiveContentShowed = false;
   bool _isDarkMode = false;
-  // String _openAiKey = '';
   String? translateLanguageCode;
 
   @override
@@ -46,9 +42,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
       switch (state) {
         case SettingsDataState state:
           setState(() {
-            // _isSensitiveContentShowed = state.settings.isMindContentVisible;
             _isDarkMode = state.settings.isDarkMode;
-            // _openAiKey = state.settings.openAIKey ?? '';
           });
           break;
         case SettingsShowMessage state:
@@ -137,14 +131,6 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
           SettingsSection(
             title: Text(context.l10n.userData.toUpperCase()),
             tiles: [
-              // NOTE: Open AI is temporary disabled.
-              // SettingsTile(
-              //   title: const Text('Setup OpenAI Token'),
-              //   leading: const Icon(Icons.chat, color: Colors.greenAccent),
-              //   onPressed: (BuildContext context) async {
-              //     await _showOpenAITokenChanger();
-              //   },
-              // ),
               SettingsTile(
                 title: Text(context.l10n.exportData),
                 leading: const Icon(Icons.upload, color: Colors.redAccent),
@@ -286,45 +272,9 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     }
   }
 
-  void openPaywall() async {
-    final paywallResult = await RevenueCatUI.presentPaywall();
-    //log('Paywall result: $paywallResult');
+  Future<void> openPaywall() async {
+    await RevenueCatUI.presentPaywall();
   }
-
-  // Future<void> _showOpenAITokenChanger() async {
-  //   String openAiToken = '';
-
-  //   await showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: Text(context.l10n.setOpenAIToken),
-  //         content: TextField(
-  //           onChanged: (value) => openAiToken = value,
-  //           decoration: const InputDecoration(
-  //             hintText: 'Enter token here',
-  //             labelText: 'Token',
-  //           ),
-  //           controller: TextEditingController(text: _openAiKey),
-  //         ),
-  //         actions: [
-  //           TextButton(
-  //             onPressed: () => Navigator.of(context).pop(),
-  //             child: Text(context.l10n.cancel),
-  //           ),
-  //           TextButton(
-  //             onPressed: () {
-  //               _openAiKey = openAiToken;
-  //               Navigator.of(context).pop();
-  //               sendEventToBloc<SettingsBloc>(SettingsChangeOpenAIKey(openAIToken: openAiToken));
-  //             },
-  //             child: Text(context.l10n.save),
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
 
   void _switchDarkMode(bool value) {
     sendEventToBloc<SettingsBloc>(SettingsChangeIsDarkMode(isDarkMode: value));

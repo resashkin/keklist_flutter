@@ -1,4 +1,3 @@
-
 const String kMindAudioTag = 'kekaudio';
 
 sealed class BaseMindNotePiece {
@@ -45,6 +44,8 @@ final class MindNoteAudio extends BaseMindNotePiece {
 /// ordering of text and embedded content (e.g. audio tags).
 final class MindNoteContent {
   const MindNoteContent._(this._pieces);
+
+  factory MindNoteContent.empty() => const MindNoteContent._([]);
 
   /// Factory that parses the raw note string into structured content.
   factory MindNoteContent.parse(String note) {
@@ -116,15 +117,18 @@ final class MindNoteContent {
     return MindNoteContent._(updated);
   }
 
+  /// Returns a new instance with an additional text entry appended.
+  MindNoteContent appendText(String value) {
+    if (value.isEmpty) {
+      return this;
+    }
+    final List<BaseMindNotePiece> updated = List<BaseMindNotePiece>.of(_pieces);
+    updated.add(MindNoteText(value));
+    return MindNoteContent._(updated);
+  }
+
   /// Returns `true` if at least one audio tag is present.
   bool get hasAudio => audioPieces.isNotEmpty;
-
-  /// Suggests a reasonable default file name for the next audio recording,
-  /// based on the amount of audio pieces currently in the note.
-  // String buildNextAudioFileName({String prefix = 'mind_audio', String extension = 'm4a'}) {
-  //   final String audioId = const Uuid().v4();
-  //   return '${prefix}_$audioId.$extension';
-  // }
 
   /// Convenience to create a new note from raw text with an optional audio path.
   factory MindNoteContent.fromTextAndAudio({

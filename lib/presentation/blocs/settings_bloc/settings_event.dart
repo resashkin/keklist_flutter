@@ -42,12 +42,6 @@ final class SettingsChangeIsDarkMode extends SettingsEvent {
   const SettingsChangeIsDarkMode({required this.isDarkMode});
 }
 
-final class SettingsChangeOpenAIKey extends SettingsEvent {
-  final String openAIToken;
-
-  const SettingsChangeOpenAIKey({required this.openAIToken});
-}
-
 final class SettingsGetMindCandidatesToUpload extends SettingsEvent {}
 
 final class SettingsUploadMindCandidates extends SettingsEvent {}

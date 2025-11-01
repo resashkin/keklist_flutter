@@ -48,13 +48,6 @@ final class SettingsHiveRepository implements SettingsRepository {
   }
 
   @override
-  FutureOr<void> updateOpenAIKey(String? openAIKey) async {
-    final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.globalSettingsIndex);
-    settingsObject?.openAIKey = openAIKey;
-    await settingsObject?.save();
-  }
-
-  @override
   FutureOr<void> updateLanguage(SupportedLanguage language) async {
     final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.globalSettingsIndex);
     settingsObject?.language = language.code;

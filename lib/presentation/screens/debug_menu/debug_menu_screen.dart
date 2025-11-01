@@ -65,13 +65,11 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
   }
 
   String _getDebugMenuItemTitle(DebugMenuType type) => switch (type) {
-        DebugMenuType.chatWithAI => context.l10n.chatWithAI,
         DebugMenuType.translation => context.l10n.translateContent,
         DebugMenuType.sensitiveContent => context.l10n.sensitiveContent,
       };
 
   String _getDebugMenuItemDescription(DebugMenuType type) => switch (type) {
-        DebugMenuType.chatWithAI => 'Showing/Hiding Chat with AI action, that allows to discuss Mind with AI in chat.',
         DebugMenuType.translation =>
           'Showing/Hiding Translate action, that just opens Alert with translation on English.',
         DebugMenuType.sensitiveContent =>

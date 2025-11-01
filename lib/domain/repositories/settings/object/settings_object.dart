@@ -17,9 +17,6 @@ final class SettingsObject extends HiveObject {
   @HiveField(3, defaultValue: true)
   late bool isDarkMode;
 
-  @HiveField(4, defaultValue: null)
-  late String? openAIKey = '';
-
   @HiveField(5, defaultValue: true)
   late bool shouldShowTitles;
 
@@ -34,7 +31,6 @@ final class SettingsObject extends HiveObject {
   KeklistSettings toSettings() => KeklistSettings(
         isMindContentVisible: isMindContentVisible,
         previousAppVersion: previousAppVersion,
-        openAIKey: openAIKey,
         shouldShowTitles: shouldShowTitles,
         isDarkMode: isDarkMode,
         userName: userName,

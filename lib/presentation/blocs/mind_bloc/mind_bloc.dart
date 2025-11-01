@@ -6,6 +6,7 @@ import 'package:collection/collection.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/mind_utils.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
+import 'package:keklist/domain/services/entities/mind_note_content.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:keklist/presentation/cubits/mind_searcher/mind_searcher_cubit.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
@@ -56,10 +57,44 @@ final class MindBloc extends Bloc<MindEvent, MindState> with DisposeBag {
   Future<void> _createMind(MindCreate event, Emitter<MindState> emit) async {
     final int sortIndex =
         ((await _findMindsByDayIndex(event.dayIndex)).map((mind) => mind.sortIndex).maxOrNull ?? -1) + 1;
+
+    final List<BaseMindNotePiece> sanitizedPieces = <BaseMindNotePiece>[];
+    for (final BaseMindNotePiece piece in event.mindContent) {
+      piece.map(
+        text: (MindNoteText textPiece) {
+          sanitizedPieces.add(textPiece);
+        },
+        audio: (MindNoteAudio audioPiece) {
+          final String trimmedPath = audioPiece.appRelativeAbsoulutePath.trim();
+          if (trimmedPath.isEmpty) {
+            return;
+          }
+          sanitizedPieces.add(
+            trimmedPath == audioPiece.appRelativeAbsoulutePath
+                ? audioPiece
+                : MindNoteAudio(appRelativeAbsoulutePath: trimmedPath),
+          );
+        },
+      );
+    }
+
+    final String rawNote = sanitizedPieces
+        .map(
+          (BaseMindNotePiece piece) => piece.map(
+            text: (MindNoteText textPiece) => textPiece.value,
+            audio: (MindNoteAudio audioPiece) =>
+                '<$kMindAudioTag>${audioPiece.appRelativeAbsoulutePath}</$kMindAudioTag>',
+          ),
+        )
+        .join();
+    final String normalizedNote = rawNote.trim();
+    final MindNoteContent content =
+        normalizedNote.isEmpty ? MindNoteContent.empty() : MindNoteContent.parse(normalizedNote);
+
     final Mind mind = Mind(
       id: const Uuid().v4(),
       dayIndex: event.dayIndex,
-      note: event.note.trim(),
+      note: content.toRawNoteString(),
       emoji: event.emoji,
       creationDate: DateTime.now().toUtc(),
       sortIndex: sortIndex,

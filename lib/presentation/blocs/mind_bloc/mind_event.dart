@@ -10,19 +10,19 @@ final class MindGetList extends MindEvent {}
 
 final class MindCreate extends MindEvent {
   final int dayIndex;
-  final String note;
   final String emoji;
   final String? rootId;
+  final List<BaseMindNotePiece> mindContent;
 
   MindCreate({
     required this.dayIndex,
-    required this.note,
+    required List<BaseMindNotePiece> mindContent,
     required this.emoji,
     required this.rootId,
-  });
+  }) : mindContent = List<BaseMindNotePiece>.unmodifiable(mindContent);
 
   @override
-  List<Object?> get props => [dayIndex, note, emoji, rootId];
+  List<Object?> get props => [dayIndex, mindContent, emoji, rootId];
 }
 
 final class MindDelete extends MindEvent {

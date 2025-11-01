@@ -39,7 +39,6 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     on<SettingsGet>(_getSettings);
     on<SettingGetWhatsNew>(_sendWhatsNewIfNeeded);
     on<SettingsChangeIsDarkMode>(_changeSettingsDarkMode);
-    on<SettingsChangeOpenAIKey>(_changeOpenAIKey);
     on<SettingsUpdateShouldShowTitlesMode>(_updateShouldShowTitlesMode);
     on<SettingsChangeLanguage>(_changeLanguage);
 
@@ -196,11 +195,6 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     if (needToShowWhatsNewOnStart) {
       emit(SettingsShowWhatsNew());
     }
-  }
-
-  FutureOr<void> _changeOpenAIKey(SettingsChangeOpenAIKey event, Emitter<SettingsState> emit) {
-    // OpenAI.apiKey = event.openAIToken;
-    // _repository.updateOpenAIKey(event.openAIToken);
   }
 
   FutureOr<void> _updateShouldShowTitlesMode(

@@ -14,7 +14,6 @@ sealed class ActionModel {
 
   factory ActionModel.custom({required String title, required Icon icon}) =>
       CustomActionModel(title: title, icon: icon);
-  factory ActionModel.chatWithAI(BuildContext context) => ChatWithAIActionModel(context: context);
   factory ActionModel.photosPerDay(BuildContext context) => PhotosPerDayActionModel(context: context);
   factory ActionModel.extraActions(BuildContext context) => ExtraActionsMenuActionModel(context: context);
   factory ActionModel.mindOptions(BuildContext context) => MindOptionsMenuActionModel(context: context);
@@ -31,14 +30,6 @@ sealed class ActionModel {
 
 final class CustomActionModel extends ActionModel {
   const CustomActionModel({required super.title, required super.icon});
-}
-
-final class ChatWithAIActionModel extends ActionModel {
-  ChatWithAIActionModel({required BuildContext context})
-      : super(
-          title: context.l10n.chatWithAI,
-          icon: const Icon(Icons.chat),
-        );
 }
 
 final class PhotosPerDayActionModel extends ActionModel {

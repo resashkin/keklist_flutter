@@ -66,5 +66,7 @@
 	<string>For showing/hiding sensetive data for other users by current user</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>keklist needs access to photo library to import your backups from files</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>keklist needs access to your microphone only to record voice messages</string>
 </dict>
 </plist>

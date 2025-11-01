@@ -1,8 +1,10 @@
-import 'package:keklist/presentation/core/helpers/platform_utils.dart';
-import 'package:keklist/domain/services/entities/mind.dart';
-import 'package:keklist/presentation/core/widgets/mind_widget.dart';
-import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:keklist/domain/repositories/files/app_file_repository.dart';
+import 'package:keklist/domain/services/entities/mind.dart';
+import 'package:keklist/presentation/core/helpers/platform_utils.dart';
+import 'package:keklist/presentation/core/widgets/mind_audio_recorder_sheet.dart';
+import 'package:keklist/presentation/core/widgets/mind_widget.dart';
 import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
 
 // TODO: превратить suggestions в миничипсы и убрать эмодзик слева как нибудь
@@ -19,6 +21,7 @@ final class MindCreatorBottomBar extends StatefulWidget {
   final Function(String) onTapSuggestionEmoji;
   final VoidCallback onTapCancelEdit;
   final Function(CreateMindData) onDone;
+  final Function(AudioCreateMindData) onAudioRecordDone;
 
   const MindCreatorBottomBar({
     super.key,
@@ -33,6 +36,7 @@ final class MindCreatorBottomBar extends StatefulWidget {
     required this.placeholder,
     this.editableMind,
     required this.onTapCancelEdit,
+    required this.onAudioRecordDone,
   });
 
   @override
@@ -74,6 +78,7 @@ class _MindCreatorBottomBarState extends State<MindCreatorBottomBar> {
               placeholder: widget.placeholder,
               focusNode: widget.focusNode,
               textEditingController: widget.textEditingController,
+              doneTitle: widget.doneTitle.toUpperCase(),
               onDone: () {
                 widget.onDone(
                   CreateMindData(
@@ -82,6 +87,7 @@ class _MindCreatorBottomBarState extends State<MindCreatorBottomBar> {
                   ),
                 );
               },
+              onAudioRecordDone: widget.onAudioRecordDone,
             ),
             const SizedBox(height: 4.0),
           ],
@@ -91,7 +97,7 @@ class _MindCreatorBottomBarState extends State<MindCreatorBottomBar> {
   }
 }
 
-class _EditableMindInfoWidget extends StatelessWidget {
+final class _EditableMindInfoWidget extends StatelessWidget {
   final Mind editableMind;
   final Function() onTapEmoji;
   final Function() onTapCancelEdit;
@@ -148,7 +154,7 @@ class _EditableMindInfoWidget extends StatelessWidget {
   }
 }
 
-class _HorizontalSeparator extends StatelessWidget {
+final class _HorizontalSeparator extends StatelessWidget {
   const _HorizontalSeparator();
 
   @override
@@ -160,14 +166,16 @@ class _HorizontalSeparator extends StatelessWidget {
   }
 }
 
-class _TextFieldWidget extends StatelessWidget {
+final class _TextFieldWidget extends StatelessWidget {
   const _TextFieldWidget({
     required this.selectedEmoji,
     required this.placeholder,
     required this.onSearchEmoji,
     required this.focusNode,
     required this.textEditingController,
+    required this.doneTitle,
     required this.onDone,
+    required this.onAudioRecordDone,
   });
 
   final String? selectedEmoji;
@@ -175,7 +183,9 @@ class _TextFieldWidget extends StatelessWidget {
   final FocusNode focusNode;
   final TextEditingController textEditingController;
   final String placeholder;
+  final String doneTitle;
   final Function() onDone;
+  final Function(AudioCreateMindData) onAudioRecordDone;
 
   @override
   Widget build(BuildContext context) {
@@ -221,8 +231,22 @@ class _TextFieldWidget extends StatelessWidget {
                       foregroundColor: WidgetStateProperty.all(Colors.blueAccent),
                     ),
                     onPressed: onDone,
+                    onLongPress: () async {
+                      focusNode.unfocus();
+                      final AppFileRepository fileRepository = context.read<AppFileRepository>();
+                      final AudioRecordingResult audioRecordingResult =
+                          await showModalBottomSheet<AudioRecordingResult>(
+                        context: context,
+                        builder: (BuildContext sheetContext) => MindAudioRecorderSheet(
+                          fileRepository: fileRepository,
+                        ),
+                      );
+                      if (audioRecordingResult != null) {
+                        onAudioRecordDone.call(AudioCreateMindData(path: audioRecordingResult));
+                      }
+                    },
                     child: Text(
-                      context.l10n.done,
+                      doneTitle,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -267,7 +291,7 @@ class _SuggestionsWidget extends StatelessWidget {
   }
 }
 
-class CreateMindData {
+final class CreateMindData {
   final String text;
   final String emoji;
 
@@ -275,4 +299,10 @@ class CreateMindData {
     required this.text,
     required this.emoji,
   });
+}
+
+final class AudioCreateMindData {
+  final String path;
+
+  const AudioCreateMindData({required this.path});
 }

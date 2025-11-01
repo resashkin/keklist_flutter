@@ -9,6 +9,7 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:keklist/domain/repositories/tabs/tabs_settings_repository.dart';
 import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
+import 'package:keklist/domain/repositories/files/app_file_repository.dart';
 // import 'package:home_widget/home_widget.dart';
 // import 'package:home_widget/home_widget.dart';
 import 'package:keklist/domain/repositories/mind/object/mind_object.dart';
@@ -16,7 +17,6 @@ import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
 import 'package:keklist/keklist_app.dart';
 import 'package:keklist/domain/hive_constants.dart';
-import 'package:keklist/domain/repositories/message/message/message_object.dart';
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
 import 'package:keklist/domain/repositories/debug_menu/object/debug_menu_object.dart';
 import 'package:keklist/presentation/blocs/mind_creator_bloc/mind_creator_bloc.dart';
@@ -99,6 +99,7 @@ void _connectToWatchCommunicationManager(Injector mainInjector) {
 Widget _getApplication(Injector mainInjector) => MultiProvider(
       providers: [
         RepositoryProvider(create: (context) => mainInjector.get<MindRepository>()),
+        RepositoryProvider(create: (context) => mainInjector.get<AppFileRepository>()),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -161,7 +162,6 @@ void _setupBlockingLoadingWidget() {
 Future<void> _initHive() async {
   Hive.registerAdapter<SettingsObject>(SettingsObjectAdapter());
   Hive.registerAdapter<MindObject>(MindObjectAdapter());
-  Hive.registerAdapter<MessageObject>(MessageObjectAdapter());
   Hive.registerAdapter<DebugMenuObject>(DebugMenuObjectAdapter());
   await Hive.initFlutter();
   final Box<SettingsObject> settingsBox = await Hive.openBox<SettingsObject>(HiveConstants.settingsBoxName);
@@ -170,7 +170,6 @@ Future<void> _initHive() async {
     settingsBox.put(HiveConstants.globalSettingsIndex, KeklistSettings.initial().toObject());
   }
   await Hive.openBox<MindObject>(HiveConstants.mindBoxName);
-  await Hive.openBox<MessageObject>(HiveConstants.messageChatBoxName);
   await Hive.openBox<DebugMenuObject>(HiveConstants.debugMenuBoxName);
 }
 

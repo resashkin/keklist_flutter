@@ -16,11 +16,9 @@ import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/screens/actions/action_model.dart';
 import 'package:keklist/presentation/screens/actions/actions_screen.dart';
-import 'package:keklist/presentation/screens/mind_chat_discussion/mind_chat_discussion_screen.dart';
 import 'package:keklist/presentation/screens/mind_creator/mind_creator_screen.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:keklist/presentation/core/helpers/extensions/state_extensions.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/messaged_list/mind_monolog_list_widget.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
@@ -33,6 +31,7 @@ import 'package:keklist/presentation/screens/mind_info/mind_info_screen.dart';
 import 'package:keklist/presentation/screens/mind_one_emoji_collection/mind_one_emoji_collection.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
+import 'package:keklist/domain/services/entities/mind_note_content.dart';
 
 final class MindDayCollectionScreen extends StatefulWidget {
   final int initialDayIndex;
@@ -344,10 +343,6 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
       context: context,
       builder: (context) => ActionsScreen(
         actions: [
-          if (_debugMenuState?.debugMenuItems
-                  .firstWhereOrNull((element) => element.type == DebugMenuType.chatWithAI && element.value) !=
-              null)
-            (ActionModel.chatWithAI(context), () => _showChatDiscussionScreen(mind: mind)),
           if (mind.rootId != null) (ActionModel.convertToStandalone(context), () => _convertToStandalone(mind)),
           (ActionModel.edit(context), () => _editMind(mind)),
           (ActionModel.switchDay(context), () => _updateMindDay(mind)),
@@ -361,17 +356,6 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
   void _convertToStandalone(Mind mind) {
     final Mind standaloneMind = mind.copyWith(rootId: null);
     sendEventToBloc<MindBloc>(MindEdit(mind: standaloneMind));
-  }
-
-  void _showChatDiscussionScreen({required Mind mind}) async {
-    Navigator.of(mountedContext!).push(
-      BackSwipePageRoute(
-        builder: (_) => MindChatDiscussionScreen(
-          rootMind: mind,
-          allMinds: allMinds,
-        ),
-      ),
-    );
   }
 
   void _editMind(Mind mind) {
@@ -421,9 +405,12 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
           initialText: initialText,
           onDone: (String text, String emoji) {
             if (_editableMind == null) {
+              final String normalizedText = text.trim();
+              final MindNoteContent content =
+                  normalizedText.isEmpty ? MindNoteContent.empty() : MindNoteContent.parse(normalizedText);
               final MindCreate event = MindCreate(
                 dayIndex: dayIndex,
-                note: text,
+                mindContent: content.pieces,
                 emoji: emoji,
                 rootId: null,
               );

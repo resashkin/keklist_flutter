@@ -21,8 +21,4 @@ final class DebugMenuData {
   });
 }
 
-enum DebugMenuType {
-  chatWithAI,
-  translation,
-  sensitiveContent,
-}
+enum DebugMenuType { translation, sensitiveContent }

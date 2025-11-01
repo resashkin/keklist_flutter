@@ -9,7 +9,6 @@ abstract class SettingsRepository {
   Stream<KeklistSettings> get stream;
   FutureOr<void> updateUserName(String string);
   FutureOr<void> updateSettings(KeklistSettings settings);
-  FutureOr<void> updateOpenAIKey(String? openAIKey);
   FutureOr<void> updateDarkMode(bool isDarkMode);
   FutureOr<void> updateMindContentVisibility(bool isVisible);
   FutureOr<void> updateShouldShowTitles(bool shouldShowTitles);
@@ -21,7 +20,6 @@ final class KeklistSettings {
   final bool isMindContentVisible;
   final String? previousAppVersion;
   final bool isDarkMode;
-  final String? openAIKey;
   final bool shouldShowTitles;
   final String? userName;
   final SupportedLanguage language;
@@ -30,7 +28,6 @@ final class KeklistSettings {
     required this.isMindContentVisible,
     required this.previousAppVersion,
     required this.isDarkMode,
-    required this.openAIKey,
     required this.shouldShowTitles,
     required this.userName,
     required this.language,
@@ -41,7 +38,6 @@ final class KeklistSettings {
     ..previousAppVersion = previousAppVersion
     ..isDarkMode = isDarkMode
     ..shouldShowTitles = shouldShowTitles
-    ..openAIKey = openAIKey
     ..userName = userName
     ..language = language.code;
 
@@ -50,7 +46,6 @@ final class KeklistSettings {
         previousAppVersion: null,
         isDarkMode: true,
         shouldShowTitles: true,
-        openAIKey: null,
         userName: null,
         language: _detectDeviceLocale(),
       );

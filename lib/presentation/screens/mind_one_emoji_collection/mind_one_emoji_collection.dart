@@ -12,9 +12,9 @@ import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/mind_utils.dart';
 import 'package:keklist/presentation/core/helpers/date_utils.dart';
 import 'package:keklist/presentation/core/widgets/creator_bottom_bar/mind_creator_bottom_bar.dart';
-import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/screens/mind_info/mind_info_screen.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
+import 'package:keklist/domain/services/entities/mind_note_content.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 final class MindOneEmojiCollectionScreen extends StatefulWidget {
@@ -130,10 +130,13 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
                     placeholder: 'Append a mind...',
                     onDone: (CreateMindData data) {
                       if (_editableMind == null) {
+                        final String normalizedText = data.text.trim();
+                        final MindNoteContent content =
+                            normalizedText.isEmpty ? MindNoteContent.empty() : MindNoteContent.parse(normalizedText);
                         sendEventToBloc<MindBloc>(
                           MindCreate(
                             dayIndex: DateUtils.getTodayIndex(),
-                            note: data.text,
+                            mindContent: content.pieces,
                             emoji: data.emoji,
                             rootId: null,
                           ),
@@ -147,10 +150,52 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
                       }
                       _resetMindCreator();
                     },
+                    onAudioRecordDone: (AudioCreateMindData audio) {
+                      final String trimmedPath = audio.path.trim();
+                      if (trimmedPath.isEmpty) {
+                        return;
+                      }
+                      final String currentText = _createMindEditingController.text;
+
+                      if (_editableMind == null) {
+                        final String normalizedText = currentText.trim();
+                        MindNoteContent content =
+                            normalizedText.isEmpty ? MindNoteContent.empty() : MindNoteContent.parse(normalizedText);
+                        final bool needsLineBreak = content.pieces.isNotEmpty &&
+                            content.pieces.last.map(
+                              text: (MindNoteText textPiece) =>
+                                  textPiece.value.isNotEmpty && !textPiece.value.endsWith('\n'),
+                              audio: (_) => false,
+                            );
+                        content = content.appendAudio(trimmedPath, separator: needsLineBreak ? '\n' : null);
+                        sendEventToBloc<MindBloc>(
+                          MindCreate(
+                            dayIndex: DateUtils.getTodayIndex(),
+                            mindContent: content.pieces,
+                            emoji: emoji,
+                            rootId: null,
+                          ),
+                        );
+                      } else {
+                        MindNoteContent content =
+                            currentText.trim().isEmpty ? MindNoteContent.empty() : MindNoteContent.parse(currentText);
+                        final bool needsLineBreak = content.pieces.isNotEmpty &&
+                            content.pieces.last.map(
+                              text: (MindNoteText textPiece) =>
+                                  textPiece.value.isNotEmpty && !textPiece.value.endsWith('\n'),
+                              audio: (_) => false,
+                            );
+                        content = content.appendAudio(trimmedPath, separator: needsLineBreak ? '\n' : null);
+                        final Mind updatedMind = _editableMind!.copyWithNoteContent(content);
+                        sendEventToBloc<MindBloc>(MindEdit(mind: updatedMind));
+                      }
+
+                      _resetMindCreator();
+                    },
                     suggestionMinds: const [],
                     selectedEmoji: emoji,
                     onTapEmoji: () {},
-                    doneTitle: context.l10n.done,
+                    doneTitle: 'Save',
                     onTapCancelEdit: () {
                       _resetMindCreator();
                     },

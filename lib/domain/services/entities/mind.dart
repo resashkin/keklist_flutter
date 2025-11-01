@@ -9,11 +9,14 @@ part 'mind.g.dart';
 final class Mind with EquatableMixin {
   final String id;
   final String emoji;
-  final String note;
+  final String note; // TODO: rename to rawNote
   final int dayIndex;
   final DateTime creationDate;
   final int sortIndex;
   final String? rootId;
+
+  /// Structured representation of the `note` string that is aware of embedded tags.
+  MindNoteContent get noteContent => MindNoteContent.parse(note);
 
   Mind({
     required this.id,
@@ -89,9 +92,6 @@ final class Mind with EquatableMixin {
     ..creationDate = creationDate
     ..sortIndex = sortIndex
     ..rootId = rootId;
-
-  /// Structured representation of the `note` string that is aware of embedded tags.
-  MindNoteContent get noteContent => MindNoteContent.parse(note);
 
   /// Plain text version of the note without any embedded tags.
   String get plainNote => noteContent.plainText;
