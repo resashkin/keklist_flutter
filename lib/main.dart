@@ -2,7 +2,6 @@
 
 import 'dart:io';
 
-import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
@@ -20,7 +19,6 @@ import 'package:keklist/domain/hive_constants.dart';
 import 'package:keklist/domain/repositories/message/message/message_object.dart';
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
 import 'package:keklist/domain/repositories/debug_menu/object/debug_menu_object.dart';
-import 'package:keklist/native/web/telegram/telegram_web_initializer.dart';
 import 'package:keklist/presentation/blocs/mind_creator_bloc/mind_creator_bloc.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bloc.dart';
 import 'package:keklist/presentation/blocs/user_profile_bloc/user_profile_bloc.dart';
@@ -73,12 +71,12 @@ Future<void> main() async {
   }();
   await Purchases.configure(PurchasesConfiguration(revenueCatApiKey));
 
-  try {
-    CustomerInfo customerInfo = await Purchases.getCustomerInfo();
-    // access latest customerInfo
-  } on PlatformException {
-    // Error fetching customer info
-  }
+  // try {
+  //   CustomerInfo customerInfo = await Purchases.getCustomerInfo();
+  //   // access latest customerInfo
+  // } on PlatformException {
+  //   // Error fetching customer info
+  // }
 
   final Widget application = _getApplication(mainInjector);
   runApp(application);

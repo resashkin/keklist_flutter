@@ -247,7 +247,7 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
 
   void _translateToEnglish({required Mind mind}) async {
     final GoogleTranslator translator = GoogleTranslator();
-    final Translation translation = await translator.translate(mind.note, to: 'en');
+    final Translation translation = await translator.translate(mind.plainNote, to: 'en');
 
     await showOkAlertDialog(
       context: context,

@@ -31,7 +31,7 @@ class MindIconedListWidget extends StatelessWidget {
                   size: MindSize.large,
                   onTap: () => onTap(mind),
                   onLongTap: () => onLongTap(mind),
-                  isHighlighted: mind.note.isNotEmpty,
+                  isHighlighted: mind.plainNote.isNotEmpty || mind.audioNotes.isNotEmpty,
                   badge: _obtainBadgeText(mind),
                 ).animate().fadeIn(),
               )

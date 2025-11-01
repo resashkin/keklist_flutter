@@ -139,13 +139,14 @@ final class MessageBloc extends Bloc<MessageEvent, MessageState> with DisposeBag
       if (mindChildren.isEmpty) {
         return '';
       }
-      final String mindChildrenPromt = mindChildren.map((mind) => '${mind.emoji} - ${mind.note}').join(';\n');
+      final String mindChildrenPromt =
+          mindChildren.map((mind) => '${mind.emoji} - ${mind.plainNote}').join(';\n');
       return 'Here is my list of comments for this mind:\n$mindChildrenPromt';
     }();
 
     final String prompt = '''
     ACT YOUR SELF LIKE PRO PSYCOLOGIST.
-    It's my mind with the note - ${mind.note}. 
+    It's my mind with the note - ${mind.plainNote}. 
     I've set this emoji for the note - ${mind.emoji}.
     $mindChildrenPromt
     It's important to use language of message content for feedback otherwise I dont know english.

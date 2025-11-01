@@ -43,7 +43,7 @@ final class MindMessageWidget extends StatelessWidget {
                       const SizedBox(height: 8.0),
                       SensitiveWidget(
                         child: Text(
-                          mind.note,
+                          mind.plainNote,
                           style: Theme.of(context).textTheme.bodyLarge,
                           textAlign: TextAlign.center,
                         ),
@@ -76,7 +76,7 @@ final class MindMessageWidget extends StatelessWidget {
                     (mind) => MindBulletModel(
                       entityId: mind.id,
                       emoji: mind.emoji,
-                      text: mind.note,
+                      text: mind.plainNote,
                     ),
                   )
                   .toList(),

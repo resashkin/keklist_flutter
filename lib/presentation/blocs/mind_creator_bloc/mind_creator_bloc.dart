@@ -33,7 +33,9 @@ final class MindCreatorBloc extends Bloc<MindCreatorEvent, MindCreatorState> {
     final Iterable<Mind> minds = List.of(mindRepository.values, growable: false);
     final Iterable<String> suggestions = await Isolate.run(() {
       final Iterable<String> suggestions = minds
-          .where((Mind mind) => mind.note.trim().toLowerCase().contains(event.text.trim().toLowerCase()))
+          .where(
+            (Mind mind) => mind.plainNote.trim().toLowerCase().contains(event.text.trim().toLowerCase()),
+          )
           .map((Mind mind) => mind.emoji)
           .toList()
           .distinct()

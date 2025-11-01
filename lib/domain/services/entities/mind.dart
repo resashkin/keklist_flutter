@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:keklist/domain/repositories/mind/object/mind_object.dart';
+import 'package:keklist/domain/services/entities/mind_note_content.dart';
 
 part 'mind.g.dart';
 
@@ -88,4 +89,20 @@ final class Mind with EquatableMixin {
     ..creationDate = creationDate
     ..sortIndex = sortIndex
     ..rootId = rootId;
+
+  /// Structured representation of the `note` string that is aware of embedded tags.
+  MindNoteContent get noteContent => MindNoteContent.parse(note);
+
+  /// Plain text version of the note without any embedded tags.
+  String get plainNote => noteContent.plainText;
+
+  /// Embedded audio entries associated with this mind.
+  List<MindNoteAudio> get audioNotes => noteContent.audioPieces;
+
+  /// Returns a copy where the raw note string is replaced by the provided content.
+  Mind copyWithNoteContent(MindNoteContent content) => copyWith(note: content.toRawNoteString());
+
+  /// Returns a copy with an additional `<kekaudio>` entry appended to the note.
+  Mind appendAudioNote(String path, {String? separator}) =>
+      copyWithNoteContent(noteContent.appendAudio(path, separator: separator));
 }
