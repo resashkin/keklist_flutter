@@ -76,7 +76,7 @@ final class MindMessageWidget extends StatelessWidget {
                     (mind) => MindBulletModel(
                       entityId: mind.id,
                       emoji: mind.emoji,
-                      text: mind.plainNote,
+                      content: mind.noteContent,
                     ),
                   )
                   .toList(),

@@ -103,6 +103,8 @@ final class MindBloc extends Bloc<MindEvent, MindState> with DisposeBag {
     _mindRepository.createMind(mind: mind);
   }
 
+  // TODO: remove audio content as well when mind was related with it
+
   Future<void> _deleteMind(MindDelete event, Emitter<MindState> emit) async {
     await _mindRepository.deleteMindsWhere((mind) => mind.rootId == event.mind.id);
     await _mindRepository.deleteMind(mindId: event.mind.id);

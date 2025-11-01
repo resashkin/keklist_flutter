@@ -23,9 +23,7 @@ final class MindBulletListWidget extends StatelessWidget {
           child: GestureDetector(
             onTap: () => onTap?.call(model.entityId),
             onLongPress: () => onLongPress?.call(model.entityId),
-            child: MindBulletWidget(
-              model: model,
-            ),
+            child: MindBulletWidget(model: model),
           ),
         );
       }).toList(),
