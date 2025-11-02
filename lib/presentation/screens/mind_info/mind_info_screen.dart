@@ -196,11 +196,11 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
                             normalizedText.isEmpty ? MindNoteContent.empty() : MindNoteContent.parse(normalizedText);
                         final bool needsLineBreak = content.pieces.isNotEmpty &&
                             content.pieces.last.map(
-                              text: (MindNoteText textPiece) =>
+                              ifText: (MindNoteText textPiece) =>
                                   textPiece.value.isNotEmpty && !textPiece.value.endsWith('\n'),
-                              audio: (_) => false,
+                              ifAudio: (_) => false,
                             );
-                        content = content.appendAudio(trimmedPath, separator: needsLineBreak ? '\n' : null);
+                        content = content.copyWithAppendedAudio(trimmedPath, separator: needsLineBreak ? '\n' : null);
                         sendEventToBloc<MindBloc>(
                           MindCreate(
                             dayIndex: _rootMind.dayIndex,
@@ -214,11 +214,11 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
                             currentText.trim().isEmpty ? MindNoteContent.empty() : MindNoteContent.parse(currentText);
                         final bool needsLineBreak = content.pieces.isNotEmpty &&
                             content.pieces.last.map(
-                              text: (MindNoteText textPiece) =>
+                              ifText: (MindNoteText textPiece) =>
                                   textPiece.value.isNotEmpty && !textPiece.value.endsWith('\n'),
-                              audio: (_) => false,
+                              ifAudio: (_) => false,
                             );
-                        content = content.appendAudio(trimmedPath, separator: needsLineBreak ? '\n' : null);
+                        content = content.copyWithAppendedAudio(trimmedPath, separator: needsLineBreak ? '\n' : null);
                         final Mind updatedMind =
                             _editableMind!.copyWithNoteContent(content).copyWith(emoji: _selectedEmoji);
                         sendEventToBloc<MindBloc>(MindEdit(mind: updatedMind));

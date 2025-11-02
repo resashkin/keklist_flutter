@@ -61,10 +61,10 @@ final class MindBloc extends Bloc<MindEvent, MindState> with DisposeBag {
     final List<BaseMindNotePiece> sanitizedPieces = <BaseMindNotePiece>[];
     for (final BaseMindNotePiece piece in event.mindContent) {
       piece.map(
-        text: (MindNoteText textPiece) {
+        ifText: (MindNoteText textPiece) {
           sanitizedPieces.add(textPiece);
         },
-        audio: (MindNoteAudio audioPiece) {
+        ifAudio: (MindNoteAudio audioPiece) {
           final String trimmedPath = audioPiece.appRelativeAbsoulutePath.trim();
           if (trimmedPath.isEmpty) {
             return;
@@ -81,8 +81,8 @@ final class MindBloc extends Bloc<MindEvent, MindState> with DisposeBag {
     final String rawNote = sanitizedPieces
         .map(
           (BaseMindNotePiece piece) => piece.map(
-            text: (MindNoteText textPiece) => textPiece.value,
-            audio: (MindNoteAudio audioPiece) =>
+            ifText: (MindNoteText textPiece) => textPiece.value,
+            ifAudio: (MindNoteAudio audioPiece) =>
                 '<$kMindAudioTag>${audioPiece.appRelativeAbsoulutePath}</$kMindAudioTag>',
           ),
         )

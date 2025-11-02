@@ -15,8 +15,12 @@ final class Mind with EquatableMixin {
   final int sortIndex;
   final String? rootId;
 
-  /// Structured representation of the `note` string that is aware of embedded tags.
+  @override
+  bool? get stringify => true;
+
+  String get plainNote => noteContent.plainText;
   MindNoteContent get noteContent => MindNoteContent.parse(note);
+  List<MindNoteAudio> get audioNotes => noteContent.audioPieces;
 
   Mind({
     required this.id,
@@ -31,9 +35,6 @@ final class Mind with EquatableMixin {
   // JsonSerializable
   factory Mind.fromJson(Map<String, dynamic> json) => _$MindFromJson(json);
   Map<String, dynamic> toJson() => _$MindToJson(this);
-
-  @override
-  bool? get stringify => true;
 
   @override
   List<Object?> get props => [
@@ -93,16 +94,7 @@ final class Mind with EquatableMixin {
     ..sortIndex = sortIndex
     ..rootId = rootId;
 
-  /// Plain text version of the note without any embedded tags.
-  String get plainNote => noteContent.plainText;
-
-  /// Embedded audio entries associated with this mind.
-  List<MindNoteAudio> get audioNotes => noteContent.audioPieces;
-
-  /// Returns a copy where the raw note string is replaced by the provided content.
   Mind copyWithNoteContent(MindNoteContent content) => copyWith(note: content.toRawNoteString());
-
-  /// Returns a copy with an additional `<kekaudio>` entry appended to the note.
   Mind appendAudioNote(String path, {String? separator}) =>
-      copyWithNoteContent(noteContent.appendAudio(path, separator: separator));
+      copyWithNoteContent(noteContent.copyWithAppendedAudio(path, separator: separator));
 }

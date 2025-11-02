@@ -4,15 +4,15 @@ sealed class BaseMindNotePiece {
   const BaseMindNotePiece();
 
   T map<T>({
-    required T Function(MindNoteText text) text,
-    required T Function(MindNoteAudio audio) audio,
+    required T Function(MindNoteText text) ifText,
+    required T Function(MindNoteAudio audio) ifAudio,
   }) {
     final BaseMindNotePiece self = this;
     if (self is MindNoteText) {
-      return text(self);
+      return ifText(self);
     }
     if (self is MindNoteAudio) {
-      return audio(self);
+      return ifAudio(self);
     }
     throw UnsupportedError('Unknown MindNotePiece: $self');
   }
@@ -40,14 +40,14 @@ final class MindNoteAudio extends BaseMindNotePiece {
   String toString() => 'MindNoteAudio($appRelativeAbsoulutePath)';
 }
 
-/// Parsed representation of the `Mind.note` string that keeps the original
-/// ordering of text and embedded content (e.g. audio tags).
 final class MindNoteContent {
+  List<MindNoteAudio> get audioPieces => _pieces.whereType<MindNoteAudio>().toList(growable: false);
+  bool get hasAudio => audioPieces.isNotEmpty;
+
   const MindNoteContent._(this._pieces);
 
   factory MindNoteContent.empty() => const MindNoteContent._([]);
 
-  /// Factory that parses the raw note string into structured content.
   factory MindNoteContent.parse(String note) {
     if (note.isEmpty) {
       return const MindNoteContent._([]);
@@ -67,58 +67,41 @@ final class MindNoteContent {
       if (match.start > cursor) {
         pieces.add(MindNoteText(note.substring(cursor, match.start)));
       }
-
       final String rawPath = match.group(1) ?? '';
       final String trimmedPath = rawPath.trim();
-
       if (trimmedPath.isNotEmpty) {
         pieces.add(MindNoteAudio(appRelativeAbsoulutePath: trimmedPath));
       }
-
       cursor = match.end;
     }
-
     if (cursor < note.length) {
       pieces.add(MindNoteText(note.substring(cursor)));
     }
-
     return MindNoteContent._(pieces);
   }
 
   final List<BaseMindNotePiece> _pieces;
-
-  /// All pieces in the order they appeared in the raw note string.
   List<BaseMindNotePiece> get pieces => List.unmodifiable(_pieces);
-
-  /// Plain text concatenation of every `MindNoteText` piece.
   String get plainText => _pieces.whereType<MindNoteText>().map((MindNoteText piece) => piece.value).join();
 
-  /// Embedded audio items extracted from the note.
-  List<MindNoteAudio> get audioPieces => _pieces.whereType<MindNoteAudio>().toList(growable: false);
+  String toRawNoteString() => _pieces
+      .map((BaseMindNotePiece piece) => piece.map(
+            ifText: (MindNoteText textPiece) => textPiece.value,
+            ifAudio: (MindNoteAudio audioPiece) =>
+                '<$kMindAudioTag>${audioPiece.appRelativeAbsoulutePath}</$kMindAudioTag>',
+          ))
+      .join();
 
-  /// Rebuilds a note string with `<kekaudio>` tags using the stored order.
-  String toRawNoteString() => _pieces.map((BaseMindNotePiece piece) {
-        return piece.map(
-          text: (MindNoteText textPiece) => textPiece.value,
-          audio: (MindNoteAudio audioPiece) =>
-              '<$kMindAudioTag>${audioPiece.appRelativeAbsoulutePath}</$kMindAudioTag>',
-        );
-      }).join();
-
-  /// Returns a new instance with an additional audio entry appended.
-  MindNoteContent appendAudio(String path, {String? separator}) {
+  MindNoteContent copyWithAppendedAudio(String path, {String? separator}) {
     final List<BaseMindNotePiece> updated = List<BaseMindNotePiece>.of(_pieces);
-
     if (separator != null && separator.isNotEmpty) {
       updated.add(MindNoteText(separator));
     }
-
     updated.add(MindNoteAudio(appRelativeAbsoulutePath: path));
     return MindNoteContent._(updated);
   }
 
-  /// Returns a new instance with an additional text entry appended.
-  MindNoteContent appendText(String value) {
+  MindNoteContent copyWithAppendedText(String value) {
     if (value.isEmpty) {
       return this;
     }
@@ -126,9 +109,6 @@ final class MindNoteContent {
     updated.add(MindNoteText(value));
     return MindNoteContent._(updated);
   }
-
-  /// Returns `true` if at least one audio tag is present.
-  bool get hasAudio => audioPieces.isNotEmpty;
 
   /// Convenience to create a new note from raw text with an optional audio path.
   factory MindNoteContent.fromTextAndAudio({

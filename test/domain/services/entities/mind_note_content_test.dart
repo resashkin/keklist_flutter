@@ -49,7 +49,7 @@ void main() {
       const String rawNote = 'Note body';
       final MindNoteContent content = MindNoteContent.parse(rawNote);
 
-      final MindNoteContent updated = content.appendAudio('/app/audio/new_note.m4a', separator: '\n');
+      final MindNoteContent updated = content.copyWithAppendedAudio('/app/audio/new_note.m4a', separator: '\n');
 
       expect(updated.audioPieces.single.appRelativeAbsoulutePath, '/app/audio/new_note.m4a');
       expect(updated.toRawNoteString(), 'Note body\n<kekaudio>/app/audio/new_note.m4a</kekaudio>');
