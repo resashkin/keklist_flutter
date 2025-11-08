@@ -16,6 +16,10 @@ import 'package:keklist/presentation/core/extensions/localization_extensions.dar
 import 'package:keklist/presentation/screens/language_picker/language_picker_screen.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
+
+import 'dart:async';
+import 'dart:developer';
 
 import 'dart:async';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
@@ -188,6 +192,11 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
           SettingsSection(
             title: Text(context.l10n.about.toUpperCase()),
             tiles: [
+              SettingsTile.navigation(
+                title: Text('keklist PRO'),
+                leading: const Icon(Icons.handshake, color: Colors.yellowAccent),
+                onPressed: (BuildContext context) => openPaywall(),
+              ),
               SettingsTile.navigation(
                 title: Text(context.l10n.whatsNew),
                 leading: const Icon(Icons.new_releases, color: Colors.purple),
