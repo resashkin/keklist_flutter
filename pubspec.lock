@@ -81,14 +81,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
-  benchmarking:
-    dependency: "direct dev"
-    description:
-      name: benchmarking
-      sha256: "6b7f6955e8b0b6ce0dd4c3bc5611430aac017a74923669ad3687b718e5085c6a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.6.1"
   bloc:
     dependency: "direct main"
     description:
@@ -266,7 +258,7 @@ packages:
     source: hosted
     version: "0.3.4+2"
   crypto:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: crypto
       sha256: "1e445881f28f22d6140f181e07737b22f1e099a5e1ff94b0af2f9e4a463f4855"
@@ -289,14 +281,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
-  dart_openai:
-    dependency: "direct main"
-    description:
-      name: dart_openai
-      sha256: "853bb57fed6a71c3ba0324af5cb40c16d196cf3aa55b91d244964ae4a241ccf1"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.1.0"
   dart_style:
     dependency: transitive
     description:
@@ -361,22 +345,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "11.0.4"
-  fetch_api:
-    dependency: transitive
-    description:
-      name: fetch_api
-      sha256: "24cbd5616f3d4008c335c197bb90bfa0eb43b9e55c6de5c60d1f805092636034"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.1"
-  fetch_client:
-    dependency: transitive
-    description:
-      name: fetch_client
-      sha256: "375253f4efe64303c793fb17fe90771c591320b2ae11fb29cb5b406cc8533c00"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.4"
   ffi:
     dependency: transitive
     description:
@@ -1125,6 +1093,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.0"
+  purchases_flutter:
+    dependency: "direct main"
+    description:
+      name: purchases_flutter
+      sha256: "5c472741d1e073ac8603b1b7d7e1707870a869c927dc31d6f38a4a8658c8d335"
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.8.0"
+  purchases_ui_flutter:
+    dependency: "direct main"
+    description:
+      name: purchases_ui_flutter
+      sha256: d8f1d8e40061814120db3c046dc499231b3e71ee7f10b506a07d75a4e735dd2b
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.8.0"
   rxdart:
     dependency: "direct main"
     description:

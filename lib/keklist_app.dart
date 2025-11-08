@@ -1,4 +1,3 @@
-import 'package:dart_openai/dart_openai.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -38,9 +37,6 @@ final class KeklistAppState extends KekWidgetState<KeklistApp> {
     subscribeToBloc<SettingsBloc>(
       onNewState: (state) {
         if (state is SettingsDataState) {
-          if (state.settings.openAIKey != null) {
-            OpenAI.apiKey = state.settings.openAIKey!;
-          }
           setState(() {
             _isDarkMode = state.settings.isDarkMode;
             _currentLanguage = state.settings.language;
@@ -61,6 +57,7 @@ final class KeklistAppState extends KekWidgetState<KeklistApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'keklist',
       home: const TabsContainerScreen(),
       theme: _isDarkMode ? Themes.dark : Themes.light,
