@@ -4,10 +4,12 @@ final class Story {
   const Story({
     required this.id,
     required this.title,
+    required this.emoji,
   });
 
   final String id;
   final String title;
+  final String emoji;
 }
 
 // TODO: implement gradiented border that calculated by title hash or something
@@ -56,7 +58,10 @@ final class StoriesWidget extends StatelessWidget {
     final captionStyle = theme.textTheme.bodySmall?.copyWith(
       color: theme.colorScheme.onSurface.withAlpha(180),
       fontWeight: FontWeight.w500,
+      fontSize: 10.0,
     );
+    final emojiStyle =
+        theme.textTheme.titleMedium?.copyWith(fontSize: 26.0) ?? const TextStyle(fontSize: 26.0);
     final itemCount = stories.length;
 
     return SingleChildScrollView(
@@ -88,6 +93,12 @@ final class StoriesWidget extends StatelessWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: theme.colorScheme.surface,
+                      ),
+                      child: Center(
+                        child: Text(
+                          story.emoji,
+                          style: emojiStyle,
+                        ),
                       ),
                     ),
                   ),

@@ -19,10 +19,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
 import 'dart:async';
-import 'dart:developer';
 
-import 'dart:async';
-import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 // TODO: move methods from MindBloc to SettingsBloc
 // TODO: darkmode: add system mode
 
@@ -77,14 +74,6 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const stories = [
-      Story(id: '1', title: 'Planner'),
-      Story(id: '2', title: 'Focus'),
-      Story(id: '3', title: 'Sync'),
-      Story(id: '4', title: 'Cache'),
-      Story(id: '5', title: 'Notes'),
-    ];
-
     // final lightSettingsListBackground = Color.fromRGBO(242, 242, 247, 1);
     // final darkSettingsListBackground = CupertinoColors.black;
 
@@ -93,10 +82,9 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
       body: SettingsList(
         sections: [
           SettingsSection(
-            title: Text('Developer block'),
             tiles: [
               SettingsTile.navigation(
-                title: Text('Last features'),
+                title: Text('Our new features'),
                 enabled: false,
                 trailing: Gap(0),
               ),
@@ -105,28 +93,40 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
                   color: Color.fromRGBO(27, 27, 27, 1),
                   child: Column(
                     children: [
-                      StoriesWidget(stories: stories),
+                      StoriesWidget(
+                        stories: [
+                          Story(id: '1', title: 'Voices', emoji: '🎙️'),
+                          Story(id: '2', title: 'Whats new', emoji: '👨‍💻'),
+                          Story(id: '3', title: 'PRO', emoji: '🤝'),
+                          Story(id: '4', title: 'Supermind', emoji: '🧠'),
+                        ],
+                      ),
                     ],
                   ),
                 ),
               ),
               SettingsTile.navigation(
-                title: Text('keklist PRO'),
-                leading: const Icon(Icons.handshake, color: Colors.yellowAccent),
-                onPressed: (BuildContext context) => openPaywall(),
+                title: Text('Release notes'),
+                leading: const Icon(Icons.new_releases, color: Color.fromARGB(255, 191, 188, 191)),
+                onPressed: (BuildContext context) => _showWhatsNew(),
               ),
               SettingsTile.navigation(
-                title: Text('Chat with developer'),
-                leading: const Icon(Icons.chat, color: Colors.blue),
-                onPressed: (BuildContext context) => openPaywall(),
+                title: Text('keklist PRO'),
+                leading: const Icon(Icons.handshake, color: Colors.yellowAccent),
+                onPressed: (BuildContext context) => _openPaywall(),
+              ),
+              SettingsTile.navigation(
+                title: Text('keklist news [Telegram] [RU]'),
+                leading: const Icon(Icons.newspaper, color: Colors.blue),
+                onPressed: (BuildContext context) => _openAppNews(),
               ),
               SettingsTile.navigation(
                 title: Text(context.l10n.suggestFeature),
                 leading: const Icon(Icons.handyman, color: Colors.green),
-                onPressed: (BuildContext context) => _openFeatureSuggestion(),
+                onPressed: (BuildContext context) => _openSuggestFeature(),
               ),
               SettingsTile.navigation(
-                title: Text('Send feedback email'),
+                title: Text('Problem detected'),
                 leading: const Icon(Icons.feedback, color: Colors.blueGrey),
                 onPressed: (BuildContext context) async => await _openEmailFeedbackForm(),
               ),
@@ -193,16 +193,6 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
             title: Text(context.l10n.about.toUpperCase()),
             tiles: [
               SettingsTile.navigation(
-                title: Text('keklist PRO'),
-                leading: const Icon(Icons.handshake, color: Colors.yellowAccent),
-                onPressed: (BuildContext context) => openPaywall(),
-              ),
-              SettingsTile.navigation(
-                title: Text(context.l10n.whatsNew),
-                leading: const Icon(Icons.new_releases, color: Colors.purple),
-                onPressed: (BuildContext context) => _showWhatsNew(),
-              ),
-              SettingsTile.navigation(
                 title: Text(context.l10n.sourceCode),
                 leading: const Icon(Icons.code, color: Colors.yellow),
                 onPressed: (BuildContext context) async => await _openSourceCode(),
@@ -260,7 +250,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     }
   }
 
-  Future<void> _openFeatureSuggestion() async {
+  Future<void> _openSuggestFeature() async {
     final Uri uri = Uri.parse(KeklistConstants.featureSuggestionsURL);
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);
@@ -281,7 +271,14 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     }
   }
 
-  Future<void> openPaywall() async {
+  Future<void> _openAppNews() async {
+    final Uri uri = Uri.parse(KeklistConstants.newsTelegramChannelURL);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    }
+  }
+
+  Future<void> _openPaywall() async {
     await RevenueCatUI.presentPaywall();
   }
 

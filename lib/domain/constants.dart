@@ -107,6 +107,7 @@ final class KeklistConstants {
   static String feedbackEmail = 'sashkn2@gmail.com';
   static String sourceCodeURL = 'https://github.com/resashkin/keklist_flutter';
   static String featureSuggestionsURL = 'https://insigh.to/b/keklist';
+  static String newsTelegramChannelURL = 'https://t.me/keklistlog';
   static Iterable<String> defaultEmojiesToPick = [
     '😔',
     '🙁',
