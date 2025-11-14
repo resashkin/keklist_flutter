@@ -39,16 +39,16 @@ final class MindBulletWidget extends StatelessWidget {
           piece.map(
             ifText: (MindNoteText textPiece) => SensitiveWidget(
               child: Align(
-                alignment: Alignment.centerRight,
+                alignment: .centerRight,
                 child: ConstrainedBox(
                   constraints: BoxConstraints(maxWidth: maxBubbleWidth),
                   child: DecoratedBox(
                     decoration: BoxDecoration(
                       color: colorScheme.primaryContainer,
-                      borderRadius: BorderRadius.circular(18.0),
+                      borderRadius: .circular(18.0),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 10.0),
+                      padding: .symmetric(horizontal: 14.0, vertical: 10.0),
                       child: Text(
                         textPiece.value,
                         maxLines: null,
@@ -84,10 +84,10 @@ final class MindBulletWidget extends StatelessWidget {
         Flexible(
           fit: FlexFit.tight,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 6.0),
+            padding: .symmetric(vertical: 6.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: .end,
+              mainAxisSize: .min,
               children: contentWidgets,
             ),
           ),
