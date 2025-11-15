@@ -29,11 +29,7 @@ final class MindInfoScreen extends StatefulWidget {
   final Mind rootMind;
   final Iterable<Mind> allMinds;
 
-  const MindInfoScreen({
-    super.key,
-    required this.rootMind,
-    required this.allMinds,
-  });
+  const MindInfoScreen({super.key, required this.rootMind, required this.allMinds});
 
   @override
   State<MindInfoScreen> createState() => _MindInfoScreenState();
@@ -47,14 +43,14 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
   Mind? _editableMind;
   late String _selectedEmoji = _rootMind.emoji;
 
-  Mind get _rootMind => widget.allMinds.firstWhere(
-        (element) => element.id == widget.rootMind.id,
-        orElse: () => widget.rootMind,
-      );
+  Mind get _rootMind =>
+      widget.allMinds.firstWhere((element) => element.id == widget.rootMind.id, orElse: () => widget.rootMind);
   late final List<Mind> _allMinds = widget.allMinds.toList();
 
-  List<Mind> get _rootMindChildren => MindUtils.findMindsByRootId(rootId: _rootMind.id, allMinds: widget.allMinds)
-      .sortedByProperty((mind) => mind.creationDate);
+  List<Mind> get _rootMindChildren => MindUtils.findMindsByRootId(
+    rootId: _rootMind.id,
+    allMinds: widget.allMinds,
+  ).sortedByProperty((mind) => mind.creationDate);
 
   @override
   void initState() {
@@ -71,21 +67,25 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
       });
     });
 
-    subscribeToBloc<MindBloc>(onNewState: (state) async {
-      if (state is MindList) {
-        setState(() {
-          _allMinds
-            ..clear()
-            ..addAll(state.values.sortedByCreationDate());
-        });
-      }
-    })?.disposed(by: this);
+    subscribeToBloc<MindBloc>(
+      onNewState: (state) async {
+        if (state is MindList) {
+          setState(() {
+            _allMinds
+              ..clear()
+              ..addAll(state.values.sortedByCreationDate());
+          });
+        }
+      },
+    )?.disposed(by: this);
 
-    subscribeToBloc<DebugMenuBloc>(onNewState: (state) {
-      if (state is DebugMenuDataState) {
-        _debugMenuState = state;
-      }
-    })?.disposed(by: this);
+    subscribeToBloc<DebugMenuBloc>(
+      onNewState: (state) {
+        if (state is DebugMenuDataState) {
+          _debugMenuState = state;
+        }
+      },
+    )?.disposed(by: this);
     sendEventToBloc<DebugMenuBloc>(DebugMenuGet());
   }
 
@@ -103,7 +103,7 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
               onPressed: () => _showActions(mind: _rootMind),
               icon: const Icon(Icons.more_vert),
             ),
-          )
+          ),
         ],
       ),
       body: Stack(
@@ -114,11 +114,7 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
             onOverscrollTopPointerUp: () => _mindCreatorFocusNode.requestFocus(),
             childScrollController: _scrollController,
             topOverscrollChild: const Row(
-              children: [
-                Icon(Icons.arrow_upward),
-                SizedBox(width: 8.0),
-                Icon(Icons.keyboard_alt_outlined),
-              ],
+              children: [Icon(Icons.arrow_upward), SizedBox(width: 8.0), Icon(Icons.keyboard_alt_outlined)],
             ),
             child: SingleChildScrollView(
               controller: _scrollController,
@@ -148,10 +144,7 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
               // NOTE: Подложка для скрытия текста эмодзи.
               Align(
                 alignment: Alignment.bottomCenter,
-                child: Container(
-                  color: Theme.of(context).scaffoldBackgroundColor,
-                  height: 60,
-                ),
+                child: Container(color: Theme.of(context).scaffoldBackgroundColor, height: 60),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -164,8 +157,9 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
                     onDone: (CreateMindData data) {
                       if (_editableMind == null) {
                         final String normalizedText = data.text.trim();
-                        final MindNoteContent content =
-                            normalizedText.isEmpty ? MindNoteContent.empty() : MindNoteContent.parse(normalizedText);
+                        final MindNoteContent content = normalizedText.isEmpty
+                            ? MindNoteContent.empty()
+                            : MindNoteContent.parse(normalizedText);
                         sendEventToBloc<MindBloc>(
                           MindCreate(
                             dayIndex: _rootMind.dayIndex,
@@ -175,10 +169,7 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
                           ),
                         );
                       } else {
-                        final Mind mindForEdit = _editableMind!.copyWith(
-                          note: data.text,
-                          emoji: _selectedEmoji,
-                        );
+                        final Mind mindForEdit = _editableMind!.copyWith(note: data.text, emoji: _selectedEmoji);
                         sendEventToBloc<MindBloc>(MindEdit(mind: mindForEdit));
                       }
                       _resetMindCreator();
@@ -192,13 +183,15 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
 
                       if (_editableMind == null) {
                         final String normalizedText = currentText.trim();
-                        MindNoteContent content =
-                            normalizedText.isEmpty ? MindNoteContent.empty() : MindNoteContent.parse(normalizedText);
-                        final bool needsLineBreak = content.pieces.isNotEmpty &&
+                        MindNoteContent content = normalizedText.isEmpty
+                            ? MindNoteContent.empty()
+                            : MindNoteContent.parse(normalizedText);
+                        final bool needsLineBreak =
+                            content.pieces.isNotEmpty &&
                             content.pieces.last.map(
-                              ifText: (MindNoteText textPiece) =>
+                              text: (MindNoteText textPiece) =>
                                   textPiece.value.isNotEmpty && !textPiece.value.endsWith('\n'),
-                              ifAudio: (_) => false,
+                              audio: (_) => false,
                             );
                         content = content.copyWithAppendedAudio(trimmedPath, separator: needsLineBreak ? '\n' : null);
                         sendEventToBloc<MindBloc>(
@@ -210,17 +203,20 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
                           ),
                         );
                       } else {
-                        MindNoteContent content =
-                            currentText.trim().isEmpty ? MindNoteContent.empty() : MindNoteContent.parse(currentText);
-                        final bool needsLineBreak = content.pieces.isNotEmpty &&
+                        MindNoteContent content = currentText.trim().isEmpty
+                            ? MindNoteContent.empty()
+                            : MindNoteContent.parse(currentText);
+                        final bool needsLineBreak =
+                            content.pieces.isNotEmpty &&
                             content.pieces.last.map(
-                              ifText: (MindNoteText textPiece) =>
+                              text: (MindNoteText textPiece) =>
                                   textPiece.value.isNotEmpty && !textPiece.value.endsWith('\n'),
-                              ifAudio: (_) => false,
+                              audio: (_) => false,
                             );
                         content = content.copyWithAppendedAudio(trimmedPath, separator: needsLineBreak ? '\n' : null);
-                        final Mind updatedMind =
-                            _editableMind!.copyWithNoteContent(content).copyWith(emoji: _selectedEmoji);
+                        final Mind updatedMind = _editableMind!
+                            .copyWithNoteContent(content)
+                            .copyWith(emoji: _selectedEmoji);
                         sendEventToBloc<MindBloc>(MindEdit(mind: updatedMind));
                       }
 
@@ -274,8 +270,9 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
       context: context,
       builder: (context) => ActionsScreen(
         actions: [
-          if (_debugMenuState?.debugMenuItems
-                  .firstWhereOrNull((element) => element.type == DebugMenuType.translation && element.value) !=
+          if (_debugMenuState?.debugMenuItems.firstWhereOrNull(
+                (element) => element.type == DebugMenuType.translation && element.value,
+              ) !=
               null)
             (ActionModel.tranlsateToEnglish(context), () => _translateToEnglish(mind: mind)),
           (ActionModel.edit(context), () => _editMind(mind)),
@@ -290,10 +287,7 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
     final GoogleTranslator translator = GoogleTranslator();
     final Translation translation = await translator.translate(mind.plainNote, to: 'en');
 
-    await showOkAlertDialog(
-      context: context,
-      message: translation.text,
-    );
+    await showOkAlertDialog(context: context, message: translation.text);
   }
 
   void _editMind(Mind mind) {
@@ -308,10 +302,7 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
   void _showAllMinds(Mind mind) {
     Navigator.of(context).push(
       BackSwipePageRoute(
-        builder: (_) => MindOneEmojiCollectionScreen(
-          emoji: mind.emoji,
-          allMinds: _allMinds,
-        ),
+        builder: (_) => MindOneEmojiCollectionScreen(emoji: mind.emoji, allMinds: _allMinds),
       ),
     );
   }

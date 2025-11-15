@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:io';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:just_waveform/just_waveform.dart';
 import 'package:keklist/domain/repositories/files/app_file_repository.dart';
 import 'package:keklist/domain/services/entities/mind_note_content.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/bulleted_list/audio/play_pause_button.dart';
@@ -15,10 +18,7 @@ import 'package:provider/provider.dart';
 /// * slide forward by finger above widget without creating UI components
 
 final class AudioTrackWidget extends StatefulWidget {
-  const AudioTrackWidget({
-    super.key,
-    required this.audio,
-  });
+  const AudioTrackWidget({super.key, required this.audio});
 
   final MindNoteAudio audio;
 
@@ -31,10 +31,12 @@ final class AudioTrackWidgetState extends State<AudioTrackWidget> {
   StreamSubscription<Duration>? _positionSubscription;
   StreamSubscription<PlayerState>? _playerStateSubscription;
   StreamSubscription<Duration?>? _durationSubscription;
+  StreamSubscription<WaveformProgress>? _waveformSubscription;
 
   Duration _duration = Duration.zero;
   Duration _position = Duration.zero;
   bool _hasError = false;
+  List<double>? _waveform;
 
   @override
   void initState() {
@@ -65,6 +67,7 @@ final class AudioTrackWidgetState extends State<AudioTrackWidget> {
     _positionSubscription?.cancel();
     _playerStateSubscription?.cancel();
     _durationSubscription?.cancel();
+    _waveformSubscription?.cancel();
     _player.dispose();
     super.dispose();
   }
@@ -72,10 +75,12 @@ final class AudioTrackWidgetState extends State<AudioTrackWidget> {
   Future<void> _initialize() async {
     _positionSubscription?.cancel();
     _durationSubscription?.cancel();
+    _waveformSubscription?.cancel();
     setState(() {
       _hasError = false;
       _position = Duration.zero;
       _duration = Duration.zero;
+      //_waveform = _waveformCache[widget.audio.appRelativeAbsoulutePath];
     });
 
     try {
@@ -89,13 +94,13 @@ final class AudioTrackWidgetState extends State<AudioTrackWidget> {
         _duration = _player.duration ?? Duration.zero;
       });
 
+      unawaited(_loadWaveform(absolutePath));
+
       _positionSubscription = _player.positionStream.listen((Duration position) {
         if (!mounted) {
           return;
         }
-        setState(() {
-          _position = position;
-        });
+        setState(() => _position = position);
       });
       _durationSubscription = _player.durationStream.listen((Duration? newDuration) {
         if (!mounted || newDuration == null) {
@@ -109,10 +114,70 @@ final class AudioTrackWidgetState extends State<AudioTrackWidget> {
       if (!mounted) {
         return;
       }
-      setState(() {
-        _hasError = true;
-      });
+      setState(() => _hasError = true);
     }
+  }
+
+  Future<void> _loadWaveform(String absolutePath) async {
+    //final String cacheKey = widget.audio.appRelativeAbsoulutePath;
+    // if (_waveformCache.containsKey(cacheKey)) {
+    //   if (!mounted) {
+    //     return;
+    //   }
+    //   setState(() {
+    //     _waveform = _waveformCache[cacheKey];
+    //   });
+    //   return;
+    // }
+    final File audioFile = .new(absolutePath);
+    if (!await audioFile.exists()) {
+      return;
+    }
+
+    final File waveformFile = .new('$absolutePath.waveform');
+    try {
+      if (await waveformFile.exists()) {
+        final Waveform waveform = await JustWaveform.parse(waveformFile);
+        _setupWaveform(waveform);
+        return;
+      }
+      _waveformSubscription =
+          JustWaveform.extract(
+            audioInFile: audioFile,
+            waveOutFile: waveformFile,
+            zoom: const WaveformZoom.pixelsPerSecond(200),
+          ).listen((WaveformProgress progress) {
+            if (!mounted) {
+              return;
+            }
+            final Waveform? waveform = progress.waveform;
+            if (waveform != null) {
+              _setupWaveform(waveform);
+            }
+          }, onError: (_) {});
+    } catch (_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() => _waveform = null);
+    }
+  }
+
+  void _setupWaveform(Waveform waveform) {
+    final double maxAmplitude = waveform.flags == 0 ? 32768 : 128;
+    final List<double> normalized = .generate(waveform.length, (int index) {
+      final double min = waveform.getPixelMin(index).abs() / maxAmplitude;
+      final double max = waveform.getPixelMax(index).abs() / maxAmplitude;
+      final double normalizedValue = math.max(min, max);
+      return normalizedValue.isFinite ? normalizedValue.clamp(0.0, 1.0) : 0.0;
+    }, growable: false);
+    //_waveformCache[cacheKey] = normalized;
+    if (!mounted) {
+      return;
+    }
+    setState(() {
+      _waveform = normalized;
+    });
   }
 
   Future<void> _togglePlayback() async {
@@ -146,30 +211,28 @@ final class AudioTrackWidgetState extends State<AudioTrackWidget> {
   @override
   Widget build(BuildContext context) {
     final bool isPlaying = _player.playing;
-    final double progress =
-        _duration.inMilliseconds == 0 ? 0 : (_position.inMilliseconds / _duration.inMilliseconds).clamp(0.0, 1.0);
+    final double progress = _duration.inMilliseconds == 0
+        ? 0
+        : (_position.inMilliseconds / _duration.inMilliseconds).clamp(0.0, 1.0);
 
     return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: .min,
+      crossAxisAlignment: .start,
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: .center,
           children: [
             // TODO: remove has error and make this button with disabled state
-            PlayPauseButton(
-              isPlaying: isPlaying,
-              hasError: _hasError,
-              onPressed: _togglePlayback,
-            ),
+            PlayPauseButton(isPlaying: isPlaying, hasError: _hasError, onPressed: _togglePlayback),
             const Gap(4.0),
             Expanded(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: .start,
+                mainAxisSize: .min,
                 children: [
                   WaveProgressWidget(
                     progress: _hasError ? 0.0 : progress,
+                    waveform: _waveform,
                     onSeek: _hasError ? null : _onSeek,
                   ),
                   const Gap(2.0),

@@ -21,10 +21,8 @@ final class MindBloc extends Bloc<MindEvent, MindState> with DisposeBag {
   late final MindSearcherCubit _searcherCubit;
   late final MindRepository _mindRepository;
 
-  MindBloc({
-    required MindSearcherCubit mindSearcherCubit,
-    required MindRepository mindRepository,
-  }) : super(MindList(values: const [])) {
+  MindBloc({required MindSearcherCubit mindSearcherCubit, required MindRepository mindRepository})
+    : super(MindList(values: const [])) {
     _searcherCubit = mindSearcherCubit;
     _mindRepository = mindRepository;
     on<MindGetList>(_getMinds);
@@ -61,10 +59,10 @@ final class MindBloc extends Bloc<MindEvent, MindState> with DisposeBag {
     final List<BaseMindNotePiece> sanitizedPieces = <BaseMindNotePiece>[];
     for (final BaseMindNotePiece piece in event.mindContent) {
       piece.map(
-        ifText: (MindNoteText textPiece) {
+        text: (MindNoteText textPiece) {
           sanitizedPieces.add(textPiece);
         },
-        ifAudio: (MindNoteAudio audioPiece) {
+        audio: (MindNoteAudio audioPiece) {
           final String trimmedPath = audioPiece.appRelativeAbsoulutePath.trim();
           if (trimmedPath.isEmpty) {
             return;
@@ -81,15 +79,16 @@ final class MindBloc extends Bloc<MindEvent, MindState> with DisposeBag {
     final String rawNote = sanitizedPieces
         .map(
           (BaseMindNotePiece piece) => piece.map(
-            ifText: (MindNoteText textPiece) => textPiece.value,
-            ifAudio: (MindNoteAudio audioPiece) =>
+            text: (MindNoteText textPiece) => textPiece.value,
+            audio: (MindNoteAudio audioPiece) =>
                 '<$kMindAudioTag>${audioPiece.appRelativeAbsoulutePath}</$kMindAudioTag>',
           ),
         )
         .join();
     final String normalizedNote = rawNote.trim();
-    final MindNoteContent content =
-        normalizedNote.isEmpty ? MindNoteContent.empty() : MindNoteContent.parse(normalizedNote);
+    final MindNoteContent content = normalizedNote.isEmpty
+        ? MindNoteContent.empty()
+        : MindNoteContent.parse(normalizedNote);
 
     final Mind mind = Mind(
       id: const Uuid().v4(),
@@ -111,48 +110,25 @@ final class MindBloc extends Bloc<MindEvent, MindState> with DisposeBag {
   }
 
   FutureOr<void> _startSearch(MindStartSearch event, emit) async {
-    emit(
-      MindSearching(
-        enabled: true,
-        allValues: _mindRepository.values,
-        resultValues: const [],
-      ),
-    );
+    emit(MindSearching(enabled: true, allValues: _mindRepository.values, resultValues: const []));
   }
 
   FutureOr<void> _stopSearch(MindStopSearch event, emit) async {
-    emit(
-      MindSearching(
-        enabled: false,
-        allValues: _mindRepository.values,
-        resultValues: const [],
-      ),
-    );
+    emit(MindSearching(enabled: false, allValues: _mindRepository.values, resultValues: const []));
   }
 
   FutureOr<void> _enterTextSearch(MindEnterSearchText event, Emitter<MindState> emit) async {
     final List<Mind> filteredMinds = await _searcherCubit.searchMindList(event.text);
-    emit(
-      MindSearching(
-        enabled: true,
-        allValues: _mindRepository.values,
-        resultValues: filteredMinds,
-      ),
-    );
+    emit(MindSearching(enabled: true, allValues: _mindRepository.values, resultValues: filteredMinds));
   }
 
   Future<List<Mind>> _findMindsByDayIndex(int index) async {
-    final minds = await _mindRepository.obtainMindsWhere(
-      (mind) => mind.dayIndex == index && mind.rootId == null,
-    )
+    final minds = await _mindRepository.obtainMindsWhere((mind) => mind.dayIndex == index && mind.rootId == null)
       ..sortedByProperty((it) => it.sortIndex);
     return minds.toList();
   }
 
-  Future<void> _editMind(
-    MindEdit event,
-    Emitter<MindState> emit,
-  ) async {
+  Future<void> _editMind(MindEdit event, Emitter<MindState> emit) async {
     final Mind editedMind = event.mind;
     await _mindRepository.updateMind(mind: editedMind);
   }

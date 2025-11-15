@@ -3,16 +3,13 @@ const String kMindAudioTag = 'kekaudio';
 sealed class BaseMindNotePiece {
   const BaseMindNotePiece();
 
-  T map<T>({
-    required T Function(MindNoteText text) ifText,
-    required T Function(MindNoteAudio audio) ifAudio,
-  }) {
+  T map<T>({required T Function(MindNoteText text) text, required T Function(MindNoteAudio audio) audio}) {
     final BaseMindNotePiece self = this;
     if (self is MindNoteText) {
-      return ifText(self);
+      return text(self);
     }
     if (self is MindNoteAudio) {
-      return ifAudio(self);
+      return audio(self);
     }
     throw UnsupportedError('Unknown MindNotePiece: $self');
   }
@@ -54,11 +51,7 @@ final class MindNoteContent {
     }
 
     final List<BaseMindNotePiece> pieces = [];
-    final RegExp tagRegExp = RegExp(
-      '<$kMindAudioTag>(.*?)</$kMindAudioTag>',
-      caseSensitive: false,
-      dotAll: true,
-    );
+    final RegExp tagRegExp = RegExp('<$kMindAudioTag>(.*?)</$kMindAudioTag>', caseSensitive: false, dotAll: true);
 
     int cursor = 0;
     final Iterable<RegExpMatch> matches = tagRegExp.allMatches(note);
@@ -85,11 +78,13 @@ final class MindNoteContent {
   String get plainText => _pieces.whereType<MindNoteText>().map((MindNoteText piece) => piece.value).join();
 
   String toRawNoteString() => _pieces
-      .map((BaseMindNotePiece piece) => piece.map(
-            ifText: (MindNoteText textPiece) => textPiece.value,
-            ifAudio: (MindNoteAudio audioPiece) =>
-                '<$kMindAudioTag>${audioPiece.appRelativeAbsoulutePath}</$kMindAudioTag>',
-          ))
+      .map(
+        (BaseMindNotePiece piece) => piece.map(
+          text: (MindNoteText textPiece) => textPiece.value,
+          audio: (MindNoteAudio audioPiece) =>
+              '<$kMindAudioTag>${audioPiece.appRelativeAbsoulutePath}</$kMindAudioTag>',
+        ),
+      )
       .join();
 
   MindNoteContent copyWithAppendedAudio(String path, {String? separator}) {
@@ -111,10 +106,7 @@ final class MindNoteContent {
   }
 
   /// Convenience to create a new note from raw text with an optional audio path.
-  factory MindNoteContent.fromTextAndAudio({
-    required String text,
-    Iterable<String> audioPaths = const [],
-  }) {
+  factory MindNoteContent.fromTextAndAudio({required String text, Iterable<String> audioPaths = const []}) {
     final List<BaseMindNotePiece> pieces = [
       if (text.isNotEmpty) MindNoteText(text),
       ...audioPaths

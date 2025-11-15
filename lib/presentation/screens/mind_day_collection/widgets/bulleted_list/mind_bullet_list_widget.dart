@@ -7,26 +7,23 @@ final class MindBulletListWidget extends StatelessWidget {
   final Function(String)? onTap;
   final Function(String)? onLongPress;
 
-  const MindBulletListWidget({
-    super.key,
-    required this.models,
-    this.onTap,
-    this.onLongPress,
-  });
+  const MindBulletListWidget({super.key, required this.models, this.onTap, this.onLongPress});
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: models.map((model) {
-        return SensitiveWidget(
-          mode: SensitiveMode.nonTappable,
-          child: GestureDetector(
-            onTap: () => onTap?.call(model.entityId),
-            onLongPress: () => onLongPress?.call(model.entityId),
-            child: MindBulletWidget(model: model),
-          ),
-        );
-      }).toList(),
+      children: models
+          .map((model) {
+            return SensitiveWidget(
+              mode: SensitiveMode.nonTappable,
+              child: GestureDetector(
+                onTap: () => onTap?.call(model.entityId),
+                onLongPress: () => onLongPress?.call(model.entityId),
+                child: MindBulletWidget(model: model),
+              ),
+            );
+          })
+          .toList(growable: false),
     );
   }
 }

@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 
 final class PlayPauseButton extends StatelessWidget {
-  const PlayPauseButton({
-    required this.isPlaying,
-    required this.hasError,
-    required this.onPressed,
-  });
-
   final bool isPlaying;
   final bool hasError;
   final VoidCallback onPressed;
+
+  const PlayPauseButton({super.key, required this.isPlaying, required this.hasError, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {

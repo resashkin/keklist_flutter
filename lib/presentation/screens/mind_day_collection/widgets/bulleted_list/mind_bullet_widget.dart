@@ -7,10 +7,7 @@ import 'package:keklist/presentation/screens/mind_day_collection/widgets/bullete
 final class MindBulletWidget extends StatelessWidget {
   final MindBulletModel model;
 
-  const MindBulletWidget({
-    super.key,
-    required this.model,
-  });
+  const MindBulletWidget({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +18,7 @@ final class MindBulletWidget extends StatelessWidget {
     final List<Widget> contentWidgets = pieces.isEmpty
         ? <Widget>[
             SensitiveWidget(
-              child: Text(
-                model.content.plainText,
-                maxLines: null,
-                style: const TextStyle(fontSize: 15.0),
-              ),
+              child: Text(model.content.plainText, maxLines: null, style: const TextStyle(fontSize: 15.0)),
             ),
           ]
         : <Widget>[];
@@ -37,42 +30,34 @@ final class MindBulletWidget extends StatelessWidget {
         }
         contentWidgets.add(
           piece.map(
-            ifText: (MindNoteText textPiece) => SensitiveWidget(
+            text: (MindNoteText textPiece) => SensitiveWidget(
               child: Align(
                 alignment: .centerRight,
                 child: ConstrainedBox(
                   constraints: BoxConstraints(maxWidth: maxBubbleWidth),
                   child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: colorScheme.primaryContainer,
-                      borderRadius: .circular(18.0),
-                    ),
+                    decoration: BoxDecoration(color: colorScheme.primaryContainer, borderRadius: .circular(18.0)),
                     child: Padding(
                       padding: .symmetric(horizontal: 14.0, vertical: 10.0),
                       child: Text(
                         textPiece.value,
                         maxLines: null,
-                        style: TextStyle(
-                          fontSize: 15.0,
-                          color: colorScheme.onPrimaryContainer,
-                        ),
+                        style: TextStyle(fontSize: 15.0, color: colorScheme.onPrimaryContainer),
                       ),
                     ),
                   ),
                 ),
               ),
             ),
-            ifAudio: (MindNoteAudio audioPiece) => SensitiveWidget(
-              child: AudioTrackWidget(audio: audioPiece),
-            ),
+            audio: (MindNoteAudio audioPiece) => SensitiveWidget(child: AudioTrackWidget(audio: audioPiece)),
           ),
         );
       }
     }
 
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: .start,
+      mainAxisSize: .max,
       children: [
         // TODO: just wathing how it goes without emoji on start...
         // const Gap(10.0),
@@ -82,14 +67,10 @@ final class MindBulletWidget extends StatelessWidget {
         // ),
         const Gap(10.0),
         Flexible(
-          fit: FlexFit.tight,
+          fit: .tight,
           child: Padding(
             padding: .symmetric(vertical: 6.0),
-            child: Column(
-              crossAxisAlignment: .end,
-              mainAxisSize: .min,
-              children: contentWidgets,
-            ),
+            child: Column(crossAxisAlignment: .end, mainAxisSize: .min, children: contentWidgets),
           ),
         ),
         const Gap(16.0),
@@ -103,9 +84,5 @@ final class MindBulletModel {
   final String emoji;
   final MindNoteContent content;
 
-  const MindBulletModel({
-    required this.entityId,
-    required this.emoji,
-    required this.content,
-  });
+  const MindBulletModel({required this.entityId, required this.emoji, required this.content});
 }

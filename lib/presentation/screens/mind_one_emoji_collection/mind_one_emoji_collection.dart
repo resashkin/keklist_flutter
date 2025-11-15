@@ -21,28 +21,20 @@ final class MindOneEmojiCollectionScreen extends StatefulWidget {
   final String emoji;
   final Iterable<Mind> allMinds;
 
-  const MindOneEmojiCollectionScreen({
-    super.key,
-    required this.emoji,
-    required this.allMinds,
-  });
+  const MindOneEmojiCollectionScreen({super.key, required this.emoji, required this.allMinds});
 
   @override
   // ignore: no_logic_in_create_state
-  State<MindOneEmojiCollectionScreen> createState() => _MindOneEmojiCollectionScreenState(
-        emoji: emoji,
-        allMinds: allMinds.sortedByProperty((e) => e.dayIndex).toList(),
-      );
+  State<MindOneEmojiCollectionScreen> createState() =>
+      _MindOneEmojiCollectionScreenState(emoji: emoji, allMinds: allMinds.sortedByProperty((e) => e.dayIndex).toList());
 }
 
 final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollectionScreen> with DisposeBag {
   final String emoji;
   final List<Mind> allMinds;
 
-  List<Mind> get emojiMinds => MindUtils.findMindsByEmoji(
-        emoji: emoji,
-        allMinds: allMinds,
-      ).sortedByProperty((e) => e.dayIndex);
+  List<Mind> get emojiMinds =>
+      MindUtils.findMindsByEmoji(emoji: emoji, allMinds: allMinds).sortedByProperty((e) => e.dayIndex);
 
   final TextEditingController _createMindEditingController = TextEditingController(text: null);
   final FocusNode _mindCreatorFocusNode = FocusNode();
@@ -51,10 +43,7 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
 
   final ScrollController _scrollController = ScrollController();
 
-  _MindOneEmojiCollectionScreenState({
-    required this.emoji,
-    required this.allMinds,
-  });
+  _MindOneEmojiCollectionScreenState({required this.emoji, required this.allMinds});
 
   @override
   void initState() {
@@ -74,23 +63,23 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
       _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
     });
 
-    subscribeToBloc<MindBloc>(onNewState: (state) async {
-      if (state is MindList) {
-        setState(() {
-          allMinds
-            ..clear()
-            ..addAll(state.values.sortedByProperty((e) => e.dayIndex));
-        });
-      }
-    })?.disposed(by: this);
+    subscribeToBloc<MindBloc>(
+      onNewState: (state) async {
+        if (state is MindList) {
+          setState(() {
+            allMinds
+              ..clear()
+              ..addAll(state.values.sortedByProperty((e) => e.dayIndex));
+          });
+        }
+      },
+    )?.disposed(by: this);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(emoji),
-      ),
+      appBar: AppBar(title: Text(emoji)),
       body: Stack(
         children: [
           GestureDetector(
@@ -115,10 +104,7 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
               // NOTE: Подложка для скрытия текста эмодзи.
               Align(
                 alignment: Alignment.bottomCenter,
-                child: Container(
-                  color: Theme.of(context).scaffoldBackgroundColor,
-                  height: 90,
-                ),
+                child: Container(color: Theme.of(context).scaffoldBackgroundColor, height: 90),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -131,8 +117,9 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
                     onDone: (CreateMindData data) {
                       if (_editableMind == null) {
                         final String normalizedText = data.text.trim();
-                        final MindNoteContent content =
-                            normalizedText.isEmpty ? MindNoteContent.empty() : MindNoteContent.parse(normalizedText);
+                        final MindNoteContent content = normalizedText.isEmpty
+                            ? MindNoteContent.empty()
+                            : MindNoteContent.parse(normalizedText);
                         sendEventToBloc<MindBloc>(
                           MindCreate(
                             dayIndex: DateUtils.getTodayIndex(),
@@ -142,10 +129,7 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
                           ),
                         );
                       } else {
-                        final Mind mindForEdit = _editableMind!.copyWith(
-                          note: data.text,
-                          emoji: data.emoji,
-                        );
+                        final Mind mindForEdit = _editableMind!.copyWith(note: data.text, emoji: data.emoji);
                         sendEventToBloc<MindBloc>(MindEdit(mind: mindForEdit));
                       }
                       _resetMindCreator();
@@ -159,13 +143,15 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
 
                       if (_editableMind == null) {
                         final String normalizedText = currentText.trim();
-                        MindNoteContent content =
-                            normalizedText.isEmpty ? MindNoteContent.empty() : MindNoteContent.parse(normalizedText);
-                        final bool needsLineBreak = content.pieces.isNotEmpty &&
+                        MindNoteContent content = normalizedText.isEmpty
+                            ? MindNoteContent.empty()
+                            : MindNoteContent.parse(normalizedText);
+                        final bool needsLineBreak =
+                            content.pieces.isNotEmpty &&
                             content.pieces.last.map(
-                              ifText: (MindNoteText textPiece) =>
+                              text: (MindNoteText textPiece) =>
                                   textPiece.value.isNotEmpty && !textPiece.value.endsWith('\n'),
-                              ifAudio: (_) => false,
+                              audio: (_) => false,
                             );
                         content = content.copyWithAppendedAudio(trimmedPath, separator: needsLineBreak ? '\n' : null);
                         sendEventToBloc<MindBloc>(
@@ -177,13 +163,15 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
                           ),
                         );
                       } else {
-                        MindNoteContent content =
-                            currentText.trim().isEmpty ? MindNoteContent.empty() : MindNoteContent.parse(currentText);
-                        final bool needsLineBreak = content.pieces.isNotEmpty &&
+                        MindNoteContent content = currentText.trim().isEmpty
+                            ? MindNoteContent.empty()
+                            : MindNoteContent.parse(currentText);
+                        final bool needsLineBreak =
+                            content.pieces.isNotEmpty &&
                             content.pieces.last.map(
-                              ifText: (MindNoteText textPiece) =>
+                              text: (MindNoteText textPiece) =>
                                   textPiece.value.isNotEmpty && !textPiece.value.endsWith('\n'),
-                              ifAudio: (_) => false,
+                              audio: (_) => false,
                             );
                         content = content.copyWithAppendedAudio(trimmedPath, separator: needsLineBreak ? '\n' : null);
                         final Mind updatedMind = _editableMind!.copyWithNoteContent(content);
@@ -243,7 +231,7 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
               });
               _createMindEditingController.text = mind.note;
               _mindCreatorFocusNode.requestFocus();
-            }
+            },
           ),
           (
             ActionModel.switchDay(context),
@@ -258,7 +246,7 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
                 final Mind newMind = mind.copyWith(dayIndex: switchedDay, sortIndex: sortIndex);
                 sendEventToBloc<MindBloc>(MindEdit(mind: newMind));
               }
-            }
+            },
           ),
           (ActionModel.delete(context), () => sendEventToBloc<MindBloc>(MindDelete(mind: mind))),
         ],
@@ -269,9 +257,7 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
   Future<int?> _showDateSwitcherToNewDay() async {
     final List<DateTime?>? dates = await showCalendarDatePicker2Dialog(
       context: context,
-      value: [
-        DateUtils.getDateFromDayIndex(DateUtils.getTodayIndex()),
-      ],
+      value: [DateUtils.getDateFromDayIndex(DateUtils.getTodayIndex())],
       config: CalendarDatePicker2WithActionButtonsConfig(firstDayOfWeek: 1),
       dialogSize: const Size(325, 400),
       borderRadius: BorderRadius.circular(15),
@@ -292,10 +278,7 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
 
     Navigator.of(mountedContext!).push(
       BackSwipePageRoute(
-        builder: (_) => MindInfoScreen(
-          rootMind: mind,
-          allMinds: allMinds,
-        ),
+        builder: (_) => MindInfoScreen(rootMind: mind, allMinds: allMinds),
       ),
     );
   }

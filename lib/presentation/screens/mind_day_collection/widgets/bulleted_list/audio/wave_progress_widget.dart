@@ -1,13 +1,17 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 final class WaveProgressWidget extends StatelessWidget {
   const WaveProgressWidget({
     super.key,
     required this.progress,
+    this.waveform,
     this.onSeek,
   });
 
   final double progress;
+  final List<double>? waveform;
   final ValueChanged<double>? onSeek;
 
   @override
@@ -21,10 +25,57 @@ final class WaveProgressWidget extends StatelessWidget {
         final int computedCount = (constraints.maxWidth / 6).floor();
         final int barCount = computedCount <= 0 ? 8 : computedCount;
         final double barWidth = 4;
-        final List<double> heights = List<double>.generate(barCount, (int index) {
-          final double normalized = (index % 4) / 4;
-          return 10 + (14 * normalized);
-        });
+        const double minHeight = 6.0;
+        const double maxHeight = 22.0;
+
+        List<double> downSampleWaveform(List<double> source, int targetCount) {
+          if (source.isEmpty) {
+            return List<double>.filled(targetCount, 0.0);
+          }
+          if (source.length == targetCount) {
+            return List<double>.of(source, growable: false);
+          }
+          final List<double> result = List<double>.filled(targetCount, 0.0);
+          final double window = source.length / targetCount;
+          for (int i = 0; i < targetCount; i++) {
+            final double start = i * window;
+            final double end = start + window;
+            double sum = 0;
+            int count = 0;
+            int sampleIndex = start.floor();
+            final int endIndex = math.min(source.length, end.ceil());
+            while (sampleIndex < endIndex) {
+              sum += source[sampleIndex];
+              sampleIndex++;
+              count++;
+            }
+            if (count == 0) {
+              final int fallbackIndex = math.min(source.length - 1, start.round());
+              result[i] = source[fallbackIndex];
+            } else {
+              result[i] = sum / count;
+            }
+          }
+          return result;
+        }
+
+        List<double> buildHeights(int count, double min, double max) {
+          if (waveform == null || waveform!.isEmpty) {
+            return List<double>.generate(count, (int index) {
+              final double normalized = (index % 4) / 4;
+              return min + ((max - min) * normalized);
+            });
+          }
+          final List<double> samples = downSampleWaveform(waveform!, count);
+          final double heightRange = max - min;
+          return samples
+              .map(
+                (double value) => min + heightRange * (value.isFinite ? value.clamp(0.0, 1.0) : 0.0),
+              )
+              .toList(growable: false);
+        }
+
+        final List<double> heights = buildHeights(barCount, minHeight, maxHeight);
         final double activeBarsDouble = effectiveProgress * barCount;
         final int fullActiveBars = activeBarsDouble.floor();
         final double partialBarFraction = activeBarsDouble - fullActiveBars;
@@ -70,7 +121,7 @@ final class WaveProgressWidget extends StatelessWidget {
                   height: heights[index],
                   decoration: BoxDecoration(
                     color: barColor,
-                    borderRadius: BorderRadius.circular(2),
+                    borderRadius: .circular(2),
                   ),
                 );
               }),
