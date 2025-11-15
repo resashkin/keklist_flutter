@@ -32,14 +32,12 @@ import 'package:keklist/presentation/screens/mind_one_emoji_collection/mind_one_
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/domain/services/entities/mind_note_content.dart';
+import 'package:provider/provider.dart';
 
 final class MindDayCollectionScreen extends StatefulWidget {
   final int initialDayIndex;
 
-  const MindDayCollectionScreen({
-    super.key,
-    required this.initialDayIndex,
-  });
+  const MindDayCollectionScreen({super.key, required this.initialDayIndex});
 
   @override
   // ignore: no_logic_in_create_state
@@ -52,10 +50,7 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
 
   final ScrollController _scrollController = ScrollController();
 
-  List<Mind> get _dayMinds => MindUtils.findMindsByDayIndex(
-        dayIndex: dayIndex,
-        allMinds: allMinds,
-      );
+  List<Mind> get _dayMinds => MindUtils.findMindsByDayIndex(dayIndex: dayIndex, allMinds: allMinds);
 
   Map<String, List<Mind>> get _mindIdsToChildren => MindUtils.convertToMindChildren(minds: allMinds);
 
@@ -72,33 +67,41 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
   void initState() {
     super.initState();
 
-    subscribeToBloc<MindBloc>(onNewState: (state) async {
-      if (state is MindList) {
-        setState(() {
-          allMinds
-            ..clear()
-            ..addAll(state.values.sortedBySortIndex());
-        });
-      }
-    })?.disposed(by: this);
+    subscribeToBloc<MindBloc>(
+      onNewState: (state) async {
+        if (state is MindList) {
+          setState(() {
+            allMinds
+              ..clear()
+              ..addAll(state.values.sortedBySortIndex());
+          });
+        }
+      },
+    )?.disposed(by: this);
 
-    subscribeToBloc<SettingsBloc>(onNewState: (state) {
-      if (state is SettingsDataState) {
-        setState(() {
-          _isMindContentVisible = state.settings.isMindContentVisible;
-        });
-      }
-    })?.disposed(by: this);
+    subscribeToBloc<SettingsBloc>(
+      onNewState: (state) {
+        if (state is SettingsDataState) {
+          setState(() {
+            _isMindContentVisible = state.settings.isMindContentVisible;
+          });
+        }
+      },
+    )?.disposed(by: this);
 
-    subscribeToBloc<DebugMenuBloc>(onNewState: (state) {
-      if (state is DebugMenuDataState) {
-        _debugMenuState = state;
-      }
-    })?.disposed(by: this);
+    subscribeToBloc<DebugMenuBloc>(
+      onNewState: (state) {
+        if (state is DebugMenuDataState) {
+          _debugMenuState = state;
+        }
+      },
+    )?.disposed(by: this);
 
-    subscribeToBloc<MindCreatorBloc>(onNewState: (state) {
-      setState(() => suggestions = state.suggestions.take(5));
-    })?.disposed(by: this);
+    subscribeToBloc<MindCreatorBloc>(
+      onNewState: (state) {
+        setState(() => suggestions = state.suggestions.take(5));
+      },
+    )?.disposed(by: this);
 
     sendEventToBloc<MindBloc>(MindGetList());
     sendEventToBloc<SettingsBloc>(SettingsGet());
@@ -117,17 +120,11 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
             Text(
               // TODO: refactor it
               '${DateFormatters.dayMonthFormat(Localizations.localeOf(context)).format(DateUtils.getDateFromDayIndex(dayIndex))}${DateUtils.getDateFromDayIndex(dayIndex).year != DateTime.now().year ? ' ${DateUtils.getDateFromDayIndex(dayIndex).year}' : ''}',
-              style: const TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.w500,
-              ),
+              style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
             ),
             Text(
               DateFormatters.formatWeekday(DateUtils.getDateFromDayIndex(dayIndex), Localizations.localeOf(context)),
-              style: const TextStyle(
-                fontSize: 14.0,
-                fontWeight: FontWeight.w300,
-              ),
+              style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.w300),
             ),
           ],
         ),
@@ -143,8 +140,10 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
             },
           ),
           BoolWidget(
-            condition: _debugMenuState?.debugMenuItems
-                    .firstWhereOrNull((element) => element.type == DebugMenuType.sensitiveContent && element.value) !=
+            condition:
+                _debugMenuState?.debugMenuItems.firstWhereOrNull(
+                  (element) => element.type == DebugMenuType.sensitiveContent && element.value,
+                ) !=
                 null,
             trueChild: IconButton(
               icon: BoolWidget(
@@ -168,16 +167,24 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
         childScrollController: _scrollController,
         topOverscrollChild: Column(
           children: [
-            Text(DateFormatters.formatFullDate(
-                DateUtils.getDateFromDayIndex(dayIndex - 1), Localizations.localeOf(context))),
+            Text(
+              DateFormatters.formatFullDate(
+                DateUtils.getDateFromDayIndex(dayIndex - 1),
+                Localizations.localeOf(context),
+              ),
+            ),
             const Icon(Icons.arrow_upward),
           ],
         ),
         bottomOverscrollChild: Column(
           children: [
             const Icon(Icons.arrow_downward),
-            Text(DateFormatters.formatFullDate(
-                DateUtils.getDateFromDayIndex(dayIndex + 1), Localizations.localeOf(context))),
+            Text(
+              DateFormatters.formatFullDate(
+                DateUtils.getDateFromDayIndex(dayIndex + 1),
+                Localizations.localeOf(context),
+              ),
+            ),
           ],
         ),
         child: SingleChildScrollView(
@@ -192,25 +199,9 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
               onOptions: (Mind mind) => _showActions(context, mind),
               mindIdsToChildren: _mindIdsToChildren,
             ),
-            falseChild: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Gap(32.0),
-                if (suggestions.isNotEmpty) const Text('Pick emoji to write a new note...'),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  spacing: 8.0,
-                  children: suggestions
-                      .map(
-                        (emoji) => GestureDetector(
-                          child: MindWidget.justEmoji(emoji: emoji).animate().fadeIn(),
-                          onTap: () => _showMindCreator(initialEmoji: emoji),
-                        ),
-                      )
-                      .toList(),
-                ),
-                Gap(32.0),
-              ],
+            falseChild: _MindZeroCase(
+              suggestions: suggestions,
+              onEmojiTap: (emoji) => _showMindCreator(initialEmoji: emoji),
             ),
           ),
         ),
@@ -221,13 +212,7 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
         child: FloatingActionButton.extended(
           icon: const Icon(Icons.add),
           onPressed: () => _showMindCreator(),
-          label: Text(
-            context.l10n.create,
-            style: TextStyle(
-              fontSize: 18.0,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
+          label: Text(context.l10n.create, style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500)),
           enableFeedback: true,
         ),
       ),
@@ -250,8 +235,9 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
         final bool canAuthenticate = canAuthenticateWithBiometrics || await auth.isDeviceSupported();
         if (canAuthenticate) {
           final bool didAuthenticate = await auth.authenticate(
-              localizedReason: context.l10n.pleaseAuthenticateToShowContent,
-              options: const AuthenticationOptions(useErrorDialogs: false));
+            localizedReason: context.l10n.pleaseAuthenticateToShowContent,
+            options: const AuthenticationOptions(useErrorDialogs: false),
+          );
           if (didAuthenticate) {
             setState(() {
               sendEventToBloc<SettingsBloc>(const SettingsChangeMindContentVisibility(isVisible: true));
@@ -273,9 +259,7 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
   Future<int?> _showDateSwitcherToNewDay() async {
     final List<DateTime?>? dates = await showCalendarDatePicker2Dialog(
       context: context,
-      value: [
-        DateUtils.getDateFromDayIndex(this.dayIndex),
-      ],
+      value: [DateUtils.getDateFromDayIndex(this.dayIndex)],
       config: CalendarDatePicker2WithActionButtonsConfig(firstDayOfWeek: 1),
       dialogSize: const Size(325, 400),
       borderRadius: BorderRadius.circular(15),
@@ -293,10 +277,7 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
   void _showMindInfo(Mind mind) {
     Navigator.of(context).push(
       BackSwipePageRoute(
-        builder: (_) => MindInfoScreen(
-          rootMind: mind,
-          allMinds: allMinds,
-        ),
+        builder: (_) => MindInfoScreen(rootMind: mind, allMinds: allMinds),
       ),
     );
   }
@@ -310,11 +291,7 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
 
   void _switchToDayIndexWithScrollToTop(int dayIndex) {
     _scrollController.jumpTo(_scrollController.position.maxScrollExtent + 500.0);
-    _scrollController.animateTo(
-      0,
-      duration: const Duration(milliseconds: 250),
-      curve: Curves.easeInOut,
-    );
+    _scrollController.animateTo(0, duration: const Duration(milliseconds: 250), curve: Curves.easeInOut);
     setState(() {
       this.dayIndex = dayIndex;
     });
@@ -322,11 +299,7 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
 
   void _switchToDayIndexWithScrollToBottom(int dayIndex) {
     _scrollController.jumpTo(-500);
-    _scrollController.animateTo(
-      0,
-      duration: const Duration(milliseconds: 250),
-      curve: Curves.easeInOut,
-    );
+    _scrollController.animateTo(0, duration: const Duration(milliseconds: 250), curve: Curves.easeInOut);
     setState(() {
       this.dayIndex = dayIndex;
     });
@@ -360,19 +333,13 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
 
   void _editMind(Mind mind) {
     _editableMind = mind;
-    _showMindCreator(
-      initialText: mind.note,
-      initialEmoji: mind.emoji,
-    );
+    _showMindCreator(initialText: mind.note, initialEmoji: mind.emoji);
   }
 
   Future<void> _updateMindDay(Mind mind) async {
     final int? switchedDay = await _showDateSwitcherToNewDay();
     if (switchedDay != null) {
-      final List<Mind> switchedDayMinds = MindUtils.findMindsByDayIndex(
-        dayIndex: switchedDay,
-        allMinds: allMinds,
-      );
+      final List<Mind> switchedDayMinds = MindUtils.findMindsByDayIndex(dayIndex: switchedDay, allMinds: allMinds);
       final int sortIndex = (switchedDayMinds.map((mind) => mind.sortIndex).maxOrNull ?? -1) + 1;
       final Mind newMind = mind.copyWith(dayIndex: switchedDay, sortIndex: sortIndex);
       sendEventToBloc<MindBloc>(MindEdit(mind: newMind));
@@ -382,10 +349,7 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
   void _showAllMinds(Mind mind) {
     Navigator.of(context).push(
       BackSwipePageRoute(
-        builder: (_) => MindOneEmojiCollectionScreen(
-          emoji: mind.emoji,
-          allMinds: allMinds,
-        ),
+        builder: (_) => MindOneEmojiCollectionScreen(emoji: mind.emoji, allMinds: allMinds),
       ),
     );
   }
@@ -399,15 +363,14 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
       context: context,
       builder: (_) {
         return MindCreatorScreen(
-          buttonIcon: initialEmoji == null ? const Icon(Icons.add) : const Icon(Icons.edit),
-          buttonText: initialEmoji == null ? context.l10n.create : context.l10n.edit,
           initialEmoji: initialEmoji,
           initialText: initialText,
           onDone: (String text, String emoji) {
             if (_editableMind == null) {
               final String normalizedText = text.trim();
-              final MindNoteContent content =
-                  normalizedText.isEmpty ? MindNoteContent.empty() : MindNoteContent.parse(normalizedText);
+              final MindNoteContent content = normalizedText.isEmpty
+                  ? MindNoteContent.empty()
+                  : MindNoteContent.parse(normalizedText);
               final MindCreate event = MindCreate(
                 dayIndex: dayIndex,
                 mindContent: content.pieces,
@@ -416,16 +379,44 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
               );
               sendEventToBloc<MindBloc>(event);
             } else {
-              final Mind mindForEdit = _editableMind!.copyWith(
-                note: text,
-                emoji: emoji,
-              );
+              final Mind mindForEdit = _editableMind!.copyWith(note: text, emoji: emoji);
               sendEventToBloc<MindBloc>(MindEdit(mind: mindForEdit));
               _editableMind = null;
             }
           },
         );
       },
+    );
+  }
+}
+
+final class _MindZeroCase extends StatelessWidget {
+  final Iterable<String> suggestions;
+  final ValueChanged<String> onEmojiTap;
+
+  const _MindZeroCase({required this.suggestions, required this.onEmojiTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        const Gap(32.0),
+        if (suggestions.isNotEmpty) const Text('Pick emoji to write a new note...'),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 8.0,
+          children: suggestions
+              .map(
+                (emoji) => GestureDetector(
+                  child: MindWidget.justEmoji(emoji: emoji).animate().fadeIn(),
+                  onTap: () => onEmojiTap(emoji),
+                ),
+              )
+              .toList(),
+        ),
+        const Gap(32.0),
+      ],
     );
   }
 }
