@@ -10,8 +10,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:keklist/domain/repositories/tabs/tabs_settings_repository.dart';
 import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
 import 'package:keklist/domain/repositories/files/app_file_repository.dart';
-// import 'package:home_widget/home_widget.dart';
-// import 'package:home_widget/home_widget.dart';
 import 'package:keklist/domain/repositories/mind/object/mind_object.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
