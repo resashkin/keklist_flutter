@@ -32,7 +32,6 @@ import 'package:keklist/presentation/screens/mind_one_emoji_collection/mind_one_
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/domain/services/entities/mind_note_content.dart';
-import 'package:provider/provider.dart';
 
 final class MindDayCollectionScreen extends StatefulWidget {
   final int initialDayIndex;
@@ -111,20 +110,21 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
 
   @override
   Widget build(BuildContext context) {
+    final Locale locale = Localizations.localeOf(context);
+    final DateTime dayDate = DateUtils.getDateFromDayIndex(dayIndex);
+    final String formattedDay = DateFormatters.dayMonthFormat(locale).format(dayDate);
+    final String yearSuffix = dayDate.year == DateTime.now().year ? '' : ' ${dayDate.year}';
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Text('$formattedDay$yearSuffix', style: const TextStyle(fontSize: 16.0, fontWeight: .w500)),
             Text(
-              // TODO: refactor it
-              '${DateFormatters.dayMonthFormat(Localizations.localeOf(context)).format(DateUtils.getDateFromDayIndex(dayIndex))}${DateUtils.getDateFromDayIndex(dayIndex).year != DateTime.now().year ? ' ${DateUtils.getDateFromDayIndex(dayIndex).year}' : ''}',
-              style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
-            ),
-            Text(
-              DateFormatters.formatWeekday(DateUtils.getDateFromDayIndex(dayIndex), Localizations.localeOf(context)),
-              style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.w300),
+              DateFormatters.formatWeekday(dayDate, locale),
+              style: const TextStyle(fontSize: 14.0, fontWeight: .w300),
             ),
           ],
         ),
@@ -402,7 +402,7 @@ final class _MindZeroCase extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: [
         const Gap(32.0),
-        if (suggestions.isNotEmpty) const Text('Pick emoji to write a new note...'),
+        if (suggestions.isNotEmpty) const Text('Pick emoji to write a new note...'), // TODO: localize
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           spacing: 8.0,
