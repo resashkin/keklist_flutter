@@ -64,8 +64,16 @@ final class WaveProgressWidget extends StatelessWidget {
           }
           final List<double> samples = downSampleWaveform(waveform!, count);
           final double heightRange = max - min;
+          final double peak = samples
+              .map((double value) => value.isFinite ? value.abs() : 0.0)
+              .fold<double>(0.0, (double acc, double value) => math.max(acc, value));
+          final double scale = peak > 0 ? peak : 1.0;
           return samples
-              .map((double value) => min + heightRange * (value.isFinite ? value.clamp(0.0, 1.0) : 0.0))
+              .map((double value) {
+                final double normalized = (value.isFinite ? value.abs() : 0.0) / scale;
+                final double shaped = math.pow(normalized.clamp(0.0, 1.0), 1.35).toDouble();
+                return min + heightRange * shaped;
+              })
               .toList(growable: false);
         }
 
