@@ -4,7 +4,7 @@ platform :android do
   desc "Build AAB and upload to Play Store internal testing track"
   lane :build_and_upload_to_internal do
     # Build Flutter app for Android
-    sh("cd .. && flutter build appbundle --release")
+    sh("cd .. && fvm flutter build appbundle --release")
     
     # Upload to Play Store internal testing track
     upload_to_play_store(
