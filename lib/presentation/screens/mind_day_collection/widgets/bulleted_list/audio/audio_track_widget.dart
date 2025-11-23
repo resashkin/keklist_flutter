@@ -12,11 +12,6 @@ import 'package:keklist/presentation/screens/mind_day_collection/widgets/bullete
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/bulleted_list/audio/wave_progress_widget.dart';
 import 'package:provider/provider.dart';
 
-/// TODO: refactor after AI
-/// * use player as a global bloc?
-/// * add real waves of audio instead of random pillars
-/// * slide forward by finger above widget without creating UI components
-
 final class AudioTrackWidget extends StatefulWidget {
   const AudioTrackWidget({super.key, required this.audio});
 
@@ -80,7 +75,6 @@ final class AudioTrackWidgetState extends State<AudioTrackWidget> {
       _hasError = false;
       _position = Duration.zero;
       _duration = Duration.zero;
-      //_waveform = _waveformCache[widget.audio.appRelativeAbsoulutePath];
     });
 
     try {
@@ -119,16 +113,6 @@ final class AudioTrackWidgetState extends State<AudioTrackWidget> {
   }
 
   Future<void> _loadWaveform(String absolutePath) async {
-    //final String cacheKey = widget.audio.appRelativeAbsoulutePath;
-    // if (_waveformCache.containsKey(cacheKey)) {
-    //   if (!mounted) {
-    //     return;
-    //   }
-    //   setState(() {
-    //     _waveform = _waveformCache[cacheKey];
-    //   });
-    //   return;
-    // }
     final File audioFile = .new(absolutePath);
     if (!await audioFile.exists()) {
       return;

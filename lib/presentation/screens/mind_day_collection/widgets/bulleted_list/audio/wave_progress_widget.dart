@@ -1,14 +1,8 @@
 import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 
 final class WaveProgressWidget extends StatelessWidget {
-  const WaveProgressWidget({
-    super.key,
-    required this.progress,
-    this.waveform,
-    this.onSeek,
-  });
+  const WaveProgressWidget({super.key, required this.progress, this.waveform, this.onSeek});
 
   final double progress;
   final List<double>? waveform;
@@ -26,7 +20,9 @@ final class WaveProgressWidget extends StatelessWidget {
         final int barCount = computedCount <= 0 ? 8 : computedCount;
         final double barWidth = 4;
         const double minHeight = 6.0;
-        const double maxHeight = 22.0;
+        const double maxHeight = 12.0;
+        const double barRadius = 2.0;
+        const double totalHeight = maxHeight * 2;
 
         List<double> downSampleWaveform(List<double> source, int targetCount) {
           if (source.isEmpty) {
@@ -69,9 +65,7 @@ final class WaveProgressWidget extends StatelessWidget {
           final List<double> samples = downSampleWaveform(waveform!, count);
           final double heightRange = max - min;
           return samples
-              .map(
-                (double value) => min + heightRange * (value.isFinite ? value.clamp(0.0, 1.0) : 0.0),
-              )
+              .map((double value) => min + heightRange * (value.isFinite ? value.clamp(0.0, 1.0) : 0.0))
               .toList(growable: false);
         }
 
@@ -92,37 +86,48 @@ final class WaveProgressWidget extends StatelessWidget {
           onSeek!(relativeProgress);
         }
 
-        /// TODO: ignore some any transitions outside this widget with tap down, make this GD to main and override elses
-        /// * dont seek if playing was not started
-
         return GestureDetector(
-          behavior: HitTestBehavior.translucent,
+          //behavior: HitTestBehavior.translucent,
           onTapDown: onSeek == null ? null : (TapDownDetails details) => handleSeek(details.localPosition.dx),
-          onHorizontalDragStart:
-              onSeek == null ? null : (DragStartDetails details) => handleSeek(details.localPosition.dx),
-          onHorizontalDragUpdate:
-              onSeek == null ? null : (DragUpdateDetails details) => handleSeek(details.localPosition.dx),
+          onHorizontalDragStart: onSeek == null
+              ? null
+              : (DragStartDetails details) => handleSeek(details.localPosition.dx),
+          onHorizontalDragUpdate: onSeek == null
+              ? null
+              : (DragUpdateDetails details) => handleSeek(details.localPosition.dx),
           child: SizedBox(
-            height: 24,
+            height: totalHeight,
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: .center,
+              mainAxisAlignment: .spaceBetween,
               children: List<Widget>.generate(barCount, (int index) {
                 Color barColor = inactiveColor;
-
                 if (effectiveProgress >= 1.0 || index < fullActiveBars) {
                   barColor = activeColor;
                 } else if (index == fullActiveBars && partialBarFraction > 0 && fullActiveBars < barCount) {
                   barColor = Color.lerp(inactiveColor, activeColor, partialBarFraction) ?? activeColor;
                 }
-
-                return Container(
-                  width: barWidth,
-                  height: heights[index],
-                  decoration: BoxDecoration(
-                    color: barColor,
-                    borderRadius: .circular(2),
-                  ),
+                final double barHeight = heights[index];
+                return Column(
+                  mainAxisAlignment: .center,
+                  children: [
+                    Container(
+                      width: barWidth,
+                      height: barHeight,
+                      decoration: BoxDecoration(
+                        color: barColor,
+                        borderRadius: .only(topLeft: .circular(barRadius), topRight: .circular(barRadius)),
+                      ),
+                    ),
+                    Container(
+                      width: barWidth,
+                      height: barHeight,
+                      decoration: BoxDecoration(
+                        color: barColor,
+                        borderRadius: .only(bottomLeft: .circular(barRadius), bottomRight: .circular(barRadius)),
+                      ),
+                    ),
+                  ],
                 );
               }),
             ),
