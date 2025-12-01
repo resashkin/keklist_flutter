@@ -192,6 +192,7 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
                               text: (MindNoteText textPiece) =>
                                   textPiece.value.isNotEmpty && !textPiece.value.endsWith('\n'),
                               audio: (_) => false,
+                              unknown: () => false,
                             );
                         content = content.copyWithAppendedAudio(trimmedPath, separator: needsLineBreak ? '\n' : null);
                         sendEventToBloc<MindBloc>(
@@ -212,6 +213,7 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
                               text: (MindNoteText textPiece) =>
                                   textPiece.value.isNotEmpty && !textPiece.value.endsWith('\n'),
                               audio: (_) => false,
+                              unknown: () => false,
                             );
                         content = content.copyWithAppendedAudio(trimmedPath, separator: needsLineBreak ? '\n' : null);
                         final Mind updatedMind = _editableMind!

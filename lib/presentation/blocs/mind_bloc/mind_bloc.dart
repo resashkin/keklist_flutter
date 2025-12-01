@@ -73,6 +73,7 @@ final class MindBloc extends Bloc<MindEvent, MindState> with DisposeBag {
                 : MindNoteAudio(appRelativeAbsoulutePath: trimmedPath),
           );
         },
+        unknown: () => null,
       );
     }
 
@@ -82,6 +83,7 @@ final class MindBloc extends Bloc<MindEvent, MindState> with DisposeBag {
             text: (MindNoteText textPiece) => textPiece.value,
             audio: (MindNoteAudio audioPiece) =>
                 '<$kMindAudioTag>${audioPiece.appRelativeAbsoulutePath}</$kMindAudioTag>',
+            unknown: () => '',
           ),
         )
         .join();

@@ -2,6 +2,7 @@ import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart' hide DateUtils;
 import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/core/helpers/extensions/state_extensions.dart';
 import 'package:keklist/presentation/screens/actions/action_model.dart';
 import 'package:keklist/presentation/screens/actions/actions_screen.dart';
@@ -152,6 +153,7 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
                               text: (MindNoteText textPiece) =>
                                   textPiece.value.isNotEmpty && !textPiece.value.endsWith('\n'),
                               audio: (_) => false,
+                              unknown: () => false,
                             );
                         content = content.copyWithAppendedAudio(trimmedPath, separator: needsLineBreak ? '\n' : null);
                         sendEventToBloc<MindBloc>(
@@ -172,18 +174,18 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
                               text: (MindNoteText textPiece) =>
                                   textPiece.value.isNotEmpty && !textPiece.value.endsWith('\n'),
                               audio: (_) => false,
+                              unknown: () => false,
                             );
                         content = content.copyWithAppendedAudio(trimmedPath, separator: needsLineBreak ? '\n' : null);
                         final Mind updatedMind = _editableMind!.copyWithNoteContent(content);
                         sendEventToBloc<MindBloc>(MindEdit(mind: updatedMind));
                       }
-
                       _resetMindCreator();
                     },
                     suggestionMinds: const [],
                     selectedEmoji: emoji,
                     onTapEmoji: () {},
-                    doneTitle: 'Save',
+                    doneTitle: context.l10n.save,
                     onTapCancelEdit: () {
                       _resetMindCreator();
                     },

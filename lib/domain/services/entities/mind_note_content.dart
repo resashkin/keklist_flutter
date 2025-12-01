@@ -3,7 +3,11 @@ const String kMindAudioTag = 'kekaudio';
 sealed class BaseMindNotePiece {
   const BaseMindNotePiece();
 
-  T map<T>({required T Function(MindNoteText text) text, required T Function(MindNoteAudio audio) audio}) {
+  T map<T>({
+    required T Function(MindNoteText text) text,
+    required T Function(MindNoteAudio audio) audio,
+    required T Function() unknown,
+  }) {
     final BaseMindNotePiece self = this;
     if (self is MindNoteText) {
       return text(self);
@@ -11,7 +15,7 @@ sealed class BaseMindNotePiece {
     if (self is MindNoteAudio) {
       return audio(self);
     }
-    throw UnsupportedError('Unknown MindNotePiece: $self');
+    return unknown();
   }
 }
 
@@ -83,6 +87,7 @@ final class MindNoteContent {
           text: (MindNoteText textPiece) => textPiece.value,
           audio: (MindNoteAudio audioPiece) =>
               '<$kMindAudioTag>${audioPiece.appRelativeAbsoulutePath}</$kMindAudioTag>',
+          unknown: () => '',
         ),
       )
       .join();
