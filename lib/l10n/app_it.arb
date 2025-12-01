@@ -97,6 +97,10 @@
     "@whatsNew": {
         "description": "Navigazione cosa c'è di nuovo"
     },
+    "releaseNotes": "Note di rilascio",
+    "@releaseNotes": {
+        "description": "Navigazione note di rilascio"
+    },
     "suggestFeature": "Suggerisci una funzione",
     "@suggestFeature": {
         "description": "Navigazione suggerisci funzione"
@@ -104,6 +108,14 @@
     "sendFeedback": "Invia feedback",
     "@sendFeedback": {
         "description": "Navigazione invia feedback"
+    },
+    "emailUs": "Inviaci un'email",
+    "@emailUs": {
+        "description": "Navigazione inviaci un'email"
+    },
+    "clearOfflineDataWarning": "Tutti i tuoi dati offline verranno eliminati. Assicurati di averli già esportati.",
+    "@clearOfflineDataWarning": {
+        "description": "Avviso cancellazione dati offline"
     },
     "sourceCode": "Codice sorgente",
     "@sourceCode": {

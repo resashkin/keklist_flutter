@@ -87,10 +87,20 @@ class AppLocalizationsEs extends AppLocalizations {
   String get whatsNew => '¿Qué hay de nuevo?';
 
   @override
+  String get releaseNotes => 'Notas de la versión';
+
+  @override
   String get suggestFeature => 'Sugerir una función';
 
   @override
   String get sendFeedback => 'Enviar comentarios';
+
+  @override
+  String get emailUs => 'Envíanos un correo';
+
+  @override
+  String get clearOfflineDataWarning =>
+      'Todos tus datos sin conexión se eliminarán. Asegúrate de haberlos exportado.';
 
   @override
   String get sourceCode => 'Código fuente';

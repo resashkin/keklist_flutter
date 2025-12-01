@@ -87,10 +87,20 @@ class AppLocalizationsKk extends AppLocalizations {
   String get whatsNew => 'Жаңалықтар?';
 
   @override
+  String get releaseNotes => 'Шығарылым жазбалары';
+
+  @override
   String get suggestFeature => 'Функция ұсыну';
 
   @override
   String get sendFeedback => 'Пікір жіберу';
+
+  @override
+  String get emailUs => 'Бізге email жазыңыз';
+
+  @override
+  String get clearOfflineDataWarning =>
+      'Барлық офлайн деректеріңіз жойылады. Оларды алдын ала экспорттағаныңызға көз жеткізіңіз.';
 
   @override
   String get sourceCode => 'Дереккөз коды';

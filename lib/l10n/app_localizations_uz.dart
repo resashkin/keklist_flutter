@@ -87,10 +87,20 @@ class AppLocalizationsUz extends AppLocalizations {
   String get whatsNew => 'Yangi nimalar?';
 
   @override
+  String get releaseNotes => 'Reliz eslatmalari';
+
+  @override
   String get suggestFeature => 'Xususiyat taklif qilish';
 
   @override
   String get sendFeedback => 'Fikr-mulohaza yuborish';
+
+  @override
+  String get emailUs => 'Bizga email yozing';
+
+  @override
+  String get clearOfflineDataWarning =>
+      'Barcha oflayn ma\'lumotlaringiz o\'chiriladi. Ularni oldindan eksport qilganingizga ishonch hosil qiling.';
 
   @override
   String get sourceCode => 'Manba kodi';

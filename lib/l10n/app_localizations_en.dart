@@ -87,10 +87,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get whatsNew => 'What\'s new?';
 
   @override
+  String get releaseNotes => 'Release notes';
+
+  @override
   String get suggestFeature => 'Suggest a feature';
 
   @override
   String get sendFeedback => 'Send feedback';
+
+  @override
+  String get emailUs => 'Email us';
+
+  @override
+  String get clearOfflineDataWarning =>
+      'All your offline data will be deleted. Make sure that you have already exported it.';
 
   @override
   String get sourceCode => 'Source code';

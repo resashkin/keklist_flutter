@@ -16,6 +16,7 @@ import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/screens/actions/action_model.dart';
 import 'package:keklist/presentation/screens/actions/actions_screen.dart';
+import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_collection_empty_day_widget.dart';
 import 'package:keklist/presentation/screens/mind_creator/mind_creator_screen.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -199,10 +200,12 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
               onOptions: (Mind mind) => _showActions(context, mind),
               mindIdsToChildren: _mindIdsToChildren,
             ),
-            falseChild: _MindZeroCase(
-              suggestions: suggestions,
-              onEmojiTap: (emoji) => _showMindCreator(initialEmoji: emoji),
-            ),
+            falseChild: MindCollectionEmptyDayWidget.noMindsForDay(),
+            // falseChild: _MindInteractiveZeroCase(
+            //   title: 'No created minds for today. Pick emoji to create one.',
+            //   suggestions: suggestions,
+            //   onEmojiTap: (emoji) => _showMindCreator(initialEmoji: emoji),
+            // ),
           ),
         ),
       ),
@@ -390,11 +393,12 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
   }
 }
 
-final class _MindZeroCase extends StatelessWidget {
+final class _MindInteractiveZeroCase extends StatelessWidget {
+  final String title;
   final Iterable<String> suggestions;
   final ValueChanged<String> onEmojiTap;
 
-  const _MindZeroCase({required this.suggestions, required this.onEmojiTap});
+  const _MindInteractiveZeroCase({required this.suggestions, required this.onEmojiTap, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -402,7 +406,7 @@ final class _MindZeroCase extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: [
         const Gap(32.0),
-        if (suggestions.isNotEmpty) const Text('Pick emoji to write a new note...'), // TODO: localize
+        if (suggestions.isNotEmpty) Text(title),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           spacing: 8.0,

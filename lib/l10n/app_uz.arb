@@ -97,6 +97,10 @@
     "@whatsNew": {
         "description": "Yangi nimalar navigatsiyasi"
     },
+    "releaseNotes": "Reliz eslatmalari",
+    "@releaseNotes": {
+        "description": "Reliz eslatmalari navigatsiyasi"
+    },
     "suggestFeature": "Xususiyat taklif qilish",
     "@suggestFeature": {
         "description": "Xususiyat taklif qilish navigatsiyasi"
@@ -104,6 +108,14 @@
     "sendFeedback": "Fikr-mulohaza yuborish",
     "@sendFeedback": {
         "description": "Fikr-mulohaza yuborish navigatsiyasi"
+    },
+    "emailUs": "Bizga email yozing",
+    "@emailUs": {
+        "description": "Email yozish navigatsiyasi"
+    },
+    "clearOfflineDataWarning": "Barcha oflayn ma'lumotlaringiz o'chiriladi. Ularni oldindan eksport qilganingizga ishonch hosil qiling.",
+    "@clearOfflineDataWarning": {
+        "description": "Oflayn ma'lumotlarni o'chirish ogohlantirishi"
     },
     "sourceCode": "Manba kodi",
     "@sourceCode": {

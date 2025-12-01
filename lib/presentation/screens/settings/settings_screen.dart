@@ -2,7 +2,6 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
-import 'package:gap/gap.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
 import 'package:keklist/domain/constants.dart';
@@ -39,36 +38,33 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   void initState() {
     super.initState();
 
-    subscribeToBloc<SettingsBloc>(onNewState: (state) {
-      switch (state) {
-        case SettingsDataState state:
-          setState(() {
-            _isDarkMode = state.settings.isDarkMode;
-          });
-          break;
-        case SettingsShowMessage state:
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text(state.title),
-              content: Text(state.message),
-              actions: [
-                TextButton(
-                  child: Text('OK'),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-              ],
-            ),
-          );
-        case SettingsLoadingState state:
-          if (state.isLoading) {
-            EasyLoading.show();
-          } else {
-            EasyLoading.dismiss();
-          }
-          break;
-      }
-    })?.disposed(by: this);
+    subscribeToBloc<SettingsBloc>(
+      onNewState: (state) {
+        switch (state) {
+          case SettingsDataState state:
+            setState(() {
+              _isDarkMode = state.settings.isDarkMode;
+            });
+            break;
+          case SettingsShowMessage state:
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: Text(state.title),
+                content: Text(state.message),
+                actions: [TextButton(child: Text('OK'), onPressed: () => Navigator.of(context).pop())],
+              ),
+            );
+          case SettingsLoadingState state:
+            if (state.isLoading) {
+              EasyLoading.show();
+            } else {
+              EasyLoading.dismiss();
+            }
+            break;
+        }
+      },
+    )?.disposed(by: this);
     sendEventToBloc<SettingsBloc>(SettingsGet());
   }
 
@@ -82,41 +78,38 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
       body: SettingsList(
         sections: [
           SettingsSection(
+            title: Text('APPLICATION'),
             tiles: [
-              SettingsTile.navigation(
-                title: Text('Our new features'),
-                enabled: false,
-                trailing: Gap(0),
-              ),
-              CustomSettingsTile(
-                child: Container(
-                  color: Color.fromRGBO(27, 27, 27, 1),
-                  child: Column(
-                    children: [
-                      StoriesWidget(
-                        stories: [
-                          Story(id: '1', title: 'Voices', emoji: '🎙️'),
-                          Story(id: '2', title: 'Whats new', emoji: '👨‍💻'),
-                          Story(id: '3', title: 'PRO', emoji: '🤝'),
-                          Story(id: '4', title: 'Supermind', emoji: '🧠'),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SettingsTile.navigation(
-                title: Text('Release notes'),
-                leading: const Icon(Icons.new_releases, color: Color.fromARGB(255, 191, 188, 191)),
-                onPressed: (BuildContext context) => _showWhatsNew(),
-              ),
+              // SettingsTile.navigation(title: Text('Our new features'), enabled: false, trailing: SizedBox.shrink()),
+              // CustomSettingsTile(
+              //   child: Container(
+              //     color: Color.fromRGBO(27, 27, 27, 1),
+              //     child: Column(
+              //       children: [
+              //         StoriesWidget(
+              //           stories: [
+              //             Story(id: '1', title: 'Voices', emoji: '🎙️'),
+              //             Story(id: '2', title: 'Whats new', emoji: '👨‍💻'),
+              //             Story(id: '3', title: 'PRO', emoji: '🤝'),
+              //             Story(id: '4', title: 'Supermind', emoji: '🧠'),
+              //           ],
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
               SettingsTile.navigation(
                 title: Text('keklist PRO'),
                 leading: const Icon(Icons.handshake, color: Colors.yellowAccent),
                 onPressed: (BuildContext context) => _openPaywall(),
               ),
               SettingsTile.navigation(
-                title: Text('keklist news [Telegram] [RU]'),
+                title: Text(context.l10n.releaseNotes),
+                leading: const Icon(Icons.new_releases, color: Color.fromARGB(255, 191, 188, 191)),
+                onPressed: (BuildContext context) => _showWhatsNew(),
+              ),
+              SettingsTile.navigation(
+                title: Text('Dev Blog [Telegram] [RU]'),
                 leading: const Icon(Icons.newspaper, color: Colors.blue),
                 onPressed: (BuildContext context) => _openAppNews(),
               ),
@@ -126,7 +119,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
                 onPressed: (BuildContext context) => _openSuggestFeature(),
               ),
               SettingsTile.navigation(
-                title: Text('Problem detected'),
+                title: Text(context.l10n.emailUs),
                 leading: const Icon(Icons.feedback, color: Colors.blueGrey),
                 onPressed: (BuildContext context) async => await _openEmailFeedbackForm(),
               ),
@@ -148,7 +141,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
                 onPressed: (BuildContext context) {
                   sendEventToBloc<SettingsBloc>(SettingsImport(type: SettingsImportType.csv));
                 },
-              )
+              ),
             ],
           ),
           SettingsSection(
@@ -216,20 +209,16 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
                 title: Text(context.l10n.clearOnDeviceData),
                 leading: const Icon(Icons.delete_outline, color: Colors.red),
                 onPressed: (BuildContext context) async => await _clearCache(),
-              )
+              ),
             ],
-          )
+          ),
         ],
       ),
     );
   }
 
   void _showLanguagePicker() {
-    Navigator.of(context).push(
-      BackSwipePageRoute(
-        builder: (context) => const LanguagePickerScreen(),
-      ),
-    );
+    Navigator.of(context).push(BackSwipePageRoute(builder: (context) => const LanguagePickerScreen()));
   }
 
   Future<void> _openEmailFeedbackForm() async {
@@ -274,7 +263,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   Future<void> _openAppNews() async {
     final Uri uri = Uri.parse(KeklistConstants.newsTelegramChannelURL);
     if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
+      await launchUrl(uri, mode: .externalApplication);
     }
   }
 
@@ -293,27 +282,23 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   void _showWhatsNew() {
     Navigator.of(context).push<void>(
       BackSwipePageRoute<void>(
-        builder: (BuildContext context) => WebPageScreen(
-          title: context.l10n.whatsNew,
-          initialUri: Uri.parse(KeklistConstants.whatsNewURL),
-        ),
+        builder: (BuildContext context) =>
+            WebPageScreen(title: context.l10n.whatsNew, initialUri: Uri.parse(KeklistConstants.whatsNewURL)),
       ),
     );
   }
 
   void _showTabsSettings() {
-    Navigator.of(context).push<void>(
-      BackSwipePageRoute<void>(
-        builder: (BuildContext context) => const TabsSettingsScreen(),
-      ),
-    );
+    Navigator.of(
+      context,
+    ).push<void>(BackSwipePageRoute<void>(builder: (BuildContext context) => const TabsSettingsScreen()));
   }
 
   Future<void> _clearCache() async {
     final OkCancelResult result = await showOkCancelAlertDialog(
       context: context,
       title: context.l10n.areYouSure,
-      message: 'All your offline data will be deleted. Make sure that you have already exported it.',
+      message: context.l10n.clearOfflineDataWarning,
       cancelLabel: context.l10n.cancel,
       okLabel: context.l10n.clearCache,
       isDestructiveAction: true,

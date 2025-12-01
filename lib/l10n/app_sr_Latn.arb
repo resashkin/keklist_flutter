@@ -95,6 +95,10 @@
     "@whatsNew": {
         "description": "Navigacija šta je novo"
     },
+    "releaseNotes": "Beleške o izdanju",
+    "@releaseNotes": {
+        "description": "Navigacija beleške o izdanju"
+    },
     "suggestFeature": "Predloži funkciju",
     "@suggestFeature": {
         "description": "Navigacija predlaganja funkcije"
@@ -102,6 +106,14 @@
     "sendFeedback": "Pošalji povratnu informaciju",
     "@sendFeedback": {
         "description": "Navigacija slanja povratne informacije"
+    },
+    "emailUs": "Pošalji nam e-poruku",
+    "@emailUs": {
+        "description": "Navigacija slanja email poruke"
+    },
+    "clearOfflineDataWarning": "Svi oflajn podaci će biti obrisani. Uveri se da si ih već izvezao.",
+    "@clearOfflineDataWarning": {
+        "description": "Upozorenje za brisanje oflajn podataka"
     },
     "sourceCode": "Izvorni kod",
     "@sourceCode": {

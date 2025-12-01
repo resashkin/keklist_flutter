@@ -97,6 +97,10 @@
     "@whatsNew": {
         "description": "Navegación qué hay de nuevo"
     },
+    "releaseNotes": "Notas de la versión",
+    "@releaseNotes": {
+        "description": "Navegación notas de la versión"
+    },
     "suggestFeature": "Sugerir una función",
     "@suggestFeature": {
         "description": "Navegación sugerir función"
@@ -104,6 +108,14 @@
     "sendFeedback": "Enviar comentarios",
     "@sendFeedback": {
         "description": "Navegación enviar comentarios"
+    },
+    "emailUs": "Envíanos un correo",
+    "@emailUs": {
+        "description": "Navegación envíanos un correo"
+    },
+    "clearOfflineDataWarning": "Todos tus datos sin conexión se eliminarán. Asegúrate de haberlos exportado.",
+    "@clearOfflineDataWarning": {
+        "description": "Advertencia al borrar datos sin conexión"
     },
     "sourceCode": "Código fuente",
     "@sourceCode": {

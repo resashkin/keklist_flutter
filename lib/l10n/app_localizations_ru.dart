@@ -87,10 +87,20 @@ class AppLocalizationsRu extends AppLocalizations {
   String get whatsNew => 'Что нового?';
 
   @override
+  String get releaseNotes => 'История версий';
+
+  @override
   String get suggestFeature => 'Предложить функцию';
 
   @override
   String get sendFeedback => 'Отправить отзыв';
+
+  @override
+  String get emailUs => 'Напишите нам на email';
+
+  @override
+  String get clearOfflineDataWarning =>
+      'Все ваши офлайн данные будут удалены. Убедитесь, что вы уже экспортировали их.';
 
   @override
   String get sourceCode => 'Исходный код';

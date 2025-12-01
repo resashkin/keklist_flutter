@@ -87,10 +87,20 @@ class AppLocalizationsSr extends AppLocalizations {
   String get whatsNew => 'Шта је ново?';
 
   @override
+  String get releaseNotes => 'Белешке о издању';
+
+  @override
   String get suggestFeature => 'Предложи функцију';
 
   @override
   String get sendFeedback => 'Пошаљи повратну информацију';
+
+  @override
+  String get emailUs => 'Пошаљи нам e-поруку';
+
+  @override
+  String get clearOfflineDataWarning =>
+      'Сви офлајн подаци ће бити обрисани. Увери се да си их већ извезао.';
 
   @override
   String get sourceCode => 'Изворни код';
@@ -370,10 +380,20 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
   String get whatsNew => 'Šta je novo?';
 
   @override
+  String get releaseNotes => 'Beleške o izdanju';
+
+  @override
   String get suggestFeature => 'Predloži funkciju';
 
   @override
   String get sendFeedback => 'Pošalji povratnu informaciju';
+
+  @override
+  String get emailUs => 'Pošalji nam e-poruku';
+
+  @override
+  String get clearOfflineDataWarning =>
+      'Svi oflajn podaci će biti obrisani. Uveri se da si ih već izvezao.';
 
   @override
   String get sourceCode => 'Izvorni kod';

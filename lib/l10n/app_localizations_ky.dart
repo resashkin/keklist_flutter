@@ -87,10 +87,20 @@ class AppLocalizationsKy extends AppLocalizations {
   String get whatsNew => 'Жаңы нерселер?';
 
   @override
+  String get releaseNotes => 'Релиз жазмалары';
+
+  @override
   String get suggestFeature => 'Өзгөчөлүктү сунуш кылуу';
 
   @override
   String get sendFeedback => 'Пикир-божомол жөнөтүү';
+
+  @override
+  String get emailUs => 'Бизге email жазыңыз';
+
+  @override
+  String get clearOfflineDataWarning =>
+      'Бардык оффлайн маалыматтарың өчүрүлөт. Аларды мурун экспорттогонуңа ынан.';
 
   @override
   String get sourceCode => 'Булак коду';

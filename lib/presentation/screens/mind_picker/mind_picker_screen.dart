@@ -11,11 +11,7 @@ final class MindPickerScreen extends StatefulWidget {
   final Iterable<String> suggestions;
   final Function(String) onSelect;
 
-  const MindPickerScreen({
-    super.key,
-    required this.onSelect,
-    this.suggestions = const [],
-  });
+  const MindPickerScreen({super.key, required this.onSelect, this.suggestions = const []});
 
   @override
   MindPickerScreenState createState() => MindPickerScreenState();
@@ -47,11 +43,13 @@ final class MindPickerScreenState extends KekWidgetState<MindPickerScreen> {
       });
     });
 
-    subscribeToBloc<MindCreatorBloc>(onNewState: (state) {
-      setState(() => _suggestions = state.suggestions);
-    })?.disposed(by: this);
+    subscribeToBloc<MindCreatorBloc>(
+      onNewState: (state) {
+        setState(() => _suggestions = state.suggestions);
+      },
+    )?.disposed(by: this);
 
-    sendEventToBloc<MindCreatorBloc>(MindCreatorGetSuggestions(text: ''));
+    //sendEventToBloc<MindCreatorBloc>(MindCreatorGetSuggestions(text: ''));
   }
 
   @override
@@ -80,17 +78,10 @@ final class MindPickerScreenState extends KekWidgetState<MindPickerScreen> {
               return GridView.custom(
                 padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: widgetsInRowCount),
-                childrenDelegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    final emoji = _displayedEmojiCharacters[index];
-                    return MindWidget(
-                      item: emoji,
-                      onTap: () => _pickEmoji(emoji),
-                      isHighlighted: true,
-                    );
-                  },
-                  childCount: _displayedEmojies.length,
-                ),
+                childrenDelegate: SliverChildBuilderDelegate((context, index) {
+                  final emoji = _displayedEmojiCharacters[index];
+                  return MindWidget(item: emoji, onTap: () => _pickEmoji(emoji), isHighlighted: true);
+                }, childCount: _displayedEmojies.length),
               );
             },
           ),

@@ -97,6 +97,10 @@
     "@whatsNew": {
         "description": "Жаңалықтар навигациясы"
     },
+    "releaseNotes": "Шығарылым жазбалары",
+    "@releaseNotes": {
+        "description": "Шығарылым жазбалары навигациясы"
+    },
     "suggestFeature": "Функция ұсыну",
     "@suggestFeature": {
         "description": "Функция ұсыну навигациясы"
@@ -104,6 +108,14 @@
     "sendFeedback": "Пікір жіберу",
     "@sendFeedback": {
         "description": "Пікір жіберу навигациясы"
+    },
+    "emailUs": "Бізге email жазыңыз",
+    "@emailUs": {
+        "description": "Email арқылы хабарласу навигациясы"
+    },
+    "clearOfflineDataWarning": "Барлық офлайн деректеріңіз жойылады. Оларды алдын ала экспорттағаныңызға көз жеткізіңіз.",
+    "@clearOfflineDataWarning": {
+        "description": "Офлайн деректерді өшіру ескертуі"
     },
     "sourceCode": "Дереккөз коды",
     "@sourceCode": {

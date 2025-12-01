@@ -273,6 +273,12 @@ abstract class AppLocalizations {
   /// **'What\'s new?'**
   String get whatsNew;
 
+  /// Release notes navigation
+  ///
+  /// In en, this message translates to:
+  /// **'Release notes'**
+  String get releaseNotes;
+
   /// Suggest feature navigation
   ///
   /// In en, this message translates to:
@@ -284,6 +290,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Send feedback'**
   String get sendFeedback;
+
+  /// Email us navigation
+  ///
+  /// In en, this message translates to:
+  /// **'Email us'**
+  String get emailUs;
+
+  /// Warning when clearing offline data
+  ///
+  /// In en, this message translates to:
+  /// **'All your offline data will be deleted. Make sure that you have already exported it.'**
+  String get clearOfflineDataWarning;
 
   /// Source code navigation
   ///

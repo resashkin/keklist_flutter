@@ -103,6 +103,10 @@
     "@whatsNew": {
         "description": "What's new navigation"
     },
+    "releaseNotes": "Release notes",
+    "@releaseNotes": {
+        "description": "Release notes navigation"
+    },
     "suggestFeature": "Suggest a feature",
     "@suggestFeature": {
         "description": "Suggest feature navigation"
@@ -110,6 +114,14 @@
     "sendFeedback": "Send feedback",
     "@sendFeedback": {
         "description": "Send feedback navigation"
+    },
+    "emailUs": "Email us",
+    "@emailUs": {
+        "description": "Email us navigation"
+    },
+    "clearOfflineDataWarning": "All your offline data will be deleted. Make sure that you have already exported it.",
+    "@clearOfflineDataWarning": {
+        "description": "Warning when clearing offline data"
     },
     "sourceCode": "Source code",
     "@sourceCode": {
