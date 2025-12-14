@@ -1,0 +1,62 @@
+name: Build Android APK
+
+on:
+  push:
+    branches:
+      - master
+      - 'claude/**'
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+          channel: 'stable'
+          cache: true
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Build APK
+        run: flutter build apk --release
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: keklist-app-release
+          path: build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 30
+
+      - name: Get commit info
+        id: commit_info
+        run: |
+          echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "commit_msg=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
+
+      - name: Create artifact summary
+        run: |
+          echo "### ✅ APK Build Successful!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Commit:** ${{ steps.commit_info.outputs.short_sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Message:** ${{ steps.commit_info.outputs.commit_msg }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📦 Download the APK from the artifacts section above." >> $GITHUB_STEP_SUMMARY
