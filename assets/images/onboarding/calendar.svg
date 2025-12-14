@@ -1,0 +1,42 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Calendar and insights illustration -->
+
+  <!-- Background -->
+  <circle cx="100" cy="100" r="85" fill="#9C27B0" opacity="0.1"/>
+
+  <!-- Calendar -->
+  <rect x="50" y="60" width="100" height="90" rx="6" fill="white" stroke="#9C27B0" stroke-width="3"/>
+
+  <!-- Calendar header -->
+  <rect x="50" y="60" width="100" height="20" rx="6" fill="#9C27B0"/>
+  <rect x="50" y="75" width="100" height="5" fill="#9C27B0"/>
+
+  <!-- Calendar rings -->
+  <rect x="65" y="53" width="6" height="14" rx="3" fill="#9C27B0"/>
+  <rect x="129" y="53" width="6" height="14" rx="3" fill="#9C27B0"/>
+
+  <!-- Calendar grid -->
+  <line x1="70" y1="85" x2="70" y2="145" stroke="#E1BEE7" stroke-width="1"/>
+  <line x1="90" y1="85" x2="90" y2="145" stroke="#E1BEE7" stroke-width="1"/>
+  <line x1="110" y1="85" x2="110" y2="145" stroke="#E1BEE7" stroke-width="1"/>
+  <line x1="130" y1="85" x2="130" y2="145" stroke="#E1BEE7" stroke-width="1"/>
+
+  <line x1="55" y1="95" x2="145" y2="95" stroke="#E1BEE7" stroke-width="1"/>
+  <line x1="55" y1="110" x2="145" y2="110" stroke="#E1BEE7" stroke-width="1"/>
+  <line x1="55" y1="125" x2="145" y2="125" stroke="#E1BEE7" stroke-width="1"/>
+
+  <!-- Emoji dots on calendar -->
+  <circle cx="60" cy="90" r="3" fill="#FDD835"/>
+  <circle cx="80" cy="90" r="3" fill="#4CAF50"/>
+  <circle cx="100" cy="105" r="3" fill="#FF5722"/>
+  <circle cx="120" cy="105" r="3" fill="#2196F3"/>
+  <circle cx="60" cy="120" r="3" fill="#9C27B0"/>
+  <circle cx="80" cy="135" r="3" fill="#FDD835"/>
+
+  <!-- Chart icon -->
+  <g transform="translate(160, 100)">
+    <rect x="-12" y="0" width="6" height="25" rx="2" fill="#4CAF50" opacity="0.7"/>
+    <rect x="-4" y="-10" width="6" height="35" rx="2" fill="#4CAF50" opacity="0.9"/>
+    <rect x="4" y="5" width="6" height="20" rx="2" fill="#4CAF50"/>
+  </g>
+</svg>

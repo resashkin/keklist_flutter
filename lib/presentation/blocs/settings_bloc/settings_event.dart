@@ -63,3 +63,9 @@ final class SettingsChangeLanguage extends SettingsEvent {
 
   const SettingsChangeLanguage({required this.language});
 }
+
+final class SettingsUpdateOnboardingComplete extends SettingsEvent {
+  final bool hasSeenOnboarding;
+
+  const SettingsUpdateOnboardingComplete({required this.hasSeenOnboarding});
+}

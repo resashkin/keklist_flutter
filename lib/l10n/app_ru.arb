@@ -88,5 +88,20 @@
     "debugMenuDescription": "Инструменты разработчика для переключения экспериментальных функций",
     "noMindsForThisDay": "Нет заметок на этот день",
     "showMindsForPeriod": "Показать заметки за {period}",
-    "week": "Неделя"
+    "week": "Неделя",
+    "onboardingWelcomeTitle": "Добро пожаловать в keklist!",
+    "onboardingWelcomeDescription": "Ваше личное пространство для сбора и осмысления повседневных моментов, мыслей и эмоций.",
+    "onboardingMindTitle": "Что такое Mind?",
+    "onboardingMindDescription": "Mind - это простая запись, сочетающая эмодзи и заметку. Выражайте свои мысли, чувства или моменты за секунды!",
+    "onboardingCalendarTitle": "Отслеживайте и анализируйте",
+    "onboardingCalendarDescription": "Просматривайте свои заметки в красивом календаре, находите закономерности и получайте представление о своем эмоциональном путешествии.",
+    "onboardingStartTitle": "Готовы начать?",
+    "onboardingStartDescription": "Начните собирать свои мысли сегодня. Мы создали несколько примеров, чтобы помочь вам начать!",
+    "onboardingNext": "Далее",
+    "onboardingSkip": "Пропустить",
+    "onboardingGetStarted": "Начать",
+    "onboardingSampleMind1": "Добро пожаловать в keklist! Это ваша первая заметка. Нажмите кнопку + ниже, чтобы создать больше.",
+    "onboardingSampleMind2": "Используйте эмодзи, чтобы быстро запечатлеть свое настроение или чувство",
+    "onboardingSampleMind3": "Добавляйте заметки, чтобы запомнить важные моменты",
+    "onboardingSampleMind4": "Вы можете создавать сколько угодно заметок каждый день!"
 }

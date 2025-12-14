@@ -42,6 +42,7 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     on<SettingsChangeOpenAIKey>(_changeOpenAIKey);
     on<SettingsUpdateShouldShowTitlesMode>(_updateShouldShowTitlesMode);
     on<SettingsChangeLanguage>(_changeLanguage);
+    on<SettingsUpdateOnboardingComplete>(_updateOnboardingComplete);
 
     _repository.stream.listen((settings) => add(SettingsGet())).disposed(by: this);
   }
@@ -208,6 +209,13 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
 
   FutureOr<void> _changeLanguage(SettingsChangeLanguage event, Emitter<SettingsState> emit) async {
     await _repository.updateLanguage(event.language);
+  }
+
+  FutureOr<void> _updateOnboardingComplete(
+    SettingsUpdateOnboardingComplete event,
+    Emitter<SettingsState> emit,
+  ) async {
+    await _repository.updateHasSeenOnboarding(event.hasSeenOnboarding);
   }
 
   // FutureOr<void> _exportToEncryptedImage(

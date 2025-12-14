@@ -363,5 +363,65 @@
     "week": "Week",
     "@week": {
         "description": "Week label"
+    },
+    "onboardingWelcomeTitle": "Welcome to keklist!",
+    "@onboardingWelcomeTitle": {
+        "description": "Onboarding welcome page title"
+    },
+    "onboardingWelcomeDescription": "Your personal space to collect and reflect on your daily moments, thoughts, and emotions.",
+    "@onboardingWelcomeDescription": {
+        "description": "Onboarding welcome page description"
+    },
+    "onboardingMindTitle": "What is a Mind?",
+    "@onboardingMindTitle": {
+        "description": "Onboarding mind concept page title"
+    },
+    "onboardingMindDescription": "A mind is a simple entry combining an emoji and a note. Express your thoughts, feelings, or moments in seconds!",
+    "@onboardingMindDescription": {
+        "description": "Onboarding mind concept page description"
+    },
+    "onboardingCalendarTitle": "Track & Analyze",
+    "@onboardingCalendarTitle": {
+        "description": "Onboarding calendar features page title"
+    },
+    "onboardingCalendarDescription": "View your minds in a beautiful calendar, discover patterns, and gain insights about your emotional journey.",
+    "@onboardingCalendarDescription": {
+        "description": "Onboarding calendar features page description"
+    },
+    "onboardingStartTitle": "Ready to Begin?",
+    "@onboardingStartTitle": {
+        "description": "Onboarding start page title"
+    },
+    "onboardingStartDescription": "Start collecting your minds today. We've created a few examples to help you get started!",
+    "@onboardingStartDescription": {
+        "description": "Onboarding start page description"
+    },
+    "onboardingNext": "Next",
+    "@onboardingNext": {
+        "description": "Onboarding next button"
+    },
+    "onboardingSkip": "Skip",
+    "@onboardingSkip": {
+        "description": "Onboarding skip button"
+    },
+    "onboardingGetStarted": "Get Started",
+    "@onboardingGetStarted": {
+        "description": "Onboarding get started button"
+    },
+    "onboardingSampleMind1": "Welcome to keklist! This is your first mind. Tap the + button below to create more.",
+    "@onboardingSampleMind1": {
+        "description": "Onboarding sample mind 1 text"
+    },
+    "onboardingSampleMind2": "Use emojis to quickly capture your mood or feeling",
+    "@onboardingSampleMind2": {
+        "description": "Onboarding sample mind 2 text"
+    },
+    "onboardingSampleMind3": "Add notes to remember important moments",
+    "@onboardingSampleMind3": {
+        "description": "Onboarding sample mind 3 text"
+    },
+    "onboardingSampleMind4": "You can create as many minds as you want each day!",
+    "@onboardingSampleMind4": {
+        "description": "Onboarding sample mind 4 text"
     }
 }

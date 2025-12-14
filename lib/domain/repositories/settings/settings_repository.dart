@@ -15,6 +15,7 @@ abstract class SettingsRepository {
   FutureOr<void> updateShouldShowTitles(bool shouldShowTitles);
   FutureOr<void> updatePreviousAppVersion(String? previousAppVersion);
   FutureOr<void> updateLanguage(SupportedLanguage language);
+  FutureOr<void> updateHasSeenOnboarding(bool hasSeenOnboarding);
 }
 
 final class KeklistSettings {
@@ -25,6 +26,7 @@ final class KeklistSettings {
   final bool shouldShowTitles;
   final String? userName;
   final SupportedLanguage language;
+  final bool hasSeenOnboarding;
 
   KeklistSettings({
     required this.isMindContentVisible,
@@ -34,6 +36,7 @@ final class KeklistSettings {
     required this.shouldShowTitles,
     required this.userName,
     required this.language,
+    required this.hasSeenOnboarding,
   });
 
   SettingsObject toObject() => SettingsObject()
@@ -43,7 +46,8 @@ final class KeklistSettings {
     ..shouldShowTitles = shouldShowTitles
     ..openAIKey = openAIKey
     ..userName = userName
-    ..language = language.code;
+    ..language = language.code
+    ..hasSeenOnboarding = hasSeenOnboarding;
 
   factory KeklistSettings.initial() => KeklistSettings(
         isMindContentVisible: true,
@@ -53,6 +57,7 @@ final class KeklistSettings {
         openAIKey: null,
         userName: null,
         language: _detectDeviceLocale(),
+        hasSeenOnboarding: false,
       );
 
   /// Detect device locale and return supported language or fallback to English

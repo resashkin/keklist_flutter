@@ -86,4 +86,11 @@ final class SettingsHiveRepository implements SettingsRepository {
     settingsObject?.userName = userName;
     await settingsObject?.save();
   }
+
+  @override
+  FutureOr<void> updateHasSeenOnboarding(bool hasSeenOnboarding) async {
+    final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.globalSettingsIndex);
+    settingsObject?.hasSeenOnboarding = hasSeenOnboarding;
+    await settingsObject?.save();
+  }
 }

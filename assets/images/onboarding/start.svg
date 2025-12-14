@@ -1,0 +1,39 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Get started illustration with rocket -->
+
+  <!-- Background circles -->
+  <circle cx="100" cy="100" r="85" fill="#FF5722" opacity="0.1"/>
+  <circle cx="100" cy="100" r="65" fill="#FF5722" opacity="0.15"/>
+
+  <!-- Rocket body -->
+  <ellipse cx="100" cy="110" rx="20" ry="35" fill="#FF5722"/>
+
+  <!-- Rocket nose -->
+  <path d="M 100 75 L 85 90 L 115 90 Z" fill="#F44336"/>
+
+  <!-- Rocket window -->
+  <circle cx="100" cy="105" r="8" fill="#81D4FA" opacity="0.8"/>
+  <circle cx="100" cy="105" r="5" fill="#E1F5FE"/>
+
+  <!-- Rocket fins -->
+  <path d="M 80 120 L 70 140 L 85 135 Z" fill="#D32F2F"/>
+  <path d="M 120 120 L 130 140 L 115 135 Z" fill="#D32F2F"/>
+
+  <!-- Rocket flames -->
+  <ellipse cx="100" cy="147" rx="12" ry="8" fill="#FDD835"/>
+  <ellipse cx="95" cy="153" rx="8" ry="6" fill="#FFB74D"/>
+  <ellipse cx="105" cy="153" rx="8" ry="6" fill="#FFB74D"/>
+  <ellipse cx="100" cy="158" rx="6" ry="4" fill="#FF5722"/>
+
+  <!-- Stars -->
+  <g>
+    <path d="M 50 50 L 52 54 L 56 54 L 53 57 L 54 61 L 50 59 L 46 61 L 47 57 L 44 54 L 48 54 Z" fill="#FDD835"/>
+    <path d="M 150 45 L 151.5 48 L 154.5 48 L 152 50 L 152.5 53 L 150 51.5 L 147.5 53 L 148 50 L 145.5 48 L 148.5 48 Z" fill="#FDD835"/>
+    <path d="M 160 90 L 161 92 L 163 92 L 161.5 93.5 L 162 95.5 L 160 94.5 L 158 95.5 L 158.5 93.5 L 157 92 L 159 92 Z" fill="#FDD835"/>
+    <path d="M 45 120 L 46.5 123 L 49.5 123 L 47 125 L 47.5 128 L 45 126.5 L 42.5 128 L 43 125 L 40.5 123 L 43.5 123 Z" fill="#FDD835"/>
+  </g>
+
+  <!-- Motion lines -->
+  <line x1="30" y1="160" x2="50" y2="170" stroke="#FFB74D" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+  <line x1="170" y1="160" x2="150" y2="170" stroke="#FFB74D" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+</svg>

@@ -101,5 +101,6 @@ flutter:
   uses-material-design: true
   assets:
     - dotenv
+    - assets/images/onboarding/
     # - assets/auth_icons/
     # - assets/steganograph_image/
