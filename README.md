@@ -65,10 +65,12 @@ With keklist I'm trying to resolve this kind of problems. Firstly, I'm trying to
 
 ## Prerequisites
 
-- **Flutter SDK**: Version 3.5.0 or higher
-- **Dart SDK**: Comes with Flutter
+- **FVM (Flutter Version Manager)**: Recommended for managing Flutter versions ([Install FVM](https://fvm.app/documentation/getting-started/installation))
+- **Dart SDK**: Required for FVM installation
 - **Android Studio** or **Xcode** (for Android/iOS development)
 - **Git**
+
+**Note:** This project uses FVM to manage Flutter versions. The required Flutter version (3.35.2) is specified in `.fvmrc`.
 
 ## Setup Instructions
 
@@ -79,13 +81,26 @@ git clone https://github.com/resashkin/keklist_flutter.git
 cd keklist_flutter
 ```
 
-### 2. Install dependencies
+### 2. Install Flutter with FVM
 
 ```bash
-flutter pub get
+# Install FVM if you haven't already
+dart pub global activate fvm
+
+# Install the Flutter version specified in .fvmrc
+fvm install
+
+# Use the installed Flutter version
+fvm use
 ```
 
-### 3. Set up environment variables
+### 3. Install dependencies
+
+```bash
+fvm flutter pub get
+```
+
+### 4. Set up environment variables
 
 Create a `dotenv` file in the root directory:
 
@@ -100,35 +115,35 @@ REVENUE_CAT_TEST_API_KEY=your_test_api_key_here
 REVENUE_CAT_PROD_API_KEY=your_prod_api_key_here
 ```
 
-### 4. Generate code
+### 5. Generate code
 
 Run code generation for Hive adapters and JSON serialization:
 
 ```bash
-dart run build_runner build --delete-conflicting-outputs
+fvm dart run build_runner build --delete-conflicting-outputs
 ```
 
-### 5. Generate localization files
+### 6. Generate localization files
 
 ```bash
-flutter gen-l10n
+fvm flutter gen-l10n
 ```
 
-### 6. Run the app
+### 7. Run the app
 
 **For Android:**
 ```bash
-flutter run
+fvm flutter run
 ```
 
 **For iOS:**
 ```bash
-flutter run -d ios
+fvm flutter run -d ios
 ```
 
 **For Web:**
 ```bash
-flutter run -d chrome
+fvm flutter run -d chrome
 ```
 
 ## Building Release Versions
@@ -136,7 +151,7 @@ flutter run -d chrome
 ### Android APK
 
 ```bash
-flutter build apk --release
+fvm flutter build apk --release
 ```
 
 The APK will be located at: `build/app/outputs/flutter-apk/app-release.apk`
@@ -144,13 +159,13 @@ The APK will be located at: `build/app/outputs/flutter-apk/app-release.apk`
 ### Android App Bundle (for Play Store)
 
 ```bash
-flutter build appbundle --release
+fvm flutter build appbundle --release
 ```
 
 ### iOS (requires Mac)
 
 ```bash
-flutter build ios --release
+fvm flutter build ios --release
 ```
 
 Then open `ios/Runner.xcworkspace` in Xcode to archive and upload to App Store.
@@ -192,40 +207,44 @@ keklist_flutter/
 ### Adding new localizations
 
 1. Add strings to `lib/l10n/app_en.arb` (and other language files)
-2. Run `flutter gen-l10n`
+2. Run `fvm flutter gen-l10n`
 3. Use via `AppLocalizations.of(context)!.yourKey`
 
 ### Adding new Hive models
 
 1. Create model in `lib/domain/repositories/*/object/`
 2. Add `@HiveType` and `@HiveField` annotations
-3. Run `dart run build_runner build --delete-conflicting-outputs`
+3. Run `fvm dart run build_runner build --delete-conflicting-outputs`
 
 ### Code formatting
 
 ```bash
-dart format lib/
+fvm dart format lib/
 ```
 
 ### Running tests
 
 ```bash
-flutter test
+fvm flutter test
 ```
 
 ## Troubleshooting
 
-**Issue: "dart: command not found"**
-- Ensure Flutter is in your PATH
-- Run `flutter doctor` to verify installation
+**Issue: "fvm: command not found"**
+- Install FVM: `dart pub global activate fvm`
+- Ensure `~/.pub-cache/bin` is in your PATH
+
+**Issue: "Flutter version mismatch"**
+- Run `fvm install` to install the correct Flutter version
+- Run `fvm use` to use it for the project
 
 **Issue: Build errors after pulling changes**
-- Run `flutter clean`
-- Run `flutter pub get`
-- Rebuild code generation
+- Run `fvm flutter clean`
+- Run `fvm flutter pub get`
+- Rebuild code generation: `fvm dart run build_runner build --delete-conflicting-outputs`
 
 **Issue: Localization not working**
-- Run `flutter gen-l10n`
+- Run `fvm flutter gen-l10n`
 - Restart your IDE/editor
 
 # How to support?

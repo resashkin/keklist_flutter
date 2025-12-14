@@ -4,8 +4,11 @@ Get keklist running locally in 5 minutes!
 
 ## Prerequisites
 
-- Flutter SDK 3.5.0+ ([Install Flutter](https://flutter.dev/docs/get-started/install))
+- Dart SDK ([Install Dart](https://dart.dev/get-dart))
+- FVM (Flutter Version Manager) ([Install FVM](https://fvm.app))
 - Git
+
+**Note:** This project uses FVM to manage Flutter versions (currently 3.35.2).
 
 ## Installation
 
@@ -14,22 +17,29 @@ Get keklist running locally in 5 minutes!
 git clone https://github.com/resashkin/keklist_flutter.git
 cd keklist_flutter
 
-# 2. Install dependencies
-flutter pub get
+# 2. Install FVM (if not already installed)
+dart pub global activate fvm
 
-# 3. Create environment file
+# 3. Install Flutter with FVM
+fvm install
+fvm use
+
+# 4. Install dependencies
+fvm flutter pub get
+
+# 5. Create environment file
 touch dotenv
 echo "REVENUE_CAT_TEST_API_KEY=your_test_key" >> dotenv
 echo "REVENUE_CAT_PROD_API_KEY=your_prod_key" >> dotenv
 
-# 4. Generate code
-dart run build_runner build --delete-conflicting-outputs
+# 6. Generate code
+fvm dart run build_runner build --delete-conflicting-outputs
 
-# 5. Generate localizations
-flutter gen-l10n
+# 7. Generate localizations
+fvm flutter gen-l10n
 
-# 6. Run the app
-flutter run
+# 8. Run the app
+fvm flutter run
 ```
 
 ## That's it! 🎉
@@ -44,21 +54,28 @@ The app should now be running on your device/emulator.
 
 ## Common Issues
 
-**"dart: command not found"**
+**"fvm: command not found"**
 ```bash
-flutter doctor  # Verify Flutter is installed and in PATH
+dart pub global activate fvm
+# Add ~/.pub-cache/bin to your PATH
+```
+
+**"Flutter version mismatch"**
+```bash
+fvm install  # Install the correct Flutter version
+fvm use      # Use it for the project
 ```
 
 **Build errors**
 ```bash
-flutter clean
-flutter pub get
-dart run build_runner build --delete-conflicting-outputs
+fvm flutter clean
+fvm flutter pub get
+fvm dart run build_runner build --delete-conflicting-outputs
 ```
 
 **Localization errors**
 ```bash
-flutter gen-l10n
+fvm flutter gen-l10n
 ```
 
 ## Need Help?
