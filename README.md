@@ -62,7 +62,171 @@ With keklist I'm trying to resolve this kind of problems. Firstly, I'm trying to
 - Long-term existing
 
 # How to build?
-// TODO: write an instruction
+
+## Prerequisites
+
+- **Flutter SDK**: Version 3.5.0 or higher
+- **Dart SDK**: Comes with Flutter
+- **Android Studio** or **Xcode** (for Android/iOS development)
+- **Git**
+
+## Setup Instructions
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/resashkin/keklist_flutter.git
+cd keklist_flutter
+```
+
+### 2. Install dependencies
+
+```bash
+flutter pub get
+```
+
+### 3. Set up environment variables
+
+Create a `dotenv` file in the root directory:
+
+```bash
+touch dotenv
+```
+
+Add the following variables (replace with your actual keys):
+
+```env
+REVENUE_CAT_TEST_API_KEY=your_test_api_key_here
+REVENUE_CAT_PROD_API_KEY=your_prod_api_key_here
+```
+
+### 4. Generate code
+
+Run code generation for Hive adapters and JSON serialization:
+
+```bash
+dart run build_runner build --delete-conflicting-outputs
+```
+
+### 5. Generate localization files
+
+```bash
+flutter gen-l10n
+```
+
+### 6. Run the app
+
+**For Android:**
+```bash
+flutter run
+```
+
+**For iOS:**
+```bash
+flutter run -d ios
+```
+
+**For Web:**
+```bash
+flutter run -d chrome
+```
+
+## Building Release Versions
+
+### Android APK
+
+```bash
+flutter build apk --release
+```
+
+The APK will be located at: `build/app/outputs/flutter-apk/app-release.apk`
+
+### Android App Bundle (for Play Store)
+
+```bash
+flutter build appbundle --release
+```
+
+### iOS (requires Mac)
+
+```bash
+flutter build ios --release
+```
+
+Then open `ios/Runner.xcworkspace` in Xcode to archive and upload to App Store.
+
+## Project Structure
+
+```
+keklist_flutter/
+├── lib/
+│   ├── di/                          # Dependency injection
+│   ├── domain/
+│   │   ├── repositories/            # Data repositories (Hive, settings, etc.)
+│   │   └── services/                # Business logic services
+│   ├── l10n/                        # Localization files (en, ru, etc.)
+│   ├── presentation/
+│   │   ├── blocs/                   # BLoC state management
+│   │   ├── cubits/                  # Cubit state management
+│   │   ├── screens/                 # UI screens
+│   │   │   ├── onboarding/         # Onboarding flow
+│   │   │   ├── mind_collection/    # Calendar view
+│   │   │   ├── insights/           # Analytics & charts
+│   │   │   └── settings/           # App settings
+│   │   └── core/                    # Shared widgets & utilities
+│   ├── native/                      # Platform-specific code
+│   ├── keklist_app.dart            # Main app widget
+│   └── main.dart                    # App entry point
+├── assets/
+│   └── images/
+│       └── onboarding/              # Onboarding SVG illustrations
+├── android/                         # Android-specific files
+├── ios/                            # iOS-specific files
+├── dotenv                          # Environment variables (not in git)
+└── pubspec.yaml                    # Dependencies
+
+```
+
+## Development Workflow
+
+### Adding new localizations
+
+1. Add strings to `lib/l10n/app_en.arb` (and other language files)
+2. Run `flutter gen-l10n`
+3. Use via `AppLocalizations.of(context)!.yourKey`
+
+### Adding new Hive models
+
+1. Create model in `lib/domain/repositories/*/object/`
+2. Add `@HiveType` and `@HiveField` annotations
+3. Run `dart run build_runner build --delete-conflicting-outputs`
+
+### Code formatting
+
+```bash
+dart format lib/
+```
+
+### Running tests
+
+```bash
+flutter test
+```
+
+## Troubleshooting
+
+**Issue: "dart: command not found"**
+- Ensure Flutter is in your PATH
+- Run `flutter doctor` to verify installation
+
+**Issue: Build errors after pulling changes**
+- Run `flutter clean`
+- Run `flutter pub get`
+- Rebuild code generation
+
+**Issue: Localization not working**
+- Run `flutter gen-l10n`
+- Restart your IDE/editor
 
 # How to support?
 - Reach me in [Telegram](https://t.me/resashkin) or by email sashkn2@gmail.com
