@@ -41,14 +41,14 @@ jobs:
       - name: Get dependencies
         run: fvm flutter pub get
 
-      - name: Build APK
-        run: fvm flutter build apk --release
+      - name: Build APK (Debug - Unsigned)
+        run: fvm flutter build apk --debug
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: keklist-app-release
-          path: build/app/outputs/flutter-apk/app-release.apk
+          name: keklist-app-debug
+          path: build/app/outputs/flutter-apk/app-debug.apk
           retention-days: 30
 
       - name: Get commit info
@@ -59,10 +59,13 @@ jobs:
 
       - name: Create artifact summary
         run: |
-          echo "### ✅ APK Build Successful!" >> $GITHUB_STEP_SUMMARY
+          echo "### ✅ Debug APK Build Successful!" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Build Type:** Debug (Unsigned)" >> $GITHUB_STEP_SUMMARY
           echo "**Commit:** ${{ steps.commit_info.outputs.short_sha }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Message:** ${{ steps.commit_info.outputs.commit_msg }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "📦 Download the APK from the artifacts section above." >> $GITHUB_STEP_SUMMARY
+          echo "📦 Download the debug APK from the artifacts section above." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "⚠️  Note: This is a debug build and not optimized for production use." >> $GITHUB_STEP_SUMMARY
