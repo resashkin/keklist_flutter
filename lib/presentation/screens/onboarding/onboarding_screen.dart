@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
 import 'package:keklist/l10n/app_localizations.dart';
 import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
-import 'package:keklist/presentation/blocs/settings_bloc/settings_event.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 
 class OnboardingScreen extends StatefulWidget {
