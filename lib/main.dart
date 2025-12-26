@@ -17,6 +17,7 @@ import 'package:keklist/keklist_app.dart';
 import 'package:keklist/domain/hive_constants.dart';
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
 import 'package:keklist/domain/repositories/debug_menu/object/debug_menu_object.dart';
+import 'package:keklist/presentation/blocs/audio_player_bloc/audio_player_bloc.dart';
 import 'package:keklist/presentation/blocs/mind_creator_bloc/mind_creator_bloc.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bloc.dart';
 import 'package:keklist/presentation/blocs/user_profile_bloc/user_profile_bloc.dart';
@@ -132,6 +133,7 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
               debugMenuRepository: mainInjector.get<DebugMenuRepository>(),
             ),
           ),
+          BlocProvider(create: (context) => AudioPlayerBloc()),
         ],
         child: const KeklistApp(),
       ),

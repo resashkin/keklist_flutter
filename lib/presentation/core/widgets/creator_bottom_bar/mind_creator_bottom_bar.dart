@@ -7,8 +7,6 @@ import 'package:keklist/presentation/core/widgets/mind_audio_recorder_sheet.dart
 import 'package:keklist/presentation/core/widgets/mind_widget.dart';
 import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
 
-// TODO: превратить suggestions в миничипсы и убрать эмодзик слева как нибудь
-
 final class MindCreatorBottomBar extends StatefulWidget {
   final Mind? editableMind;
   final TextEditingController textEditingController;
@@ -43,7 +41,7 @@ final class MindCreatorBottomBar extends StatefulWidget {
   State<MindCreatorBottomBar> createState() => _MindCreatorBottomBarState();
 }
 
-class _MindCreatorBottomBarState extends State<MindCreatorBottomBar> {
+final class _MindCreatorBottomBarState extends State<MindCreatorBottomBar> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -72,8 +70,8 @@ class _MindCreatorBottomBarState extends State<MindCreatorBottomBar> {
               ),
               const SizedBox(height: 8.0),
             ],
+            const SizedBox(height: 8.0),
             _TextFieldWidget(
-              selectedEmoji: widget.selectedEmoji,
               onSearchEmoji: widget.onTapEmoji,
               placeholder: widget.placeholder,
               focusNode: widget.focusNode,
@@ -81,10 +79,7 @@ class _MindCreatorBottomBarState extends State<MindCreatorBottomBar> {
               doneTitle: widget.doneTitle.toUpperCase(),
               onDone: () {
                 widget.onDone(
-                  CreateMindData(
-                    emoji: widget.selectedEmoji ?? '',
-                    text: widget.textEditingController.text,
-                  ),
+                  CreateMindData(emoji: widget.selectedEmoji ?? '', text: widget.textEditingController.text),
                 );
               },
               onAudioRecordDone: widget.onAudioRecordDone,
@@ -102,49 +97,24 @@ final class _EditableMindInfoWidget extends StatelessWidget {
   final Function() onTapEmoji;
   final Function() onTapCancelEdit;
 
-  const _EditableMindInfoWidget({
-    required this.editableMind,
-    required this.onTapEmoji,
-    required this.onTapCancelEdit,
-  });
+  const _EditableMindInfoWidget({required this.editableMind, required this.onTapEmoji, required this.onTapCancelEdit});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Padding(
-          padding: EdgeInsets.all(10.0),
-          child: Icon(Icons.edit),
-        ),
-        Container(
-          color: Theme.of(context).disabledColor,
-          height: 38.0,
-          width: 0.3,
-        ),
+        const Padding(padding: EdgeInsets.all(10.0), child: Icon(Icons.edit)),
+        Container(color: Theme.of(context).disabledColor, height: 38.0, width: 0.3),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                MindWidget.sized(
-                  item: editableMind.emoji,
-                  size: MindSize.small,
-                  onTap: onTapEmoji,
-                  badge: null,
-                ),
-                const SizedBox(width: 10.0),
                 Flexible(
-                  child: Text(
-                    editableMind.note.replaceAll('\n', ' '),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
+                  child: Text(editableMind.note.replaceAll('\n', ' '), overflow: TextOverflow.ellipsis, maxLines: 1),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.close),
-                  onPressed: onTapCancelEdit,
-                ),
+                IconButton(icon: const Icon(Icons.close), onPressed: onTapCancelEdit),
               ],
             ),
           ),
@@ -159,16 +129,12 @@ final class _HorizontalSeparator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Theme.of(context).disabledColor,
-      height: 0.3,
-    );
+    return Container(color: Theme.of(context).disabledColor, height: 0.3);
   }
 }
 
 final class _TextFieldWidget extends StatelessWidget {
   const _TextFieldWidget({
-    required this.selectedEmoji,
     required this.placeholder,
     required this.onSearchEmoji,
     required this.focusNode,
@@ -178,7 +144,6 @@ final class _TextFieldWidget extends StatelessWidget {
     required this.onAudioRecordDone,
   });
 
-  final String? selectedEmoji;
   final VoidCallback onSearchEmoji;
   final FocusNode focusNode;
   final TextEditingController textEditingController;
@@ -191,16 +156,7 @@ final class _TextFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const SizedBox(width: 4.0),
-        if (selectedEmoji != null) ...[
-          MindWidget.sized(
-            item: selectedEmoji!,
-            size: MindSize.medium,
-            onTap: onSearchEmoji,
-            badge: null,
-          ),
-          const SizedBox(width: 4.0),
-        ],
+        const SizedBox(width: 8.0),
         Flexible(
           flex: 1,
           child: ConstrainedBox(
@@ -219,9 +175,7 @@ final class _TextFieldWidget extends StatelessWidget {
               controller: textEditingController,
               decoration: InputDecoration(
                 contentPadding: const EdgeInsets.all(12.0),
-                border: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                ),
+                border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(12.0))),
                 hintText: placeholder,
                 suffixIcon: SensitiveWidget(
                   mode: SensitiveMode.blurredAndNonTappable,
@@ -236,36 +190,29 @@ final class _TextFieldWidget extends StatelessWidget {
                       final AppFileRepository fileRepository = context.read<AppFileRepository>();
                       final AudioRecordingResult audioRecordingResult =
                           await showModalBottomSheet<AudioRecordingResult>(
-                        context: context,
-                        builder: (BuildContext sheetContext) => MindAudioRecorderSheet(
-                          fileRepository: fileRepository,
-                        ),
-                      );
+                            context: context,
+                            builder: (BuildContext sheetContext) =>
+                                MindAudioRecorderSheet(fileRepository: fileRepository),
+                          );
                       if (audioRecordingResult != null) {
                         onAudioRecordDone.call(AudioCreateMindData(path: audioRecordingResult));
                       }
                     },
-                    child: Text(
-                      doneTitle,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
+                    child: Text(doneTitle, style: TextStyle(fontWeight: FontWeight.bold)),
                   ),
                 ),
               ),
             ),
           ),
         ),
-        const SizedBox(width: 4.0),
+        const SizedBox(width: 8.0),
       ],
     );
   }
 }
 
 class _SuggestionsWidget extends StatelessWidget {
-  const _SuggestionsWidget({
-    required this.suggestionMinds,
-    required this.onSelectSuggestionEmoji,
-  });
+  const _SuggestionsWidget({required this.suggestionMinds, required this.onSelectSuggestionEmoji});
 
   final List<String> suggestionMinds;
   final Function(String) onSelectSuggestionEmoji;
@@ -295,10 +242,7 @@ final class CreateMindData {
   final String text;
   final String emoji;
 
-  const CreateMindData({
-    required this.text,
-    required this.emoji,
-  });
+  const CreateMindData({required this.text, required this.emoji});
 }
 
 final class AudioCreateMindData {

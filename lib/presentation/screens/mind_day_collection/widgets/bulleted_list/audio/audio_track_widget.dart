@@ -1,241 +1,128 @@
-import 'dart:async';
-import 'dart:io';
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:just_audio/just_audio.dart';
-import 'package:just_waveform/just_waveform.dart';
 import 'package:keklist/domain/repositories/files/app_file_repository.dart';
 import 'package:keklist/domain/services/entities/mind_note_content.dart';
+import 'package:keklist/presentation/blocs/audio_player_bloc/audio_player_bloc.dart';
+import 'package:keklist/presentation/core/widgets/bool_widget.dart';
+import 'package:keklist/presentation/screens/mind_day_collection/widgets/bulleted_list/audio/full_screen_audio_player.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/bulleted_list/audio/play_pause_button.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/bulleted_list/audio/wave_progress_widget.dart';
-import 'package:provider/provider.dart';
 
-final class AudioTrackWidget extends StatefulWidget {
-  const AudioTrackWidget({super.key, required this.audio});
+final class AudioTrackWidget extends StatelessWidget {
+  const AudioTrackWidget({super.key, required this.audio, required this.emoji});
 
   final MindNoteAudio audio;
-
-  @override
-  State<AudioTrackWidget> createState() => AudioTrackWidgetState();
-}
-
-final class AudioTrackWidgetState extends State<AudioTrackWidget> {
-  late final AudioPlayer _player = AudioPlayer();
-  StreamSubscription<Duration>? _positionSubscription;
-  StreamSubscription<PlayerState>? _playerStateSubscription;
-  StreamSubscription<Duration?>? _durationSubscription;
-  StreamSubscription<WaveformProgress>? _waveformSubscription;
-
-  Duration _duration = Duration.zero;
-  Duration _position = Duration.zero;
-  bool _hasError = false;
-  List<double>? _waveform;
-
-  @override
-  void initState() {
-    super.initState();
-    _playerStateSubscription = _player.playerStateStream.listen((PlayerState state) {
-      if (!mounted) {
-        return;
-      }
-      if (state.processingState == ProcessingState.completed) {
-        unawaited(_player.seek(Duration.zero));
-        unawaited(_player.pause());
-      }
-      setState(() {});
-    });
-    unawaited(_initialize());
-  }
-
-  @override
-  void didUpdateWidget(covariant AudioTrackWidget oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.audio.appRelativeAbsoulutePath != widget.audio.appRelativeAbsoulutePath) {
-      unawaited(_initialize());
-    }
-  }
-
-  @override
-  void dispose() {
-    _positionSubscription?.cancel();
-    _playerStateSubscription?.cancel();
-    _durationSubscription?.cancel();
-    _waveformSubscription?.cancel();
-    _player.dispose();
-    super.dispose();
-  }
-
-  Future<void> _initialize() async {
-    _positionSubscription?.cancel();
-    _durationSubscription?.cancel();
-    _waveformSubscription?.cancel();
-    setState(() {
-      _hasError = false;
-      _position = Duration.zero;
-      _duration = Duration.zero;
-    });
-
-    try {
-      final AppFileRepository fileRepository = context.read<AppFileRepository>();
-      final String absolutePath = await fileRepository.resolveAbsolutePath(widget.audio.appRelativeAbsoulutePath);
-      await _player.setFilePath(absolutePath);
-      if (!mounted) {
-        return;
-      }
-      setState(() {
-        _duration = _player.duration ?? Duration.zero;
-      });
-
-      unawaited(_loadWaveform(absolutePath));
-
-      _positionSubscription = _player.positionStream.listen((Duration position) {
-        if (!mounted) {
-          return;
-        }
-        setState(() => _position = position);
-      });
-      _durationSubscription = _player.durationStream.listen((Duration? newDuration) {
-        if (!mounted || newDuration == null) {
-          return;
-        }
-        setState(() {
-          _duration = newDuration;
-        });
-      });
-    } catch (_) {
-      if (!mounted) {
-        return;
-      }
-      setState(() => _hasError = true);
-    }
-  }
-
-  Future<void> _loadWaveform(String absolutePath) async {
-    final File audioFile = .new(absolutePath);
-    if (!await audioFile.exists()) {
-      return;
-    }
-
-    final File waveformFile = .new('$absolutePath.waveform');
-    try {
-      if (await waveformFile.exists()) {
-        final Waveform waveform = await JustWaveform.parse(waveformFile);
-        _setupWaveform(waveform);
-        return;
-      }
-      _waveformSubscription =
-          JustWaveform.extract(
-            audioInFile: audioFile,
-            waveOutFile: waveformFile,
-            zoom: const WaveformZoom.pixelsPerSecond(200),
-          ).listen((WaveformProgress progress) {
-            if (!mounted) {
-              return;
-            }
-            final Waveform? waveform = progress.waveform;
-            if (waveform != null) {
-              _setupWaveform(waveform);
-            }
-          }, onError: (_) {});
-    } catch (_) {
-      if (!mounted) {
-        return;
-      }
-      setState(() => _waveform = null);
-    }
-  }
-
-  void _setupWaveform(Waveform waveform) {
-    final double maxAmplitude = waveform.flags == 0 ? 32768 : 128;
-    final List<double> normalized = .generate(waveform.length, (int index) {
-      final double min = waveform.getPixelMin(index).abs() / maxAmplitude;
-      final double max = waveform.getPixelMax(index).abs() / maxAmplitude;
-      final double normalizedValue = math.max(min, max);
-      return normalizedValue.isFinite ? normalizedValue.clamp(0.0, 1.0) : 0.0;
-    }, growable: false);
-    //_waveformCache[cacheKey] = normalized;
-    if (!mounted) {
-      return;
-    }
-    setState(() {
-      _waveform = normalized;
-    });
-  }
-
-  Future<void> _togglePlayback() async {
-    if (_hasError) {
-      return;
-    }
-
-    if (_player.playing) {
-      await _player.pause();
-    } else {
-      await _player.play();
-    }
-    if (mounted) {
-      setState(() {});
-    }
-  }
-
-  void _onSeek(double relativePosition) {
-    if (_hasError || _duration == Duration.zero || !relativePosition.isFinite) {
-      return;
-    }
-    final double clamped = relativePosition.clamp(0.0, 1.0);
-    final int targetMilliseconds = (_duration.inMilliseconds * clamped).round();
-    final Duration targetPosition = Duration(milliseconds: targetMilliseconds);
-    unawaited(_player.seek(targetPosition));
-    setState(() {
-      _position = targetPosition;
-    });
-  }
+  final String emoji;
 
   @override
   Widget build(BuildContext context) {
-    final bool isPlaying = _player.playing;
-    final double progress = _duration.inMilliseconds == 0
-        ? 0
-        : (_position.inMilliseconds / _duration.inMilliseconds).clamp(0.0, 1.0);
+    return BlocBuilder<AudioPlayerBloc, AudioPlayerState>(
+      buildWhen: (AudioPlayerState previous, AudioPlayerState current) {
+        // Only rebuild if this audio is loaded or state changed
+        if (current is AudioPlayerReady) {
+          return current.audio.appRelativeAbsoulutePath == audio.appRelativeAbsoulutePath;
+        }
+        if (current is AudioPlayerError) {
+          return current.audio?.appRelativeAbsoulutePath == audio.appRelativeAbsoulutePath;
+        }
+        return previous.runtimeType != current.runtimeType;
+      },
+      builder: (BuildContext context, AudioPlayerState state) {
+        final bool isThisAudioLoaded =
+            state is AudioPlayerReady && state.audio.appRelativeAbsoulutePath == audio.appRelativeAbsoulutePath;
 
-    return Column(
-      mainAxisSize: .min,
-      crossAxisAlignment: .start,
-      children: [
-        Row(
-          crossAxisAlignment: .center,
+        final bool hasError =
+            state is AudioPlayerError && state.audio?.appRelativeAbsoulutePath == audio.appRelativeAbsoulutePath;
+
+        final Duration duration = isThisAudioLoaded ? (state).duration : Duration.zero;
+        final List<double>? waveform = isThisAudioLoaded ? (state).waveform : null;
+
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // TODO: remove has error and make this button with disabled state
-            PlayPauseButton(isPlaying: isPlaying, hasError: _hasError, onPressed: _togglePlayback),
-            const Gap(4.0),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: .start,
-                mainAxisSize: .min,
-                children: [
-                  WaveProgressWidget(
-                    progress: _hasError ? 0.0 : progress,
-                    waveform: _waveform,
-                    onSeek: _hasError ? null : _onSeek,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                PlayPauseButton(
+                  isPlaying: false,
+                  hasError: hasError,
+                  onPressed: () => _openFullScreenPlayer(context),
+                  iconSize: 36.0,
+                ),
+                const Gap(4.0),
+                Expanded(
+                  child: InkWell(
+                    onTap: () => _openFullScreenPlayer(context),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        WaveProgressWidget(
+                          progress: 0.0,
+                          waveform: waveform,
+                          onSeek: null, // No seeking in compact view
+                        ),
+                        BoolWidget(
+                          condition: duration != Duration.zero,
+                          trueChild: Column(
+                            children: [
+                              const Gap(2.0),
+                              Text(_formatDuration(duration), style: Theme.of(context).textTheme.labelSmall),
+                            ],
+                          ),
+                          falseChild: SizedBox.shrink(),
+                        ),
+                      ],
+                    ),
                   ),
-                  const Gap(2.0),
-                  Text(
-                    '${_formatDuration(_position)} / ${_duration == Duration.zero ? '--:--' : _formatDuration(_duration)}',
-                    style: Theme.of(context).textTheme.labelSmall,
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
+            if (hasError)
+              Text(
+                'Unable to play audio',
+                style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Theme.of(context).colorScheme.error),
+              ),
           ],
-        ),
-        if (_hasError)
-          Text(
-            'Unable to play audio',
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Theme.of(context).colorScheme.error),
-          ),
-      ],
+        );
+      },
     );
+  }
+
+  Future<void> _loadAudio(BuildContext context, {bool autoPlay = false}) async {
+    final AppFileRepository fileRepository = context.read<AppFileRepository>();
+    final String absolutePath = await fileRepository.resolveAbsolutePath(audio.appRelativeAbsoulutePath);
+
+    if (context.mounted) {
+      context.read<AudioPlayerBloc>().add(
+        AudioPlayerLoadAudio(audio: audio, absolutePath: absolutePath, autoPlay: autoPlay),
+      );
+    }
+  }
+
+  Future<void> _openFullScreenPlayer(BuildContext context) async {
+    final AudioPlayerBloc bloc = context.read<AudioPlayerBloc>();
+    final AudioPlayerState state = bloc.state;
+
+    // Load audio if not already loaded
+    if (state is! AudioPlayerReady || state.audio.appRelativeAbsoulutePath != audio.appRelativeAbsoulutePath) {
+      await _loadAudio(context, autoPlay: true);
+    } else if (!state.isPlaying) {
+      bloc.add(AudioPlayerPlay());
+    }
+
+    // Open bottom sheet
+    if (context.mounted) {
+      await showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        showDragHandle: true,
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
+        builder: (BuildContext context) => FullScreenAudioPlayerScreen(audio: audio, emoji: emoji),
+      );
+    }
   }
 
   String _formatDuration(Duration duration) {

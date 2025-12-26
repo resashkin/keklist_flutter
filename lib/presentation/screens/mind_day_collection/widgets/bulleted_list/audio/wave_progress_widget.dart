@@ -95,14 +95,8 @@ final class WaveProgressWidget extends StatelessWidget {
         }
 
         return GestureDetector(
-          //behavior: HitTestBehavior.translucent,
+          behavior: HitTestBehavior.translucent,
           onTapDown: onSeek == null ? null : (TapDownDetails details) => handleSeek(details.localPosition.dx),
-          onHorizontalDragStart: onSeek == null
-              ? null
-              : (DragStartDetails details) => handleSeek(details.localPosition.dx),
-          onHorizontalDragUpdate: onSeek == null
-              ? null
-              : (DragUpdateDetails details) => handleSeek(details.localPosition.dx),
           child: SizedBox(
             height: totalHeight,
             child: Row(

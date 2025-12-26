@@ -49,7 +49,9 @@ final class MindBulletWidget extends StatelessWidget {
                 ),
               ),
             ),
-            audio: (MindNoteAudio audioPiece) => SensitiveWidget(child: AudioTrackWidget(audio: audioPiece)),
+            audio: (MindNoteAudio audioPiece) => SensitiveWidget(
+              child: AudioTrackWidget(audio: audioPiece, emoji: model.emoji),
+            ),
             unknown: () => Padding(
               padding: .symmetric(horizontal: 14.0, vertical: 8.0),
               child: Text('Not supported media :(', style: const TextStyle(fontSize: 15.0)),
