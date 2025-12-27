@@ -121,6 +121,7 @@ final class _AudioTrackWidgetState extends State<AudioTrackWidget> {
         isScrollControlled: true,
         showDragHandle: true,
         backgroundColor: Theme.of(context).colorScheme.onPrimary,
+        constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.9),
         builder: (BuildContext context) => FullScreenAudioPlayerScreen(audio: widget.audio, emoji: widget.emoji),
       ).then((_) {
         sendEventToBloc<AudioPlayerBloc>(AudioPlayerDispose());
