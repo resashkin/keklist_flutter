@@ -45,6 +45,7 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
   bool _creatorPanelHasFocus = false;
   Mind? _editableMind;
   late String _selectedEmoji = _rootMind.emoji;
+  final ScrollController _scrollController = ScrollController();
 
   Mind get _rootMind =>
       widget.allMinds.firstWhere((element) => element.id == widget.rootMind.id, orElse: () => widget.rootMind);
@@ -91,8 +92,6 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
     )?.disposed(by: this);
     sendEventToBloc<DebugMenuBloc>(DebugMenuGet());
   }
-
-  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {

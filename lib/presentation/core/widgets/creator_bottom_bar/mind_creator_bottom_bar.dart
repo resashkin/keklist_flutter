@@ -184,20 +184,6 @@ final class _TextFieldWidget extends StatelessWidget {
                       foregroundColor: WidgetStateProperty.all(Colors.blueAccent),
                     ),
                     onPressed: onDone,
-                    // TODO: remove
-                    // onLongPress: () async {
-                    //   focusNode.unfocus();
-                    //   final AppFileRepository fileRepository = context.read<AppFileRepository>();
-                    //   final AudioRecordingResult audioRecordingResult =
-                    //       await showModalBottomSheet<AudioRecordingResult>(
-                    //         context: context,
-                    //         builder: (BuildContext sheetContext) =>
-                    //             MindAudioRecorderSheet(fileRepository: fileRepository),
-                    //       );
-                    //   if (audioRecordingResult != null) {
-                    //     onAudioRecordDone.call(AudioCreateMindData(path: audioRecordingResult));
-                    //   }
-                    // },
                     child: Text(doneTitle, style: TextStyle(fontWeight: FontWeight.bold)),
                   ),
                 ),
@@ -250,10 +236,4 @@ final class CreateMindData {
   final String emoji;
 
   const CreateMindData({required this.text, required this.emoji});
-}
-
-final class AudioCreateMindData {
-  final String path;
-
-  const AudioCreateMindData({required this.path});
 }
