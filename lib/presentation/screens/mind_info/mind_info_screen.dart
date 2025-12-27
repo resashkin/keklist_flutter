@@ -1,12 +1,15 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:keklist/domain/constants.dart';
 import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
+import 'package:keklist/domain/repositories/files/app_file_repository.dart';
 import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
+import 'package:keklist/presentation/core/widgets/mind_audio_recorder_sheet.dart';
 import 'package:keklist/presentation/core/widgets/overscroll_listener.dart';
 import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
 import 'package:keklist/presentation/screens/actions/action_model.dart';
@@ -154,34 +157,20 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
                     focusNode: _mindCreatorFocusNode,
                     textEditingController: _createMindEditingController,
                     placeholder: 'Comment mind...',
-                    onDone: (CreateMindData data) {
-                      if (_editableMind == null) {
-                        final String normalizedText = data.text.trim();
-                        final MindNoteContent content = normalizedText.isEmpty
-                            ? MindNoteContent.empty()
-                            : MindNoteContent.parse(normalizedText);
-                        sendEventToBloc<MindBloc>(
-                          MindCreate(
-                            dayIndex: _rootMind.dayIndex,
-                            mindContent: content.pieces,
-                            emoji: _selectedEmoji,
-                            rootId: _rootMind.id,
-                          ),
-                        );
-                      } else {
-                        final Mind mindForEdit = _editableMind!.copyWith(note: data.text, emoji: _selectedEmoji);
-                        sendEventToBloc<MindBloc>(MindEdit(mind: mindForEdit));
-                      }
-                      _resetMindCreator();
-                    },
-                    onAudioRecordDone: (AudioCreateMindData audio) async {
-                      final String trimmedPath = audio.path.trim();
-                      if (trimmedPath.isEmpty) {
-                        return;
-                      }
-                      final String currentText = _createMindEditingController.text;
+                    onDone: _handleCommentDone,
+                    onTapRecordAudio: () async {
+                      final AppFileRepository fileRepository = context.read<AppFileRepository>();
+                      final AudioRecordingResult audio = await showModalBottomSheet<AudioRecordingResult>(
+                        context: context,
+                        builder: (BuildContext sheetContext) => MindAudioRecorderSheet(fileRepository: fileRepository),
+                      );
+                      if (audio != null) {
+                        final String trimmedPath = audio.trim();
+                        if (trimmedPath.isEmpty) {
+                          return;
+                        }
+                        final String currentText = _createMindEditingController.text;
 
-                      if (_editableMind == null) {
                         final String normalizedText = currentText.trim();
                         MindNoteContent content = normalizedText.isEmpty
                             ? MindNoteContent.empty()
@@ -203,26 +192,8 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
                             rootId: _rootMind.id,
                           ),
                         );
-                      } else {
-                        MindNoteContent content = currentText.trim().isEmpty
-                            ? MindNoteContent.empty()
-                            : MindNoteContent.parse(currentText);
-                        final bool needsLineBreak =
-                            content.pieces.isNotEmpty &&
-                            content.pieces.last.map(
-                              text: (MindNoteText textPiece) =>
-                                  textPiece.value.isNotEmpty && !textPiece.value.endsWith('\n'),
-                              audio: (_) => false,
-                              unknown: () => false,
-                            );
-                        content = content.copyWithAppendedAudio(trimmedPath, separator: needsLineBreak ? '\n' : null);
-                        final Mind updatedMind = _editableMind!
-                            .copyWithNoteContent(content)
-                            .copyWith(emoji: _selectedEmoji);
-                        sendEventToBloc<MindBloc>(MindEdit(mind: updatedMind));
+                        _resetMindCreator();
                       }
-
-                      _resetMindCreator();
                     },
                     suggestionMinds: const [],
                     selectedEmoji: _selectedEmoji,
@@ -246,6 +217,27 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
         ],
       ),
     );
+  }
+
+  _handleCommentDone(CreateMindData data) {
+    if (_editableMind == null) {
+      final String normalizedText = data.text.trim();
+      final MindNoteContent content = normalizedText.isEmpty
+          ? MindNoteContent.empty()
+          : MindNoteContent.parse(normalizedText);
+      sendEventToBloc<MindBloc>(
+        MindCreate(
+          dayIndex: _rootMind.dayIndex,
+          mindContent: content.pieces,
+          emoji: _selectedEmoji,
+          rootId: _rootMind.id,
+        ),
+      );
+    } else {
+      final Mind mindForEdit = _editableMind!.copyWith(note: data.text, emoji: _selectedEmoji);
+      sendEventToBloc<MindBloc>(MindEdit(mind: mindForEdit));
+    }
+    _resetMindCreator();
   }
 
   void _resetMindCreator() {

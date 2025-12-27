@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:keklist/domain/repositories/files/app_file_repository.dart';
+import 'package:gap/gap.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/presentation/core/helpers/platform_utils.dart';
-import 'package:keklist/presentation/core/widgets/mind_audio_recorder_sheet.dart';
+import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/presentation/core/widgets/mind_widget.dart';
 import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
 
@@ -19,7 +18,7 @@ final class MindCreatorBottomBar extends StatefulWidget {
   final Function(String) onTapSuggestionEmoji;
   final VoidCallback onTapCancelEdit;
   final Function(CreateMindData) onDone;
-  final Function(AudioCreateMindData) onAudioRecordDone;
+  final Function() onTapRecordAudio;
 
   const MindCreatorBottomBar({
     super.key,
@@ -34,7 +33,7 @@ final class MindCreatorBottomBar extends StatefulWidget {
     required this.placeholder,
     this.editableMind,
     required this.onTapCancelEdit,
-    required this.onAudioRecordDone,
+    required this.onTapRecordAudio,
   });
 
   @override
@@ -82,7 +81,7 @@ final class _MindCreatorBottomBarState extends State<MindCreatorBottomBar> {
                   CreateMindData(emoji: widget.selectedEmoji ?? '', text: widget.textEditingController.text),
                 );
               },
-              onAudioRecordDone: widget.onAudioRecordDone,
+              onRecordAudio: widget.onTapRecordAudio,
             ),
             const SizedBox(height: 4.0),
           ],
@@ -141,7 +140,7 @@ final class _TextFieldWidget extends StatelessWidget {
     required this.textEditingController,
     required this.doneTitle,
     required this.onDone,
-    required this.onAudioRecordDone,
+    required this.onRecordAudio,
   });
 
   final VoidCallback onSearchEmoji;
@@ -150,7 +149,7 @@ final class _TextFieldWidget extends StatelessWidget {
   final String placeholder;
   final String doneTitle;
   final Function() onDone;
-  final Function(AudioCreateMindData) onAudioRecordDone;
+  final Function() onRecordAudio;
 
   @override
   Widget build(BuildContext context) {
@@ -185,19 +184,20 @@ final class _TextFieldWidget extends StatelessWidget {
                       foregroundColor: WidgetStateProperty.all(Colors.blueAccent),
                     ),
                     onPressed: onDone,
-                    onLongPress: () async {
-                      focusNode.unfocus();
-                      final AppFileRepository fileRepository = context.read<AppFileRepository>();
-                      final AudioRecordingResult audioRecordingResult =
-                          await showModalBottomSheet<AudioRecordingResult>(
-                            context: context,
-                            builder: (BuildContext sheetContext) =>
-                                MindAudioRecorderSheet(fileRepository: fileRepository),
-                          );
-                      if (audioRecordingResult != null) {
-                        onAudioRecordDone.call(AudioCreateMindData(path: audioRecordingResult));
-                      }
-                    },
+                    // TODO: remove
+                    // onLongPress: () async {
+                    //   focusNode.unfocus();
+                    //   final AppFileRepository fileRepository = context.read<AppFileRepository>();
+                    //   final AudioRecordingResult audioRecordingResult =
+                    //       await showModalBottomSheet<AudioRecordingResult>(
+                    //         context: context,
+                    //         builder: (BuildContext sheetContext) =>
+                    //             MindAudioRecorderSheet(fileRepository: fileRepository),
+                    //       );
+                    //   if (audioRecordingResult != null) {
+                    //     onAudioRecordDone.call(AudioCreateMindData(path: audioRecordingResult));
+                    //   }
+                    // },
                     child: Text(doneTitle, style: TextStyle(fontWeight: FontWeight.bold)),
                   ),
                 ),
@@ -205,13 +205,20 @@ final class _TextFieldWidget extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 8.0),
+        BoolWidget(
+          condition: textEditingController.text.isEmpty,
+          falseChild: Gap(0),
+          trueChild: IconButton(
+            onPressed: onRecordAudio,
+            icon: Icon(Icons.mic, color: Colors.blueAccent),
+          ),
+        ),
       ],
     );
   }
 }
 
-class _SuggestionsWidget extends StatelessWidget {
+final class _SuggestionsWidget extends StatelessWidget {
   const _SuggestionsWidget({required this.suggestionMinds, required this.onSelectSuggestionEmoji});
 
   final List<String> suggestionMinds;
