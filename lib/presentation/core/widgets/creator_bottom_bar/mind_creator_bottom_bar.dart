@@ -3,33 +3,28 @@ import 'package:gap/gap.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/presentation/core/helpers/platform_utils.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
-import 'package:keklist/presentation/core/widgets/mind_widget.dart';
 import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
 
 final class MindCreatorBottomBar extends StatefulWidget {
   final Mind? editableMind;
   final TextEditingController textEditingController;
-  final List<String> suggestionMinds;
   final FocusNode focusNode;
   final String? selectedEmoji;
   final VoidCallback onTapEmoji;
   final String doneTitle;
   final String placeholder;
-  final Function(String) onTapSuggestionEmoji;
   final VoidCallback onTapCancelEdit;
   final Function(CreateMindData) onDone;
-  final Function() onTapRecordAudio;
+  final Function()? onTapRecordAudio;
 
   const MindCreatorBottomBar({
     super.key,
     required this.textEditingController,
-    required this.suggestionMinds,
     required this.focusNode,
     required this.selectedEmoji,
     required this.doneTitle,
     required this.onDone,
     required this.onTapEmoji,
-    required this.onTapSuggestionEmoji,
     required this.placeholder,
     this.editableMind,
     required this.onTapCancelEdit,
@@ -57,18 +52,6 @@ final class _MindCreatorBottomBarState extends State<MindCreatorBottomBar> {
               ),
               const _HorizontalSeparator(),
             ],
-            if (widget.suggestionMinds.isNotEmpty &&
-                MediaQuery.of(context).orientation != Orientation.landscape &&
-                DeviceUtils.isPhone(context)) ...[
-              SensitiveWidget(
-                mode: SensitiveMode.blurredAndNonTappable,
-                child: _SuggestionsWidget(
-                  suggestionMinds: widget.suggestionMinds,
-                  onSelectSuggestionEmoji: widget.onTapSuggestionEmoji,
-                ),
-              ),
-              const SizedBox(height: 8.0),
-            ],
             const SizedBox(height: 8.0),
             _TextFieldWidget(
               onSearchEmoji: widget.onTapEmoji,
@@ -81,7 +64,7 @@ final class _MindCreatorBottomBarState extends State<MindCreatorBottomBar> {
                   CreateMindData(emoji: widget.selectedEmoji ?? '', text: widget.textEditingController.text),
                 );
               },
-              onRecordAudio: widget.onTapRecordAudio,
+              onTapRecordAudio: widget.onTapRecordAudio,
             ),
             const SizedBox(height: 4.0),
           ],
@@ -140,7 +123,7 @@ final class _TextFieldWidget extends StatelessWidget {
     required this.textEditingController,
     required this.doneTitle,
     required this.onDone,
-    required this.onRecordAudio,
+    required this.onTapRecordAudio,
   });
 
   final VoidCallback onSearchEmoji;
@@ -149,7 +132,7 @@ final class _TextFieldWidget extends StatelessWidget {
   final String placeholder;
   final String doneTitle;
   final Function() onDone;
-  final Function() onRecordAudio;
+  final Function()? onTapRecordAudio;
 
   @override
   Widget build(BuildContext context) {
@@ -192,41 +175,15 @@ final class _TextFieldWidget extends StatelessWidget {
           ),
         ),
         BoolWidget(
-          condition: textEditingController.text.isEmpty,
-          falseChild: Gap(0),
+          condition: onTapRecordAudio != null,
           trueChild: IconButton(
-            onPressed: onRecordAudio,
+            onPressed: onTapRecordAudio,
             icon: Icon(Icons.mic, color: Colors.blueAccent),
           ),
+          falseChild: Gap(0),
         ),
+        const SizedBox(width: 8.0),
       ],
-    );
-  }
-}
-
-final class _SuggestionsWidget extends StatelessWidget {
-  const _SuggestionsWidget({required this.suggestionMinds, required this.onSelectSuggestionEmoji});
-
-  final List<String> suggestionMinds;
-  final Function(String) onSelectSuggestionEmoji;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 38.0,
-      child: Row(
-        children: List.generate(suggestionMinds.length, (index) {
-          return Flexible(
-            flex: 1,
-            child: MindWidget.sized(
-              item: suggestionMinds[index],
-              size: MindSize.small,
-              onTap: () => onSelectSuggestionEmoji(suggestionMinds[index]),
-              badge: null,
-            ),
-          );
-        }),
-      ),
     );
   }
 }

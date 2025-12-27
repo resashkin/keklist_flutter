@@ -44,6 +44,7 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
   DebugMenuDataState? _debugMenuState;
   bool _creatorPanelHasFocus = false;
   Mind? _editableMind;
+  bool _isAudioRecordButtonVisible = true;
   late String _selectedEmoji = _rootMind.emoji;
   final ScrollController _scrollController = ScrollController();
 
@@ -59,6 +60,9 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
   @override
   void initState() {
     super.initState();
+
+    _isAudioRecordButtonVisible = _createMindEditingController.text.trim().isEmpty;
+    _createMindEditingController.addListener(_onCreateMindTextChanged);
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _mindCreatorFocusNode.addListener(() {
@@ -91,6 +95,15 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
       },
     )?.disposed(by: this);
     sendEventToBloc<DebugMenuBloc>(DebugMenuGet());
+  }
+
+  @override
+  void dispose() {
+    _createMindEditingController
+      ..removeListener(_onCreateMindTextChanged)
+      ..dispose();
+    _mindCreatorFocusNode.dispose();
+    super.dispose();
   }
 
   @override
@@ -157,46 +170,50 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
                     textEditingController: _createMindEditingController,
                     placeholder: 'Comment mind...',
                     onDone: _handleCommentDone,
-                    onTapRecordAudio: () async {
-                      final AppFileRepository fileRepository = context.read<AppFileRepository>();
-                      final AudioRecordingResult audio = await showModalBottomSheet<AudioRecordingResult>(
-                        context: context,
-                        builder: (BuildContext sheetContext) => MindAudioRecorderSheet(fileRepository: fileRepository),
-                      );
-                      if (audio != null) {
-                        final String trimmedPath = audio.trim();
-                        if (trimmedPath.isEmpty) {
-                          return;
-                        }
-                        final String currentText = _createMindEditingController.text;
-
-                        final String normalizedText = currentText.trim();
-                        MindNoteContent content = normalizedText.isEmpty
-                            ? MindNoteContent.empty()
-                            : MindNoteContent.parse(normalizedText);
-                        final bool needsLineBreak =
-                            content.pieces.isNotEmpty &&
-                            content.pieces.last.map(
-                              text: (MindNoteText textPiece) =>
-                                  textPiece.value.isNotEmpty && !textPiece.value.endsWith('\n'),
-                              audio: (_) => false,
-                              unknown: () => false,
+                    onTapRecordAudio: _isAudioRecordButtonVisible
+                        ? () async {
+                            final AppFileRepository fileRepository = context.read<AppFileRepository>();
+                            final AudioRecordingResult audio = await showModalBottomSheet<AudioRecordingResult>(
+                              context: context,
+                              builder: (BuildContext sheetContext) =>
+                                  MindAudioRecorderSheet(fileRepository: fileRepository),
                             );
-                        content = content.copyWithAppendedAudio(trimmedPath, separator: needsLineBreak ? '\n' : null);
-                        sendEventToBloc<MindBloc>(
-                          MindCreate(
-                            dayIndex: _rootMind.dayIndex,
-                            mindContent: content.pieces,
-                            emoji: _selectedEmoji,
-                            rootId: _rootMind.id,
-                          ),
-                        );
-                        _resetMindCreator();
-                      }
-                    },
-                    suggestionMinds: const [],
+                            if (audio != null) {
+                              final String trimmedPath = audio.trim();
+                              if (trimmedPath.isEmpty) {
+                                return;
+                              }
+                              final String currentText = _createMindEditingController.text;
+
+                              final String normalizedText = currentText.trim();
+                              MindNoteContent content = normalizedText.isEmpty
+                                  ? MindNoteContent.empty()
+                                  : MindNoteContent.parse(normalizedText);
+                              final bool needsLineBreak =
+                                  content.pieces.isNotEmpty &&
+                                  content.pieces.last.map(
+                                    text: (MindNoteText textPiece) =>
+                                        textPiece.value.isNotEmpty && !textPiece.value.endsWith('\n'),
+                                    audio: (_) => false,
+                                    unknown: () => false,
+                                  );
+                              content = content.copyWithAppendedAudio(
+                                trimmedPath,
+                                separator: needsLineBreak ? '\n' : null,
+                              );
+                              sendEventToBloc<MindBloc>(
+                                MindCreate(
+                                  dayIndex: _rootMind.dayIndex,
+                                  mindContent: content.pieces,
+                                  emoji: _selectedEmoji,
+                                  rootId: _rootMind.id,
+                                ),
+                              );
+                              _resetMindCreator();
+                            }
+                          }
+                        : null,
                     selectedEmoji: _selectedEmoji,
-                    onTapSuggestionEmoji: (_) {},
                     onTapEmoji: () {
                       _showEmojiPickerScreen(
                         onSelect: (String emoji) {
@@ -218,7 +235,15 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
     );
   }
 
-  _handleCommentDone(CreateMindData data) {
+  void _onCreateMindTextChanged() {
+    final bool shouldShowAudioRecordButton = _createMindEditingController.text.trim().isEmpty;
+    if (_isAudioRecordButtonVisible == shouldShowAudioRecordButton) {
+      return;
+    }
+    setState(() => _isAudioRecordButtonVisible = shouldShowAudioRecordButton);
+  }
+
+  void _handleCommentDone(CreateMindData data) {
     if (_editableMind == null) {
       final String normalizedText = data.text.trim();
       final MindNoteContent content = normalizedText.isEmpty
