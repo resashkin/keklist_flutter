@@ -221,13 +221,13 @@ final class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> wit
   void _updateAmplitude() {
     final AudioPlayerState currentState = state;
     if (currentState is! AudioPlayerReady || !currentState.isPlaying) {
-      add(AudioPlayerAmplitudeUpdated(amplitude: 0.0));
+      //add(AudioPlayerAmplitudeUpdated(amplitude: 0.0));
       return;
     }
 
     final List<double>? waveform = currentState.waveform;
     if (waveform == null || waveform.isEmpty) {
-      add(AudioPlayerAmplitudeUpdated(amplitude: 0.0));
+      //add(AudioPlayerAmplitudeUpdated(amplitude: 0.0));
       return;
     }
 

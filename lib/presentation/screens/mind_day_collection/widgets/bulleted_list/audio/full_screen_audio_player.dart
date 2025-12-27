@@ -18,11 +18,6 @@ final class FullScreenAudioPlayerScreen extends StatefulWidget {
 }
 
 final class _FullScreenAudioPlayerScreenState extends State<FullScreenAudioPlayerScreen> {
-  @override
-  void dispose() {
-    context.read<AudioPlayerBloc>().add(AudioPlayerDispose());
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,47 +34,49 @@ final class _FullScreenAudioPlayerScreenState extends State<FullScreenAudioPlaye
           return const Center(child: CircularProgressIndicator());
         }
 
-        return Column(
-          children: [
-            const SizedBox(height: 12),
+        return Scaffold(
+          body: Column(
+            children: [
+              const SizedBox(height: 12),
 
-            // Audio reactive waves with emoji
-            SizedBox(
-              height: 300,
-              child: AudioReactiveWavesWidget(amplitude: state.amplitude, emoji: widget.emoji),
-            ),
-
-            const SizedBox(height: 16),
-
-            // Waveform seeker
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: WaveProgressWidget(
-                progress: state.progress,
-                waveform: state.waveform,
-                onSeek: (double relativePos) => _onSeek(context, state.duration, relativePos),
+              // Audio reactive waves with emoji
+              SizedBox(
+                height: 300,
+                child: AudioReactiveWavesWidget(amplitude: state.amplitude, emoji: widget.emoji),
               ),
-            ),
 
-            const SizedBox(height: 16),
+              const SizedBox(height: 16),
 
-            // Timer display
-            AudioTimerDisplayWidget(position: state.position, duration: state.duration),
+              // Waveform seeker
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: WaveProgressWidget(
+                  progress: state.progress,
+                  waveform: state.waveform,
+                  onSeek: (double relativePos) => _onSeek(context, state.duration, relativePos),
+                ),
+              ),
 
-            const SizedBox(height: 48),
+              const SizedBox(height: 16),
 
-            // Play/Pause button
-            PlayPauseButton(
-              iconSize: 80.0,
-              isPlaying: state.isPlaying,
-              hasError: false,
-              onPressed: () {
-                context.read<AudioPlayerBloc>().add(AudioPlayerTogglePlayback());
-              },
-            ),
+              // Timer display
+              AudioTimerDisplayWidget(position: state.position, duration: state.duration),
 
-            const SizedBox(height: 48),
-          ],
+              const SizedBox(height: 48),
+
+              // Play/Pause button
+              PlayPauseButton(
+                iconSize: 80.0,
+                isPlaying: state.isPlaying,
+                hasError: false,
+                onPressed: () {
+                  context.read<AudioPlayerBloc>().add(AudioPlayerTogglePlayback());
+                },
+              ),
+
+              const SizedBox(height: 48),
+            ],
+          ),
         );
       },
     );
