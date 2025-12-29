@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:gap/gap.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/presentation/core/helpers/platform_utils.dart';
@@ -179,7 +180,7 @@ final class _TextFieldWidget extends StatelessWidget {
           trueChild: IconButton(
             onPressed: onTapRecordAudio,
             icon: Icon(Icons.mic, color: Colors.blueAccent),
-          ),
+          ).animate().fade(),
           falseChild: Gap(0),
         ),
         const SizedBox(width: 8.0),
