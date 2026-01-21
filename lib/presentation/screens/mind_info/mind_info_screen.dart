@@ -7,6 +7,7 @@ import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:keklist/domain/constants.dart';
 import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
 import 'package:keklist/domain/repositories/files/app_file_repository.dart';
+import 'package:keklist/domain/services/audio_duration_extractor.dart';
 import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/core/widgets/mind_audio_recorder_sheet.dart';
@@ -183,6 +184,11 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
                               if (trimmedPath.isEmpty) {
                                 return;
                               }
+
+                              // Extract duration from the recorded audio file
+                              final String absolutePath = await fileRepository.resolveAbsolutePath(trimmedPath);
+                              final double duration = await const AudioDurationExtractor().extractDuration(absolutePath);
+
                               final String currentText = _createMindEditingController.text;
 
                               final String normalizedText = currentText.trim();
@@ -200,6 +206,7 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
                               content = content.copyWithAppendedAudio(
                                 trimmedPath,
                                 separator: needsLineBreak ? '\n' : null,
+                                durationSeconds: duration,
                               );
                               sendEventToBloc<MindBloc>(
                                 MindCreate(

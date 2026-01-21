@@ -23,6 +23,7 @@ final class KeklistSettings {
   final bool shouldShowTitles;
   final String? userName;
   final SupportedLanguage language;
+  final int dataSchemaVersion;
 
   KeklistSettings({
     required this.isMindContentVisible,
@@ -31,6 +32,7 @@ final class KeklistSettings {
     required this.shouldShowTitles,
     required this.userName,
     required this.language,
+    required this.dataSchemaVersion,
   });
 
   SettingsObject toObject() => SettingsObject()
@@ -39,7 +41,8 @@ final class KeklistSettings {
     ..isDarkMode = isDarkMode
     ..shouldShowTitles = shouldShowTitles
     ..userName = userName
-    ..language = language.code;
+    ..language = language.code
+    ..dataSchemaVersion = dataSchemaVersion;
 
   factory KeklistSettings.initial() => KeklistSettings(
         isMindContentVisible: true,
@@ -48,6 +51,7 @@ final class KeklistSettings {
         shouldShowTitles: true,
         userName: null,
         language: _detectDeviceLocale(),
+        dataSchemaVersion: 0,
       );
 
   /// Detect device locale and return supported language or fallback to English

@@ -40,7 +40,6 @@ final class _AudioTrackWidgetState extends State<AudioTrackWidget> {
         final bool hasError =
             state is AudioPlayerError && state.audio?.appRelativeAbsoulutePath == widget.audio.appRelativeAbsoulutePath;
 
-        // final Duration duration = isThisAudioLoaded ? (state).duration : Duration.zero;
         final List<double>? waveform = isThisAudioLoaded ? (state).waveform : null;
 
         return Column(
@@ -65,16 +64,15 @@ final class _AudioTrackWidgetState extends State<AudioTrackWidget> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         WaveProgressWidget(progress: 0.0, waveform: waveform),
-                        // BoolWidget(
-                        //   condition: duration != Duration.zero,
-                        //   trueChild: Column(
-                        //     children: [
-                        //       const Gap(2.0),
-                        //       Text(_formatDuration(duration), style: Theme.of(context).textTheme.labelSmall),
-                        //     ],
-                        //   ),
-                        //   falseChild: SizedBox.shrink(),
-                        // ),
+                        if (widget.audio.hasDuration) ...[
+                          const Gap(2.0),
+                          Text(
+                            _formatDuration(widget.audio.duration!),
+                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+                            ),
+                          ),
+                        ],
                       ],
                     ),
                   ),
@@ -129,9 +127,9 @@ final class _AudioTrackWidgetState extends State<AudioTrackWidget> {
     }
   }
 
-  // String _formatDuration(Duration duration) {
-  //   final int minutes = duration.inMinutes;
-  //   final int seconds = duration.inSeconds.remainder(60);
-  //   return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
-  // }
+  String _formatDuration(Duration duration) {
+    final int minutes = duration.inMinutes;
+    final int seconds = duration.inSeconds.remainder(60);
+    return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+  }
 }

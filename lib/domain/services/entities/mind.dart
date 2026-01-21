@@ -95,6 +95,6 @@ final class Mind with EquatableMixin {
     ..rootId = rootId;
 
   Mind copyWithNoteContent(MindNoteContent content) => copyWith(note: content.toRawNoteString());
-  Mind appendAudioNote(String path, {String? separator}) =>
-      copyWithNoteContent(noteContent.copyWithAppendedAudio(path, separator: separator));
+  Mind appendAudioNote(String path, {String? separator, double? durationSeconds}) =>
+      copyWithNoteContent(noteContent.copyWithAppendedAudio(path, separator: separator, durationSeconds: durationSeconds));
 }

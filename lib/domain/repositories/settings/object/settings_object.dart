@@ -26,6 +26,9 @@ final class SettingsObject extends HiveObject {
   @HiveField(7, defaultValue: 'en')
   late String language;
 
+  @HiveField(8, defaultValue: 0)
+  late int dataSchemaVersion;
+
   SettingsObject();
 
   KeklistSettings toSettings() => KeklistSettings(
@@ -35,5 +38,6 @@ final class SettingsObject extends HiveObject {
         isDarkMode: isDarkMode,
         userName: userName,
         language: SupportedLanguage.fromCode(language),
+        dataSchemaVersion: dataSchemaVersion,
       );
 }
