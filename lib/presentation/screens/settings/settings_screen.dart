@@ -342,7 +342,6 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     final password = await PasswordInputBottomSheet.show(
       context: context,
       title: context.l10n.exportPassword,
-      isConfirmationRequired: true,
       isOptional: true,
     );
 
@@ -360,10 +359,10 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   File? _lastImportFile;
 
   Future<void> _handleImport() async {
-    // Show file picker
+    // Show file picker for CSV and ZIP files
     final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['csv', 'zip', 'encrypted'],
+      allowedExtensions: ['csv', 'zip'],
     );
 
     if (result == null || result.files.isEmpty) return;
@@ -374,15 +373,25 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     final file = File(pickedFile.path!);
     _lastImportFile = file;
 
-    // Check if file is encrypted (by extension or try to detect)
-    final needsPassword = pickedFile.name.endsWith('.encrypted');
+    // Check if file is encrypted by examining magic bytes
+    // ZIP files start with "PK" (0x50 0x4B), encrypted files don't
+    bool needsPassword = false;
+    try {
+      final bytes = await file.readAsBytes();
+      if (bytes.length > 2) {
+        final isZip = bytes[0] == 0x50 && bytes[1] == 0x4B;
+        needsPassword = !isZip && !pickedFile.name.endsWith('.csv');
+      }
+    } catch (e) {
+      // If we can't read the file, assume no password needed
+      needsPassword = false;
+    }
 
     String? password;
     if (needsPassword) {
       password = await PasswordInputBottomSheet.show(
         context: context,
         title: context.l10n.importPassword,
-        isConfirmationRequired: false,
         isOptional: false,
       );
 
@@ -412,7 +421,6 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
       final password = await PasswordInputBottomSheet.show(
         context: context,
         title: context.l10n.importPassword,
-        isConfirmationRequired: false,
         isOptional: false,
       );
 

@@ -9,13 +9,9 @@ class PasswordInputResult {
 }
 
 /// Bottom sheet for password input during export/import
-/// Shows password field with optional confirmation for export
 class PasswordInputBottomSheet extends StatefulWidget {
   /// Title displayed at the top
   final String title;
-
-  /// Whether to show confirmation field (for export)
-  final bool isConfirmationRequired;
 
   /// Whether the password is optional (can be skipped)
   final bool isOptional;
@@ -23,7 +19,6 @@ class PasswordInputBottomSheet extends StatefulWidget {
   const PasswordInputBottomSheet({
     super.key,
     required this.title,
-    this.isConfirmationRequired = false,
     this.isOptional = false,
   });
 
@@ -31,7 +26,6 @@ class PasswordInputBottomSheet extends StatefulWidget {
   static Future<String?> show({
     required BuildContext context,
     required String title,
-    bool isConfirmationRequired = false,
     bool isOptional = false,
   }) {
     return showModalBottomSheet<String>(
@@ -44,7 +38,6 @@ class PasswordInputBottomSheet extends StatefulWidget {
         ),
         child: PasswordInputBottomSheet(
           title: title,
-          isConfirmationRequired: isConfirmationRequired,
           isOptional: isOptional,
         ),
       ),
@@ -57,30 +50,16 @@ class PasswordInputBottomSheet extends StatefulWidget {
 
 class _PasswordInputBottomSheetState extends State<PasswordInputBottomSheet> {
   final _passwordController = TextEditingController();
-  final _confirmController = TextEditingController();
   bool _isPasswordVisible = false;
-  bool _isConfirmVisible = false;
-  String? _errorMessage;
 
   @override
   void dispose() {
     _passwordController.dispose();
-    _confirmController.dispose();
     super.dispose();
   }
 
   void _onContinue() {
     final password = _passwordController.text;
-    final confirm = _confirmController.text;
-
-    // Validate if confirmation is required
-    if (widget.isConfirmationRequired && password != confirm) {
-      setState(() {
-        _errorMessage = context.l10n.passwordsDoNotMatch;
-      });
-      return;
-    }
-
     // Return the password (can be empty if optional)
     Navigator.of(context).pop(password);
   }
@@ -113,26 +92,6 @@ class _PasswordInputBottomSheetState extends State<PasswordInputBottomSheet> {
             textAlign: TextAlign.center,
           ),
 
-          const SizedBox(height: 8),
-
-          // Description
-          if (widget.isConfirmationRequired)
-            Text(
-              context.l10n.exportPasswordDescription,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.textTheme.bodySmall?.color,
-              ),
-              textAlign: TextAlign.center,
-            )
-          else
-            Text(
-              context.l10n.importPasswordDescription,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.textTheme.bodySmall?.color,
-              ),
-              textAlign: TextAlign.center,
-            ),
-
           const SizedBox(height: 24),
 
           // Password field
@@ -155,60 +114,8 @@ class _PasswordInputBottomSheetState extends State<PasswordInputBottomSheet> {
                 },
               ),
             ),
-            onChanged: (_) {
-              if (_errorMessage != null) {
-                setState(() {
-                  _errorMessage = null;
-                });
-              }
-            },
-            onSubmitted: widget.isConfirmationRequired ? null : (_) => _onContinue(),
+            onSubmitted: (_) => _onContinue(),
           ),
-
-          // Confirmation field (for export)
-          if (widget.isConfirmationRequired) ...[
-            const SizedBox(height: 16),
-            TextField(
-              controller: _confirmController,
-              obscureText: !_isConfirmVisible,
-              decoration: InputDecoration(
-                labelText: context.l10n.confirmPassword,
-                hintText: context.l10n.reenterPassword,
-                border: const OutlineInputBorder(),
-                errorText: _errorMessage,
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _isConfirmVisible ? Icons.visibility_off : Icons.visibility,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _isConfirmVisible = !_isConfirmVisible;
-                    });
-                  },
-                ),
-              ),
-              onChanged: (_) {
-                if (_errorMessage != null) {
-                  setState(() {
-                    _errorMessage = null;
-                  });
-                }
-              },
-              onSubmitted: (_) => _onContinue(),
-            ),
-          ],
-
-          // Error message (if not in field)
-          if (_errorMessage != null && !widget.isConfirmationRequired) ...[
-            const SizedBox(height: 8),
-            Text(
-              _errorMessage!,
-              style: TextStyle(
-                color: theme.colorScheme.error,
-                fontSize: 12,
-              ),
-            ),
-          ],
 
           const SizedBox(height: 24),
 

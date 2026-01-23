@@ -76,9 +76,10 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
 
       switch (result) {
         case ExportSuccess success:
-          // Share the exported file
+          // Share the exported file with explicit MIME type
+          // Use application/zip for both .zip and .encrypted files
           await SharePlus.instance.share(ShareParams(
-            files: [XFile(success.file.path)],
+            files: [XFile(success.file.path, mimeType: 'application/zip')],
             sharePositionOrigin: const Rect.fromLTWH(0, 0, 1, 1),
           ));
 

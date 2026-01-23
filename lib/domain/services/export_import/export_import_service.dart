@@ -114,29 +114,23 @@ class ExportImportService {
       final zipEncoder = ZipEncoder();
       final zipBytes = zipEncoder.encode(archive);
 
-      if (zipBytes == null) {
-        return const ExportFailure(error: ExportError.fileCreationFailed, details: 'Failed to create ZIP archive');
-      }
-
       // Encrypt if password provided
+      // Always use .zip extension - encryption is detected automatically during import
       final Uint8List finalBytes;
       final bool isEncrypted;
-      final String fileExtension;
 
       if (password != null && password.isNotEmpty) {
         finalBytes = await _encryptBytes(Uint8List.fromList(zipBytes), password);
         isEncrypted = true;
-        fileExtension = 'encrypted';
       } else {
         finalBytes = Uint8List.fromList(zipBytes);
         isEncrypted = false;
-        fileExtension = 'zip';
       }
 
       // Write to file
       final tempDir = await getTemporaryDirectory();
       final timestamp = DateTime.now().toIso8601String().replaceAll(':', '-').split('.').first;
-      final file = File('${tempDir.path}/keklist_export_$timestamp.$fileExtension');
+      final file = File('${tempDir.path}/keklist_export_$timestamp.zip');
       await file.writeAsBytes(finalBytes);
 
       return ExportSuccess(
@@ -168,7 +162,7 @@ class ExportImportService {
       // Detect file type by extension
       if (fileName.endsWith('.csv')) {
         return await _importFromCSV(file);
-      } else if (fileName.endsWith('.zip') || fileName.endsWith('.encrypted')) {
+      } else if (fileName.endsWith('.zip')) {
         return await _importFromZIP(file, password: password);
       } else {
         // Try to detect by content

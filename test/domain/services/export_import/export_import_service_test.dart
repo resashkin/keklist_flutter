@@ -180,7 +180,7 @@ void main() {
       expect(success.mindsCount, 1);
       expect(success.isEncrypted, true);
       expect(success.file.existsSync(), true);
-      expect(success.file.path.endsWith('.encrypted'), true);
+      expect(success.file.path.endsWith('.zip'), true);
     });
 
     test('exportToZIP includes audio files in archive', () async {
