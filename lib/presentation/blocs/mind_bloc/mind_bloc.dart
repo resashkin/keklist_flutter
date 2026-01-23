@@ -70,27 +70,19 @@ final class MindBloc extends Bloc<MindEvent, MindState> with DisposeBag {
           sanitizedPieces.add(
             trimmedPath == audioPiece.appRelativeAbsoulutePath
                 ? audioPiece
-                : MindNoteAudio(appRelativeAbsoulutePath: trimmedPath),
+                : MindNoteAudio(
+                    appRelativeAbsoulutePath: trimmedPath,
+                    durationSeconds: audioPiece.durationSeconds,
+                  ),
           );
         },
         unknown: () => null,
       );
     }
 
-    final String rawNote = sanitizedPieces
-        .map(
-          (BaseMindNotePiece piece) => piece.map(
-            text: (MindNoteText textPiece) => textPiece.value,
-            audio: (MindNoteAudio audioPiece) =>
-                '<$kMindAudioTag>${audioPiece.appRelativeAbsoulutePath}</$kMindAudioTag>',
-            unknown: () => '',
-          ),
-        )
-        .join();
-    final String normalizedNote = rawNote.trim();
-    final MindNoteContent content = normalizedNote.isEmpty
+    final MindNoteContent content = sanitizedPieces.isEmpty
         ? MindNoteContent.empty()
-        : MindNoteContent.parse(normalizedNote);
+        : MindNoteContent.fromPieces(sanitizedPieces);
 
     final Mind mind = Mind(
       id: const Uuid().v4(),
