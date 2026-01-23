@@ -309,6 +309,25 @@ void main() {
       expect(failure.error, ImportError.invalidFormat);
     });
 
+    test('importFromFile fails when CSV has no valid rows', () async {
+      // Arrange
+      final csvFile = File('${tempDir.path}/invalid.csv');
+      await csvFile.writeAsString(
+        'invalid;row;with;not;enough;fields\n'
+        'also;invalid;row\n',
+      );
+
+      // Act
+      final result = await service.importFromFile(csvFile);
+
+      // Assert
+      expect(result, isA<ImportFailure>());
+      final failure = result as ImportFailure;
+      expect(failure.error, ImportError.invalidFormat);
+
+      verifyNever(() => mockMindRepository.createMinds(minds: any(named: 'minds')));
+    });
+
     test('importFromFile skips invalid CSV rows', () async {
       // Arrange
       final csvFile = File('${tempDir.path}/partial.csv');
