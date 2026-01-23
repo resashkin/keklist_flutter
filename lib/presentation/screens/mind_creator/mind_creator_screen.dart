@@ -121,18 +121,19 @@ final class _MindCreatorScreenState extends KekWidgetState<MindCreatorScreen> {
                     // Main emoji
                     Text(_selectedEmoji, style: const TextStyle(fontSize: 64.0)),
                     // Edit icon
-                    // Positioned(
-                    //   right: 16,
-                    //   bottom: 16,
-                    //   child: Container(
-                    //     padding: const EdgeInsets.all(6),
-                    //     decoration: BoxDecoration(
-                    //       color: Theme.of(context).colorScheme.onSurface,
-                    //       shape: BoxShape.circle,
-                    //     ),
-                    //     child: Icon(Icons.edit, size: 16, color: Theme.of(context).colorScheme.onPrimary),
-                    //   ),
-                    // ),
+                    Positioned(
+                      right: 18,
+                      bottom: 18,
+                      child: Container(
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.onSurface,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Theme.of(context).scaffoldBackgroundColor, width: 1.5),
+                        ),
+                        child: Icon(Icons.edit, size: 12, color: Theme.of(context).colorScheme.onPrimary),
+                      ),
+                    ),
                   ],
                 ),
               ),
