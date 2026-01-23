@@ -674,6 +674,174 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Week'**
   String get week;
+
+  /// Password label
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// Enter password placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Enter password'**
+  String get enterPassword;
+
+  /// Confirm password label
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm password'**
+  String get confirmPassword;
+
+  /// Re-enter password placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Re-enter password'**
+  String get reenterPassword;
+
+  /// Passwords do not match error
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordsDoNotMatch;
+
+  /// Export password dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Password protect export?'**
+  String get exportPassword;
+
+  /// Export password description
+  ///
+  /// In en, this message translates to:
+  /// **'Add a password to encrypt your export. You can skip this for unencrypted export.'**
+  String get exportPasswordDescription;
+
+  /// Import password dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Enter password'**
+  String get importPassword;
+
+  /// Import password description
+  ///
+  /// In en, this message translates to:
+  /// **'This file is password-protected. Please enter the password to decrypt.'**
+  String get importPasswordDescription;
+
+  /// Skip password button
+  ///
+  /// In en, this message translates to:
+  /// **'Skip (no password)'**
+  String get skipPassword;
+
+  /// Continue button
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get continue_;
+
+  /// Incorrect password error title
+  ///
+  /// In en, this message translates to:
+  /// **'Incorrect password'**
+  String get incorrectPassword;
+
+  /// Incorrect password error message
+  ///
+  /// In en, this message translates to:
+  /// **'The password you entered is incorrect. Please try again.'**
+  String get incorrectPasswordMessage;
+
+  /// Corrupted file error
+  ///
+  /// In en, this message translates to:
+  /// **'Corrupted file'**
+  String get corruptedFile;
+
+  /// Invalid format error
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid format'**
+  String get invalidFormat;
+
+  /// Missing audio files warning
+  ///
+  /// In en, this message translates to:
+  /// **'Some audio files are missing'**
+  String get missingAudioFiles;
+
+  /// Insufficient storage error
+  ///
+  /// In en, this message translates to:
+  /// **'Insufficient storage'**
+  String get insufficientStorage;
+
+  /// Unknown error
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown error'**
+  String get unknownError;
+
+  /// Retry button
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// OK button
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
+
+  /// Export success message title
+  ///
+  /// In en, this message translates to:
+  /// **'Export successful'**
+  String get exportSuccess;
+
+  /// Export error message title
+  ///
+  /// In en, this message translates to:
+  /// **'Export failed'**
+  String get exportError;
+
+  /// Import success message title
+  ///
+  /// In en, this message translates to:
+  /// **'Import successful'**
+  String get importSuccess;
+
+  /// Import error message title
+  ///
+  /// In en, this message translates to:
+  /// **'Import failed'**
+  String get importError;
+
+  /// Minds exported count
+  ///
+  /// In en, this message translates to:
+  /// **'Minds exported'**
+  String get mindsExported;
+
+  /// Audio files exported count
+  ///
+  /// In en, this message translates to:
+  /// **'Audio files exported'**
+  String get audioFilesExported;
+
+  /// Minds imported count
+  ///
+  /// In en, this message translates to:
+  /// **'Minds imported'**
+  String get mindsImported;
+
+  /// Audio files imported count
+  ///
+  /// In en, this message translates to:
+  /// **'Audio files imported'**
+  String get audioFilesImported;
 }
 
 class _AppLocalizationsDelegate

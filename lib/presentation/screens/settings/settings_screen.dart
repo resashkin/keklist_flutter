@@ -1,23 +1,27 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:adaptive_dialog/adaptive_dialog.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
+import 'package:keklist/domain/constants.dart';
+import 'package:keklist/domain/services/export_import/models/import_result.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
-import 'package:keklist/domain/constants.dart';
-import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
+import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
+import 'package:keklist/presentation/screens/language_picker/language_picker_screen.dart';
+import 'package:keklist/presentation/screens/settings/widgets/password_input_bottom_sheet.dart';
 import 'package:keklist/presentation/screens/settings/widgets/stories_widget.dart';
 import 'package:keklist/presentation/screens/tabs_settings/tabs_settings_screen.dart';
 import 'package:keklist/presentation/screens/web_page/web_page_screen.dart';
-import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
-import 'package:keklist/presentation/screens/language_picker/language_picker_screen.dart';
+import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
-
-import 'dart:async';
 
 // TODO: move methods from MindBloc to SettingsBloc
 // TODO: darkmode: add system mode
@@ -52,7 +56,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
               builder: (context) => AlertDialog(
                 title: Text(state.title),
                 content: Text(state.message),
-                actions: [TextButton(child: Text('OK'), onPressed: () => Navigator.of(context).pop())],
+                actions: [TextButton(child: const Text('OK'), onPressed: () => Navigator.of(context).pop())],
               ),
             );
           case SettingsLoadingState state:
@@ -60,6 +64,31 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
               EasyLoading.show();
             } else {
               EasyLoading.dismiss();
+            }
+            break;
+          case SettingsExportSuccess state:
+            _showSuccessMessage(
+              context.l10n.exportSuccess,
+              '${context.l10n.mindsExported}: ${state.mindsCount}\n'
+              '${context.l10n.audioFilesExported}: ${state.audioFilesCount}',
+            );
+            break;
+          case SettingsExportError state:
+            _showErrorMessage(context.l10n.exportError, state.message);
+            break;
+          case SettingsImportSuccess state:
+            _showSuccessMessage(
+              context.l10n.importSuccess,
+              '${context.l10n.mindsImported}: ${state.mindsCount}\n'
+              '${context.l10n.audioFilesImported}: ${state.audioFilesCount}',
+            );
+            break;
+          case SettingsImportError state:
+            // For invalid password error, show retry dialog
+            if (state.error == ImportError.invalidPassword) {
+              _handleInvalidPasswordError();
+            } else {
+              _showErrorMessage(context.l10n.importError, state.message);
             }
             break;
         }
@@ -131,16 +160,12 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
               SettingsTile(
                 title: Text(context.l10n.exportData),
                 leading: const Icon(Icons.upload, color: Colors.redAccent),
-                onPressed: (BuildContext context) {
-                  sendEventToBloc<SettingsBloc>(SettingsExport(type: SettingsExportType.csv));
-                },
+                onPressed: (BuildContext context) => _handleExport(),
               ),
               SettingsTile(
                 title: Text(context.l10n.importData),
                 leading: const Icon(Icons.download, color: Colors.greenAccent),
-                onPressed: (BuildContext context) {
-                  sendEventToBloc<SettingsBloc>(SettingsImport(type: SettingsImportType.csv));
-                },
+                onPressed: (BuildContext context) => _handleImport(),
               ),
             ],
           ),
@@ -310,5 +335,127 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
       case OkCancelResult.cancel:
         break;
     }
+  }
+
+  Future<void> _handleExport() async {
+    // Show password input bottom sheet
+    final password = await PasswordInputBottomSheet.show(
+      context: context,
+      title: context.l10n.exportPassword,
+      isConfirmationRequired: true,
+      isOptional: true,
+    );
+
+    if (password == null) return; // User cancelled
+
+    // Export as ZIP with optional password
+    sendEventToBloc<SettingsBloc>(
+      SettingsExport(
+        type: SettingsExportType.zip,
+        password: password.isEmpty ? null : password,
+      ),
+    );
+  }
+
+  File? _lastImportFile;
+
+  Future<void> _handleImport() async {
+    // Show file picker
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['csv', 'zip', 'encrypted'],
+    );
+
+    if (result == null || result.files.isEmpty) return;
+
+    final pickedFile = result.files.single;
+    if (pickedFile.path == null) return;
+
+    final file = File(pickedFile.path!);
+    _lastImportFile = file;
+
+    // Check if file is encrypted (by extension or try to detect)
+    final needsPassword = pickedFile.name.endsWith('.encrypted');
+
+    String? password;
+    if (needsPassword) {
+      password = await PasswordInputBottomSheet.show(
+        context: context,
+        title: context.l10n.importPassword,
+        isConfirmationRequired: false,
+        isOptional: false,
+      );
+
+      if (password == null) return; // User cancelled
+    }
+
+    // Trigger import
+    sendEventToBloc<SettingsBloc>(
+      SettingsImport(
+        file: file,
+        password: password,
+      ),
+    );
+  }
+
+  Future<void> _handleInvalidPasswordError() async {
+    final result = await showOkCancelAlertDialog(
+      context: context,
+      title: context.l10n.incorrectPassword,
+      message: context.l10n.incorrectPasswordMessage,
+      okLabel: context.l10n.retry,
+      cancelLabel: context.l10n.cancel,
+    );
+
+    if (result == OkCancelResult.ok && _lastImportFile != null) {
+      // Retry with new password
+      final password = await PasswordInputBottomSheet.show(
+        context: context,
+        title: context.l10n.importPassword,
+        isConfirmationRequired: false,
+        isOptional: false,
+      );
+
+      if (password != null) {
+        sendEventToBloc<SettingsBloc>(
+          SettingsImport(
+            file: _lastImportFile!,
+            password: password,
+          ),
+        );
+      }
+    }
+  }
+
+  void _showSuccessMessage(String title, String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: Text(message),
+        actions: [
+          TextButton(
+            child: Text(context.l10n.ok),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showErrorMessage(String title, String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: Text(message),
+        actions: [
+          TextButton(
+            child: Text(context.l10n.ok),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
+      ),
+    );
   }
 }

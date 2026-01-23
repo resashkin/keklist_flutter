@@ -17,6 +17,7 @@ dependencies:
   csv: ^6.0.0
   cupertino_icons: ^1.0.5
   emojis: ^0.9.9
+  encrypt: ^5.0.3
   equatable: ^2.0.5
   fast_immutable_collections: ^11.0.3
   fl_chart: ^1.0.0
@@ -40,6 +41,7 @@ dependencies:
   modal_bottom_sheet: ^3.0.0-pre
   package_info_plus: ^9.0.0
   path_provider: ^2.0.12
+  pointycastle: ^3.9.1
   just_audio: ^0.9.40
   rxdart: ^0.28.0
   scrollable_positioned_list: ^0.3.5
@@ -56,6 +58,7 @@ dependencies:
   flutter_staggered_grid_view: ^0.7.0
   bottom_sheet: ^4.0.0
   action_sheet: ^1.0.4
+  archive: ^3.6.1
   haptic_feedback: ^0.5.1+1
   provider: ^6.1.2
   collection: ^1.18.0
@@ -74,6 +77,7 @@ dependencies:
   purchases_ui_flutter: ^9.8.0
   record: ^6.1.2
   just_waveform: ^0.0.7
+  flutter_gen: ^5.9.0
 
 dev_dependencies:
   flutter_lints: ^6.0.0

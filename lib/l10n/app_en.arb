@@ -375,5 +375,117 @@
     "week": "Week",
     "@week": {
         "description": "Week label"
+    },
+    "password": "Password",
+    "@password": {
+        "description": "Password label"
+    },
+    "enterPassword": "Enter password",
+    "@enterPassword": {
+        "description": "Enter password placeholder"
+    },
+    "confirmPassword": "Confirm password",
+    "@confirmPassword": {
+        "description": "Confirm password label"
+    },
+    "reenterPassword": "Re-enter password",
+    "@reenterPassword": {
+        "description": "Re-enter password placeholder"
+    },
+    "passwordsDoNotMatch": "Passwords do not match",
+    "@passwordsDoNotMatch": {
+        "description": "Passwords do not match error"
+    },
+    "exportPassword": "Password protect export?",
+    "@exportPassword": {
+        "description": "Export password dialog title"
+    },
+    "exportPasswordDescription": "Add a password to encrypt your export. You can skip this for unencrypted export.",
+    "@exportPasswordDescription": {
+        "description": "Export password description"
+    },
+    "importPassword": "Enter password",
+    "@importPassword": {
+        "description": "Import password dialog title"
+    },
+    "importPasswordDescription": "This file is password-protected. Please enter the password to decrypt.",
+    "@importPasswordDescription": {
+        "description": "Import password description"
+    },
+    "skipPassword": "Skip (no password)",
+    "@skipPassword": {
+        "description": "Skip password button"
+    },
+    "continue_": "Continue",
+    "@continue_": {
+        "description": "Continue button"
+    },
+    "incorrectPassword": "Incorrect password",
+    "@incorrectPassword": {
+        "description": "Incorrect password error title"
+    },
+    "incorrectPasswordMessage": "The password you entered is incorrect. Please try again.",
+    "@incorrectPasswordMessage": {
+        "description": "Incorrect password error message"
+    },
+    "corruptedFile": "Corrupted file",
+    "@corruptedFile": {
+        "description": "Corrupted file error"
+    },
+    "invalidFormat": "Invalid format",
+    "@invalidFormat": {
+        "description": "Invalid format error"
+    },
+    "missingAudioFiles": "Some audio files are missing",
+    "@missingAudioFiles": {
+        "description": "Missing audio files warning"
+    },
+    "insufficientStorage": "Insufficient storage",
+    "@insufficientStorage": {
+        "description": "Insufficient storage error"
+    },
+    "unknownError": "Unknown error",
+    "@unknownError": {
+        "description": "Unknown error"
+    },
+    "retry": "Retry",
+    "@retry": {
+        "description": "Retry button"
+    },
+    "ok": "OK",
+    "@ok": {
+        "description": "OK button"
+    },
+    "exportSuccess": "Export successful",
+    "@exportSuccess": {
+        "description": "Export success message title"
+    },
+    "exportError": "Export failed",
+    "@exportError": {
+        "description": "Export error message title"
+    },
+    "importSuccess": "Import successful",
+    "@importSuccess": {
+        "description": "Import success message title"
+    },
+    "importError": "Import failed",
+    "@importError": {
+        "description": "Import error message title"
+    },
+    "mindsExported": "Minds exported",
+    "@mindsExported": {
+        "description": "Minds exported count"
+    },
+    "audioFilesExported": "Audio files exported",
+    "@audioFilesExported": {
+        "description": "Audio files exported count"
+    },
+    "mindsImported": "Minds imported",
+    "@mindsImported": {
+        "description": "Minds imported count"
+    },
+    "audioFilesImported": "Audio files imported",
+    "@audioFilesImported": {
+        "description": "Audio files imported count"
     }
 }

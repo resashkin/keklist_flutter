@@ -8,18 +8,21 @@ final class SettingsGet extends SettingsEvent {}
 
 final class SettingsExport extends SettingsEvent {
   final SettingsExportType type;
+  final String? password;
 
-  SettingsExport({required this.type});
+  SettingsExport({required this.type, this.password});
 }
 
 final class SettingsImport extends SettingsEvent {
-  final SettingsImportType type;
+  final File file;
+  final String? password;
 
-  SettingsImport({required this.type});
+  SettingsImport({required this.file, this.password});
 }
 
-enum SettingsExportType { csv }
+enum SettingsExportType { csv, zip }
 
+@Deprecated('Use SettingsImport with file parameter instead')
 enum SettingsImportType { csv }
 
 final class SettingsExportAllMindsToCSV extends SettingsEvent {}

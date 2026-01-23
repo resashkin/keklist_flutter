@@ -16,6 +16,7 @@ import 'package:keklist/domain/repositories/mind/mind_hive_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_hive_repository.dart';
 import 'package:keklist/domain/migrations/migration_runner.dart';
+import 'package:keklist/domain/services/export_import/export_import_service.dart';
 import 'package:keklist/keklist_app.dart';
 import 'package:keklist/domain/hive_constants.dart';
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
@@ -118,6 +119,7 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
         create: (context) => SettingsBloc(
           repository: mainInjector.get<SettingsRepository>(),
           mindRepository: mainInjector.get<MindRepository>(),
+          exportImportService: mainInjector.get<ExportImportService>(),
         ),
       ),
       BlocProvider(

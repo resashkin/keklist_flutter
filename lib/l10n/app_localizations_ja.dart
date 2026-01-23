@@ -290,4 +290,91 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get week => '週';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get enterPassword => 'Enter password';
+
+  @override
+  String get confirmPassword => 'Confirm password';
+
+  @override
+  String get reenterPassword => 'Re-enter password';
+
+  @override
+  String get passwordsDoNotMatch => 'Passwords do not match';
+
+  @override
+  String get exportPassword => 'Password protect export?';
+
+  @override
+  String get exportPasswordDescription =>
+      'Add a password to encrypt your export. You can skip this for unencrypted export.';
+
+  @override
+  String get importPassword => 'Enter password';
+
+  @override
+  String get importPasswordDescription =>
+      'This file is password-protected. Please enter the password to decrypt.';
+
+  @override
+  String get skipPassword => 'Skip (no password)';
+
+  @override
+  String get continue_ => 'Continue';
+
+  @override
+  String get incorrectPassword => 'Incorrect password';
+
+  @override
+  String get incorrectPasswordMessage =>
+      'The password you entered is incorrect. Please try again.';
+
+  @override
+  String get corruptedFile => 'Corrupted file';
+
+  @override
+  String get invalidFormat => 'Invalid format';
+
+  @override
+  String get missingAudioFiles => 'Some audio files are missing';
+
+  @override
+  String get insufficientStorage => 'Insufficient storage';
+
+  @override
+  String get unknownError => 'Unknown error';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get exportSuccess => 'Export successful';
+
+  @override
+  String get exportError => 'Export failed';
+
+  @override
+  String get importSuccess => 'Import successful';
+
+  @override
+  String get importError => 'Import failed';
+
+  @override
+  String get mindsExported => 'Minds exported';
+
+  @override
+  String get audioFilesExported => 'Audio files exported';
+
+  @override
+  String get mindsImported => 'Minds imported';
+
+  @override
+  String get audioFilesImported => 'Audio files imported';
 }

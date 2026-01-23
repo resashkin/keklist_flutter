@@ -6,7 +6,7 @@ import 'package:uuid/uuid.dart';
 /// Lightweight repository responsible for managing app-specific file storage.
 /// Keeps all user generated assets inside a dedicated folder under the app
 /// documents directory to simplify clean up and backup.
-final class AppFileRepository {
+class AppFileRepository {
   const AppFileRepository();
 
   static const String _userRootFolderName = 'user_files';
@@ -38,10 +38,7 @@ final class AppFileRepository {
     final Directory audioDirectory = await _ensureAudioDirectory();
     final String fileName = '${const Uuid().v4()}.$extension';
     final File file = File('${audioDirectory.path}/$fileName');
-    return AppFileHandle(
-      file: file,
-      relativePath: '$_audioFolderName/$fileName',
-    );
+    return AppFileHandle(file: file, relativePath: '$_audioFolderName/$fileName');
   }
 
   /// Resolves an app-relative path (obtained from [AppFileHandle.relativePath])
@@ -57,8 +54,5 @@ final class AppFileHandle {
   final File file;
   final String relativePath;
 
-  const AppFileHandle({
-    required this.file,
-    required this.relativePath,
-  });
+  const AppFileHandle({required this.file, required this.relativePath});
 }
