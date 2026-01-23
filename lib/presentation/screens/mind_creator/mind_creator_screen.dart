@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:keklist/presentation/blocs/mind_creator_bloc/mind_creator_bloc.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
@@ -103,7 +105,37 @@ final class _MindCreatorScreenState extends KekWidgetState<MindCreatorScreen> {
                   },
                 );
               },
-              child: Text(_selectedEmoji, style: const TextStyle(fontSize: 64.0)),
+              child: SizedBox(
+                width: 120,
+                height: 120,
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  alignment: Alignment.center,
+                  children: [
+                    // Stroke effect - smooth circular outline
+                    ..._buildStrokeEmojis(
+                      _selectedEmoji,
+                      strokeColor: Theme.of(context).colorScheme.onSurface,
+                      strokeWidth: 4.0,
+                    ),
+                    // Main emoji
+                    Text(_selectedEmoji, style: const TextStyle(fontSize: 64.0)),
+                    // Edit icon
+                    // Positioned(
+                    //   right: 16,
+                    //   bottom: 16,
+                    //   child: Container(
+                    //     padding: const EdgeInsets.all(6),
+                    //     decoration: BoxDecoration(
+                    //       color: Theme.of(context).colorScheme.onSurface,
+                    //       shape: BoxShape.circle,
+                    //     ),
+                    //     child: Icon(Icons.edit, size: 16, color: Theme.of(context).colorScheme.onPrimary),
+                    //   ),
+                    // ),
+                  ],
+                ),
+              ),
             ),
             const SizedBox(height: 16.0),
             TextField(
@@ -130,5 +162,30 @@ final class _MindCreatorScreenState extends KekWidgetState<MindCreatorScreen> {
       context: context,
       builder: (context) => MindPickerScreen(onSelect: onSelect, suggestions: []),
     );
+  }
+
+  List<Widget> _buildStrokeEmojis(String emoji, {required Color strokeColor, required double strokeWidth}) {
+    const double fontSize = 64.0;
+    final List<Widget> strokeEmojis = [];
+
+    // 16 directional offsets in a circle for smooth stroke effect
+    const int directions = 16;
+    for (int i = 0; i < directions; i++) {
+      final double angle = (i * 2 * pi) / directions;
+      final double dx = strokeWidth * cos(angle);
+      final double dy = strokeWidth * sin(angle);
+
+      strokeEmojis.add(
+        Transform.translate(
+          offset: Offset(dx, dy),
+          child: ColorFiltered(
+            colorFilter: ColorFilter.mode(strokeColor, BlendMode.srcIn),
+            child: Text(emoji, style: const TextStyle(fontSize: fontSize)),
+          ),
+        ),
+      );
+    }
+
+    return strokeEmojis;
   }
 }
