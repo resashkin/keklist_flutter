@@ -20,11 +20,9 @@ class ExportImportService {
   final MindRepository _mindRepository;
   final AppFileRepository _fileRepository;
 
-  const ExportImportService({
-    required MindRepository mindRepository,
-    required AppFileRepository fileRepository,
-  })  : _mindRepository = mindRepository,
-        _fileRepository = fileRepository;
+  const ExportImportService({required MindRepository mindRepository, required AppFileRepository fileRepository})
+    : _mindRepository = mindRepository,
+      _fileRepository = fileRepository;
 
   // Encryption constants
   static const int _saltLength = 16;
@@ -37,10 +35,7 @@ class ExportImportService {
       final minds = _mindRepository.values.toList();
 
       if (minds.isEmpty) {
-        return const ExportFailure(
-          error: ExportError.noMindsToExport,
-          details: 'No minds available to export',
-        );
+        return const ExportFailure(error: ExportError.noMindsToExport, details: 'No minds available to export');
       }
 
       // Convert to CSV
@@ -53,12 +48,7 @@ class ExportImportService {
       final file = File('${tempDir.path}/keklist_export_$timestamp.csv');
       await file.writeAsString(csv);
 
-      return ExportSuccess(
-        file: file,
-        mindsCount: minds.length,
-        audioFilesCount: 0,
-        isEncrypted: false,
-      );
+      return ExportSuccess(file: file, mindsCount: minds.length, audioFilesCount: 0, isEncrypted: false);
     } catch (e) {
       return ExportFailure(
         error: ExportError.fileCreationFailed,
@@ -75,10 +65,7 @@ class ExportImportService {
       final minds = _mindRepository.values.toList();
 
       if (minds.isEmpty) {
-        return const ExportFailure(
-          error: ExportError.noMindsToExport,
-          details: 'No minds available to export',
-        );
+        return const ExportFailure(error: ExportError.noMindsToExport, details: 'No minds available to export');
       }
 
       // Create CSV content
@@ -100,11 +87,7 @@ class ExportImportService {
       final archive = Archive();
 
       // Add minds.csv to root
-      archive.addFile(ArchiveFile(
-        'minds.csv',
-        csv.length,
-        utf8.encode(csv),
-      ));
+      archive.addFile(ArchiveFile('minds.csv', csv.length, utf8.encode(csv)));
 
       // Add audio files
       int successfulAudioCount = 0;
@@ -117,11 +100,7 @@ class ExportImportService {
             final bytes = await file.readAsBytes();
             // Extract just the filename from the relative path (e.g., "audio/uuid.m4a" -> "uuid.m4a")
             final fileName = relativePath.split('/').last;
-            archive.addFile(ArchiveFile(
-              'audio/$fileName',
-              bytes.length,
-              bytes,
-            ));
+            archive.addFile(ArchiveFile('audio/$fileName', bytes.length, bytes));
             successfulAudioCount++;
           } else {
             missingAudioFiles.add(relativePath);
@@ -136,10 +115,7 @@ class ExportImportService {
       final zipBytes = zipEncoder.encode(archive);
 
       if (zipBytes == null) {
-        return const ExportFailure(
-          error: ExportError.fileCreationFailed,
-          details: 'Failed to create ZIP archive',
-        );
+        return const ExportFailure(error: ExportError.fileCreationFailed, details: 'Failed to create ZIP archive');
       }
 
       // Encrypt if password provided
@@ -184,10 +160,7 @@ class ExportImportService {
   Future<ImportResult> importFromFile(File file, {String? password}) async {
     try {
       if (!await file.exists()) {
-        return const ImportFailure(
-          error: ImportError.corruptedFile,
-          details: 'File does not exist',
-        );
+        return const ImportFailure(error: ImportError.corruptedFile, details: 'File does not exist');
       }
 
       final fileName = file.path.toLowerCase();
@@ -231,22 +204,13 @@ class ExportImportService {
       final csvContent = await file.readAsString();
 
       if (csvContent.trim().isEmpty) {
-        return const ImportFailure(
-          error: ImportError.invalidFormat,
-          details: 'CSV file is empty',
-        );
+        return const ImportFailure(error: ImportError.invalidFormat, details: 'CSV file is empty');
       }
 
-      final rawRows = const CsvToListConverter(
-        fieldDelimiter: ';',
-        shouldParseNumbers: false,
-      ).convert(csvContent);
+      final rawRows = const CsvToListConverter(fieldDelimiter: ';', shouldParseNumbers: false).convert(csvContent);
 
       if (rawRows.isEmpty) {
-        return const ImportFailure(
-          error: ImportError.invalidFormat,
-          details: 'No data found in CSV file',
-        );
+        return const ImportFailure(error: ImportError.invalidFormat, details: 'No data found in CSV file');
       }
 
       final mindsToImport = <Mind>[];
@@ -274,19 +238,13 @@ class ExportImportService {
       }
 
       if (mindsToImport.isEmpty) {
-        return const ImportFailure(
-          error: ImportError.invalidFormat,
-          details: 'No valid minds found in CSV file',
-        );
+        return const ImportFailure(error: ImportError.invalidFormat, details: 'No valid minds found in CSV file');
       }
 
       // Batch import
       await _mindRepository.createMinds(minds: mindsToImport);
 
-      return ImportSuccess(
-        mindsCount: mindsToImport.length,
-        audioFilesCount: 0,
-      );
+      return ImportSuccess(mindsCount: mindsToImport.length, audioFilesCount: 0);
     } catch (e) {
       return ImportFailure(
         error: ImportError.corruptedFile,
@@ -364,10 +322,7 @@ class ExportImportService {
 
       // Parse CSV
       final csvContent = utf8.decode(mindsFile.content as List<int>);
-      final rawRows = const CsvToListConverter(
-        fieldDelimiter: ';',
-        shouldParseNumbers: false,
-      ).convert(csvContent);
+      final rawRows = const CsvToListConverter(fieldDelimiter: ';', shouldParseNumbers: false).convert(csvContent);
 
       final mindsToImport = <Mind>[];
 
@@ -391,10 +346,7 @@ class ExportImportService {
       }
 
       if (mindsToImport.isEmpty) {
-        return const ImportFailure(
-          error: ImportError.invalidFormat,
-          details: 'No valid minds found in archive',
-        );
+        return const ImportFailure(error: ImportError.invalidFormat, details: 'No valid minds found in archive');
       }
 
       // Copy audio files to app directory
