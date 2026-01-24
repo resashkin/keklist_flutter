@@ -87,5 +87,7 @@
 	<string>keklist needs access to photo library to import your backups from files</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>keklist needs access to your microphone only to record voice messages</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>
