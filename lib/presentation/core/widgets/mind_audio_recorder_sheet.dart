@@ -39,37 +39,83 @@ final class _MindAudioRecorderSheetState extends State<MindAudioRecorderSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      top: false,
-      child: Padding(
-        padding: const EdgeInsets.all(24),
+    final theme = Theme.of(context);
+
+    return PopScope(
+      canPop: !_isRecording,
+      child: Container(
+        decoration: BoxDecoration(
+          color: theme.scaffoldBackgroundColor,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              _isRecording ? 'Recording…' : 'Record audio',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 24),
-            ElevatedButton.icon(
-              onPressed: _isProcessing ? null : _toggleRecording,
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 56),
+            // Drag handle
+            Center(
+              child: Container(
+                margin: const EdgeInsets.only(top: 12, bottom: 8),
+                width: 32,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: _isRecording
+                    ? Colors.red
+                    : theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.4),
+                  borderRadius: BorderRadius.circular(2),
+                ),
               ),
-              icon: Icon(_isRecording ? Icons.stop : Icons.mic),
-              label: Text(_isRecording ? 'Stop' : 'Start'),
             ),
-            if (_isRecording) ...[
-              const SizedBox(height: 16),
-              Text(
-                'Tap Stop to save to your device.',
-                style: Theme.of(context).textTheme.bodyMedium,
+
+            // Title
+            Padding(
+              padding: const EdgeInsets.fromLTRB(24, 8, 24, 0),
+              child: Text(
+                _isRecording ? 'Recording…' : 'Record audio',
+                style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
               ),
-            ],
-            const SizedBox(height: 8),
-            TextButton(
-              onPressed: _isProcessing ? null : () => Navigator.of(context).maybePop(),
-              child: const Text('Cancel'),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(top: 0, bottom: 24.0, left: 24.0, right: 24.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  if (_isRecording) ...[
+                    const SizedBox(height: 16),
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.surfaceContainerHighest,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        'Tap Stop to save to your device.',
+                        style: theme.textTheme.bodyMedium,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
+
+                  const SizedBox(height: 24),
+
+                  // Record/Stop button
+                  FilledButton.icon(
+                    onPressed: _isProcessing ? null : _toggleRecording,
+                    icon: Icon(_isRecording ? Icons.stop : Icons.mic),
+                    label: Text(_isRecording ? 'Stop' : 'Start'),
+                  ),
+
+                  // Cancel button
+                  const SizedBox(height: 8),
+                  TextButton(
+                    onPressed: _isProcessing || _isRecording ? null : () => Navigator.of(context).maybePop(),
+                    child: const Text('Cancel'),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

@@ -176,8 +176,12 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
                             final AppFileRepository fileRepository = context.read<AppFileRepository>();
                             final AudioRecordingResult audio = await showModalBottomSheet<AudioRecordingResult>(
                               context: context,
-                              builder: (BuildContext sheetContext) =>
-                                  MindAudioRecorderSheet(fileRepository: fileRepository),
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              builder: (BuildContext sheetContext) => Padding(
+                                padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                child: MindAudioRecorderSheet(fileRepository: fileRepository),
+                              ),
                             );
                             if (audio != null) {
                               final String trimmedPath = audio.trim();
