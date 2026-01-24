@@ -51,8 +51,6 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FLTEnableImpeller</key>
 	<true/>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocalNetworkUsageDescription</key>
