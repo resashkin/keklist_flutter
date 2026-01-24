@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
@@ -6,6 +7,7 @@ import 'package:collection/collection.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/mind_utils.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
+import 'package:keklist/domain/repositories/files/app_file_repository.dart';
 import 'package:keklist/domain/services/entities/mind_note_content.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:keklist/presentation/cubits/mind_searcher/mind_searcher_cubit.dart';
@@ -20,11 +22,16 @@ part 'mind_state.dart';
 final class MindBloc extends Bloc<MindEvent, MindState> with DisposeBag {
   late final MindSearcherCubit _searcherCubit;
   late final MindRepository _mindRepository;
+  late final AppFileRepository _fileRepository;
 
-  MindBloc({required MindSearcherCubit mindSearcherCubit, required MindRepository mindRepository})
-    : super(MindList(values: const [])) {
+  MindBloc({
+    required MindSearcherCubit mindSearcherCubit,
+    required MindRepository mindRepository,
+    required AppFileRepository fileRepository,
+  }) : super(MindList(values: const [])) {
     _searcherCubit = mindSearcherCubit;
     _mindRepository = mindRepository;
+    _fileRepository = fileRepository;
     on<MindGetList>(_getMinds);
     on<MindUpdateMobileWidgets>(_updateMobileWidgets);
     on<MindCreate>(_createMind);
@@ -96,10 +103,39 @@ final class MindBloc extends Bloc<MindEvent, MindState> with DisposeBag {
     _mindRepository.createMind(mind: mind);
   }
 
-  // TODO: remove audio content as well when mind was related with it
-
   Future<void> _deleteMind(MindDelete event, Emitter<MindState> emit) async {
+    // Collect all minds to be deleted (main mind + child minds with rootId)
+    final mindsToDelete = <Mind>[
+      event.mind,
+      ..._mindRepository.values.where((mind) => mind.rootId == event.mind.id),
+    ];
+
+    // Collect all audio files from all minds to be deleted
+    final audioFilesToDelete = <String>{};
+    for (final mind in mindsToDelete) {
+      final noteContent = MindNoteContent.parse(mind.note);
+      for (final audioPiece in noteContent.audioPieces) {
+        audioFilesToDelete.add(audioPiece.appRelativeAbsoulutePath);
+      }
+    }
+
+    // Delete all audio files
+    for (final relativePath in audioFilesToDelete) {
+      try {
+        final absolutePath = await _fileRepository.resolveAbsolutePath(relativePath);
+        final file = File(absolutePath);
+        if (await file.exists()) {
+          await file.delete();
+        }
+      } catch (e) {
+        // Log error but continue with deletion
+        debugPrint('Error deleting audio file $relativePath: $e');
+      }
+    }
+
+    // Delete child minds first
     await _mindRepository.deleteMindsWhere((mind) => mind.rootId == event.mind.id);
+    // Then delete the main mind
     await _mindRepository.deleteMind(mindId: event.mind.id);
   }
 
@@ -132,6 +168,30 @@ final class MindBloc extends Bloc<MindEvent, MindState> with DisposeBag {
   }
 
   Future<void> _clearCache(MindClearCache event, Emitter<MindState> emit) async {
+    // Collect all audio files from all minds
+    final audioFilesToDelete = <String>{};
+    for (final mind in _mindRepository.values) {
+      final noteContent = MindNoteContent.parse(mind.note);
+      for (final audioPiece in noteContent.audioPieces) {
+        audioFilesToDelete.add(audioPiece.appRelativeAbsoulutePath);
+      }
+    }
+
+    // Delete all audio files
+    for (final relativePath in audioFilesToDelete) {
+      try {
+        final absolutePath = await _fileRepository.resolveAbsolutePath(relativePath);
+        final file = File(absolutePath);
+        if (await file.exists()) {
+          await file.delete();
+        }
+      } catch (e) {
+        // Log error but continue with deletion
+        debugPrint('Error deleting audio file $relativePath: $e');
+      }
+    }
+
+    // Delete all minds
     await _mindRepository.deleteMinds();
   }
 
