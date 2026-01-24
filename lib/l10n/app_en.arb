@@ -55,6 +55,10 @@
     "@share": {
         "description": "Share action"
     },
+    "saveToFiles": "Save to files",
+    "@saveToFiles": {
+        "description": "Save to files action"
+    },
     "switchDay": "Switch day",
     "@switchDay": {
         "description": "Switch day action"
@@ -380,6 +384,10 @@
     "@password": {
         "description": "Password label"
     },
+    "archivePassword": "Archive password",
+    "@archivePassword": {
+        "description": "Archive password label for export"
+    },
     "enterPassword": "Enter password",
     "@enterPassword": {
         "description": "Enter password placeholder"
@@ -396,7 +404,7 @@
     "@passwordsDoNotMatch": {
         "description": "Passwords do not match error"
     },
-    "exportPassword": "Password protect export?",
+    "exportPassword": "Export to ZIP",
     "@exportPassword": {
         "description": "Export password dialog title"
     },
@@ -471,6 +479,14 @@
     "importError": "Import failed",
     "@importError": {
         "description": "Import error message title"
+    },
+    "mindsToExport": "Minds",
+    "@mindsToExport": {
+        "description": "Minds count label for export"
+    },
+    "audioFilesToExport": "Audio files",
+    "@audioFilesToExport": {
+        "description": "Audio files count label for export"
     },
     "mindsExported": "Minds exported",
     "@mindsExported": {

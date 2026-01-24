@@ -51,6 +51,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get share => 'Поделиться';
 
   @override
+  String get saveToFiles => 'Сохранить в файлы';
+
+  @override
   String get switchDay => 'Поменять день';
 
   @override
@@ -300,6 +303,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get password => 'Пароль';
 
   @override
+  String get archivePassword => 'Пароль для архива';
+
+  @override
   String get enterPassword => 'Введите пароль';
 
   @override
@@ -312,7 +318,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get passwordsDoNotMatch => 'Пароли не совпадают';
 
   @override
-  String get exportPassword => 'Защитить экспорт паролем?';
+  String get exportPassword => 'Экспорт в ZIP';
 
   @override
   String get exportPasswordDescription =>
@@ -370,6 +376,12 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get importError => 'Ошибка импорта';
+
+  @override
+  String get mindsToExport => 'Заметок';
+
+  @override
+  String get audioFilesToExport => 'Аудиофайлов';
 
   @override
   String get mindsExported => 'Заметок экспортировано';

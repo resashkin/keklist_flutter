@@ -201,6 +201,12 @@ abstract class AppLocalizations {
   /// **'Share'**
   String get share;
 
+  /// Save to files action
+  ///
+  /// In en, this message translates to:
+  /// **'Save to files'**
+  String get saveToFiles;
+
   /// Switch day action
   ///
   /// In en, this message translates to:
@@ -681,6 +687,12 @@ abstract class AppLocalizations {
   /// **'Password'**
   String get password;
 
+  /// Archive password label for export
+  ///
+  /// In en, this message translates to:
+  /// **'Archive password'**
+  String get archivePassword;
+
   /// Enter password placeholder
   ///
   /// In en, this message translates to:
@@ -708,7 +720,7 @@ abstract class AppLocalizations {
   /// Export password dialog title
   ///
   /// In en, this message translates to:
-  /// **'Password protect export?'**
+  /// **'Export to ZIP'**
   String get exportPassword;
 
   /// Export password description
@@ -818,6 +830,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Import failed'**
   String get importError;
+
+  /// Minds count label for export
+  ///
+  /// In en, this message translates to:
+  /// **'Minds'**
+  String get mindsToExport;
+
+  /// Audio files count label for export
+  ///
+  /// In en, this message translates to:
+  /// **'Audio files'**
+  String get audioFilesToExport;
 
   /// Minds exported count
   ///

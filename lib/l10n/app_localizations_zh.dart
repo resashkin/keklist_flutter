@@ -51,6 +51,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get share => '分享';
 
   @override
+  String get saveToFiles => 'Save to files';
+
+  @override
   String get switchDay => '切换日期';
 
   @override
@@ -293,6 +296,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get password => 'Password';
 
   @override
+  String get archivePassword => 'Archive password';
+
+  @override
   String get enterPassword => 'Enter password';
 
   @override
@@ -363,6 +369,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get importError => 'Import failed';
+
+  @override
+  String get mindsToExport => 'Minds';
+
+  @override
+  String get audioFilesToExport => 'Audio files';
 
   @override
   String get mindsExported => 'Minds exported';

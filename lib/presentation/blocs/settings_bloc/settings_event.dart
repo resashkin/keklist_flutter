@@ -9,8 +9,13 @@ final class SettingsGet extends SettingsEvent {}
 final class SettingsExport extends SettingsEvent {
   final SettingsExportType type;
   final String? password;
+  final SettingsExportAction action;
 
-  SettingsExport({required this.type, this.password});
+  SettingsExport({
+    required this.type,
+    this.password,
+    this.action = SettingsExportAction.share,
+  });
 }
 
 final class SettingsImport extends SettingsEvent {
@@ -21,6 +26,8 @@ final class SettingsImport extends SettingsEvent {
 }
 
 enum SettingsExportType { csv, zip }
+
+enum SettingsExportAction { saveToFiles, share }
 
 @Deprecated('Use SettingsImport with file parameter instead')
 enum SettingsImportType { csv }

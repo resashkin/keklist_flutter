@@ -76,18 +76,48 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
 
       switch (result) {
         case ExportSuccess success:
-          // Share the exported file with explicit MIME type
-          // Use application/zip for both .zip and .encrypted files
-          await SharePlus.instance.share(ShareParams(
-            files: [XFile(success.file.path, mimeType: 'application/zip')],
-            sharePositionOrigin: const Rect.fromLTWH(0, 0, 1, 1),
-          ));
+          // Handle based on export action
+          if (event.action == SettingsExportAction.saveToFiles) {
+            // Save to file system using file picker
+            final timestamp = DateTime.now().toIso8601String().replaceAll(':', '-').split('.').first;
+            final suggestedName = 'keklist_export_$timestamp.zip';
 
-          emit(SettingsExportSuccess(
-            mindsCount: success.mindsCount,
-            audioFilesCount: success.audioFilesCount,
-            isEncrypted: success.isEncrypted,
-          ));
+            // Read the bytes from the temp file
+            final tempFile = File(success.file.path);
+            final bytes = await tempFile.readAsBytes();
+
+            final outputPath = await FilePicker.platform.saveFile(
+              dialogTitle: 'Save export file',
+              fileName: suggestedName,
+              type: FileType.custom,
+              allowedExtensions: ['zip'],
+              bytes: bytes,
+            );
+
+            if (outputPath != null) {
+              emit(SettingsExportSuccess(
+                mindsCount: success.mindsCount,
+                audioFilesCount: success.audioFilesCount,
+                isEncrypted: success.isEncrypted,
+              ));
+            } else {
+              // User cancelled the save dialog
+              emit(SettingsLoadingState(false));
+            }
+          } else {
+            // Share the exported file with explicit MIME type
+            // Use application/zip for both .zip and .encrypted files
+            await SharePlus.instance.share(ShareParams(
+              files: [XFile(success.file.path, mimeType: 'application/zip')],
+              sharePositionOrigin: const Rect.fromLTWH(0, 0, 1, 1),
+            ));
+
+            emit(SettingsExportSuccess(
+              mindsCount: success.mindsCount,
+              audioFilesCount: success.audioFilesCount,
+              isEncrypted: success.isEncrypted,
+            ));
+          }
           break;
 
         case ExportFailure failure:

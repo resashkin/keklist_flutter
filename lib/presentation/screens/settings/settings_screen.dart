@@ -4,19 +4,24 @@ import 'dart:io';
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
 import 'package:keklist/domain/constants.dart';
+import 'package:keklist/domain/services/entities/mind.dart';
+import 'package:keklist/domain/services/entities/mind_note_content.dart';
 import 'package:keklist/domain/services/export_import/models/import_result.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
+import 'package:keklist/presentation/core/helpers/platform_utils.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
+import 'package:keklist/presentation/screens/actions/action_model.dart';
+import 'package:keklist/presentation/screens/actions/actions_screen.dart';
 import 'package:keklist/presentation/screens/language_picker/language_picker_screen.dart';
 import 'package:keklist/presentation/screens/settings/widgets/password_input_bottom_sheet.dart';
-import 'package:keklist/presentation/screens/settings/widgets/stories_widget.dart';
 import 'package:keklist/presentation/screens/tabs_settings/tabs_settings_screen.dart';
 import 'package:keklist/presentation/screens/web_page/web_page_screen.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
@@ -67,11 +72,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
             }
             break;
           case SettingsExportSuccess state:
-            _showSuccessMessage(
-              context.l10n.exportSuccess,
-              '${context.l10n.mindsExported}: ${state.mindsCount}\n'
-              '${context.l10n.audioFilesExported}: ${state.audioFilesCount}',
-            );
+            // Success - no alert needed, metadata was shown in password sheet
             break;
           case SettingsExportError state:
             _showErrorMessage(context.l10n.exportError, state.message);
@@ -338,20 +339,78 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   }
 
   Future<void> _handleExport() async {
-    // Show password input bottom sheet
+    // Calculate export metadata
+    final mindBloc = context.read<MindBloc>();
+    final mindState = mindBloc.state;
+
+    final minds = switch (mindState) {
+      MindList list => list.values,
+      MindSearching searching => searching.allValues,
+      _ => <Mind>[],
+    };
+
+    final mindsCount = minds.length;
+
+    // Count unique audio files
+    final audioFiles = <String>{};
+    for (final mind in minds) {
+      final noteContent = MindNoteContent.parse(mind.note);
+      for (final audioPiece in noteContent.audioPieces) {
+        audioFiles.add(audioPiece.appRelativeAbsoulutePath);
+      }
+    }
+    final audioFilesCount = audioFiles.length;
+
+    // Show password input bottom sheet with metadata
     final password = await PasswordInputBottomSheet.show(
       context: context,
       title: context.l10n.exportPassword,
       isOptional: true,
+      mindsCount: mindsCount,
+      audioFilesCount: audioFilesCount,
     );
 
     if (password == null) return; // User cancelled
+
+    // On Android, show action selection bottom sheet
+    SettingsExportAction action = SettingsExportAction.share;
+    if (DeviceUtils.safeGetPlatform() == SupportedPlatform.android) {
+      if (!mounted) return;
+
+      SettingsExportAction? selectedAction;
+
+      await showModalBottomSheet<void>(
+        context: context,
+        builder: (context) => ActionsScreen(
+          actions: [
+            (
+              ActionModel.custom(
+                title: context.l10n.saveToFiles,
+                icon: const Icon(Icons.save),
+              ),
+              () => selectedAction = SettingsExportAction.saveToFiles,
+            ),
+            (
+              ActionModel.custom(
+                title: context.l10n.share,
+                icon: const Icon(Icons.share),
+              ),
+              () => selectedAction = SettingsExportAction.share,
+            ),
+          ],
+        ),
+      );
+
+      if (selectedAction == null) return; // User cancelled
+      action = selectedAction!;
+    }
 
     // Export as ZIP with optional password
     sendEventToBloc<SettingsBloc>(
       SettingsExport(
         type: SettingsExportType.zip,
         password: password.isEmpty ? null : password,
+        action: action,
       ),
     );
   }
