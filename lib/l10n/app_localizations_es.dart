@@ -51,7 +51,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get share => 'Compartir';
 
   @override
-  String get saveToFiles => 'Save to files';
+  String get saveToFiles => 'Guardar en archivos';
 
   @override
   String get switchDay => 'Cambiar día';
@@ -302,98 +302,98 @@ class AppLocalizationsEs extends AppLocalizations {
   String get week => 'Semana';
 
   @override
-  String get password => 'Password';
+  String get password => 'Contraseña';
 
   @override
-  String get archivePassword => 'Archive password';
+  String get archivePassword => 'Contraseña del archivo';
 
   @override
-  String get enterPassword => 'Enter password';
+  String get enterPassword => 'Introducir contraseña';
 
   @override
-  String get confirmPassword => 'Confirm password';
+  String get confirmPassword => 'Confirmar contraseña';
 
   @override
-  String get reenterPassword => 'Re-enter password';
+  String get reenterPassword => 'Volver a introducir contraseña';
 
   @override
-  String get passwordsDoNotMatch => 'Passwords do not match';
+  String get passwordsDoNotMatch => 'Las contraseñas no coinciden';
 
   @override
-  String get exportPassword => 'Password protect export?';
+  String get exportPassword => '¿Proteger exportación con contraseña?';
 
   @override
   String get exportPasswordDescription =>
-      'Add a password to encrypt your export. You can skip this for unencrypted export.';
+      'Agrega una contraseña para cifrar tu exportación. Puedes omitir esto para exportación sin cifrar.';
 
   @override
-  String get importPassword => 'Enter password';
+  String get importPassword => 'Introducir contraseña';
 
   @override
   String get importPasswordDescription =>
-      'This file is password-protected. Please enter the password to decrypt.';
+      'Este archivo está protegido con contraseña. Por favor introduce la contraseña para descifrar.';
 
   @override
-  String get skipPassword => 'Skip (no password)';
+  String get skipPassword => 'Omitir (sin contraseña)';
 
   @override
-  String get continue_ => 'Continue';
+  String get continue_ => 'Continuar';
 
   @override
-  String get incorrectPassword => 'Incorrect password';
+  String get incorrectPassword => 'Contraseña incorrecta';
 
   @override
   String get incorrectPasswordMessage =>
-      'The password you entered is incorrect. Please try again.';
+      'La contraseña que introdujiste es incorrecta. Por favor intenta de nuevo.';
 
   @override
-  String get corruptedFile => 'Corrupted file';
+  String get corruptedFile => 'Archivo dañado';
 
   @override
-  String get invalidFormat => 'Invalid format';
+  String get invalidFormat => 'Formato inválido';
 
   @override
-  String get missingAudioFiles => 'Some audio files are missing';
+  String get missingAudioFiles => 'Faltan algunos archivos de audio';
 
   @override
-  String get insufficientStorage => 'Insufficient storage';
+  String get insufficientStorage => 'Almacenamiento insuficiente';
 
   @override
-  String get unknownError => 'Unknown error';
+  String get unknownError => 'Error desconocido';
 
   @override
-  String get retry => 'Retry';
+  String get retry => 'Reintentar';
 
   @override
   String get ok => 'OK';
 
   @override
-  String get exportSuccess => 'Export successful';
+  String get exportSuccess => 'Exportación exitosa';
 
   @override
-  String get exportError => 'Export failed';
+  String get exportError => 'Exportación fallida';
 
   @override
-  String get importSuccess => 'Import successful';
+  String get importSuccess => 'Importación exitosa';
 
   @override
-  String get importError => 'Import failed';
+  String get importError => 'Importación fallida';
 
   @override
-  String get mindsToExport => 'Minds';
+  String get mindsToExport => 'Mentes';
 
   @override
-  String get audioFilesToExport => 'Audio files';
+  String get audioFilesToExport => 'Archivos de audio';
 
   @override
-  String get mindsExported => 'Minds exported';
+  String get mindsExported => 'Mentes exportadas';
 
   @override
-  String get audioFilesExported => 'Audio files exported';
+  String get audioFilesExported => 'Archivos de audio exportados';
 
   @override
-  String get mindsImported => 'Minds imported';
+  String get mindsImported => 'Mentes importadas';
 
   @override
-  String get audioFilesImported => 'Audio files imported';
+  String get audioFilesImported => 'Archivos de audio importados';
 }

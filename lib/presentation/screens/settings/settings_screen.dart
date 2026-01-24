@@ -128,11 +128,12 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
               //     ),
               //   ),
               // ),
-              SettingsTile.navigation(
-                title: Text('keklist PRO'),
-                leading: const Icon(Icons.handshake, color: Colors.yellowAccent),
-                onPressed: (BuildContext context) => _openPaywall(),
-              ),
+              if (DeviceUtils.safeGetPlatform() != SupportedPlatform.android)
+                SettingsTile.navigation(
+                  title: Text('keklist PRO'),
+                  leading: const Icon(Icons.handshake, color: Colors.yellowAccent),
+                  onPressed: (BuildContext context) => _openPaywall(),
+                ),
               SettingsTile.navigation(
                 title: Text(context.l10n.releaseNotes),
                 leading: const Icon(Icons.new_releases, color: Color.fromARGB(255, 191, 188, 191)),

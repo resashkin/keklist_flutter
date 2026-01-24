@@ -51,7 +51,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get share => '分享';
 
   @override
-  String get saveToFiles => 'Save to files';
+  String get saveToFiles => '保存到文件';
 
   @override
   String get switchDay => '切换日期';
@@ -293,98 +293,95 @@ class AppLocalizationsZh extends AppLocalizations {
   String get week => '周';
 
   @override
-  String get password => 'Password';
+  String get password => '密码';
 
   @override
-  String get archivePassword => 'Archive password';
+  String get archivePassword => '存档密码';
 
   @override
-  String get enterPassword => 'Enter password';
+  String get enterPassword => '输入密码';
 
   @override
-  String get confirmPassword => 'Confirm password';
+  String get confirmPassword => '确认密码';
 
   @override
-  String get reenterPassword => 'Re-enter password';
+  String get reenterPassword => '重新输入密码';
 
   @override
-  String get passwordsDoNotMatch => 'Passwords do not match';
+  String get passwordsDoNotMatch => '密码不匹配';
 
   @override
-  String get exportPassword => 'Password protect export?';
+  String get exportPassword => '是否为导出设置密码保护？';
 
   @override
-  String get exportPasswordDescription =>
-      'Add a password to encrypt your export. You can skip this for unencrypted export.';
+  String get exportPasswordDescription => '添加密码以加密您的导出。您可以跳过此步骤以进行未加密的导出。';
 
   @override
-  String get importPassword => 'Enter password';
+  String get importPassword => '输入密码';
 
   @override
-  String get importPasswordDescription =>
-      'This file is password-protected. Please enter the password to decrypt.';
+  String get importPasswordDescription => '此文件已加密保护。请输入密码以解密。';
 
   @override
-  String get skipPassword => 'Skip (no password)';
+  String get skipPassword => '跳过（无密码）';
 
   @override
-  String get continue_ => 'Continue';
+  String get continue_ => '继续';
 
   @override
-  String get incorrectPassword => 'Incorrect password';
+  String get incorrectPassword => '密码错误';
 
   @override
-  String get incorrectPasswordMessage =>
-      'The password you entered is incorrect. Please try again.';
+  String get incorrectPasswordMessage => '您输入的密码不正确。请重试。';
 
   @override
-  String get corruptedFile => 'Corrupted file';
+  String get corruptedFile => '文件已损坏';
 
   @override
-  String get invalidFormat => 'Invalid format';
+  String get invalidFormat => '格式无效';
 
   @override
-  String get missingAudioFiles => 'Some audio files are missing';
+  String get missingAudioFiles => '部分音频文件丢失';
 
   @override
-  String get insufficientStorage => 'Insufficient storage';
+  String get insufficientStorage => '存储空间不足';
 
   @override
-  String get unknownError => 'Unknown error';
+  String get unknownError => '未知错误';
 
   @override
-  String get retry => 'Retry';
+  String get retry => '重试';
 
   @override
-  String get ok => 'OK';
+  String get ok => '确定';
 
   @override
-  String get exportSuccess => 'Export successful';
+  String get exportSuccess => '导出成功';
 
   @override
-  String get exportError => 'Export failed';
+  String get exportError => '导出失败';
 
   @override
-  String get importSuccess => 'Import successful';
+  String get importSuccess => '导入成功';
 
   @override
-  String get importError => 'Import failed';
+  String get importError => '导入失败';
 
   @override
-  String get mindsToExport => 'Minds';
+  String get mindsToExport => '思绪';
 
   @override
-  String get audioFilesToExport => 'Audio files';
+  String get audioFilesToExport => '音频文件';
 
   @override
-  String get mindsExported => 'Minds exported';
+  String get mindsExported => '思绪已导出';
 
   @override
-  String get audioFilesExported => 'Audio files exported';
+  String get audioFilesExported => '音频文件已导出';
 
   @override
-  String get mindsImported => 'Minds imported';
+  String get mindsImported => '思绪已导入';
 
   @override
-  String get audioFilesImported => 'Audio files imported';
+  String get audioFilesImported => '音频文件已导入';
 }

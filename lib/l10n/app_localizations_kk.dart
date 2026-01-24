@@ -51,7 +51,7 @@ class AppLocalizationsKk extends AppLocalizations {
   String get share => 'Бөлісу';
 
   @override
-  String get saveToFiles => 'Save to files';
+  String get saveToFiles => 'Файлдарға сақтау';
 
   @override
   String get switchDay => 'Күнді ауыстыру';
@@ -300,98 +300,98 @@ class AppLocalizationsKk extends AppLocalizations {
   String get week => 'Апта';
 
   @override
-  String get password => 'Password';
+  String get password => 'Құпия сөз';
 
   @override
-  String get archivePassword => 'Archive password';
+  String get archivePassword => 'Мұрағат құпия сөзі';
 
   @override
-  String get enterPassword => 'Enter password';
+  String get enterPassword => 'Құпия сөзді енгізіңіз';
 
   @override
-  String get confirmPassword => 'Confirm password';
+  String get confirmPassword => 'Құпия сөзді растаңыз';
 
   @override
-  String get reenterPassword => 'Re-enter password';
+  String get reenterPassword => 'Құпия сөзді қайта енгізіңіз';
 
   @override
-  String get passwordsDoNotMatch => 'Passwords do not match';
+  String get passwordsDoNotMatch => 'Құпия сөздер сәйкес келмейді';
 
   @override
-  String get exportPassword => 'Password protect export?';
+  String get exportPassword => 'Экспортты құпия сөзбен қорғау керек пе?';
 
   @override
   String get exportPasswordDescription =>
-      'Add a password to encrypt your export. You can skip this for unencrypted export.';
+      'Экспортыңызды шифрлау үшін құпия сөз қосыңыз. Шифрланбаған экспорт үшін мұны өткізіп жіберуге болады.';
 
   @override
-  String get importPassword => 'Enter password';
+  String get importPassword => 'Құпия сөзді енгізіңіз';
 
   @override
   String get importPasswordDescription =>
-      'This file is password-protected. Please enter the password to decrypt.';
+      'Бұл файл құпия сөзбен қорғалған. Шифрды ашу үшін құпия сөзді енгізіңіз.';
 
   @override
-  String get skipPassword => 'Skip (no password)';
+  String get skipPassword => 'Өткізіп жіберу (құпия сөз жоқ)';
 
   @override
-  String get continue_ => 'Continue';
+  String get continue_ => 'Жалғастыру';
 
   @override
-  String get incorrectPassword => 'Incorrect password';
+  String get incorrectPassword => 'Құпия сөз қате';
 
   @override
   String get incorrectPasswordMessage =>
-      'The password you entered is incorrect. Please try again.';
+      'Сіз енгізген құпия сөз қате. Қайтадан көріңіз.';
 
   @override
-  String get corruptedFile => 'Corrupted file';
+  String get corruptedFile => 'Зақымдалған файл';
 
   @override
-  String get invalidFormat => 'Invalid format';
+  String get invalidFormat => 'Жарамсыз пішім';
 
   @override
-  String get missingAudioFiles => 'Some audio files are missing';
+  String get missingAudioFiles => 'Кейбір аудио файлдар жоқ';
 
   @override
-  String get insufficientStorage => 'Insufficient storage';
+  String get insufficientStorage => 'Жеткіліксіз қоймалық орын';
 
   @override
-  String get unknownError => 'Unknown error';
+  String get unknownError => 'Белгісіз қате';
 
   @override
-  String get retry => 'Retry';
+  String get retry => 'Қайтадан көру';
 
   @override
   String get ok => 'OK';
 
   @override
-  String get exportSuccess => 'Export successful';
+  String get exportSuccess => 'Экспорт сәтті';
 
   @override
-  String get exportError => 'Export failed';
+  String get exportError => 'Экспорт сәтсіз';
 
   @override
-  String get importSuccess => 'Import successful';
+  String get importSuccess => 'Импорт сәтті';
 
   @override
-  String get importError => 'Import failed';
+  String get importError => 'Импорт сәтсіз';
 
   @override
-  String get mindsToExport => 'Minds';
+  String get mindsToExport => 'Ойлар';
 
   @override
-  String get audioFilesToExport => 'Audio files';
+  String get audioFilesToExport => 'Аудио файлдар';
 
   @override
-  String get mindsExported => 'Minds exported';
+  String get mindsExported => 'Ойлар экспортталды';
 
   @override
-  String get audioFilesExported => 'Audio files exported';
+  String get audioFilesExported => 'Аудио файлдар экспортталды';
 
   @override
-  String get mindsImported => 'Minds imported';
+  String get mindsImported => 'Ойлар импортталды';
 
   @override
-  String get audioFilesImported => 'Audio files imported';
+  String get audioFilesImported => 'Аудио файлдар импортталды';
 }

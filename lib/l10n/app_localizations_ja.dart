@@ -51,7 +51,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get share => '共有';
 
   @override
-  String get saveToFiles => 'Save to files';
+  String get saveToFiles => 'ファイルに保存';
 
   @override
   String get switchDay => '日を切り替え';
@@ -295,98 +295,97 @@ class AppLocalizationsJa extends AppLocalizations {
   String get week => '週';
 
   @override
-  String get password => 'Password';
+  String get password => 'パスワード';
 
   @override
-  String get archivePassword => 'Archive password';
+  String get archivePassword => 'アーカイブパスワード';
 
   @override
-  String get enterPassword => 'Enter password';
+  String get enterPassword => 'パスワードを入力';
 
   @override
-  String get confirmPassword => 'Confirm password';
+  String get confirmPassword => 'パスワードを確認';
 
   @override
-  String get reenterPassword => 'Re-enter password';
+  String get reenterPassword => 'パスワードを再入力';
 
   @override
-  String get passwordsDoNotMatch => 'Passwords do not match';
+  String get passwordsDoNotMatch => 'パスワードが一致しません';
 
   @override
-  String get exportPassword => 'Password protect export?';
+  String get exportPassword => 'エクスポートをパスワードで保護しますか？';
 
   @override
   String get exportPasswordDescription =>
-      'Add a password to encrypt your export. You can skip this for unencrypted export.';
+      'エクスポートを暗号化するためにパスワードを追加します。暗号化しない場合はスキップできます。';
 
   @override
-  String get importPassword => 'Enter password';
+  String get importPassword => 'パスワードを入力';
 
   @override
   String get importPasswordDescription =>
-      'This file is password-protected. Please enter the password to decrypt.';
+      'このファイルはパスワードで保護されています。復号化するためにパスワードを入力してください。';
 
   @override
-  String get skipPassword => 'Skip (no password)';
+  String get skipPassword => 'スキップ（パスワードなし）';
 
   @override
-  String get continue_ => 'Continue';
+  String get continue_ => '続ける';
 
   @override
-  String get incorrectPassword => 'Incorrect password';
+  String get incorrectPassword => 'パスワードが正しくありません';
 
   @override
-  String get incorrectPasswordMessage =>
-      'The password you entered is incorrect. Please try again.';
+  String get incorrectPasswordMessage => '入力されたパスワードが正しくありません。もう一度お試しください。';
 
   @override
-  String get corruptedFile => 'Corrupted file';
+  String get corruptedFile => '破損したファイル';
 
   @override
-  String get invalidFormat => 'Invalid format';
+  String get invalidFormat => '無効な形式';
 
   @override
-  String get missingAudioFiles => 'Some audio files are missing';
+  String get missingAudioFiles => '一部の音声ファイルが見つかりません';
 
   @override
-  String get insufficientStorage => 'Insufficient storage';
+  String get insufficientStorage => 'ストレージ容量が不足しています';
 
   @override
-  String get unknownError => 'Unknown error';
+  String get unknownError => '不明なエラー';
 
   @override
-  String get retry => 'Retry';
+  String get retry => '再試行';
 
   @override
   String get ok => 'OK';
 
   @override
-  String get exportSuccess => 'Export successful';
+  String get exportSuccess => 'エクスポート成功';
 
   @override
-  String get exportError => 'Export failed';
+  String get exportError => 'エクスポート失敗';
 
   @override
-  String get importSuccess => 'Import successful';
+  String get importSuccess => 'インポート成功';
 
   @override
-  String get importError => 'Import failed';
+  String get importError => 'インポート失敗';
 
   @override
-  String get mindsToExport => 'Minds';
+  String get mindsToExport => 'マインド';
 
   @override
-  String get audioFilesToExport => 'Audio files';
+  String get audioFilesToExport => '音声ファイル';
 
   @override
-  String get mindsExported => 'Minds exported';
+  String get mindsExported => 'マインドをエクスポートしました';
 
   @override
-  String get audioFilesExported => 'Audio files exported';
+  String get audioFilesExported => '音声ファイルをエクスポートしました';
 
   @override
-  String get mindsImported => 'Minds imported';
+  String get mindsImported => 'マインドをインポートしました';
 
   @override
-  String get audioFilesImported => 'Audio files imported';
+  String get audioFilesImported => '音声ファイルをインポートしました';
 }

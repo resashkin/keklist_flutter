@@ -51,7 +51,7 @@ class AppLocalizationsUz extends AppLocalizations {
   String get share => 'Ulashish';
 
   @override
-  String get saveToFiles => 'Save to files';
+  String get saveToFiles => 'Fayllarga saqlash';
 
   @override
   String get switchDay => 'Kunni almashtirish';
@@ -300,98 +300,98 @@ class AppLocalizationsUz extends AppLocalizations {
   String get week => 'Hafta';
 
   @override
-  String get password => 'Password';
+  String get password => 'Parol';
 
   @override
-  String get archivePassword => 'Archive password';
+  String get archivePassword => 'Arxiv paroli';
 
   @override
-  String get enterPassword => 'Enter password';
+  String get enterPassword => 'Parolni kiriting';
 
   @override
-  String get confirmPassword => 'Confirm password';
+  String get confirmPassword => 'Parolni tasdiqlang';
 
   @override
-  String get reenterPassword => 'Re-enter password';
+  String get reenterPassword => 'Parolni qayta kiriting';
 
   @override
-  String get passwordsDoNotMatch => 'Passwords do not match';
+  String get passwordsDoNotMatch => 'Parollar mos kelmaydi';
 
   @override
-  String get exportPassword => 'Password protect export?';
+  String get exportPassword => 'Eksportni parol bilan himoyalaysizmi?';
 
   @override
   String get exportPasswordDescription =>
-      'Add a password to encrypt your export. You can skip this for unencrypted export.';
+      'Eksportingizni shifrlash uchun parol qo\'shing. Shifrlanmagan eksport uchun buni o\'tkazib yuborishingiz mumkin.';
 
   @override
-  String get importPassword => 'Enter password';
+  String get importPassword => 'Parolni kiriting';
 
   @override
   String get importPasswordDescription =>
-      'This file is password-protected. Please enter the password to decrypt.';
+      'Bu fayl parol bilan himoyalangan. Shifrni ochish uchun parolni kiriting.';
 
   @override
-  String get skipPassword => 'Skip (no password)';
+  String get skipPassword => 'O\'tkazib yuborish (parolsiz)';
 
   @override
-  String get continue_ => 'Continue';
+  String get continue_ => 'Davom etish';
 
   @override
-  String get incorrectPassword => 'Incorrect password';
+  String get incorrectPassword => 'Noto\'g\'ri parol';
 
   @override
   String get incorrectPasswordMessage =>
-      'The password you entered is incorrect. Please try again.';
+      'Siz kiritgan parol noto\'g\'ri. Iltimos, qayta urinib ko\'ring.';
 
   @override
-  String get corruptedFile => 'Corrupted file';
+  String get corruptedFile => 'Buzilgan fayl';
 
   @override
-  String get invalidFormat => 'Invalid format';
+  String get invalidFormat => 'Yaroqsiz format';
 
   @override
-  String get missingAudioFiles => 'Some audio files are missing';
+  String get missingAudioFiles => 'Ba\'zi audio fayllar yo\'q';
 
   @override
-  String get insufficientStorage => 'Insufficient storage';
+  String get insufficientStorage => 'Yetarli saqlash joyi yo\'q';
 
   @override
-  String get unknownError => 'Unknown error';
+  String get unknownError => 'Noma\'lum xato';
 
   @override
-  String get retry => 'Retry';
+  String get retry => 'Qayta urinish';
 
   @override
   String get ok => 'OK';
 
   @override
-  String get exportSuccess => 'Export successful';
+  String get exportSuccess => 'Eksport muvaffaqiyatli';
 
   @override
-  String get exportError => 'Export failed';
+  String get exportError => 'Eksport muvaffaqiyatsiz';
 
   @override
-  String get importSuccess => 'Import successful';
+  String get importSuccess => 'Import muvaffaqiyatli';
 
   @override
-  String get importError => 'Import failed';
+  String get importError => 'Import muvaffaqiyatsiz';
 
   @override
-  String get mindsToExport => 'Minds';
+  String get mindsToExport => 'Fikrlar';
 
   @override
-  String get audioFilesToExport => 'Audio files';
+  String get audioFilesToExport => 'Audio fayllar';
 
   @override
-  String get mindsExported => 'Minds exported';
+  String get mindsExported => 'Fikrlar eksport qilindi';
 
   @override
-  String get audioFilesExported => 'Audio files exported';
+  String get audioFilesExported => 'Audio fayllar eksport qilindi';
 
   @override
-  String get mindsImported => 'Minds imported';
+  String get mindsImported => 'Fikrlar import qilindi';
 
   @override
-  String get audioFilesImported => 'Audio files imported';
+  String get audioFilesImported => 'Audio fayllar import qilindi';
 }

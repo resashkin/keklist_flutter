@@ -51,7 +51,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get share => 'Teilen';
 
   @override
-  String get saveToFiles => 'Save to files';
+  String get saveToFiles => 'In Dateien speichern';
 
   @override
   String get switchDay => 'Tag wechseln';
@@ -304,7 +304,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get password => 'Passwort';
 
   @override
-  String get archivePassword => 'Archive password';
+  String get archivePassword => 'Archiv-Passwort';
 
   @override
   String get enterPassword => 'Passwort eingeben';
@@ -379,10 +379,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get importError => 'Import fehlgeschlagen';
 
   @override
-  String get mindsToExport => 'Minds';
+  String get mindsToExport => 'Notizen';
 
   @override
-  String get audioFilesToExport => 'Audio files';
+  String get audioFilesToExport => 'Audiodateien';
 
   @override
   String get mindsExported => 'Notizen exportiert';

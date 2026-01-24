@@ -51,7 +51,7 @@ class AppLocalizationsSr extends AppLocalizations {
   String get share => 'Подели';
 
   @override
-  String get saveToFiles => 'Save to files';
+  String get saveToFiles => 'Сачувај у фајлове';
 
   @override
   String get switchDay => 'Промени дан';
@@ -300,100 +300,100 @@ class AppLocalizationsSr extends AppLocalizations {
   String get week => 'Недеља';
 
   @override
-  String get password => 'Password';
+  String get password => 'Лозинка';
 
   @override
-  String get archivePassword => 'Archive password';
+  String get archivePassword => 'Лозинка архиве';
 
   @override
-  String get enterPassword => 'Enter password';
+  String get enterPassword => 'Унеси лозинку';
 
   @override
-  String get confirmPassword => 'Confirm password';
+  String get confirmPassword => 'Потврди лозинку';
 
   @override
-  String get reenterPassword => 'Re-enter password';
+  String get reenterPassword => 'Поново унеси лозинку';
 
   @override
-  String get passwordsDoNotMatch => 'Passwords do not match';
+  String get passwordsDoNotMatch => 'Лозинке се не подударају';
 
   @override
-  String get exportPassword => 'Password protect export?';
+  String get exportPassword => 'Заштитити извоз лозинком?';
 
   @override
   String get exportPasswordDescription =>
-      'Add a password to encrypt your export. You can skip this for unencrypted export.';
+      'Додај лозинку да шифрујеш извоз. Можеш прескочити за нешифровани извоз.';
 
   @override
-  String get importPassword => 'Enter password';
+  String get importPassword => 'Унеси лозинку';
 
   @override
   String get importPasswordDescription =>
-      'This file is password-protected. Please enter the password to decrypt.';
+      'Овај фајл је заштићен лозинком. Унеси лозинку да дешифрујеш.';
 
   @override
-  String get skipPassword => 'Skip (no password)';
+  String get skipPassword => 'Прескочи (без лозинке)';
 
   @override
-  String get continue_ => 'Continue';
+  String get continue_ => 'Настави';
 
   @override
-  String get incorrectPassword => 'Incorrect password';
+  String get incorrectPassword => 'Нетачна лозинка';
 
   @override
   String get incorrectPasswordMessage =>
-      'The password you entered is incorrect. Please try again.';
+      'Лозинка коју си унео је нетачна. Покушај поново.';
 
   @override
-  String get corruptedFile => 'Corrupted file';
+  String get corruptedFile => 'Оштећени фајл';
 
   @override
-  String get invalidFormat => 'Invalid format';
+  String get invalidFormat => 'Неважећи формат';
 
   @override
-  String get missingAudioFiles => 'Some audio files are missing';
+  String get missingAudioFiles => 'Неки аудио фајлови недостају';
 
   @override
-  String get insufficientStorage => 'Insufficient storage';
+  String get insufficientStorage => 'Недовољно меморије';
 
   @override
-  String get unknownError => 'Unknown error';
+  String get unknownError => 'Непозната грешка';
 
   @override
-  String get retry => 'Retry';
+  String get retry => 'Покушај поново';
 
   @override
   String get ok => 'OK';
 
   @override
-  String get exportSuccess => 'Export successful';
+  String get exportSuccess => 'Извоз успешан';
 
   @override
-  String get exportError => 'Export failed';
+  String get exportError => 'Извоз неуспешан';
 
   @override
-  String get importSuccess => 'Import successful';
+  String get importSuccess => 'Увоз успешан';
 
   @override
-  String get importError => 'Import failed';
+  String get importError => 'Увоз неуспешан';
 
   @override
-  String get mindsToExport => 'Minds';
+  String get mindsToExport => 'Умови';
 
   @override
-  String get audioFilesToExport => 'Audio files';
+  String get audioFilesToExport => 'Аудио фајлови';
 
   @override
-  String get mindsExported => 'Minds exported';
+  String get mindsExported => 'Умови извезени';
 
   @override
-  String get audioFilesExported => 'Audio files exported';
+  String get audioFilesExported => 'Аудио фајлови извезени';
 
   @override
-  String get mindsImported => 'Minds imported';
+  String get mindsImported => 'Умови увезени';
 
   @override
-  String get audioFilesImported => 'Audio files imported';
+  String get audioFilesImported => 'Аудио фајлови увезени';
 }
 
 /// The translations for Serbian, using the Latin script (`sr_Latn`).
@@ -441,6 +441,9 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
 
   @override
   String get share => 'Podeli';
+
+  @override
+  String get saveToFiles => 'Sačuvaj u fajlove';
 
   @override
   String get switchDay => 'Promeni dan';
@@ -689,89 +692,98 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
   String get week => 'Nedelja';
 
   @override
-  String get password => 'Password';
+  String get password => 'Lozinka';
 
   @override
-  String get enterPassword => 'Enter password';
+  String get archivePassword => 'Lozinka arhive';
 
   @override
-  String get confirmPassword => 'Confirm password';
+  String get enterPassword => 'Unesi lozinku';
 
   @override
-  String get reenterPassword => 'Re-enter password';
+  String get confirmPassword => 'Potvrdi lozinku';
 
   @override
-  String get passwordsDoNotMatch => 'Passwords do not match';
+  String get reenterPassword => 'Ponovo unesi lozinku';
 
   @override
-  String get exportPassword => 'Password protect export?';
+  String get passwordsDoNotMatch => 'Lozinke se ne podudaraju';
+
+  @override
+  String get exportPassword => 'Zaštititi izvoz lozinkom?';
 
   @override
   String get exportPasswordDescription =>
-      'Add a password to encrypt your export. You can skip this for unencrypted export.';
+      'Dodaj lozinku da šifruješ izvoz. Možeš preskočiti za nešifrovani izvoz.';
 
   @override
-  String get importPassword => 'Enter password';
+  String get importPassword => 'Unesi lozinku';
 
   @override
   String get importPasswordDescription =>
-      'This file is password-protected. Please enter the password to decrypt.';
+      'Ovaj fajl je zaštićen lozinkom. Unesi lozinku da dešifruješ.';
 
   @override
-  String get skipPassword => 'Skip (no password)';
+  String get skipPassword => 'Preskoči (bez lozinke)';
 
   @override
-  String get continue_ => 'Continue';
+  String get continue_ => 'Nastavi';
 
   @override
-  String get incorrectPassword => 'Incorrect password';
+  String get incorrectPassword => 'Netačna lozinka';
 
   @override
   String get incorrectPasswordMessage =>
-      'The password you entered is incorrect. Please try again.';
+      'Lozinka koju si uneo je netačna. Pokušaj ponovo.';
 
   @override
-  String get corruptedFile => 'Corrupted file';
+  String get corruptedFile => 'Oštećeni fajl';
 
   @override
-  String get invalidFormat => 'Invalid format';
+  String get invalidFormat => 'Nevažeći format';
 
   @override
-  String get missingAudioFiles => 'Some audio files are missing';
+  String get missingAudioFiles => 'Neki audio fajlovi nedostaju';
 
   @override
-  String get insufficientStorage => 'Insufficient storage';
+  String get insufficientStorage => 'Nedovoljno memorije';
 
   @override
-  String get unknownError => 'Unknown error';
+  String get unknownError => 'Nepoznata greška';
 
   @override
-  String get retry => 'Retry';
+  String get retry => 'Pokušaj ponovo';
 
   @override
   String get ok => 'OK';
 
   @override
-  String get exportSuccess => 'Export successful';
+  String get exportSuccess => 'Izvoz uspešan';
 
   @override
-  String get exportError => 'Export failed';
+  String get exportError => 'Izvoz neuspešan';
 
   @override
-  String get importSuccess => 'Import successful';
+  String get importSuccess => 'Uvoz uspešan';
 
   @override
-  String get importError => 'Import failed';
+  String get importError => 'Uvoz neuspešan';
 
   @override
-  String get mindsExported => 'Minds exported';
+  String get mindsToExport => 'Umovi';
 
   @override
-  String get audioFilesExported => 'Audio files exported';
+  String get audioFilesToExport => 'Audio fajlovi';
 
   @override
-  String get mindsImported => 'Minds imported';
+  String get mindsExported => 'Umovi izvezeni';
 
   @override
-  String get audioFilesImported => 'Audio files imported';
+  String get audioFilesExported => 'Audio fajlovi izvezeni';
+
+  @override
+  String get mindsImported => 'Umovi uvezeni';
+
+  @override
+  String get audioFilesImported => 'Audio fajlovi uvezeni';
 }
