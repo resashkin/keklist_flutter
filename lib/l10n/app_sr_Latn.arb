@@ -47,6 +47,7 @@
     "@share": {
         "description": "Akcija deljenja"
     },
+    "saveToFiles": "Sačuvaj u fajlove",
     "switchDay": "Promeni dan",
     "@switchDay": {
         "description": "Akcija promene dana"
@@ -95,6 +96,10 @@
     "@whatsNew": {
         "description": "Navigacija šta je novo"
     },
+    "releaseNotes": "Beleške o izdanju",
+    "@releaseNotes": {
+        "description": "Navigacija beleške o izdanju"
+    },
     "suggestFeature": "Predloži funkciju",
     "@suggestFeature": {
         "description": "Navigacija predlaganja funkcije"
@@ -102,6 +107,14 @@
     "sendFeedback": "Pošalji povratnu informaciju",
     "@sendFeedback": {
         "description": "Navigacija slanja povratne informacije"
+    },
+    "emailUs": "Pošalji nam e-poruku",
+    "@emailUs": {
+        "description": "Navigacija slanja email poruke"
+    },
+    "clearOfflineDataWarning": "Svi oflajn podaci će biti obrisani. Uveri se da si ih već izvezao.",
+    "@clearOfflineDataWarning": {
+        "description": "Upozorenje za brisanje oflajn podataka"
     },
     "sourceCode": "Izvorni kod",
     "@sourceCode": {
@@ -353,6 +366,37 @@
         }
     },
     "week": "Nedelja",
+    "password": "Lozinka",
+    "archivePassword": "Lozinka arhive",
     "exportData": "Izvoz podataka",
-    "importData": "Uvoz podataka"
+    "importData": "Uvoz podataka",
+    "enterPassword": "Unesi lozinku",
+    "confirmPassword": "Potvrdi lozinku",
+    "reenterPassword": "Ponovo unesi lozinku",
+    "passwordsDoNotMatch": "Lozinke se ne podudaraju",
+    "exportPassword": "Zaštititi izvoz lozinkom?",
+    "exportPasswordDescription": "Dodaj lozinku da šifruješ izvoz. Možeš preskočiti za nešifrovani izvoz.",
+    "importPassword": "Unesi lozinku",
+    "importPasswordDescription": "Ovaj fajl je zaštićen lozinkom. Unesi lozinku da dešifruješ.",
+    "skipPassword": "Preskoči (bez lozinke)",
+    "continue_": "Nastavi",
+    "incorrectPassword": "Netačna lozinka",
+    "incorrectPasswordMessage": "Lozinka koju si uneo je netačna. Pokušaj ponovo.",
+    "corruptedFile": "Oštećeni fajl",
+    "invalidFormat": "Nevažeći format",
+    "missingAudioFiles": "Neki audio fajlovi nedostaju",
+    "insufficientStorage": "Nedovoljno memorije",
+    "unknownError": "Nepoznata greška",
+    "retry": "Pokušaj ponovo",
+    "ok": "OK",
+    "exportSuccess": "Izvoz uspešan",
+    "exportError": "Izvoz neuspešan",
+    "importSuccess": "Uvoz uspešan",
+    "importError": "Uvoz neuspešan",
+    "mindsToExport": "Umovi",
+    "audioFilesToExport": "Audio fajlovi",
+    "mindsExported": "Umovi izvezeni",
+    "audioFilesExported": "Audio fajlovi izvezeni",
+    "mindsImported": "Umovi uvezeni",
+    "audioFilesImported": "Audio fajlovi uvezeni"
 }

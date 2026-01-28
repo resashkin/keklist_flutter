@@ -13,6 +13,8 @@ import 'package:keklist/domain/repositories/settings/settings_repository.dart';
 import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
 import 'package:keklist/domain/repositories/debug_menu/debug_menu_hive_repository.dart';
 import 'package:keklist/domain/repositories/debug_menu/object/debug_menu_object.dart';
+import 'package:keklist/domain/repositories/files/app_file_repository.dart';
+import 'package:keklist/domain/services/export_import/export_import_service.dart';
 import 'package:keklist/presentation/core/helpers/platform_utils.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'package:keklist/presentation/cubits/mind_searcher/mind_searcher_cubit.dart';
@@ -44,6 +46,17 @@ final class MainContainer {
     );
     injector.map<DebugMenuRepository>(
       (injector) => DebugMenuHiveRepository(box: Hive.box<DebugMenuObject>(HiveConstants.debugMenuBoxName)),
+    );
+    injector.map<AppFileRepository>(
+      (_) => const AppFileRepository(),
+      isSingleton: true,
+    );
+    injector.map<ExportImportService>(
+      (injector) => ExportImportService(
+        mindRepository: injector.get<MindRepository>(),
+        fileRepository: injector.get<AppFileRepository>(),
+      ),
+      isSingleton: true,
     );
     injector.map<TabsSettingsRepository>(
       (injector) => TabsSettingsSharedPreferencesRepository(preferences: _streamingSharedPreferences),

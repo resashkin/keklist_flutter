@@ -8,6 +8,9 @@ import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
+import 'package:keklist/domain/services/export_import/export_import_service.dart';
+import 'package:keklist/domain/services/export_import/models/export_result.dart';
+import 'package:keklist/domain/services/export_import/models/import_result.dart';
 import 'package:keklist/domain/services/language_manager.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -21,12 +24,15 @@ part 'settings_state.dart';
 final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with DisposeBag {
   final SettingsRepository _repository;
   final MindRepository _mindRepository;
+  final ExportImportService _exportImportService;
 
   SettingsBloc({
     required SettingsRepository repository,
     required MindRepository mindRepository,
+    required ExportImportService exportImportService,
   })  : _repository = repository,
         _mindRepository = mindRepository,
+        _exportImportService = exportImportService,
         super(
           SettingsDataState(
             settings: KeklistSettings.initial(),
@@ -39,7 +45,6 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     on<SettingsGet>(_getSettings);
     on<SettingGetWhatsNew>(_sendWhatsNewIfNeeded);
     on<SettingsChangeIsDarkMode>(_changeSettingsDarkMode);
-    on<SettingsChangeOpenAIKey>(_changeOpenAIKey);
     on<SettingsUpdateShouldShowTitlesMode>(_updateShouldShowTitlesMode);
     on<SettingsChangeLanguage>(_changeLanguage);
 
@@ -53,18 +58,110 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
   }
 
   FutureOr<void> _export(SettingsExport event, Emitter<SettingsState> emit) async {
-    switch (event.type) {
-      case SettingsExportType.csv:
-        await _shareCSVFileWithMinds();
-        break;
+    emit(SettingsLoadingState(true));
+
+    try {
+      final ExportResult result;
+
+      switch (event.type) {
+        case SettingsExportType.csv:
+          result = await _exportImportService.exportToCSV();
+          break;
+        case SettingsExportType.zip:
+          result = await _exportImportService.exportToZIP(password: event.password);
+          break;
+      }
+
+      emit(SettingsLoadingState(false));
+
+      switch (result) {
+        case ExportSuccess success:
+          // Handle based on export action
+          if (event.action == SettingsExportAction.saveToFiles) {
+            // Save to file system using file picker
+            final timestamp = DateTime.now().toIso8601String().replaceAll(':', '-').split('.').first;
+            final suggestedName = 'keklist_export_$timestamp.zip';
+
+            // Read the bytes from the temp file
+            final tempFile = File(success.file.path);
+            final bytes = await tempFile.readAsBytes();
+
+            final outputPath = await FilePicker.platform.saveFile(
+              dialogTitle: 'Save export file',
+              fileName: suggestedName,
+              type: FileType.custom,
+              allowedExtensions: ['zip'],
+              bytes: bytes,
+            );
+
+            if (outputPath != null) {
+              emit(SettingsExportSuccess(
+                mindsCount: success.mindsCount,
+                audioFilesCount: success.audioFilesCount,
+                isEncrypted: success.isEncrypted,
+              ));
+            } else {
+              // User cancelled the save dialog
+              emit(SettingsLoadingState(false));
+            }
+          } else {
+            // Share the exported file with explicit MIME type
+            // Use application/zip for both .zip and .encrypted files
+            await SharePlus.instance.share(ShareParams(
+              files: [XFile(success.file.path, mimeType: 'application/zip')],
+              sharePositionOrigin: const Rect.fromLTWH(0, 0, 1, 1),
+            ));
+
+            emit(SettingsExportSuccess(
+              mindsCount: success.mindsCount,
+              audioFilesCount: success.audioFilesCount,
+              isEncrypted: success.isEncrypted,
+            ));
+          }
+          break;
+
+        case ExportFailure failure:
+          emit(SettingsExportError(message: failure.message));
+          break;
+      }
+    } catch (e) {
+      emit(SettingsLoadingState(false));
+      emit(SettingsExportError(message: 'Export failed: $e'));
     }
   }
 
   FutureOr<void> _import(SettingsImport event, Emitter<SettingsState> emit) async {
-    switch (event.type) {
-      case SettingsImportType.csv:
-        await _importCSVFileWithMinds();
-        break;
+    emit(SettingsLoadingState(true));
+
+    try {
+      final result = await _exportImportService.importFromFile(
+        event.file,
+        password: event.password,
+      );
+
+      emit(SettingsLoadingState(false));
+
+      switch (result) {
+        case ImportSuccess success:
+          emit(SettingsImportSuccess(
+            mindsCount: success.mindsCount,
+            audioFilesCount: success.audioFilesCount,
+          ));
+          break;
+
+        case ImportFailure failure:
+          emit(SettingsImportError(
+            error: failure.error,
+            message: failure.message,
+          ));
+          break;
+      }
+    } catch (e) {
+      emit(SettingsLoadingState(false));
+      emit(SettingsImportError(
+        error: ImportError.unknownError,
+        message: 'Import failed: $e',
+      ));
     }
   }
 
@@ -83,6 +180,8 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
       sharePositionOrigin: Rect.fromLTWH(0, 0, 1, 1),
     ));
   }
+
+  // TODO: add parsing one row to init of Mind
 
   FutureOr<void> _importCSVFileWithMinds() async {
     final FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -194,11 +293,6 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     if (needToShowWhatsNewOnStart) {
       emit(SettingsShowWhatsNew());
     }
-  }
-
-  FutureOr<void> _changeOpenAIKey(SettingsChangeOpenAIKey event, Emitter<SettingsState> emit) {
-    // OpenAI.apiKey = event.openAIToken;
-    // _repository.updateOpenAIKey(event.openAIToken);
   }
 
   FutureOr<void> _updateShouldShowTitlesMode(

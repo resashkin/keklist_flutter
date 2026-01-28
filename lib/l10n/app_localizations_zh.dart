@@ -51,6 +51,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get share => '分享';
 
   @override
+  String get saveToFiles => '保存到文件';
+
+  @override
   String get switchDay => '切换日期';
 
   @override
@@ -87,10 +90,19 @@ class AppLocalizationsZh extends AppLocalizations {
   String get whatsNew => '新功能';
 
   @override
+  String get releaseNotes => '发行说明';
+
+  @override
   String get suggestFeature => '建议功能';
 
   @override
   String get sendFeedback => '发送反馈';
+
+  @override
+  String get emailUs => '给我们发邮件';
+
+  @override
+  String get clearOfflineDataWarning => '所有离线数据都会被删除。请确保已提前导出。';
 
   @override
   String get sourceCode => '源代码';
@@ -279,4 +291,97 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get week => '周';
+
+  @override
+  String get password => '密码';
+
+  @override
+  String get archivePassword => '存档密码';
+
+  @override
+  String get enterPassword => '输入密码';
+
+  @override
+  String get confirmPassword => '确认密码';
+
+  @override
+  String get reenterPassword => '重新输入密码';
+
+  @override
+  String get passwordsDoNotMatch => '密码不匹配';
+
+  @override
+  String get exportPassword => '是否为导出设置密码保护？';
+
+  @override
+  String get exportPasswordDescription => '添加密码以加密您的导出。您可以跳过此步骤以进行未加密的导出。';
+
+  @override
+  String get importPassword => '输入密码';
+
+  @override
+  String get importPasswordDescription => '此文件已加密保护。请输入密码以解密。';
+
+  @override
+  String get skipPassword => '跳过（无密码）';
+
+  @override
+  String get continue_ => '继续';
+
+  @override
+  String get incorrectPassword => '密码错误';
+
+  @override
+  String get incorrectPasswordMessage => '您输入的密码不正确。请重试。';
+
+  @override
+  String get corruptedFile => '文件已损坏';
+
+  @override
+  String get invalidFormat => '格式无效';
+
+  @override
+  String get missingAudioFiles => '部分音频文件丢失';
+
+  @override
+  String get insufficientStorage => '存储空间不足';
+
+  @override
+  String get unknownError => '未知错误';
+
+  @override
+  String get retry => '重试';
+
+  @override
+  String get ok => '确定';
+
+  @override
+  String get exportSuccess => '导出成功';
+
+  @override
+  String get exportError => '导出失败';
+
+  @override
+  String get importSuccess => '导入成功';
+
+  @override
+  String get importError => '导入失败';
+
+  @override
+  String get mindsToExport => '思绪';
+
+  @override
+  String get audioFilesToExport => '音频文件';
+
+  @override
+  String get mindsExported => '思绪已导出';
+
+  @override
+  String get audioFilesExported => '音频文件已导出';
+
+  @override
+  String get mindsImported => '思绪已导入';
+
+  @override
+  String get audioFilesImported => '音频文件已导入';
 }

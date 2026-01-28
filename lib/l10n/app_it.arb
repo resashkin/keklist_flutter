@@ -49,6 +49,7 @@
     "@share": {
         "description": "Azione condividi"
     },
+    "saveToFiles": "Salva in file",
     "switchDay": "Cambia giorno",
     "@switchDay": {
         "description": "Azione cambia giorno"
@@ -97,6 +98,10 @@
     "@whatsNew": {
         "description": "Navigazione cosa c'è di nuovo"
     },
+    "releaseNotes": "Note di rilascio",
+    "@releaseNotes": {
+        "description": "Navigazione note di rilascio"
+    },
     "suggestFeature": "Suggerisci una funzione",
     "@suggestFeature": {
         "description": "Navigazione suggerisci funzione"
@@ -104,6 +109,14 @@
     "sendFeedback": "Invia feedback",
     "@sendFeedback": {
         "description": "Navigazione invia feedback"
+    },
+    "emailUs": "Inviaci un'email",
+    "@emailUs": {
+        "description": "Navigazione inviaci un'email"
+    },
+    "clearOfflineDataWarning": "Tutti i tuoi dati offline verranno eliminati. Assicurati di averli già esportati.",
+    "@clearOfflineDataWarning": {
+        "description": "Avviso cancellazione dati offline"
     },
     "sourceCode": "Codice sorgente",
     "@sourceCode": {
@@ -354,5 +367,36 @@
             }
         }
     },
-    "week": "Settimana"
+    "week": "Settimana",
+    "password": "Password",
+    "archivePassword": "Password archivio",
+    "enterPassword": "Inserisci password",
+    "confirmPassword": "Conferma password",
+    "reenterPassword": "Reinserisci password",
+    "passwordsDoNotMatch": "Le password non corrispondono",
+    "exportPassword": "Proteggere esportazione con password?",
+    "exportPasswordDescription": "Aggiungi una password per crittografare la tua esportazione. Puoi saltare questo per esportazione non crittografata.",
+    "importPassword": "Inserisci password",
+    "importPasswordDescription": "Questo file è protetto da password. Per favore inserisci la password per decifrare.",
+    "skipPassword": "Salta (senza password)",
+    "continue_": "Continua",
+    "incorrectPassword": "Password errata",
+    "incorrectPasswordMessage": "La password inserita è errata. Per favore riprova.",
+    "corruptedFile": "File danneggiato",
+    "invalidFormat": "Formato non valido",
+    "missingAudioFiles": "Alcuni file audio mancano",
+    "insufficientStorage": "Spazio di archiviazione insufficiente",
+    "unknownError": "Errore sconosciuto",
+    "retry": "Riprova",
+    "ok": "OK",
+    "exportSuccess": "Esportazione riuscita",
+    "exportError": "Esportazione fallita",
+    "importSuccess": "Importazione riuscita",
+    "importError": "Importazione fallita",
+    "mindsToExport": "Mind",
+    "audioFilesToExport": "File audio",
+    "mindsExported": "Mind esportate",
+    "audioFilesExported": "File audio esportati",
+    "mindsImported": "Mind importate",
+    "audioFilesImported": "File audio importati"
 }

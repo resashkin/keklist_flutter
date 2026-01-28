@@ -49,6 +49,7 @@
     "@share": {
         "description": "Acción compartir"
     },
+    "saveToFiles": "Guardar en archivos",
     "switchDay": "Cambiar día",
     "@switchDay": {
         "description": "Acción cambiar día"
@@ -97,6 +98,10 @@
     "@whatsNew": {
         "description": "Navegación qué hay de nuevo"
     },
+    "releaseNotes": "Notas de la versión",
+    "@releaseNotes": {
+        "description": "Navegación notas de la versión"
+    },
     "suggestFeature": "Sugerir una función",
     "@suggestFeature": {
         "description": "Navegación sugerir función"
@@ -104,6 +109,14 @@
     "sendFeedback": "Enviar comentarios",
     "@sendFeedback": {
         "description": "Navegación enviar comentarios"
+    },
+    "emailUs": "Envíanos un correo",
+    "@emailUs": {
+        "description": "Navegación envíanos un correo"
+    },
+    "clearOfflineDataWarning": "Todos tus datos sin conexión se eliminarán. Asegúrate de haberlos exportado.",
+    "@clearOfflineDataWarning": {
+        "description": "Advertencia al borrar datos sin conexión"
     },
     "sourceCode": "Código fuente",
     "@sourceCode": {
@@ -354,5 +367,36 @@
             }
         }
     },
-    "week": "Semana"
+    "week": "Semana",
+    "password": "Contraseña",
+    "archivePassword": "Contraseña del archivo",
+    "enterPassword": "Introducir contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "reenterPassword": "Volver a introducir contraseña",
+    "passwordsDoNotMatch": "Las contraseñas no coinciden",
+    "exportPassword": "¿Proteger exportación con contraseña?",
+    "exportPasswordDescription": "Agrega una contraseña para cifrar tu exportación. Puedes omitir esto para exportación sin cifrar.",
+    "importPassword": "Introducir contraseña",
+    "importPasswordDescription": "Este archivo está protegido con contraseña. Por favor introduce la contraseña para descifrar.",
+    "skipPassword": "Omitir (sin contraseña)",
+    "continue_": "Continuar",
+    "incorrectPassword": "Contraseña incorrecta",
+    "incorrectPasswordMessage": "La contraseña que introdujiste es incorrecta. Por favor intenta de nuevo.",
+    "corruptedFile": "Archivo dañado",
+    "invalidFormat": "Formato inválido",
+    "missingAudioFiles": "Faltan algunos archivos de audio",
+    "insufficientStorage": "Almacenamiento insuficiente",
+    "unknownError": "Error desconocido",
+    "retry": "Reintentar",
+    "ok": "OK",
+    "exportSuccess": "Exportación exitosa",
+    "exportError": "Exportación fallida",
+    "importSuccess": "Importación exitosa",
+    "importError": "Importación fallida",
+    "mindsToExport": "Mentes",
+    "audioFilesToExport": "Archivos de audio",
+    "mindsExported": "Mentes exportadas",
+    "audioFilesExported": "Archivos de audio exportados",
+    "mindsImported": "Mentes importadas",
+    "audioFilesImported": "Archivos de audio importados"
 }

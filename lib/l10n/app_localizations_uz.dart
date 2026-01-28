@@ -51,6 +51,9 @@ class AppLocalizationsUz extends AppLocalizations {
   String get share => 'Ulashish';
 
   @override
+  String get saveToFiles => 'Fayllarga saqlash';
+
+  @override
   String get switchDay => 'Kunni almashtirish';
 
   @override
@@ -87,10 +90,20 @@ class AppLocalizationsUz extends AppLocalizations {
   String get whatsNew => 'Yangi nimalar?';
 
   @override
+  String get releaseNotes => 'Reliz eslatmalari';
+
+  @override
   String get suggestFeature => 'Xususiyat taklif qilish';
 
   @override
   String get sendFeedback => 'Fikr-mulohaza yuborish';
+
+  @override
+  String get emailUs => 'Bizga email yozing';
+
+  @override
+  String get clearOfflineDataWarning =>
+      'Barcha oflayn ma\'lumotlaringiz o\'chiriladi. Ularni oldindan eksport qilganingizga ishonch hosil qiling.';
 
   @override
   String get sourceCode => 'Manba kodi';
@@ -285,4 +298,100 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get week => 'Hafta';
+
+  @override
+  String get password => 'Parol';
+
+  @override
+  String get archivePassword => 'Arxiv paroli';
+
+  @override
+  String get enterPassword => 'Parolni kiriting';
+
+  @override
+  String get confirmPassword => 'Parolni tasdiqlang';
+
+  @override
+  String get reenterPassword => 'Parolni qayta kiriting';
+
+  @override
+  String get passwordsDoNotMatch => 'Parollar mos kelmaydi';
+
+  @override
+  String get exportPassword => 'Eksportni parol bilan himoyalaysizmi?';
+
+  @override
+  String get exportPasswordDescription =>
+      'Eksportingizni shifrlash uchun parol qo\'shing. Shifrlanmagan eksport uchun buni o\'tkazib yuborishingiz mumkin.';
+
+  @override
+  String get importPassword => 'Parolni kiriting';
+
+  @override
+  String get importPasswordDescription =>
+      'Bu fayl parol bilan himoyalangan. Shifrni ochish uchun parolni kiriting.';
+
+  @override
+  String get skipPassword => 'O\'tkazib yuborish (parolsiz)';
+
+  @override
+  String get continue_ => 'Davom etish';
+
+  @override
+  String get incorrectPassword => 'Noto\'g\'ri parol';
+
+  @override
+  String get incorrectPasswordMessage =>
+      'Siz kiritgan parol noto\'g\'ri. Iltimos, qayta urinib ko\'ring.';
+
+  @override
+  String get corruptedFile => 'Buzilgan fayl';
+
+  @override
+  String get invalidFormat => 'Yaroqsiz format';
+
+  @override
+  String get missingAudioFiles => 'Ba\'zi audio fayllar yo\'q';
+
+  @override
+  String get insufficientStorage => 'Yetarli saqlash joyi yo\'q';
+
+  @override
+  String get unknownError => 'Noma\'lum xato';
+
+  @override
+  String get retry => 'Qayta urinish';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get exportSuccess => 'Eksport muvaffaqiyatli';
+
+  @override
+  String get exportError => 'Eksport muvaffaqiyatsiz';
+
+  @override
+  String get importSuccess => 'Import muvaffaqiyatli';
+
+  @override
+  String get importError => 'Import muvaffaqiyatsiz';
+
+  @override
+  String get mindsToExport => 'Fikrlar';
+
+  @override
+  String get audioFilesToExport => 'Audio fayllar';
+
+  @override
+  String get mindsExported => 'Fikrlar eksport qilindi';
+
+  @override
+  String get audioFilesExported => 'Audio fayllar eksport qilindi';
+
+  @override
+  String get mindsImported => 'Fikrlar import qilindi';
+
+  @override
+  String get audioFilesImported => 'Audio fayllar import qilindi';
 }

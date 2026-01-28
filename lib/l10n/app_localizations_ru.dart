@@ -51,6 +51,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get share => 'Поделиться';
 
   @override
+  String get saveToFiles => 'Сохранить в файлы';
+
+  @override
   String get switchDay => 'Поменять день';
 
   @override
@@ -87,10 +90,20 @@ class AppLocalizationsRu extends AppLocalizations {
   String get whatsNew => 'Что нового?';
 
   @override
+  String get releaseNotes => 'История версий';
+
+  @override
   String get suggestFeature => 'Предложить функцию';
 
   @override
   String get sendFeedback => 'Отправить отзыв';
+
+  @override
+  String get emailUs => 'Напишите нам на email';
+
+  @override
+  String get clearOfflineDataWarning =>
+      'Все ваши офлайн данные будут удалены. Убедитесь, что вы уже экспортировали их.';
 
   @override
   String get sourceCode => 'Исходный код';
@@ -285,4 +298,100 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get week => 'Неделя';
+
+  @override
+  String get password => 'Пароль';
+
+  @override
+  String get archivePassword => 'Пароль для архива';
+
+  @override
+  String get enterPassword => 'Введите пароль';
+
+  @override
+  String get confirmPassword => 'Подтвердите пароль';
+
+  @override
+  String get reenterPassword => 'Введите пароль повторно';
+
+  @override
+  String get passwordsDoNotMatch => 'Пароли не совпадают';
+
+  @override
+  String get exportPassword => 'Экспорт в ZIP';
+
+  @override
+  String get exportPasswordDescription =>
+      'Добавьте пароль для шифрования экспорта. Вы можете пропустить это для незашифрованного экспорта.';
+
+  @override
+  String get importPassword => 'Введите пароль';
+
+  @override
+  String get importPasswordDescription =>
+      'Этот файл защищен паролем. Пожалуйста, введите пароль для расшифровки.';
+
+  @override
+  String get skipPassword => 'Пропустить (без пароля)';
+
+  @override
+  String get continue_ => 'Продолжить';
+
+  @override
+  String get incorrectPassword => 'Неверный пароль';
+
+  @override
+  String get incorrectPasswordMessage =>
+      'Введенный вами пароль неверен. Пожалуйста, попробуйте снова.';
+
+  @override
+  String get corruptedFile => 'Поврежденный файл';
+
+  @override
+  String get invalidFormat => 'Неверный формат';
+
+  @override
+  String get missingAudioFiles => 'Некоторые аудиофайлы отсутствуют';
+
+  @override
+  String get insufficientStorage => 'Недостаточно места';
+
+  @override
+  String get unknownError => 'Неизвестная ошибка';
+
+  @override
+  String get retry => 'Повторить';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get exportSuccess => 'Экспорт успешен';
+
+  @override
+  String get exportError => 'Ошибка экспорта';
+
+  @override
+  String get importSuccess => 'Импорт успешен';
+
+  @override
+  String get importError => 'Ошибка импорта';
+
+  @override
+  String get mindsToExport => 'Заметок';
+
+  @override
+  String get audioFilesToExport => 'Аудиофайлов';
+
+  @override
+  String get mindsExported => 'Заметок экспортировано';
+
+  @override
+  String get audioFilesExported => 'Аудиофайлов экспортировано';
+
+  @override
+  String get mindsImported => 'Заметок импортировано';
+
+  @override
+  String get audioFilesImported => 'Аудиофайлов импортировано';
 }

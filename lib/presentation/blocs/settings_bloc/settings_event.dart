@@ -8,18 +8,28 @@ final class SettingsGet extends SettingsEvent {}
 
 final class SettingsExport extends SettingsEvent {
   final SettingsExportType type;
+  final String? password;
+  final SettingsExportAction action;
 
-  SettingsExport({required this.type});
+  SettingsExport({
+    required this.type,
+    this.password,
+    this.action = SettingsExportAction.share,
+  });
 }
 
 final class SettingsImport extends SettingsEvent {
-  final SettingsImportType type;
+  final File file;
+  final String? password;
 
-  SettingsImport({required this.type});
+  SettingsImport({required this.file, this.password});
 }
 
-enum SettingsExportType { csv }
+enum SettingsExportType { csv, zip }
 
+enum SettingsExportAction { saveToFiles, share }
+
+@Deprecated('Use SettingsImport with file parameter instead')
 enum SettingsImportType { csv }
 
 final class SettingsExportAllMindsToCSV extends SettingsEvent {}
@@ -40,12 +50,6 @@ final class SettingsChangeIsDarkMode extends SettingsEvent {
   final bool isDarkMode;
 
   const SettingsChangeIsDarkMode({required this.isDarkMode});
-}
-
-final class SettingsChangeOpenAIKey extends SettingsEvent {
-  final String openAIToken;
-
-  const SettingsChangeOpenAIKey({required this.openAIToken});
 }
 
 final class SettingsGetMindCandidatesToUpload extends SettingsEvent {}

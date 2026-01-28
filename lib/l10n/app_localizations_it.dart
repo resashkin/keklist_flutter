@@ -51,6 +51,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get share => 'Condividi';
 
   @override
+  String get saveToFiles => 'Salva in file';
+
+  @override
   String get switchDay => 'Cambia giorno';
 
   @override
@@ -87,10 +90,20 @@ class AppLocalizationsIt extends AppLocalizations {
   String get whatsNew => 'Cosa c\'è di nuovo?';
 
   @override
+  String get releaseNotes => 'Note di rilascio';
+
+  @override
   String get suggestFeature => 'Suggerisci una funzione';
 
   @override
   String get sendFeedback => 'Invia feedback';
+
+  @override
+  String get emailUs => 'Inviaci un\'email';
+
+  @override
+  String get clearOfflineDataWarning =>
+      'Tutti i tuoi dati offline verranno eliminati. Assicurati di averli già esportati.';
 
   @override
   String get sourceCode => 'Codice sorgente';
@@ -286,4 +299,100 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get week => 'Settimana';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get archivePassword => 'Password archivio';
+
+  @override
+  String get enterPassword => 'Inserisci password';
+
+  @override
+  String get confirmPassword => 'Conferma password';
+
+  @override
+  String get reenterPassword => 'Reinserisci password';
+
+  @override
+  String get passwordsDoNotMatch => 'Le password non corrispondono';
+
+  @override
+  String get exportPassword => 'Proteggere esportazione con password?';
+
+  @override
+  String get exportPasswordDescription =>
+      'Aggiungi una password per crittografare la tua esportazione. Puoi saltare questo per esportazione non crittografata.';
+
+  @override
+  String get importPassword => 'Inserisci password';
+
+  @override
+  String get importPasswordDescription =>
+      'Questo file è protetto da password. Per favore inserisci la password per decifrare.';
+
+  @override
+  String get skipPassword => 'Salta (senza password)';
+
+  @override
+  String get continue_ => 'Continua';
+
+  @override
+  String get incorrectPassword => 'Password errata';
+
+  @override
+  String get incorrectPasswordMessage =>
+      'La password inserita è errata. Per favore riprova.';
+
+  @override
+  String get corruptedFile => 'File danneggiato';
+
+  @override
+  String get invalidFormat => 'Formato non valido';
+
+  @override
+  String get missingAudioFiles => 'Alcuni file audio mancano';
+
+  @override
+  String get insufficientStorage => 'Spazio di archiviazione insufficiente';
+
+  @override
+  String get unknownError => 'Errore sconosciuto';
+
+  @override
+  String get retry => 'Riprova';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get exportSuccess => 'Esportazione riuscita';
+
+  @override
+  String get exportError => 'Esportazione fallita';
+
+  @override
+  String get importSuccess => 'Importazione riuscita';
+
+  @override
+  String get importError => 'Importazione fallita';
+
+  @override
+  String get mindsToExport => 'Mind';
+
+  @override
+  String get audioFilesToExport => 'File audio';
+
+  @override
+  String get mindsExported => 'Mind esportate';
+
+  @override
+  String get audioFilesExported => 'File audio esportati';
+
+  @override
+  String get mindsImported => 'Mind importate';
+
+  @override
+  String get audioFilesImported => 'File audio importati';
 }

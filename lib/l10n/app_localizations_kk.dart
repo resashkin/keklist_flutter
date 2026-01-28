@@ -51,6 +51,9 @@ class AppLocalizationsKk extends AppLocalizations {
   String get share => 'Бөлісу';
 
   @override
+  String get saveToFiles => 'Файлдарға сақтау';
+
+  @override
   String get switchDay => 'Күнді ауыстыру';
 
   @override
@@ -87,10 +90,20 @@ class AppLocalizationsKk extends AppLocalizations {
   String get whatsNew => 'Жаңалықтар?';
 
   @override
+  String get releaseNotes => 'Шығарылым жазбалары';
+
+  @override
   String get suggestFeature => 'Функция ұсыну';
 
   @override
   String get sendFeedback => 'Пікір жіберу';
+
+  @override
+  String get emailUs => 'Бізге email жазыңыз';
+
+  @override
+  String get clearOfflineDataWarning =>
+      'Барлық офлайн деректеріңіз жойылады. Оларды алдын ала экспорттағаныңызға көз жеткізіңіз.';
 
   @override
   String get sourceCode => 'Дереккөз коды';
@@ -285,4 +298,100 @@ class AppLocalizationsKk extends AppLocalizations {
 
   @override
   String get week => 'Апта';
+
+  @override
+  String get password => 'Құпия сөз';
+
+  @override
+  String get archivePassword => 'Мұрағат құпия сөзі';
+
+  @override
+  String get enterPassword => 'Құпия сөзді енгізіңіз';
+
+  @override
+  String get confirmPassword => 'Құпия сөзді растаңыз';
+
+  @override
+  String get reenterPassword => 'Құпия сөзді қайта енгізіңіз';
+
+  @override
+  String get passwordsDoNotMatch => 'Құпия сөздер сәйкес келмейді';
+
+  @override
+  String get exportPassword => 'Экспортты құпия сөзбен қорғау керек пе?';
+
+  @override
+  String get exportPasswordDescription =>
+      'Экспортыңызды шифрлау үшін құпия сөз қосыңыз. Шифрланбаған экспорт үшін мұны өткізіп жіберуге болады.';
+
+  @override
+  String get importPassword => 'Құпия сөзді енгізіңіз';
+
+  @override
+  String get importPasswordDescription =>
+      'Бұл файл құпия сөзбен қорғалған. Шифрды ашу үшін құпия сөзді енгізіңіз.';
+
+  @override
+  String get skipPassword => 'Өткізіп жіберу (құпия сөз жоқ)';
+
+  @override
+  String get continue_ => 'Жалғастыру';
+
+  @override
+  String get incorrectPassword => 'Құпия сөз қате';
+
+  @override
+  String get incorrectPasswordMessage =>
+      'Сіз енгізген құпия сөз қате. Қайтадан көріңіз.';
+
+  @override
+  String get corruptedFile => 'Зақымдалған файл';
+
+  @override
+  String get invalidFormat => 'Жарамсыз пішім';
+
+  @override
+  String get missingAudioFiles => 'Кейбір аудио файлдар жоқ';
+
+  @override
+  String get insufficientStorage => 'Жеткіліксіз қоймалық орын';
+
+  @override
+  String get unknownError => 'Белгісіз қате';
+
+  @override
+  String get retry => 'Қайтадан көру';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get exportSuccess => 'Экспорт сәтті';
+
+  @override
+  String get exportError => 'Экспорт сәтсіз';
+
+  @override
+  String get importSuccess => 'Импорт сәтті';
+
+  @override
+  String get importError => 'Импорт сәтсіз';
+
+  @override
+  String get mindsToExport => 'Ойлар';
+
+  @override
+  String get audioFilesToExport => 'Аудио файлдар';
+
+  @override
+  String get mindsExported => 'Ойлар экспортталды';
+
+  @override
+  String get audioFilesExported => 'Аудио файлдар экспортталды';
+
+  @override
+  String get mindsImported => 'Ойлар импортталды';
+
+  @override
+  String get audioFilesImported => 'Аудио файлдар импортталды';
 }

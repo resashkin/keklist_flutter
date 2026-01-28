@@ -20,10 +20,10 @@ class SettingsObjectAdapter extends TypeAdapter<SettingsObject> {
       ..isMindContentVisible = fields[0] == null ? true : fields[0] as bool
       ..previousAppVersion = fields[1] as String?
       ..isDarkMode = fields[3] == null ? true : fields[3] as bool
-      ..openAIKey = fields[4] as String?
       ..shouldShowTitles = fields[5] == null ? true : fields[5] as bool
       ..userName = fields[6] as String?
-      ..language = fields[7] == null ? 'en' : fields[7] as String;
+      ..language = fields[7] == null ? 'en' : fields[7] as String
+      ..dataSchemaVersion = fields[8] == null ? 0 : fields[8] as int;
   }
 
   @override
@@ -36,14 +36,14 @@ class SettingsObjectAdapter extends TypeAdapter<SettingsObject> {
       ..write(obj.previousAppVersion)
       ..writeByte(3)
       ..write(obj.isDarkMode)
-      ..writeByte(4)
-      ..write(obj.openAIKey)
       ..writeByte(5)
       ..write(obj.shouldShowTitles)
       ..writeByte(6)
       ..write(obj.userName)
       ..writeByte(7)
-      ..write(obj.language);
+      ..write(obj.language)
+      ..writeByte(8)
+      ..write(obj.dataSchemaVersion);
   }
 
   @override

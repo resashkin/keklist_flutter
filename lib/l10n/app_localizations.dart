@@ -72,7 +72,7 @@ import 'app_localizations_zh.dart';
 /// property.
 abstract class AppLocalizations {
   AppLocalizations(String locale)
-      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -95,11 +95,11 @@ abstract class AppLocalizations {
   /// of delegates is preferred or required.
   static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
       <LocalizationsDelegate<dynamic>>[
-    delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-  ];
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
@@ -114,7 +114,7 @@ abstract class AppLocalizations {
     Locale('sr'),
     Locale.fromSubtags(languageCode: 'sr', scriptCode: 'Latn'),
     Locale('uz'),
-    Locale('zh')
+    Locale('zh'),
   ];
 
   /// Settings screen title
@@ -201,6 +201,12 @@ abstract class AppLocalizations {
   /// **'Share'**
   String get share;
 
+  /// Save to files action
+  ///
+  /// In en, this message translates to:
+  /// **'Save to files'**
+  String get saveToFiles;
+
   /// Switch day action
   ///
   /// In en, this message translates to:
@@ -273,6 +279,12 @@ abstract class AppLocalizations {
   /// **'What\'s new?'**
   String get whatsNew;
 
+  /// Release notes navigation
+  ///
+  /// In en, this message translates to:
+  /// **'Release notes'**
+  String get releaseNotes;
+
   /// Suggest feature navigation
   ///
   /// In en, this message translates to:
@@ -284,6 +296,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Send feedback'**
   String get sendFeedback;
+
+  /// Email us navigation
+  ///
+  /// In en, this message translates to:
+  /// **'Email us'**
+  String get emailUs;
+
+  /// Warning when clearing offline data
+  ///
+  /// In en, this message translates to:
+  /// **'All your offline data will be deleted. Make sure that you have already exported it.'**
+  String get clearOfflineDataWarning;
 
   /// Source code navigation
   ///
@@ -656,6 +680,192 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Week'**
   String get week;
+
+  /// Password label
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// Archive password label for export
+  ///
+  /// In en, this message translates to:
+  /// **'Archive password'**
+  String get archivePassword;
+
+  /// Enter password placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Enter password'**
+  String get enterPassword;
+
+  /// Confirm password label
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm password'**
+  String get confirmPassword;
+
+  /// Re-enter password placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Re-enter password'**
+  String get reenterPassword;
+
+  /// Passwords do not match error
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordsDoNotMatch;
+
+  /// Export password dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Export to ZIP'**
+  String get exportPassword;
+
+  /// Export password description
+  ///
+  /// In en, this message translates to:
+  /// **'Add a password to encrypt your export. You can skip this for unencrypted export.'**
+  String get exportPasswordDescription;
+
+  /// Import password dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Enter password'**
+  String get importPassword;
+
+  /// Import password description
+  ///
+  /// In en, this message translates to:
+  /// **'This file is password-protected. Please enter the password to decrypt.'**
+  String get importPasswordDescription;
+
+  /// Skip password button
+  ///
+  /// In en, this message translates to:
+  /// **'Skip (no password)'**
+  String get skipPassword;
+
+  /// Continue button
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get continue_;
+
+  /// Incorrect password error title
+  ///
+  /// In en, this message translates to:
+  /// **'Incorrect password'**
+  String get incorrectPassword;
+
+  /// Incorrect password error message
+  ///
+  /// In en, this message translates to:
+  /// **'The password you entered is incorrect. Please try again.'**
+  String get incorrectPasswordMessage;
+
+  /// Corrupted file error
+  ///
+  /// In en, this message translates to:
+  /// **'Corrupted file'**
+  String get corruptedFile;
+
+  /// Invalid format error
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid format'**
+  String get invalidFormat;
+
+  /// Missing audio files warning
+  ///
+  /// In en, this message translates to:
+  /// **'Some audio files are missing'**
+  String get missingAudioFiles;
+
+  /// Insufficient storage error
+  ///
+  /// In en, this message translates to:
+  /// **'Insufficient storage'**
+  String get insufficientStorage;
+
+  /// Unknown error
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown error'**
+  String get unknownError;
+
+  /// Retry button
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// OK button
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
+
+  /// Export success message title
+  ///
+  /// In en, this message translates to:
+  /// **'Export successful'**
+  String get exportSuccess;
+
+  /// Export error message title
+  ///
+  /// In en, this message translates to:
+  /// **'Export failed'**
+  String get exportError;
+
+  /// Import success message title
+  ///
+  /// In en, this message translates to:
+  /// **'Import successful'**
+  String get importSuccess;
+
+  /// Import error message title
+  ///
+  /// In en, this message translates to:
+  /// **'Import failed'**
+  String get importError;
+
+  /// Minds count label for export
+  ///
+  /// In en, this message translates to:
+  /// **'Minds'**
+  String get mindsToExport;
+
+  /// Audio files count label for export
+  ///
+  /// In en, this message translates to:
+  /// **'Audio files'**
+  String get audioFilesToExport;
+
+  /// Minds exported count
+  ///
+  /// In en, this message translates to:
+  /// **'Minds exported'**
+  String get mindsExported;
+
+  /// Audio files exported count
+  ///
+  /// In en, this message translates to:
+  /// **'Audio files exported'**
+  String get audioFilesExported;
+
+  /// Minds imported count
+  ///
+  /// In en, this message translates to:
+  /// **'Minds imported'**
+  String get mindsImported;
+
+  /// Audio files imported count
+  ///
+  /// In en, this message translates to:
+  /// **'Audio files imported'**
+  String get audioFilesImported;
 }
 
 class _AppLocalizationsDelegate
@@ -669,18 +879,18 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) => <String>[
-        'de',
-        'en',
-        'es',
-        'it',
-        'ja',
-        'kk',
-        'ky',
-        'ru',
-        'sr',
-        'uz',
-        'zh'
-      ].contains(locale.languageCode);
+    'de',
+    'en',
+    'es',
+    'it',
+    'ja',
+    'kk',
+    'ky',
+    'ru',
+    'sr',
+    'uz',
+    'zh',
+  ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -726,8 +936,9 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   }
 
   throw FlutterError(
-      'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-      'an issue with the localizations generation tool. Please file an issue '
-      'on GitHub with a reproducible sample app and the gen-l10n configuration '
-      'that was used.');
+    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.',
+  );
 }

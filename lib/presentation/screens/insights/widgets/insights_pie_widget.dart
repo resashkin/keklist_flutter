@@ -48,10 +48,11 @@ final class _InsightsPieWidgetState extends State<InsightsPieWidget> {
     final HashMap<String, int> intervalChoiceMap = HashMap<String, int>();
 
     for (final Mind mind in choiceMinds) {
+      final int noteLength = mind.plainNote.length;
       if (intervalChoiceMap.containsKey(mind.emoji)) {
-        intervalChoiceMap[mind.emoji] = intervalChoiceMap[mind.emoji]! + mind.note.length;
+        intervalChoiceMap[mind.emoji] = intervalChoiceMap[mind.emoji]! + noteLength;
       } else {
-        intervalChoiceMap[mind.emoji] = mind.note.length;
+        intervalChoiceMap[mind.emoji] = noteLength;
       }
     }
 

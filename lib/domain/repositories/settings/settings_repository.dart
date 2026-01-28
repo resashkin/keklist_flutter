@@ -9,7 +9,6 @@ abstract class SettingsRepository {
   Stream<KeklistSettings> get stream;
   FutureOr<void> updateUserName(String string);
   FutureOr<void> updateSettings(KeklistSettings settings);
-  FutureOr<void> updateOpenAIKey(String? openAIKey);
   FutureOr<void> updateDarkMode(bool isDarkMode);
   FutureOr<void> updateMindContentVisibility(bool isVisible);
   FutureOr<void> updateShouldShowTitles(bool shouldShowTitles);
@@ -21,19 +20,19 @@ final class KeklistSettings {
   final bool isMindContentVisible;
   final String? previousAppVersion;
   final bool isDarkMode;
-  final String? openAIKey;
   final bool shouldShowTitles;
   final String? userName;
   final SupportedLanguage language;
+  final int dataSchemaVersion;
 
   KeklistSettings({
     required this.isMindContentVisible,
     required this.previousAppVersion,
     required this.isDarkMode,
-    required this.openAIKey,
     required this.shouldShowTitles,
     required this.userName,
     required this.language,
+    required this.dataSchemaVersion,
   });
 
   SettingsObject toObject() => SettingsObject()
@@ -41,18 +40,18 @@ final class KeklistSettings {
     ..previousAppVersion = previousAppVersion
     ..isDarkMode = isDarkMode
     ..shouldShowTitles = shouldShowTitles
-    ..openAIKey = openAIKey
     ..userName = userName
-    ..language = language.code;
+    ..language = language.code
+    ..dataSchemaVersion = dataSchemaVersion;
 
   factory KeklistSettings.initial() => KeklistSettings(
         isMindContentVisible: true,
         previousAppVersion: null,
         isDarkMode: true,
         shouldShowTitles: true,
-        openAIKey: null,
         userName: null,
         language: _detectDeviceLocale(),
+        dataSchemaVersion: 0,
       );
 
   /// Detect device locale and return supported language or fallback to English

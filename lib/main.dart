@@ -2,7 +2,6 @@
 
 import 'dart:io';
 
-import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
@@ -10,16 +9,20 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:keklist/domain/repositories/tabs/tabs_settings_repository.dart';
 import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
-// import 'package:home_widget/home_widget.dart';
-// import 'package:home_widget/home_widget.dart';
+import 'package:keklist/domain/repositories/files/app_file_repository.dart';
 import 'package:keklist/domain/repositories/mind/object/mind_object.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
+import 'package:keklist/domain/repositories/mind/mind_hive_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
+import 'package:keklist/domain/repositories/settings/settings_hive_repository.dart';
+import 'package:keklist/domain/migrations/migration_runner.dart';
+import 'package:keklist/domain/services/export_import/export_import_service.dart';
 import 'package:keklist/keklist_app.dart';
 import 'package:keklist/domain/hive_constants.dart';
-import 'package:keklist/domain/repositories/message/message/message_object.dart';
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
 import 'package:keklist/domain/repositories/debug_menu/object/debug_menu_object.dart';
+import 'package:keklist/presentation/blocs/audio_player_bloc/audio_player_bloc.dart';
+import 'package:keklist/presentation/blocs/mind_creator_bloc/mind_creator_bloc.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bloc.dart';
 import 'package:keklist/presentation/blocs/user_profile_bloc/user_profile_bloc.dart';
 import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
@@ -53,8 +56,9 @@ Future<void> main() async {
 
   // Инициализация DI-контейнера.
   final Injector injector = Injector();
-  final Injector mainInjector =
-      MainContainer(streamingSharedPreferences: streamingSharedPreferences).initialize(injector);
+  final Injector mainInjector = MainContainer(
+    streamingSharedPreferences: streamingSharedPreferences,
+  ).initialize(injector);
 
   _connectToWatchCommunicationManager(mainInjector);
   _enableDebugBLOCLogs();
@@ -71,12 +75,12 @@ Future<void> main() async {
   }();
   await Purchases.configure(PurchasesConfiguration(revenueCatApiKey));
 
-  try {
-    CustomerInfo customerInfo = await Purchases.getCustomerInfo();
-    // access latest customerInfo
-  } on PlatformException catch (error) {
-    // Error fetching customer info
-  }
+  // try {
+  //   CustomerInfo customerInfo = await Purchases.getCustomerInfo();
+  //   // access latest customerInfo
+  // } on PlatformException {
+  //   // Error fetching customer info
+  // }
 
   final Widget application = _getApplication(mainInjector);
   runApp(application);
@@ -97,45 +101,46 @@ void _connectToWatchCommunicationManager(Injector mainInjector) {
 }
 
 Widget _getApplication(Injector mainInjector) => MultiProvider(
-      providers: [
-        RepositoryProvider(create: (context) => mainInjector.get<MindRepository>()),
-      ],
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) => MindBloc(
-              mindSearcherCubit: mainInjector.get<MindSearcherCubit>(),
-              mindRepository: mainInjector.get<MindRepository>(),
-            ),
-          ),
-          BlocProvider(create: (context) => mainInjector.get<MindSearcherCubit>()),
-          BlocProvider(
-            create: (context) => SettingsBloc(
-              repository: mainInjector.get<SettingsRepository>(),
-              mindRepository: mainInjector.get<MindRepository>(),
-            ),
-          ),
-          BlocProvider(
-            create: (context) => UserProfileBloc(
-              mindRepository: mainInjector.get<MindRepository>(),
-              settingsRepository: mainInjector.get<SettingsRepository>(),
-            ),
-          ),
-          BlocProvider(
-            create: (context) => DebugMenuBloc(
-              repository: mainInjector.get<DebugMenuRepository>(),
-            ),
-          ),
-          BlocProvider(
-            create: (context) => TabsContainerBloc(
-              repository: mainInjector.get<TabsSettingsRepository>(),
-              debugMenuRepository: mainInjector.get<DebugMenuRepository>(),
-            ),
-          ),
-        ],
-        child: const KeklistApp(),
+  providers: [
+    RepositoryProvider(create: (context) => mainInjector.get<MindRepository>()),
+    RepositoryProvider(create: (context) => mainInjector.get<AppFileRepository>()),
+  ],
+  child: MultiBlocProvider(
+    providers: [
+      BlocProvider(
+        create: (context) => MindBloc(
+          mindSearcherCubit: mainInjector.get<MindSearcherCubit>(),
+          mindRepository: mainInjector.get<MindRepository>(),
+          fileRepository: mainInjector.get<AppFileRepository>(),
+        ),
       ),
-    );
+      BlocProvider(create: (context) => mainInjector.get<MindSearcherCubit>()),
+      BlocProvider(create: (context) => MindCreatorBloc(mindRepository: mainInjector.get<MindRepository>())),
+      BlocProvider(
+        create: (context) => SettingsBloc(
+          repository: mainInjector.get<SettingsRepository>(),
+          mindRepository: mainInjector.get<MindRepository>(),
+          exportImportService: mainInjector.get<ExportImportService>(),
+        ),
+      ),
+      BlocProvider(
+        create: (context) => UserProfileBloc(
+          mindRepository: mainInjector.get<MindRepository>(),
+          settingsRepository: mainInjector.get<SettingsRepository>(),
+        ),
+      ),
+      BlocProvider(create: (context) => DebugMenuBloc(repository: mainInjector.get<DebugMenuRepository>())),
+      BlocProvider(
+        create: (context) => TabsContainerBloc(
+          repository: mainInjector.get<TabsSettingsRepository>(),
+          debugMenuRepository: mainInjector.get<DebugMenuRepository>(),
+        ),
+      ),
+      BlocProvider(create: (context) => AudioPlayerBloc()),
+    ],
+    child: const KeklistApp(),
+  ),
+);
 
 void _initNativeWidgets() {
   // HomeWidget.setAppGroupId(PlatformConstants.iosGroupId);
@@ -160,7 +165,6 @@ void _setupBlockingLoadingWidget() {
 Future<void> _initHive() async {
   Hive.registerAdapter<SettingsObject>(SettingsObjectAdapter());
   Hive.registerAdapter<MindObject>(MindObjectAdapter());
-  Hive.registerAdapter<MessageObject>(MessageObjectAdapter());
   Hive.registerAdapter<DebugMenuObject>(DebugMenuObjectAdapter());
   await Hive.initFlutter();
   final Box<SettingsObject> settingsBox = await Hive.openBox<SettingsObject>(HiveConstants.settingsBoxName);
@@ -168,9 +172,21 @@ Future<void> _initHive() async {
     // First launch - detect device locale and create initial settings
     settingsBox.put(HiveConstants.globalSettingsIndex, KeklistSettings.initial().toObject());
   }
-  await Hive.openBox<MindObject>(HiveConstants.mindBoxName);
-  await Hive.openBox<MessageObject>(HiveConstants.messageChatBoxName);
+  final Box<MindObject> mindBox = await Hive.openBox<MindObject>(HiveConstants.mindBoxName);
   await Hive.openBox<DebugMenuObject>(HiveConstants.debugMenuBoxName);
+
+  // Run data migrations after boxes are opened
+  await _runMigrations(settingsBox, mindBox);
+}
+
+Future<void> _runMigrations(Box<SettingsObject> settingsBox, Box<MindObject> mindBox) async {
+  final settingsRepo = SettingsHiveRepository(box: settingsBox);
+  final mindRepo = MindHiveRepository(box: mindBox);
+  final fileRepo = const AppFileRepository();
+
+  final runner = MigrationRunner(settingsRepository: settingsRepo, mindRepository: mindRepo, fileRepository: fileRepo);
+
+  await runner.runPendingMigrations();
 }
 
 final class _LoggerBlocObserver extends BlocObserver {

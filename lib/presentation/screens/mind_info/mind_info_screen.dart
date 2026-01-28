@@ -1,18 +1,20 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:keklist/domain/constants.dart';
 import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
+import 'package:keklist/domain/repositories/files/app_file_repository.dart';
+import 'package:keklist/domain/services/audio_duration_extractor.dart';
 import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
-import 'package:keklist/presentation/core/helpers/extensions/state_extensions.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
+import 'package:keklist/presentation/core/widgets/mind_audio_recorder_sheet.dart';
 import 'package:keklist/presentation/core/widgets/overscroll_listener.dart';
 import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
 import 'package:keklist/presentation/screens/actions/action_model.dart';
 import 'package:keklist/presentation/screens/actions/actions_screen.dart';
-import 'package:keklist/presentation/screens/mind_chat_discussion/mind_chat_discussion_screen.dart';
 import 'package:keklist/presentation/screens/mind_one_emoji_collection/mind_one_emoji_collection.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/messaged_list/mind_message_widget.dart';
@@ -24,17 +26,14 @@ import 'package:keklist/presentation/core/helpers/mind_utils.dart';
 import 'package:keklist/presentation/core/widgets/creator_bottom_bar/mind_creator_bottom_bar.dart';
 import 'package:keklist/presentation/screens/mind_picker/mind_picker_screen.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
+import 'package:keklist/domain/services/entities/mind_note_content.dart';
 import 'package:translator/translator.dart';
 
 final class MindInfoScreen extends StatefulWidget {
   final Mind rootMind;
   final Iterable<Mind> allMinds;
 
-  const MindInfoScreen({
-    super.key,
-    required this.rootMind,
-    required this.allMinds,
-  });
+  const MindInfoScreen({super.key, required this.rootMind, required this.allMinds});
 
   @override
   State<MindInfoScreen> createState() => _MindInfoScreenState();
@@ -46,20 +45,25 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
   DebugMenuDataState? _debugMenuState;
   bool _creatorPanelHasFocus = false;
   Mind? _editableMind;
+  bool _isAudioRecordButtonVisible = true;
   late String _selectedEmoji = _rootMind.emoji;
+  final ScrollController _scrollController = ScrollController();
 
-  Mind get _rootMind => widget.allMinds.firstWhere(
-        (element) => element.id == widget.rootMind.id,
-        orElse: () => widget.rootMind,
-      );
+  Mind get _rootMind =>
+      widget.allMinds.firstWhere((element) => element.id == widget.rootMind.id, orElse: () => widget.rootMind);
   late final List<Mind> _allMinds = widget.allMinds.toList();
 
-  List<Mind> get _rootMindChildren => MindUtils.findMindsByRootId(rootId: _rootMind.id, allMinds: widget.allMinds)
-      .sortedByProperty((mind) => mind.creationDate);
+  List<Mind> get _rootMindChildren => MindUtils.findMindsByRootId(
+    rootId: _rootMind.id,
+    allMinds: widget.allMinds,
+  ).sortedByProperty((mind) => mind.creationDate);
 
   @override
   void initState() {
     super.initState();
+
+    _isAudioRecordButtonVisible = _createMindEditingController.text.trim().isEmpty;
+    _createMindEditingController.addListener(_onCreateMindTextChanged);
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _mindCreatorFocusNode.addListener(() {
@@ -72,25 +76,36 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
       });
     });
 
-    subscribeToBloc<MindBloc>(onNewState: (state) async {
-      if (state is MindList) {
-        setState(() {
-          _allMinds
-            ..clear()
-            ..addAll(state.values.sortedByCreationDate());
-        });
-      }
-    })?.disposed(by: this);
+    subscribeToBloc<MindBloc>(
+      onNewState: (state) async {
+        if (state is MindList) {
+          setState(() {
+            _allMinds
+              ..clear()
+              ..addAll(state.values.sortedByCreationDate());
+          });
+        }
+      },
+    )?.disposed(by: this);
 
-    subscribeToBloc<DebugMenuBloc>(onNewState: (state) {
-      if (state is DebugMenuDataState) {
-        _debugMenuState = state;
-      }
-    })?.disposed(by: this);
+    subscribeToBloc<DebugMenuBloc>(
+      onNewState: (state) {
+        if (state is DebugMenuDataState) {
+          _debugMenuState = state;
+        }
+      },
+    )?.disposed(by: this);
     sendEventToBloc<DebugMenuBloc>(DebugMenuGet());
   }
 
-  final ScrollController _scrollController = ScrollController();
+  @override
+  void dispose() {
+    _createMindEditingController
+      ..removeListener(_onCreateMindTextChanged)
+      ..dispose();
+    _mindCreatorFocusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +119,7 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
               onPressed: () => _showActions(mind: _rootMind),
               icon: const Icon(Icons.more_vert),
             ),
-          )
+          ),
         ],
       ),
       body: Stack(
@@ -115,11 +130,7 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
             onOverscrollTopPointerUp: () => _mindCreatorFocusNode.requestFocus(),
             childScrollController: _scrollController,
             topOverscrollChild: const Row(
-              children: [
-                Icon(Icons.arrow_upward),
-                SizedBox(width: 8.0),
-                Icon(Icons.keyboard_alt_outlined),
-              ],
+              children: [Icon(Icons.arrow_upward), SizedBox(width: 8.0), Icon(Icons.keyboard_alt_outlined)],
             ),
             child: SingleChildScrollView(
               controller: _scrollController,
@@ -149,10 +160,7 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
               // NOTE: Подложка для скрытия текста эмодзи.
               Align(
                 alignment: Alignment.bottomCenter,
-                child: Container(
-                  color: Theme.of(context).scaffoldBackgroundColor,
-                  height: 60,
-                ),
+                child: Container(color: Theme.of(context).scaffoldBackgroundColor, height: 60),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -162,28 +170,61 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
                     focusNode: _mindCreatorFocusNode,
                     textEditingController: _createMindEditingController,
                     placeholder: 'Comment mind...',
-                    onDone: (CreateMindData data) {
-                      if (_editableMind == null) {
-                        sendEventToBloc<MindBloc>(
-                          MindCreate(
-                            dayIndex: _rootMind.dayIndex,
-                            note: data.text,
-                            emoji: _selectedEmoji,
-                            rootId: _rootMind.id,
-                          ),
-                        );
-                      } else {
-                        final Mind mindForEdit = _editableMind!.copyWith(
-                          note: data.text,
-                          emoji: _selectedEmoji,
-                        );
-                        sendEventToBloc<MindBloc>(MindEdit(mind: mindForEdit));
-                      }
-                      _resetMindCreator();
-                    },
-                    suggestionMinds: const [],
+                    onDone: _handleCommentDone,
+                    onTapRecordAudio: _isAudioRecordButtonVisible
+                        ? () async {
+                            final AppFileRepository fileRepository = context.read<AppFileRepository>();
+                            final AudioRecordingResult audio = await showModalBottomSheet<AudioRecordingResult>(
+                              context: context,
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              builder: (BuildContext sheetContext) => Padding(
+                                padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                child: MindAudioRecorderSheet(fileRepository: fileRepository),
+                              ),
+                            );
+                            if (audio != null) {
+                              final String trimmedPath = audio.trim();
+                              if (trimmedPath.isEmpty) {
+                                return;
+                              }
+
+                              // Extract duration from the recorded audio file
+                              final String absolutePath = await fileRepository.resolveAbsolutePath(trimmedPath);
+                              final double duration = await const AudioDurationExtractor().extractDuration(absolutePath);
+
+                              final String currentText = _createMindEditingController.text;
+
+                              final String normalizedText = currentText.trim();
+                              MindNoteContent content = normalizedText.isEmpty
+                                  ? MindNoteContent.empty()
+                                  : MindNoteContent.parse(normalizedText);
+                              final bool needsLineBreak =
+                                  content.pieces.isNotEmpty &&
+                                  content.pieces.last.map(
+                                    text: (MindNoteText textPiece) =>
+                                        textPiece.value.isNotEmpty && !textPiece.value.endsWith('\n'),
+                                    audio: (_) => false,
+                                    unknown: () => false,
+                                  );
+                              content = content.copyWithAppendedAudio(
+                                trimmedPath,
+                                separator: needsLineBreak ? '\n' : null,
+                                durationSeconds: duration,
+                              );
+                              sendEventToBloc<MindBloc>(
+                                MindCreate(
+                                  dayIndex: _rootMind.dayIndex,
+                                  mindContent: content.pieces,
+                                  emoji: _selectedEmoji,
+                                  rootId: _rootMind.id,
+                                ),
+                              );
+                              _resetMindCreator();
+                            }
+                          }
+                        : null,
                     selectedEmoji: _selectedEmoji,
-                    onTapSuggestionEmoji: (_) {},
                     onTapEmoji: () {
                       _showEmojiPickerScreen(
                         onSelect: (String emoji) {
@@ -191,7 +232,7 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
                         },
                       );
                     },
-                    doneTitle: context.l10n.done,
+                    doneTitle: 'Save', // TODO: localize and translate
                     onTapCancelEdit: () {
                       _resetMindCreator();
                     },
@@ -203,6 +244,35 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
         ],
       ),
     );
+  }
+
+  void _onCreateMindTextChanged() {
+    final bool shouldShowAudioRecordButton = _createMindEditingController.text.trim().isEmpty;
+    if (_isAudioRecordButtonVisible == shouldShowAudioRecordButton) {
+      return;
+    }
+    setState(() => _isAudioRecordButtonVisible = shouldShowAudioRecordButton);
+  }
+
+  void _handleCommentDone(CreateMindData data) {
+    if (_editableMind == null) {
+      final String normalizedText = data.text.trim();
+      final MindNoteContent content = normalizedText.isEmpty
+          ? MindNoteContent.empty()
+          : MindNoteContent.parse(normalizedText);
+      sendEventToBloc<MindBloc>(
+        MindCreate(
+          dayIndex: _rootMind.dayIndex,
+          mindContent: content.pieces,
+          emoji: _selectedEmoji,
+          rootId: _rootMind.id,
+        ),
+      );
+    } else {
+      final Mind mindForEdit = _editableMind!.copyWith(note: data.text, emoji: _selectedEmoji);
+      sendEventToBloc<MindBloc>(MindEdit(mind: mindForEdit));
+    }
+    _resetMindCreator();
   }
 
   void _resetMindCreator() {
@@ -229,12 +299,9 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
       context: context,
       builder: (context) => ActionsScreen(
         actions: [
-          if (_debugMenuState?.debugMenuItems
-                  .firstWhereOrNull((element) => element.type == DebugMenuType.chatWithAI && element.value) !=
-              null)
-            (ActionModel.chatWithAI(context), () => _showMessageScreen(mind: mind)),
-          if (_debugMenuState?.debugMenuItems
-                  .firstWhereOrNull((element) => element.type == DebugMenuType.translation && element.value) !=
+          if (_debugMenuState?.debugMenuItems.firstWhereOrNull(
+                (element) => element.type == DebugMenuType.translation && element.value,
+              ) !=
               null)
             (ActionModel.tranlsateToEnglish(context), () => _translateToEnglish(mind: mind)),
           (ActionModel.edit(context), () => _editMind(mind)),
@@ -247,23 +314,9 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
 
   void _translateToEnglish({required Mind mind}) async {
     final GoogleTranslator translator = GoogleTranslator();
-    final Translation translation = await translator.translate(mind.note, to: 'en');
+    final Translation translation = await translator.translate(mind.plainNote, to: 'en');
 
-    await showOkAlertDialog(
-      context: context,
-      message: translation.text,
-    );
-  }
-
-  void _showMessageScreen({required Mind mind}) async {
-    Navigator.of(mountedContext!).push(
-      BackSwipePageRoute(
-        builder: (_) => MindChatDiscussionScreen(
-          rootMind: mind,
-          allMinds: _allMinds,
-        ),
-      ),
-    );
+    await showOkAlertDialog(context: context, message: translation.text);
   }
 
   void _editMind(Mind mind) {
@@ -278,10 +331,7 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
   void _showAllMinds(Mind mind) {
     Navigator.of(context).push(
       BackSwipePageRoute(
-        builder: (_) => MindOneEmojiCollectionScreen(
-          emoji: mind.emoji,
-          allMinds: _allMinds,
-        ),
+        builder: (_) => MindOneEmojiCollectionScreen(emoji: mind.emoji, allMinds: _allMinds),
       ),
     );
   }

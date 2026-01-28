@@ -51,6 +51,9 @@ class AppLocalizationsKy extends AppLocalizations {
   String get share => 'Бөлүшүү';
 
   @override
+  String get saveToFiles => 'Файлдарга сактоо';
+
+  @override
   String get switchDay => 'Күндү алмаштыруу';
 
   @override
@@ -87,10 +90,20 @@ class AppLocalizationsKy extends AppLocalizations {
   String get whatsNew => 'Жаңы нерселер?';
 
   @override
+  String get releaseNotes => 'Релиз жазмалары';
+
+  @override
   String get suggestFeature => 'Өзгөчөлүктү сунуш кылуу';
 
   @override
   String get sendFeedback => 'Пикир-божомол жөнөтүү';
+
+  @override
+  String get emailUs => 'Бизге email жазыңыз';
+
+  @override
+  String get clearOfflineDataWarning =>
+      'Бардык оффлайн маалыматтарың өчүрүлөт. Аларды мурун экспорттогонуңа ынан.';
 
   @override
   String get sourceCode => 'Булак коду';
@@ -285,4 +298,100 @@ class AppLocalizationsKy extends AppLocalizations {
 
   @override
   String get week => 'Жума';
+
+  @override
+  String get password => 'Сырсөз';
+
+  @override
+  String get archivePassword => 'Архив сырсөзү';
+
+  @override
+  String get enterPassword => 'Сырсөздү киргизиңиз';
+
+  @override
+  String get confirmPassword => 'Сырсөздү ырастаңыз';
+
+  @override
+  String get reenterPassword => 'Сырсөздү кайра киргизиңиз';
+
+  @override
+  String get passwordsDoNotMatch => 'Сырсөздөр дал келбейт';
+
+  @override
+  String get exportPassword => 'Экспортту сырсөз менен коргоого алуу керекпи?';
+
+  @override
+  String get exportPasswordDescription =>
+      'Экспортуңузду шифрлөө үчүн сырсөз кошуңуз. Шифрлөөсүз экспорт үчүн бул өткөрүп жиберсе болот.';
+
+  @override
+  String get importPassword => 'Сырсөздү киргизиңиз';
+
+  @override
+  String get importPasswordDescription =>
+      'Бул файл сырсөз менен корголгон. Шифрди ачуу үчүн сырсөздү киргизиңиз.';
+
+  @override
+  String get skipPassword => 'Өткөрүп жиберүү (сырсөзсүз)';
+
+  @override
+  String get continue_ => 'Улантуу';
+
+  @override
+  String get incorrectPassword => 'Сырсөз туура эмес';
+
+  @override
+  String get incorrectPasswordMessage =>
+      'Сиз киргизген сырсөз туура эмес. Кайра аракет кылыңыз.';
+
+  @override
+  String get corruptedFile => 'Бузулган файл';
+
+  @override
+  String get invalidFormat => 'Жараксыз формат';
+
+  @override
+  String get missingAudioFiles => 'Кээ бир аудио файлдар жок';
+
+  @override
+  String get insufficientStorage => 'Жетишсиз сактоо орду';
+
+  @override
+  String get unknownError => 'Белгисиз ката';
+
+  @override
+  String get retry => 'Кайра аракет кылуу';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get exportSuccess => 'Экспорт ийгиликтүү';
+
+  @override
+  String get exportError => 'Экспорт ийгиликсиз';
+
+  @override
+  String get importSuccess => 'Импорт ийгиликтүү';
+
+  @override
+  String get importError => 'Импорт ийгиликсиз';
+
+  @override
+  String get mindsToExport => 'Ойлор';
+
+  @override
+  String get audioFilesToExport => 'Аудио файлдар';
+
+  @override
+  String get mindsExported => 'Ойлор экспортталды';
+
+  @override
+  String get audioFilesExported => 'Аудио файлдар экспортталды';
+
+  @override
+  String get mindsImported => 'Ойлор импортталды';
+
+  @override
+  String get audioFilesImported => 'Аудио файлдар импортталды';
 }

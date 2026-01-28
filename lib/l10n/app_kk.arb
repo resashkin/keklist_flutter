@@ -49,6 +49,7 @@
     "@share": {
         "description": "Бөлісу әрекеті"
     },
+    "saveToFiles": "Файлдарға сақтау",
     "switchDay": "Күнді ауыстыру",
     "@switchDay": {
         "description": "Күнді ауыстыру әрекеті"
@@ -97,6 +98,10 @@
     "@whatsNew": {
         "description": "Жаңалықтар навигациясы"
     },
+    "releaseNotes": "Шығарылым жазбалары",
+    "@releaseNotes": {
+        "description": "Шығарылым жазбалары навигациясы"
+    },
     "suggestFeature": "Функция ұсыну",
     "@suggestFeature": {
         "description": "Функция ұсыну навигациясы"
@@ -104,6 +109,14 @@
     "sendFeedback": "Пікір жіберу",
     "@sendFeedback": {
         "description": "Пікір жіберу навигациясы"
+    },
+    "emailUs": "Бізге email жазыңыз",
+    "@emailUs": {
+        "description": "Email арқылы хабарласу навигациясы"
+    },
+    "clearOfflineDataWarning": "Барлық офлайн деректеріңіз жойылады. Оларды алдын ала экспорттағаныңызға көз жеткізіңіз.",
+    "@clearOfflineDataWarning": {
+        "description": "Офлайн деректерді өшіру ескертуі"
     },
     "sourceCode": "Дереккөз коды",
     "@sourceCode": {
@@ -354,5 +367,36 @@
             }
         }
     },
-    "week": "Апта"
+    "week": "Апта",
+    "password": "Құпия сөз",
+    "archivePassword": "Мұрағат құпия сөзі",
+    "enterPassword": "Құпия сөзді енгізіңіз",
+    "confirmPassword": "Құпия сөзді растаңыз",
+    "reenterPassword": "Құпия сөзді қайта енгізіңіз",
+    "passwordsDoNotMatch": "Құпия сөздер сәйкес келмейді",
+    "exportPassword": "Экспортты құпия сөзбен қорғау керек пе?",
+    "exportPasswordDescription": "Экспортыңызды шифрлау үшін құпия сөз қосыңыз. Шифрланбаған экспорт үшін мұны өткізіп жіберуге болады.",
+    "importPassword": "Құпия сөзді енгізіңіз",
+    "importPasswordDescription": "Бұл файл құпия сөзбен қорғалған. Шифрды ашу үшін құпия сөзді енгізіңіз.",
+    "skipPassword": "Өткізіп жіберу (құпия сөз жоқ)",
+    "continue_": "Жалғастыру",
+    "incorrectPassword": "Құпия сөз қате",
+    "incorrectPasswordMessage": "Сіз енгізген құпия сөз қате. Қайтадан көріңіз.",
+    "corruptedFile": "Зақымдалған файл",
+    "invalidFormat": "Жарамсыз пішім",
+    "missingAudioFiles": "Кейбір аудио файлдар жоқ",
+    "insufficientStorage": "Жеткіліксіз қоймалық орын",
+    "unknownError": "Белгісіз қате",
+    "retry": "Қайтадан көру",
+    "ok": "OK",
+    "exportSuccess": "Экспорт сәтті",
+    "exportError": "Экспорт сәтсіз",
+    "importSuccess": "Импорт сәтті",
+    "importError": "Импорт сәтсіз",
+    "mindsToExport": "Ойлар",
+    "audioFilesToExport": "Аудио файлдар",
+    "mindsExported": "Ойлар экспортталды",
+    "audioFilesExported": "Аудио файлдар экспортталды",
+    "mindsImported": "Ойлар импортталды",
+    "audioFilesImported": "Аудио файлдар импортталды"
 }

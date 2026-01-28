@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:keklist/domain/repositories/mind/object/mind_object.dart';
+import 'package:keklist/domain/services/entities/mind_note_content.dart';
 
 part 'mind.g.dart';
 
@@ -8,11 +9,18 @@ part 'mind.g.dart';
 final class Mind with EquatableMixin {
   final String id;
   final String emoji;
-  final String note;
+  final String note; // TODO: rename to rawNote
   final int dayIndex;
   final DateTime creationDate;
   final int sortIndex;
   final String? rootId;
+
+  @override
+  bool? get stringify => true;
+
+  String get plainNote => noteContent.plainText;
+  MindNoteContent get noteContent => MindNoteContent.parse(note);
+  List<MindNoteAudio> get audioNotes => noteContent.audioPieces;
 
   Mind({
     required this.id,
@@ -27,9 +35,6 @@ final class Mind with EquatableMixin {
   // JsonSerializable
   factory Mind.fromJson(Map<String, dynamic> json) => _$MindFromJson(json);
   Map<String, dynamic> toJson() => _$MindToJson(this);
-
-  @override
-  bool? get stringify => true;
 
   @override
   List<Object?> get props => [
@@ -88,4 +93,8 @@ final class Mind with EquatableMixin {
     ..creationDate = creationDate
     ..sortIndex = sortIndex
     ..rootId = rootId;
+
+  Mind copyWithNoteContent(MindNoteContent content) => copyWith(note: content.toRawNoteString());
+  Mind appendAudioNote(String path, {String? separator, double? durationSeconds}) =>
+      copyWithNoteContent(noteContent.copyWithAppendedAudio(path, separator: separator, durationSeconds: durationSeconds));
 }

@@ -1,0 +1,4 @@
+.env
+dotenv
+key.properties
+fastlane-play-store.json

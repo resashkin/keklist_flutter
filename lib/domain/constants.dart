@@ -105,9 +105,16 @@ final class KeklistConstants {
   static String whatsNewURL = 'https://sashkyn.notion.site/Rememoji-Mind-Tracker-8548383aede2406bbb8d26c7f58e769c';
   static String privacyURL = 'https://resashkin.github.io/keklist-privacy/';
   static String feedbackEmail = 'sashkn2@gmail.com';
-  static String sourceCodeURL = 'https://github.com/sashkyn/keklist_flutter';
+  static String sourceCodeURL = 'https://github.com/resashkin/keklist_flutter';
   static String featureSuggestionsURL = 'https://insigh.to/b/keklist';
-  static int foldersDayIndex = 0; // TODO: remove
+  static String newsTelegramChannelURL = 'https://t.me/keklistlog';
+  static Iterable<String> defaultEmojiesToPick = [
+    '😔',
+    '🙁',
+    '🙂',
+    '☺️',
+    '🤩',
+  ];
 
   static List<TabModel> availableTabModels = [
     TabModel(type: TabType.calendar),

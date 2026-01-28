@@ -27,3 +27,41 @@ final class SettingsLoadingState extends SettingsState {
 
   SettingsLoadingState(this.isLoading);
 }
+
+final class SettingsExportSuccess extends SettingsState {
+  final int mindsCount;
+  final int audioFilesCount;
+  final bool isEncrypted;
+
+  SettingsExportSuccess({
+    required this.mindsCount,
+    required this.audioFilesCount,
+    required this.isEncrypted,
+  });
+}
+
+final class SettingsExportError extends SettingsState {
+  final String message;
+
+  SettingsExportError({required this.message});
+}
+
+final class SettingsImportSuccess extends SettingsState {
+  final int mindsCount;
+  final int audioFilesCount;
+
+  SettingsImportSuccess({
+    required this.mindsCount,
+    required this.audioFilesCount,
+  });
+}
+
+final class SettingsImportError extends SettingsState {
+  final ImportError error;
+  final String message;
+
+  SettingsImportError({
+    required this.error,
+    required this.message,
+  });
+}

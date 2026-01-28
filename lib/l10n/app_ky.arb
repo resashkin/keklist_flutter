@@ -49,6 +49,7 @@
     "@share": {
         "description": "Бөлүшүү аракети"
     },
+    "saveToFiles": "Файлдарга сактоо",
     "switchDay": "Күндү алмаштыруу",
     "@switchDay": {
         "description": "Күндү алмаштыруу аракети"
@@ -97,6 +98,10 @@
     "@whatsNew": {
         "description": "Жаңы нерселер навигациясы"
     },
+    "releaseNotes": "Релиз жазмалары",
+    "@releaseNotes": {
+        "description": "Релиз жазмалары навигациясы"
+    },
     "suggestFeature": "Өзгөчөлүктү сунуш кылуу",
     "@suggestFeature": {
         "description": "Өзгөчөлүктү сунуш кылуу навигациясы"
@@ -104,6 +109,14 @@
     "sendFeedback": "Пикир-божомол жөнөтүү",
     "@sendFeedback": {
         "description": "Пикир-божомол жөнөтүү навигациясы"
+    },
+    "emailUs": "Бизге email жазыңыз",
+    "@emailUs": {
+        "description": "Email аркылуу жазуу навигациясы"
+    },
+    "clearOfflineDataWarning": "Бардык оффлайн маалыматтарың өчүрүлөт. Аларды мурун экспорттогонуңа ынан.",
+    "@clearOfflineDataWarning": {
+        "description": "Оффлайн маалыматтарды өчүрүү эскертүүсү"
     },
     "sourceCode": "Булак коду",
     "@sourceCode": {
@@ -354,5 +367,36 @@
             }
         }
     },
-    "week": "Жума"
+    "week": "Жума",
+    "password": "Сырсөз",
+    "archivePassword": "Архив сырсөзү",
+    "enterPassword": "Сырсөздү киргизиңиз",
+    "confirmPassword": "Сырсөздү ырастаңыз",
+    "reenterPassword": "Сырсөздү кайра киргизиңиз",
+    "passwordsDoNotMatch": "Сырсөздөр дал келбейт",
+    "exportPassword": "Экспортту сырсөз менен коргоого алуу керекпи?",
+    "exportPasswordDescription": "Экспортуңузду шифрлөө үчүн сырсөз кошуңуз. Шифрлөөсүз экспорт үчүн бул өткөрүп жиберсе болот.",
+    "importPassword": "Сырсөздү киргизиңиз",
+    "importPasswordDescription": "Бул файл сырсөз менен корголгон. Шифрди ачуу үчүн сырсөздү киргизиңиз.",
+    "skipPassword": "Өткөрүп жиберүү (сырсөзсүз)",
+    "continue_": "Улантуу",
+    "incorrectPassword": "Сырсөз туура эмес",
+    "incorrectPasswordMessage": "Сиз киргизген сырсөз туура эмес. Кайра аракет кылыңыз.",
+    "corruptedFile": "Бузулган файл",
+    "invalidFormat": "Жараксыз формат",
+    "missingAudioFiles": "Кээ бир аудио файлдар жок",
+    "insufficientStorage": "Жетишсиз сактоо орду",
+    "unknownError": "Белгисиз ката",
+    "retry": "Кайра аракет кылуу",
+    "ok": "OK",
+    "exportSuccess": "Экспорт ийгиликтүү",
+    "exportError": "Экспорт ийгиликсиз",
+    "importSuccess": "Импорт ийгиликтүү",
+    "importError": "Импорт ийгиликсиз",
+    "mindsToExport": "Ойлор",
+    "audioFilesToExport": "Аудио файлдар",
+    "mindsExported": "Ойлор экспортталды",
+    "audioFilesExported": "Аудио файлдар экспортталды",
+    "mindsImported": "Ойлор импортталды",
+    "audioFilesImported": "Аудио файлдар импортталды"
 }

@@ -51,6 +51,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get share => 'Compartir';
 
   @override
+  String get saveToFiles => 'Guardar en archivos';
+
+  @override
   String get switchDay => 'Cambiar día';
 
   @override
@@ -87,10 +90,20 @@ class AppLocalizationsEs extends AppLocalizations {
   String get whatsNew => '¿Qué hay de nuevo?';
 
   @override
+  String get releaseNotes => 'Notas de la versión';
+
+  @override
   String get suggestFeature => 'Sugerir una función';
 
   @override
   String get sendFeedback => 'Enviar comentarios';
+
+  @override
+  String get emailUs => 'Envíanos un correo';
+
+  @override
+  String get clearOfflineDataWarning =>
+      'Todos tus datos sin conexión se eliminarán. Asegúrate de haberlos exportado.';
 
   @override
   String get sourceCode => 'Código fuente';
@@ -287,4 +300,100 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get week => 'Semana';
+
+  @override
+  String get password => 'Contraseña';
+
+  @override
+  String get archivePassword => 'Contraseña del archivo';
+
+  @override
+  String get enterPassword => 'Introducir contraseña';
+
+  @override
+  String get confirmPassword => 'Confirmar contraseña';
+
+  @override
+  String get reenterPassword => 'Volver a introducir contraseña';
+
+  @override
+  String get passwordsDoNotMatch => 'Las contraseñas no coinciden';
+
+  @override
+  String get exportPassword => '¿Proteger exportación con contraseña?';
+
+  @override
+  String get exportPasswordDescription =>
+      'Agrega una contraseña para cifrar tu exportación. Puedes omitir esto para exportación sin cifrar.';
+
+  @override
+  String get importPassword => 'Introducir contraseña';
+
+  @override
+  String get importPasswordDescription =>
+      'Este archivo está protegido con contraseña. Por favor introduce la contraseña para descifrar.';
+
+  @override
+  String get skipPassword => 'Omitir (sin contraseña)';
+
+  @override
+  String get continue_ => 'Continuar';
+
+  @override
+  String get incorrectPassword => 'Contraseña incorrecta';
+
+  @override
+  String get incorrectPasswordMessage =>
+      'La contraseña que introdujiste es incorrecta. Por favor intenta de nuevo.';
+
+  @override
+  String get corruptedFile => 'Archivo dañado';
+
+  @override
+  String get invalidFormat => 'Formato inválido';
+
+  @override
+  String get missingAudioFiles => 'Faltan algunos archivos de audio';
+
+  @override
+  String get insufficientStorage => 'Almacenamiento insuficiente';
+
+  @override
+  String get unknownError => 'Error desconocido';
+
+  @override
+  String get retry => 'Reintentar';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get exportSuccess => 'Exportación exitosa';
+
+  @override
+  String get exportError => 'Exportación fallida';
+
+  @override
+  String get importSuccess => 'Importación exitosa';
+
+  @override
+  String get importError => 'Importación fallida';
+
+  @override
+  String get mindsToExport => 'Mentes';
+
+  @override
+  String get audioFilesToExport => 'Archivos de audio';
+
+  @override
+  String get mindsExported => 'Mentes exportadas';
+
+  @override
+  String get audioFilesExported => 'Archivos de audio exportados';
+
+  @override
+  String get mindsImported => 'Mentes importadas';
+
+  @override
+  String get audioFilesImported => 'Archivos de audio importados';
 }

@@ -49,6 +49,7 @@
     "@share": {
         "description": "Ulashish harakati"
     },
+    "saveToFiles": "Fayllarga saqlash",
     "switchDay": "Kunni almashtirish",
     "@switchDay": {
         "description": "Kunni almashtirish harakati"
@@ -97,6 +98,10 @@
     "@whatsNew": {
         "description": "Yangi nimalar navigatsiyasi"
     },
+    "releaseNotes": "Reliz eslatmalari",
+    "@releaseNotes": {
+        "description": "Reliz eslatmalari navigatsiyasi"
+    },
     "suggestFeature": "Xususiyat taklif qilish",
     "@suggestFeature": {
         "description": "Xususiyat taklif qilish navigatsiyasi"
@@ -104,6 +109,14 @@
     "sendFeedback": "Fikr-mulohaza yuborish",
     "@sendFeedback": {
         "description": "Fikr-mulohaza yuborish navigatsiyasi"
+    },
+    "emailUs": "Bizga email yozing",
+    "@emailUs": {
+        "description": "Email yozish navigatsiyasi"
+    },
+    "clearOfflineDataWarning": "Barcha oflayn ma'lumotlaringiz o'chiriladi. Ularni oldindan eksport qilganingizga ishonch hosil qiling.",
+    "@clearOfflineDataWarning": {
+        "description": "Oflayn ma'lumotlarni o'chirish ogohlantirishi"
     },
     "sourceCode": "Manba kodi",
     "@sourceCode": {
@@ -354,5 +367,36 @@
             }
         }
     },
-    "week": "Hafta"
+    "week": "Hafta",
+    "password": "Parol",
+    "archivePassword": "Arxiv paroli",
+    "enterPassword": "Parolni kiriting",
+    "confirmPassword": "Parolni tasdiqlang",
+    "reenterPassword": "Parolni qayta kiriting",
+    "passwordsDoNotMatch": "Parollar mos kelmaydi",
+    "exportPassword": "Eksportni parol bilan himoyalaysizmi?",
+    "exportPasswordDescription": "Eksportingizni shifrlash uchun parol qo'shing. Shifrlanmagan eksport uchun buni o'tkazib yuborishingiz mumkin.",
+    "importPassword": "Parolni kiriting",
+    "importPasswordDescription": "Bu fayl parol bilan himoyalangan. Shifrni ochish uchun parolni kiriting.",
+    "skipPassword": "O'tkazib yuborish (parolsiz)",
+    "continue_": "Davom etish",
+    "incorrectPassword": "Noto'g'ri parol",
+    "incorrectPasswordMessage": "Siz kiritgan parol noto'g'ri. Iltimos, qayta urinib ko'ring.",
+    "corruptedFile": "Buzilgan fayl",
+    "invalidFormat": "Yaroqsiz format",
+    "missingAudioFiles": "Ba'zi audio fayllar yo'q",
+    "insufficientStorage": "Yetarli saqlash joyi yo'q",
+    "unknownError": "Noma'lum xato",
+    "retry": "Qayta urinish",
+    "ok": "OK",
+    "exportSuccess": "Eksport muvaffaqiyatli",
+    "exportError": "Eksport muvaffaqiyatsiz",
+    "importSuccess": "Import muvaffaqiyatli",
+    "importError": "Import muvaffaqiyatsiz",
+    "mindsToExport": "Fikrlar",
+    "audioFilesToExport": "Audio fayllar",
+    "mindsExported": "Fikrlar eksport qilindi",
+    "audioFilesExported": "Audio fayllar eksport qilindi",
+    "mindsImported": "Fikrlar import qilindi",
+    "audioFilesImported": "Audio fayllar import qilindi"
 }

@@ -127,9 +127,9 @@ Runner.app.dSYM.zip
 Runner.ipa
 
 # Fastlane Android
-**/android/fastlane
 **/android/.env
-**/android/Gemfile
+keklist-881d8-3a03518875b0.json
+/android/fastlane/report.xml
 
 # dotenv
 .env

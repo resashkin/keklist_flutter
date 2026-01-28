@@ -51,6 +51,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get share => '共有';
 
   @override
+  String get saveToFiles => 'ファイルに保存';
+
+  @override
   String get switchDay => '日を切り替え';
 
   @override
@@ -87,10 +90,20 @@ class AppLocalizationsJa extends AppLocalizations {
   String get whatsNew => '新機能';
 
   @override
+  String get releaseNotes => 'リリースノート';
+
+  @override
   String get suggestFeature => '機能を提案';
 
   @override
   String get sendFeedback => 'フィードバックを送信';
+
+  @override
+  String get emailUs => 'メールを送る';
+
+  @override
+  String get clearOfflineDataWarning =>
+      'オフラインデータはすべて削除されます。すでにエクスポート済みであることを確認してください。';
 
   @override
   String get sourceCode => 'ソースコード';
@@ -280,4 +293,99 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get week => '週';
+
+  @override
+  String get password => 'パスワード';
+
+  @override
+  String get archivePassword => 'アーカイブパスワード';
+
+  @override
+  String get enterPassword => 'パスワードを入力';
+
+  @override
+  String get confirmPassword => 'パスワードを確認';
+
+  @override
+  String get reenterPassword => 'パスワードを再入力';
+
+  @override
+  String get passwordsDoNotMatch => 'パスワードが一致しません';
+
+  @override
+  String get exportPassword => 'エクスポートをパスワードで保護しますか？';
+
+  @override
+  String get exportPasswordDescription =>
+      'エクスポートを暗号化するためにパスワードを追加します。暗号化しない場合はスキップできます。';
+
+  @override
+  String get importPassword => 'パスワードを入力';
+
+  @override
+  String get importPasswordDescription =>
+      'このファイルはパスワードで保護されています。復号化するためにパスワードを入力してください。';
+
+  @override
+  String get skipPassword => 'スキップ（パスワードなし）';
+
+  @override
+  String get continue_ => '続ける';
+
+  @override
+  String get incorrectPassword => 'パスワードが正しくありません';
+
+  @override
+  String get incorrectPasswordMessage => '入力されたパスワードが正しくありません。もう一度お試しください。';
+
+  @override
+  String get corruptedFile => '破損したファイル';
+
+  @override
+  String get invalidFormat => '無効な形式';
+
+  @override
+  String get missingAudioFiles => '一部の音声ファイルが見つかりません';
+
+  @override
+  String get insufficientStorage => 'ストレージ容量が不足しています';
+
+  @override
+  String get unknownError => '不明なエラー';
+
+  @override
+  String get retry => '再試行';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get exportSuccess => 'エクスポート成功';
+
+  @override
+  String get exportError => 'エクスポート失敗';
+
+  @override
+  String get importSuccess => 'インポート成功';
+
+  @override
+  String get importError => 'インポート失敗';
+
+  @override
+  String get mindsToExport => 'マインド';
+
+  @override
+  String get audioFilesToExport => '音声ファイル';
+
+  @override
+  String get mindsExported => 'マインドをエクスポートしました';
+
+  @override
+  String get audioFilesExported => '音声ファイルをエクスポートしました';
+
+  @override
+  String get mindsImported => 'マインドをインポートしました';
+
+  @override
+  String get audioFilesImported => '音声ファイルをインポートしました';
 }

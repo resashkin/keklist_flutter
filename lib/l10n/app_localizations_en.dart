@@ -51,6 +51,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get share => 'Share';
 
   @override
+  String get saveToFiles => 'Save to files';
+
+  @override
   String get switchDay => 'Switch day';
 
   @override
@@ -87,10 +90,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get whatsNew => 'What\'s new?';
 
   @override
+  String get releaseNotes => 'Release notes';
+
+  @override
   String get suggestFeature => 'Suggest a feature';
 
   @override
   String get sendFeedback => 'Send feedback';
+
+  @override
+  String get emailUs => 'Email us';
+
+  @override
+  String get clearOfflineDataWarning =>
+      'All your offline data will be deleted. Make sure that you have already exported it.';
 
   @override
   String get sourceCode => 'Source code';
@@ -285,4 +298,100 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get week => 'Week';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get archivePassword => 'Archive password';
+
+  @override
+  String get enterPassword => 'Enter password';
+
+  @override
+  String get confirmPassword => 'Confirm password';
+
+  @override
+  String get reenterPassword => 'Re-enter password';
+
+  @override
+  String get passwordsDoNotMatch => 'Passwords do not match';
+
+  @override
+  String get exportPassword => 'Export to ZIP';
+
+  @override
+  String get exportPasswordDescription =>
+      'Add a password to encrypt your export. You can skip this for unencrypted export.';
+
+  @override
+  String get importPassword => 'Enter password';
+
+  @override
+  String get importPasswordDescription =>
+      'This file is password-protected. Please enter the password to decrypt.';
+
+  @override
+  String get skipPassword => 'Skip (no password)';
+
+  @override
+  String get continue_ => 'Continue';
+
+  @override
+  String get incorrectPassword => 'Incorrect password';
+
+  @override
+  String get incorrectPasswordMessage =>
+      'The password you entered is incorrect. Please try again.';
+
+  @override
+  String get corruptedFile => 'Corrupted file';
+
+  @override
+  String get invalidFormat => 'Invalid format';
+
+  @override
+  String get missingAudioFiles => 'Some audio files are missing';
+
+  @override
+  String get insufficientStorage => 'Insufficient storage';
+
+  @override
+  String get unknownError => 'Unknown error';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get exportSuccess => 'Export successful';
+
+  @override
+  String get exportError => 'Export failed';
+
+  @override
+  String get importSuccess => 'Import successful';
+
+  @override
+  String get importError => 'Import failed';
+
+  @override
+  String get mindsToExport => 'Minds';
+
+  @override
+  String get audioFilesToExport => 'Audio files';
+
+  @override
+  String get mindsExported => 'Minds exported';
+
+  @override
+  String get audioFilesExported => 'Audio files exported';
+
+  @override
+  String get mindsImported => 'Minds imported';
+
+  @override
+  String get audioFilesImported => 'Audio files imported';
 }

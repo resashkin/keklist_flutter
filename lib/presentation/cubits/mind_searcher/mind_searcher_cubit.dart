@@ -21,7 +21,7 @@ final class MindSearcherCubit extends Cubit<MindSearcherState> {
     final minds = repository.values;
     final filteredMinds = minds.where((mind) {
       // Note condition.
-      final noteCondition = mind.note.trim().toLowerCase().contains(lowerCasedTrimmedText);
+      final noteCondition = mind.plainNote.trim().toLowerCase().contains(lowerCasedTrimmedText);
 
       // Emoji condition.
       final emojies = _emojiParser.parseEmojis(lowerCasedTrimmedText);
