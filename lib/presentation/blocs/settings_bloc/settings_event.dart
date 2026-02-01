@@ -67,3 +67,7 @@ final class SettingsChangeLanguage extends SettingsEvent {
 
   const SettingsChangeLanguage({required this.language});
 }
+
+final class SettingsEnableDebugMenu extends SettingsEvent {
+  const SettingsEnableDebugMenu();
+}

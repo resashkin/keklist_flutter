@@ -203,10 +203,6 @@
     "@clearCache": {
         "description": "Clear cache button"
     },
-    "developerModeEnabled": "🔧 Developer mode enabled! Debug Menu tab is now available!",
-    "@developerModeEnabled": {
-        "description": "Developer mode enabled message"
-    },
     "activeTabs": "Active tabs",
     "@activeTabs": {
         "description": "Active tabs section header"
@@ -226,14 +222,6 @@
     "send": "SEND",
     "@send": {
         "description": "Send button"
-    },
-    "translateContent": "Translate content",
-    "@translateContent": {
-        "description": "Translate content debug option"
-    },
-    "sensitiveContent": "Sensitive content",
-    "@sensitiveContent": {
-        "description": "Sensitive content debug option"
     },
     "updateYourNickname": "Update your nickname",
     "@updateYourNickname": {
@@ -503,5 +491,53 @@
     "audioFilesImported": "Audio files imported",
     "@audioFilesImported": {
         "description": "Audio files imported count"
+    },
+    "onboardingMind1": "Hello!",
+    "@onboardingMind1": {
+        "description": "First onboarding mind greeting"
+    },
+    "onboardingMind2": "I'm keklist - a personal diary of short notes",
+    "@onboardingMind2": {
+        "description": "Explanation of what keklist is"
+    },
+    "onboardingMind2Comment1": "Notes can be commented on",
+    "@onboardingMind2Comment1": {
+        "description": "Comment explaining commenting feature"
+    },
+    "onboardingMind2Comment2": "To open a note, tap on it",
+    "@onboardingMind2Comment2": {
+        "description": "Comment explaining how to open notes"
+    },
+    "onboardingMind3": "In the 'Calendar' tab, all notes are displayed by days, weeks, and months",
+    "@onboardingMind3": {
+        "description": "Explanation of Calendar tab"
+    },
+    "onboardingMind4": "The 'Analytics' tab shows brief statistics of your entries",
+    "@onboardingMind4": {
+        "description": "Explanation of Analytics tab"
+    },
+    "onboardingMind5": "All notes are stored only on your phone",
+    "@onboardingMind5": {
+        "description": "Privacy explanation"
+    },
+    "onboardingMind5Comment1": "When changing phones, use the Import/Export feature",
+    "@onboardingMind5Comment1": {
+        "description": "Data portability explanation"
+    },
+    "deleteOnboardingMindsTitle": "Delete tutorial notes?",
+    "@deleteOnboardingMindsTitle": {
+        "description": "Alert dialog title for deleting onboarding minds"
+    },
+    "deleteOnboardingMindsMessage": "You've created your first mind! Would you like to delete the tutorial notes?",
+    "@deleteOnboardingMindsMessage": {
+        "description": "Alert dialog message for deleting onboarding minds"
+    },
+    "keepTutorial": "Keep",
+    "@keepTutorial": {
+        "description": "Button to keep onboarding minds"
+    },
+    "deleteTutorial": "Delete",
+    "@deleteTutorial": {
+        "description": "Button to delete onboarding minds"
     }
 }

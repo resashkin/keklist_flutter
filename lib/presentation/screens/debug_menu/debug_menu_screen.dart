@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
 import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
+import 'package:keklist/presentation/blocs/lazy_onboarding_bloc/lazy_onboarding_bloc.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
-import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 final class DebugMenuScreen extends StatefulWidget {
@@ -36,11 +36,11 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.debugMenu)),
-      body: BoolWidget(
-        condition: _debugMenuItems.isNotEmpty,
-        trueChild: SettingsList(
-          sections: [
+      body: SettingsList(
+        sections: [
+          if (_debugMenuItems.isNotEmpty)
             SettingsSection(
+              title: const Text('Feature Flags'),
               tiles: _debugMenuItems.map((debugMenuItem) {
                 return SettingsTile.switchTile(
                   title: Text(_getDebugMenuItemTitle(debugMenuItem.type)),
@@ -57,16 +57,35 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
                 );
               }).toList(),
             ),
-          ],
-        ),
-        falseChild: SizedBox.shrink(),
+          SettingsSection(
+            title: const Text('Development Tools'),
+            tiles: [
+              SettingsTile.navigation(
+                title: const Text('Reset Lazy Onboarding'),
+                description: const Text('Delete onboarding minds and reset the flag to show onboarding again'),
+                onPressed: (context) => _resetOnboarding(context),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _resetOnboarding(BuildContext context) {
+    sendEventToBloc<LazyOnboardingBloc>(LazyOnboardingReset());
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Lazy onboarding has been reset'),
+        duration: Duration(seconds: 2),
       ),
     );
   }
 
   String _getDebugMenuItemTitle(DebugMenuType type) => switch (type) {
-        DebugMenuType.translation => context.l10n.translateContent,
-        DebugMenuType.sensitiveContent => context.l10n.sensitiveContent,
+        DebugMenuType.translation => 'Translate Content',
+        DebugMenuType.sensitiveContent => 'Sensitive Content',
       };
 
   String _getDebugMenuItemDescription(DebugMenuType type) => switch (type) {

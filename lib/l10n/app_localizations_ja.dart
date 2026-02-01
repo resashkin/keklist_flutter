@@ -388,4 +388,40 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get audioFilesImported => '音声ファイルをインポートしました';
+
+  @override
+  String get onboardingMind1 => 'こんにちは！';
+
+  @override
+  String get onboardingMind2 => '私はkeklist - 短いメモの個人日記です';
+
+  @override
+  String get onboardingMind2Comment1 => 'メモにコメントできます';
+
+  @override
+  String get onboardingMind2Comment2 => 'メモを開くには、タップしてください';
+
+  @override
+  String get onboardingMind3 => '「カレンダー」タブでは、すべてのメモが日、週、月ごとに表示されます';
+
+  @override
+  String get onboardingMind4 => '「統計」タブでは、エントリーの簡単な統計が表示されます';
+
+  @override
+  String get onboardingMind5 => 'すべてのメモは携帯電話にのみ保存されます';
+
+  @override
+  String get onboardingMind5Comment1 => '電話を変更する場合は、インポート/エクスポート機能を使用してください';
+
+  @override
+  String get deleteOnboardingMindsTitle => 'チュートリアルメモを削除しますか？';
+
+  @override
+  String get deleteOnboardingMindsMessage => '最初のメモを作成しました！チュートリアルメモを削除しますか？';
+
+  @override
+  String get keepTutorial => '保持';
+
+  @override
+  String get deleteTutorial => '削除';
 }

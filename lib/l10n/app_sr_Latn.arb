@@ -192,10 +192,6 @@
     "@clearCache": {
         "description": "Dugme za brisanje keša"
     },
-    "developerModeEnabled": "🔧 Režim programera omogućen! Debug Menu tab je sada dostupan!",
-    "@developerModeEnabled": {
-        "description": "Poruka o omogućenom režimu programera"
-    },
     "activeTabs": "Aktivni tabovi",
     "@activeTabs": {
         "description": "Zaglavlje sekcije aktivnih tabova"
@@ -215,14 +211,6 @@
     "send": "POŠALJI",
     "@send": {
         "description": "Dugme pošalji"
-    },
-    "translateContent": "Prevedi sadržaj",
-    "@translateContent": {
-        "description": "Debug opcija prevođenja sadržaja"
-    },
-    "sensitiveContent": "Osetljiv sadržaj",
-    "@sensitiveContent": {
-        "description": "Debug opcija osetljivog sadržaja"
     },
     "updateYourNickname": "Ažuriraj svoj nadimak",
     "@updateYourNickname": {
@@ -398,5 +386,17 @@
     "mindsExported": "Umovi izvezeni",
     "audioFilesExported": "Audio fajlovi izvezeni",
     "mindsImported": "Umovi uvezeni",
-    "audioFilesImported": "Audio fajlovi uvezeni"
+    "audioFilesImported": "Audio fajlovi uvezeni",
+    "onboardingMind1": "Zdravo!",
+    "onboardingMind2": "Ja sam keklist - lični dnevnik kratkih beleški",
+    "onboardingMind2Comment1": "Beleške mogu biti komentarisane",
+    "onboardingMind2Comment2": "Da otvorite belešku, dotaknite je",
+    "onboardingMind3": "U kartici 'Kalendar', sve beleške su prikazane po danima, nedeljama i mesecima",
+    "onboardingMind4": "Kartica 'Analitika' prikazuje kratku statistiku vaših unosa",
+    "onboardingMind5": "Sve beleške se čuvaju samo na vašem telefonu",
+    "onboardingMind5Comment1": "Prilikom promene telefona, koristite funkciju Uvoz/Izvoz",
+    "deleteOnboardingMindsTitle": "Obrisati beleške iz tutorijala?",
+    "deleteOnboardingMindsMessage": "Napravili ste prvu belešku! Želite li obrisati beleške iz tutorijala?",
+    "keepTutorial": "Zadrži",
+    "deleteTutorial": "Obriši"
 }

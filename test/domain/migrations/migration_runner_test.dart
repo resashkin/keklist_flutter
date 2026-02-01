@@ -38,6 +38,8 @@ void main() {
         userName: null,
         language: SupportedLanguage.english,
         dataSchemaVersion: 0,
+        hasSeenLazyOnboarding: false,
+        isDebugMenuVisible: false,
       ),
     );
   });
@@ -54,6 +56,7 @@ void main() {
           userName: null,
           language: SupportedLanguage.english,
           dataSchemaVersion: 1,
+          hasSeenLazyOnboarding: false,
         ),
       );
 
@@ -74,6 +77,7 @@ void main() {
           userName: null,
           language: SupportedLanguage.english,
           dataSchemaVersion: 0,
+          hasSeenLazyOnboarding: false,
         ),
       );
 
@@ -91,6 +95,7 @@ void main() {
           userName: null,
           language: SupportedLanguage.english,
           dataSchemaVersion: 0,
+          hasSeenLazyOnboarding: false,
         ),
       );
 

@@ -394,4 +394,44 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get audioFilesImported => 'Аудиофайлов импортировано';
+
+  @override
+  String get onboardingMind1 => 'Привет!';
+
+  @override
+  String get onboardingMind2 => 'Я keklist - личный дневник коротких заметок';
+
+  @override
+  String get onboardingMind2Comment1 => 'Заметки можно комментировать';
+
+  @override
+  String get onboardingMind2Comment2 => 'Чтобы открыть заметку, нажмите на неё';
+
+  @override
+  String get onboardingMind3 =>
+      'Во вкладке \'Календарь\' все заметки отображаются по дням, неделям и месяцам';
+
+  @override
+  String get onboardingMind4 =>
+      'Вкладка \'Аналитика\' показывает краткую статистику ваших записей';
+
+  @override
+  String get onboardingMind5 => 'Все заметки хранятся только на вашем телефоне';
+
+  @override
+  String get onboardingMind5Comment1 =>
+      'При смене телефона используйте функцию Импорт/Экспорт';
+
+  @override
+  String get deleteOnboardingMindsTitle => 'Удалить обучающие заметки?';
+
+  @override
+  String get deleteOnboardingMindsMessage =>
+      'Вы создали свою первую заметку! Хотите удалить обучающие заметки?';
+
+  @override
+  String get keepTutorial => 'Оставить';
+
+  @override
+  String get deleteTutorial => 'Удалить';
 }

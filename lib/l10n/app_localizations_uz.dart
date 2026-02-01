@@ -394,4 +394,47 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get audioFilesImported => 'Audio fayllar import qilindi';
+
+  @override
+  String get onboardingMind1 => 'Salom!';
+
+  @override
+  String get onboardingMind2 =>
+      'Men keklist - qisqa yozuvlarning shaxsiy kundaligiman';
+
+  @override
+  String get onboardingMind2Comment1 => 'Yozuvlarga sharh qoldirish mumkin';
+
+  @override
+  String get onboardingMind2Comment2 => 'Yozuvni ochish uchun uni bosing';
+
+  @override
+  String get onboardingMind3 =>
+      '\'Kalendar\' yorlig\'ida barcha yozuvlar kunlar, haftalar va oylar bo\'yicha ko\'rsatiladi';
+
+  @override
+  String get onboardingMind4 =>
+      '\'Analitika\' yorlig\'i yozuvlaringizning qisqacha statistikasini ko\'rsatadi';
+
+  @override
+  String get onboardingMind5 =>
+      'Barcha yozuvlar faqat telefoningizda saqlanadi';
+
+  @override
+  String get onboardingMind5Comment1 =>
+      'Telefon almashtirganda Import/Eksport funksiyasidan foydalaning';
+
+  @override
+  String get deleteOnboardingMindsTitle =>
+      'O\'quv yozuvlarini o\'chirish kerakmi?';
+
+  @override
+  String get deleteOnboardingMindsMessage =>
+      'Siz birinchi yozuvingizni yaratdingiz! O\'quv yozuvlarini o\'chirmoqchimisiz?';
+
+  @override
+  String get keepTutorial => 'Saqlash';
+
+  @override
+  String get deleteTutorial => 'O\'chirish';
 }

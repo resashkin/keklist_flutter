@@ -194,10 +194,6 @@
     "@clearCache": {
         "description": "Botón limpiar caché"
     },
-    "developerModeEnabled": "🔧 ¡Modo desarrollador habilitado! ¡La pestaña Menú Debug ahora está disponible!",
-    "@developerModeEnabled": {
-        "description": "Mensaje de modo desarrollador habilitado"
-    },
     "activeTabs": "Pestañas activas",
     "@activeTabs": {
         "description": "Encabezado de sección de pestañas activas"
@@ -217,14 +213,6 @@
     "send": "ENVIAR",
     "@send": {
         "description": "Botón enviar"
-    },
-    "translateContent": "Traducir contenido",
-    "@translateContent": {
-        "description": "Opción debug traducir contenido"
-    },
-    "sensitiveContent": "Contenido sensible",
-    "@sensitiveContent": {
-        "description": "Opción debug contenido sensible"
     },
     "updateYourNickname": "Actualizar tu apodo",
     "@updateYourNickname": {
@@ -398,5 +386,17 @@
     "mindsExported": "Mentes exportadas",
     "audioFilesExported": "Archivos de audio exportados",
     "mindsImported": "Mentes importadas",
-    "audioFilesImported": "Archivos de audio importados"
+    "audioFilesImported": "Archivos de audio importados",
+    "onboardingMind1": "¡Hola!",
+    "onboardingMind2": "Soy keklist - un diario personal de notas cortas",
+    "onboardingMind2Comment1": "Las notas se pueden comentar",
+    "onboardingMind2Comment2": "Para abrir una nota, tócala",
+    "onboardingMind3": "En la pestaña 'Calendario', todas las notas se muestran por días, semanas y meses",
+    "onboardingMind4": "La pestaña 'Estadísticas' muestra breves estadísticas de tus entradas",
+    "onboardingMind5": "Todas las notas se almacenan solo en tu teléfono",
+    "onboardingMind5Comment1": "Al cambiar de teléfono, usa la función Importar/Exportar",
+    "deleteOnboardingMindsTitle": "¿Eliminar notas del tutorial?",
+    "deleteOnboardingMindsMessage": "¡Has creado tu primera nota! ¿Te gustaría eliminar las notas del tutorial?",
+    "keepTutorial": "Mantener",
+    "deleteTutorial": "Eliminar"
 }

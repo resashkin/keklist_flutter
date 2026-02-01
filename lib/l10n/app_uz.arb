@@ -194,10 +194,6 @@
     "@clearCache": {
         "description": "Keshni tozalash tugmasi"
     },
-    "developerModeEnabled": "🔧 Dasturchi rejimi yoqildi! Debug Menu tabi endi mavjud!",
-    "@developerModeEnabled": {
-        "description": "Dasturchi rejimi yoqilgan xabari"
-    },
     "activeTabs": "Faol tablar",
     "@activeTabs": {
         "description": "Faol tablar bo'limi sarlavhasi"
@@ -217,14 +213,6 @@
     "send": "YUBORISH",
     "@send": {
         "description": "Yuborish tugmasi"
-    },
-    "translateContent": "Kontentni tarjima qilish",
-    "@translateContent": {
-        "description": "Kontentni tarjima qilish debug variant"
-    },
-    "sensitiveContent": "Hassos kontent",
-    "@sensitiveContent": {
-        "description": "Hassos kontent debug variant"
     },
     "updateYourNickname": "Niknamingizni yangilash",
     "@updateYourNickname": {
@@ -398,5 +386,17 @@
     "mindsExported": "Fikrlar eksport qilindi",
     "audioFilesExported": "Audio fayllar eksport qilindi",
     "mindsImported": "Fikrlar import qilindi",
-    "audioFilesImported": "Audio fayllar import qilindi"
+    "audioFilesImported": "Audio fayllar import qilindi",
+    "onboardingMind1": "Salom!",
+    "onboardingMind2": "Men keklist - qisqa yozuvlarning shaxsiy kundaligiman",
+    "onboardingMind2Comment1": "Yozuvlarga sharh qoldirish mumkin",
+    "onboardingMind2Comment2": "Yozuvni ochish uchun uni bosing",
+    "onboardingMind3": "'Kalendar' yorlig'ida barcha yozuvlar kunlar, haftalar va oylar bo'yicha ko'rsatiladi",
+    "onboardingMind4": "'Analitika' yorlig'i yozuvlaringizning qisqacha statistikasini ko'rsatadi",
+    "onboardingMind5": "Barcha yozuvlar faqat telefoningizda saqlanadi",
+    "onboardingMind5Comment1": "Telefon almashtirganda Import/Eksport funksiyasidan foydalaning",
+    "deleteOnboardingMindsTitle": "O'quv yozuvlarini o'chirish kerakmi?",
+    "deleteOnboardingMindsMessage": "Siz birinchi yozuvingizni yaratdingiz! O'quv yozuvlarini o'chirmoqchimisiz?",
+    "keepTutorial": "Saqlash",
+    "deleteTutorial": "O'chirish"
 }

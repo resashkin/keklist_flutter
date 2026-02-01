@@ -67,6 +67,8 @@ class MigrationRunner {
                 userName: updatedSettings.userName,
                 language: updatedSettings.language,
                 dataSchemaVersion: migration.version,
+                hasSeenLazyOnboarding: updatedSettings.hasSeenLazyOnboarding,
+                isDebugMenuVisible: updatedSettings.isDebugMenuVisible,
               ),
             );
 

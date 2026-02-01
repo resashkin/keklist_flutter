@@ -394,4 +394,45 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get audioFilesImported => 'Audio files imported';
+
+  @override
+  String get onboardingMind1 => 'Hello!';
+
+  @override
+  String get onboardingMind2 =>
+      'I\'m keklist - a personal diary of short notes';
+
+  @override
+  String get onboardingMind2Comment1 => 'Notes can be commented on';
+
+  @override
+  String get onboardingMind2Comment2 => 'To open a note, tap on it';
+
+  @override
+  String get onboardingMind3 =>
+      'In the \'Calendar\' tab, all notes are displayed by days, weeks, and months';
+
+  @override
+  String get onboardingMind4 =>
+      'The \'Analytics\' tab shows brief statistics of your entries';
+
+  @override
+  String get onboardingMind5 => 'All notes are stored only on your phone';
+
+  @override
+  String get onboardingMind5Comment1 =>
+      'When changing phones, use the Import/Export feature';
+
+  @override
+  String get deleteOnboardingMindsTitle => 'Delete tutorial notes?';
+
+  @override
+  String get deleteOnboardingMindsMessage =>
+      'You\'ve created your first mind! Would you like to delete the tutorial notes?';
+
+  @override
+  String get keepTutorial => 'Keep';
+
+  @override
+  String get deleteTutorial => 'Delete';
 }

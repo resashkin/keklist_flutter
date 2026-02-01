@@ -394,6 +394,47 @@ class AppLocalizationsSr extends AppLocalizations {
 
   @override
   String get audioFilesImported => 'Аудио фајлови увезени';
+
+  @override
+  String get onboardingMind1 => 'Здраво!';
+
+  @override
+  String get onboardingMind2 =>
+      'Ја сам keklist - лични дневник кратких белешки';
+
+  @override
+  String get onboardingMind2Comment1 => 'Белешке могу бити коментарисане';
+
+  @override
+  String get onboardingMind2Comment2 => 'Да отворите белешку, додирните је';
+
+  @override
+  String get onboardingMind3 =>
+      'У картици \'Календар\', све белешке су приказане по данима, недељама и месецима';
+
+  @override
+  String get onboardingMind4 =>
+      'Картица \'Аналитика\' приказује кратку статистику ваших уноса';
+
+  @override
+  String get onboardingMind5 => 'Све белешке се чувају само на вашем телефону';
+
+  @override
+  String get onboardingMind5Comment1 =>
+      'Приликом промене телефона, користите функцију Увоз/Извоз';
+
+  @override
+  String get deleteOnboardingMindsTitle => 'Обрисати белешке из туторијала?';
+
+  @override
+  String get deleteOnboardingMindsMessage =>
+      'Направили сте прву белешку! Желите ли обрисати белешке из туторијала?';
+
+  @override
+  String get keepTutorial => 'Задржи';
+
+  @override
+  String get deleteTutorial => 'Обриши';
 }
 
 /// The translations for Serbian, using the Latin script (`sr_Latn`).
@@ -786,4 +827,45 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
 
   @override
   String get audioFilesImported => 'Audio fajlovi uvezeni';
+
+  @override
+  String get onboardingMind1 => 'Zdravo!';
+
+  @override
+  String get onboardingMind2 =>
+      'Ja sam keklist - lični dnevnik kratkih beleški';
+
+  @override
+  String get onboardingMind2Comment1 => 'Beleške mogu biti komentarisane';
+
+  @override
+  String get onboardingMind2Comment2 => 'Da otvorite belešku, dotaknite je';
+
+  @override
+  String get onboardingMind3 =>
+      'U kartici \'Kalendar\', sve beleške su prikazane po danima, nedeljama i mesecima';
+
+  @override
+  String get onboardingMind4 =>
+      'Kartica \'Analitika\' prikazuje kratku statistiku vaših unosa';
+
+  @override
+  String get onboardingMind5 => 'Sve beleške se čuvaju samo na vašem telefonu';
+
+  @override
+  String get onboardingMind5Comment1 =>
+      'Prilikom promene telefona, koristite funkciju Uvoz/Izvoz';
+
+  @override
+  String get deleteOnboardingMindsTitle => 'Obrisati beleške iz tutorijala?';
+
+  @override
+  String get deleteOnboardingMindsMessage =>
+      'Napravili ste prvu belešku! Želite li obrisati beleške iz tutorijala?';
+
+  @override
+  String get keepTutorial => 'Zadrži';
+
+  @override
+  String get deleteTutorial => 'Obriši';
 }

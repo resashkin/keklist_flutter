@@ -47,6 +47,7 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     on<SettingsChangeIsDarkMode>(_changeSettingsDarkMode);
     on<SettingsUpdateShouldShowTitlesMode>(_updateShouldShowTitlesMode);
     on<SettingsChangeLanguage>(_changeLanguage);
+    on<SettingsEnableDebugMenu>(_enableDebugMenu);
 
     _repository.stream.listen((settings) => add(SettingsGet())).disposed(by: this);
   }
@@ -302,6 +303,22 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
 
   FutureOr<void> _changeLanguage(SettingsChangeLanguage event, Emitter<SettingsState> emit) async {
     await _repository.updateLanguage(event.language);
+  }
+
+  FutureOr<void> _enableDebugMenu(SettingsEnableDebugMenu event, Emitter<SettingsState> emit) async {
+    final currentSettings = _repository.value;
+    final updatedSettings = KeklistSettings(
+      isMindContentVisible: currentSettings.isMindContentVisible,
+      previousAppVersion: currentSettings.previousAppVersion,
+      isDarkMode: currentSettings.isDarkMode,
+      shouldShowTitles: currentSettings.shouldShowTitles,
+      userName: currentSettings.userName,
+      language: currentSettings.language,
+      dataSchemaVersion: currentSettings.dataSchemaVersion,
+      hasSeenLazyOnboarding: currentSettings.hasSeenLazyOnboarding,
+      isDebugMenuVisible: true,
+    );
+    await _repository.updateSettings(updatedSettings);
   }
 
   // FutureOr<void> _exportToEncryptedImage(

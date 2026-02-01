@@ -866,6 +866,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Audio files imported'**
   String get audioFilesImported;
+
+  /// First onboarding mind greeting
+  ///
+  /// In en, this message translates to:
+  /// **'Hello!'**
+  String get onboardingMind1;
+
+  /// Explanation of what keklist is
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m keklist - a personal diary of short notes'**
+  String get onboardingMind2;
+
+  /// Comment explaining commenting feature
+  ///
+  /// In en, this message translates to:
+  /// **'Notes can be commented on'**
+  String get onboardingMind2Comment1;
+
+  /// Comment explaining how to open notes
+  ///
+  /// In en, this message translates to:
+  /// **'To open a note, tap on it'**
+  String get onboardingMind2Comment2;
+
+  /// Explanation of Calendar tab
+  ///
+  /// In en, this message translates to:
+  /// **'In the \'Calendar\' tab, all notes are displayed by days, weeks, and months'**
+  String get onboardingMind3;
+
+  /// Explanation of Analytics tab
+  ///
+  /// In en, this message translates to:
+  /// **'The \'Analytics\' tab shows brief statistics of your entries'**
+  String get onboardingMind4;
+
+  /// Privacy explanation
+  ///
+  /// In en, this message translates to:
+  /// **'All notes are stored only on your phone'**
+  String get onboardingMind5;
+
+  /// Data portability explanation
+  ///
+  /// In en, this message translates to:
+  /// **'When changing phones, use the Import/Export feature'**
+  String get onboardingMind5Comment1;
+
+  /// Alert dialog title for deleting onboarding minds
+  ///
+  /// In en, this message translates to:
+  /// **'Delete tutorial notes?'**
+  String get deleteOnboardingMindsTitle;
+
+  /// Alert dialog message for deleting onboarding minds
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve created your first mind! Would you like to delete the tutorial notes?'**
+  String get deleteOnboardingMindsMessage;
+
+  /// Button to keep onboarding minds
+  ///
+  /// In en, this message translates to:
+  /// **'Keep'**
+  String get keepTutorial;
+
+  /// Button to delete onboarding minds
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get deleteTutorial;
 }
 
 class _AppLocalizationsDelegate

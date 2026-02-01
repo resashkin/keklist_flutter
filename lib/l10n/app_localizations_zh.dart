@@ -384,4 +384,40 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get audioFilesImported => '音频文件已导入';
+
+  @override
+  String get onboardingMind1 => '你好！';
+
+  @override
+  String get onboardingMind2 => '我是keklist - 简短笔记的个人日记';
+
+  @override
+  String get onboardingMind2Comment1 => '笔记可以添加评论';
+
+  @override
+  String get onboardingMind2Comment2 => '要打开笔记，请点击它';
+
+  @override
+  String get onboardingMind3 => '在「日历」标签中，所有笔记按天、周和月显示';
+
+  @override
+  String get onboardingMind4 => '「分析」标签显示您条目的简要统计信息';
+
+  @override
+  String get onboardingMind5 => '所有笔记仅存储在您的手机上';
+
+  @override
+  String get onboardingMind5Comment1 => '更换手机时，请使用导入/导出功能';
+
+  @override
+  String get deleteOnboardingMindsTitle => '删除教程笔记？';
+
+  @override
+  String get deleteOnboardingMindsMessage => '您已创建第一条笔记！是否要删除教程笔记？';
+
+  @override
+  String get keepTutorial => '保留';
+
+  @override
+  String get deleteTutorial => '删除';
 }

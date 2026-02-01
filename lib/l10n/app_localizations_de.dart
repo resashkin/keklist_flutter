@@ -395,4 +395,47 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get audioFilesImported => 'Audiodateien importiert';
+
+  @override
+  String get onboardingMind1 => 'Hallo!';
+
+  @override
+  String get onboardingMind2 =>
+      'Ich bin keklist - ein persönliches Tagebuch für kurze Notizen';
+
+  @override
+  String get onboardingMind2Comment1 => 'Notizen können kommentiert werden';
+
+  @override
+  String get onboardingMind2Comment2 =>
+      'Um eine Notiz zu öffnen, tippen Sie darauf';
+
+  @override
+  String get onboardingMind3 =>
+      'Im Tab \'Kalender\' werden alle Notizen nach Tagen, Wochen und Monaten angezeigt';
+
+  @override
+  String get onboardingMind4 =>
+      'Der Tab \'Statistiken\' zeigt kurze Statistiken Ihrer Einträge';
+
+  @override
+  String get onboardingMind5 =>
+      'Alle Notizen werden nur auf Ihrem Telefon gespeichert';
+
+  @override
+  String get onboardingMind5Comment1 =>
+      'Beim Wechsel des Telefons verwenden Sie die Import/Export-Funktion';
+
+  @override
+  String get deleteOnboardingMindsTitle => 'Tutorial-Notizen löschen?';
+
+  @override
+  String get deleteOnboardingMindsMessage =>
+      'Sie haben Ihre erste Notiz erstellt! Möchten Sie die Tutorial-Notizen löschen?';
+
+  @override
+  String get keepTutorial => 'Behalten';
+
+  @override
+  String get deleteTutorial => 'Löschen';
 }

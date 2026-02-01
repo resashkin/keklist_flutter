@@ -186,3 +186,61 @@ Events follow the pattern: `<Entity><Action>Event` (e.g., `MindCreatedEvent`, `S
 - Unit tests go in `test/` mirroring `lib/` structure
 - Use `mocktail` for mocking
 - Test files end with `_test.dart`
+
+## Documentation
+
+### Feature Documentation
+
+**IMPORTANT**: When implementing non-trivial features or changes, create comprehensive documentation in the `documentation/` folder.
+
+Documentation should be created for:
+- New features (e.g., lazy onboarding, debug menu)
+- Architectural changes or patterns
+- Complex implementations that future developers need to understand
+- Features with specific edge cases or caveats
+
+**Documentation structure:**
+```markdown
+# Feature Name Implementation
+
+## Overview
+Brief description of the feature and its purpose
+
+## Implementation Details
+### 1. Domain Layer
+- Files modified
+- New entities/models added
+- Repository changes
+
+### 2. BLoC Layer (if applicable)
+- New events/states
+- BLoC handlers
+- State management logic
+
+### 3. UI Layer
+- Screen changes
+- Widget additions
+- User interactions
+
+## How It Works
+Step-by-step explanation of the feature flow
+
+## Updated Files
+List of all modified/created files organized by layer
+
+## Testing
+How to test the feature manually or via unit tests
+
+## Edge Cases & Considerations
+Important notes about the implementation
+```
+
+**Example documentation files:**
+- `documentation/LAZY_ONBOARDING_IMPLEMENTATION.md` - Lazy onboarding feature
+- `documentation/DEBUG_MENU_IMPLEMENTATION.md` - Debug menu visibility implementation
+
+**When NOT to create documentation:**
+- Trivial bug fixes
+- Simple refactoring without architectural changes
+- Minor UI tweaks
+- Localization updates

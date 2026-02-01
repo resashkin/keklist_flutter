@@ -394,4 +394,45 @@ class AppLocalizationsKk extends AppLocalizations {
 
   @override
   String get audioFilesImported => 'Аудио файлдар импортталды';
+
+  @override
+  String get onboardingMind1 => 'Сәлем!';
+
+  @override
+  String get onboardingMind2 =>
+      'Мен keklist - қысқа жазбалардың жеке күнделігімін';
+
+  @override
+  String get onboardingMind2Comment1 => 'Жазбаларға түсініктеме қосуға болады';
+
+  @override
+  String get onboardingMind2Comment2 => 'Жазбаны ашу үшін оны түртіңіз';
+
+  @override
+  String get onboardingMind3 =>
+      '\'Күнтізбе\' қойындысында барлық жазбалар күндер, апталар және айлар бойынша көрсетіледі';
+
+  @override
+  String get onboardingMind4 =>
+      '\'Аналитика\' қойындысы жазбаларыңыздың қысқаша статистикасын көрсетеді';
+
+  @override
+  String get onboardingMind5 => 'Барлық жазбалар тек телефоныңызда сақталады';
+
+  @override
+  String get onboardingMind5Comment1 =>
+      'Телефонды ауыстырғанда Импорт/Экспорт функциясын пайдаланыңыз';
+
+  @override
+  String get deleteOnboardingMindsTitle => 'Оқыту жазбаларын жою керек пе?';
+
+  @override
+  String get deleteOnboardingMindsMessage =>
+      'Сіз алғашқы жазбаңызды жасадыңыз! Оқыту жазбаларын жойғыңыз келе ме?';
+
+  @override
+  String get keepTutorial => 'Сақтау';
+
+  @override
+  String get deleteTutorial => 'Жою';
 }
