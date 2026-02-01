@@ -123,13 +123,16 @@ app.*.symbols
 # Fastlane iOS
 **/ios/.env
 **/ios/fastlane/report.xml
+**/ios/fastlane/test_output/
 Runner.app.dSYM.zip
 Runner.ipa
 
 # Fastlane Android
 **/android/.env
+**/android/fastlane/.env
+**/android/fastlane/report.xml
+**/android/fastlane/test_output/
 keklist-881d8-3a03518875b0.json
-/android/fastlane/report.xml
 
 # dotenv
 .env
@@ -139,6 +142,10 @@ dotenv
 /.firebase
 .firebaserc
 firebase.json
+**/android/app/google-services.json
+**/ios/GoogleService-Info.plist
+firebase-debug.log
+**/firebase-debug.log
 
 # FVM Version Cache
 .fvm/

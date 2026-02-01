@@ -1,3 +1,18 @@
+# Fastfile for keklist Android builds
+#
+# Available lanes:
+#
+# Play Store:
+#   bundle exec fastlane build_and_upload_to_internal  # Build AAB and upload to internal testing
+#   bundle exec fastlane build_aab_flutter              # Build AAB only (for testing)
+#
+# Firebase App Distribution:
+#   bundle exec fastlane distribute_firebase            # Distribute to default testers group
+#   bundle exec fastlane distribute_firebase_with_notes notes:"Release notes" groups:"testers,beta"
+#
+# Or use the helper script from project root:
+#   ./scripts/distribute_android.sh "Release notes" "group1,group2"
+
 default_platform(:android)
 
 platform :android do
@@ -22,5 +37,58 @@ platform :android do
   desc "Build AAB only (for testing)"
   lane :build_aab_flutter do
     sh("cd .. && flutter build appbundle --release")
+  end
+
+  desc "Build APK and distribute to Firebase App Distribution"
+  lane :distribute_firebase do
+    # Build Flutter app for Android (APK for distribution)
+    sh("cd .. && fvm flutter build apk --release")
+
+    # Build Firebase CLI command with absolute path (go up from android/fastlane to project root)
+    apk_path = File.expand_path("../../build/app/outputs/flutter-apk/app-release.apk", __dir__)
+    firebase_cmd = "firebase appdistribution:distribute \"#{apk_path}\""
+    firebase_cmd += " --app #{ENV['FIREBASE_APP_ID']}"
+    firebase_cmd += " --groups \"android-testers\""
+    firebase_cmd += " --release-notes \"New build from CI/CD\""
+
+    # Add token if set (for CI/CD)
+    if ENV["FIREBASE_TOKEN"] && !ENV["FIREBASE_TOKEN"].empty?
+      firebase_cmd += " --token #{ENV['FIREBASE_TOKEN']}"
+    end
+
+    # Execute Firebase CLI command
+    sh(firebase_cmd)
+  end
+
+  desc "Build APK and distribute to Firebase with custom release notes"
+  lane :distribute_firebase_with_notes do |options|
+    # Build Flutter app for Android (APK for distribution)
+    sh("cd .. && fvm flutter build apk --release")
+
+    # Get release notes from parameter or use default
+    release_notes = options[:notes] || "New build"
+    groups = options[:groups] || "android-testers"
+    testers = options[:testers]
+
+    # Build Firebase CLI command with absolute path (go up from android/fastlane to project root)
+    apk_path = File.expand_path("../../build/app/outputs/flutter-apk/app-release.apk", __dir__)
+    firebase_cmd = "firebase appdistribution:distribute \"#{apk_path}\""
+    firebase_cmd += " --app #{ENV['FIREBASE_APP_ID']}"
+    firebase_cmd += " --release-notes \"#{release_notes}\""
+
+    # Add groups or testers
+    if testers && !testers.empty?
+      firebase_cmd += " --testers \"#{testers}\""
+    elsif groups && !groups.empty?
+      firebase_cmd += " --groups \"#{groups}\""
+    end
+
+    # Add token if set (for CI/CD)
+    if ENV["FIREBASE_TOKEN"] && !ENV["FIREBASE_TOKEN"].empty?
+      firebase_cmd += " --token #{ENV['FIREBASE_TOKEN']}"
+    end
+
+    # Execute Firebase CLI command
+    sh(firebase_cmd)
   end
 end

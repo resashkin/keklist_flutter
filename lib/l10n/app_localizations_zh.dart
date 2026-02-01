@@ -162,266 +162,253 @@ class AppLocalizationsZh extends AppLocalizations {
   String get clearCache => '清除缓存';
 
   @override
-  String get activeTabs => 'Active tabs';
+  String get activeTabs => '活动标签页';
 
   @override
-  String get hiddenTabs => 'Hidden tabs';
+  String get hiddenTabs => '隐藏标签页';
 
   @override
-  String get error => 'Error';
+  String get error => '错误';
 
   @override
-  String get startDiscussion => 'Start discussion';
+  String get startDiscussion => '开始讨论';
 
   @override
-  String get send => 'SEND';
+  String get send => '发送';
 
   @override
-  String get updateYourNickname => 'Update your nickname';
+  String get updateYourNickname => '更新您的昵称';
 
   @override
-  String get yourNickname => 'Your nickname';
+  String get yourNickname => '您的昵称';
 
   @override
-  String get create => 'Write';
+  String get create => '写';
 
   @override
-  String get yourFolderName => 'Your folder name';
+  String get yourFolderName => '您的文件夹名称';
 
   @override
-  String get noMindsInSelectedPeriod => 'No minds in selected period';
+  String get noMindsInSelectedPeriod => '所选期间没有笔记';
 
   @override
-  String get noMindsForPeriod => 'No minds for this period';
+  String get noMindsForPeriod => '此期间没有笔记';
 
   @override
-  String get selectPeriod => 'Select period ...';
+  String get selectPeriod => '选择期间...';
 
   @override
-  String get digest => 'Digest';
+  String get digest => '摘要';
 
   @override
-  String get minds => 'Minds';
+  String get minds => '笔记';
 
   @override
-  String get searchForYourNotes => 'Search for your notes';
+  String get searchForYourNotes => '搜索您的笔记';
 
   @override
-  String get searchYourEmoji => 'Search your emoji...';
+  String get searchYourEmoji => '搜索您的表情符号...';
 
   @override
-  String get writeSomething => 'Write something...';
+  String get writeSomething => '写点什么...';
 
   @override
-  String get topMinds => 'Top minds';
+  String get topMinds => '热门笔记';
 
   @override
-  String get todayMinds => 'Today minds';
+  String get todayMinds => '今天的笔记';
 
   @override
-  String get randomMind => 'Random mind';
+  String get randomMind => '随机笔记';
 
   @override
-  String get spectrum => 'Spectrum';
+  String get spectrum => '光谱';
 
   @override
-  String get youDidNotCollectAnyEntriesYet =>
-      'You did not collect any entries yet';
+  String get youDidNotCollectAnyEntriesYet => '您还没有收集任何条目';
 
   @override
-  String get pleaseAuthenticateToShowContent =>
-      'Please authenticate to show content of your mind';
+  String get pleaseAuthenticateToShowContent => '请进行身份验证以显示您的笔记内容';
 
   @override
-  String get areYouSure => 'Are you sure?';
+  String get areYouSure => '您确定吗？';
 
   @override
-  String get cannotRemoveMainScreen =>
-      'Cannot remove main screen. You will loose option to setup tabs.';
+  String get cannotRemoveMainScreen => '无法删除主屏幕。您将失去设置标签页的选项。';
 
   @override
-  String get today => 'Today';
+  String get today => '今天';
 
   @override
-  String get yesterday => 'Yesterday';
+  String get yesterday => '昨天';
 
   @override
-  String get thisWeek => 'This week';
+  String get thisWeek => '本周';
 
   @override
-  String get lastTwoWeeks => 'Last 2 weeks';
+  String get lastTwoWeeks => '最近2周';
 
   @override
-  String get thisMonth => 'This month';
+  String get thisMonth => '本月';
 
   @override
-  String get thisYear => 'This year';
+  String get thisYear => '今年';
 
   @override
-  String get calendarDescription => 'Main screen with Calendar of entries';
+  String get calendarDescription => '带有条目日历的主屏幕';
 
   @override
-  String get insightsDescription => 'Statistics all yours entries';
+  String get insightsDescription => '所有条目的统计信息';
 
   @override
-  String get settingsDescription =>
-      'Screen with all settings (dark mode, sync and etc.)';
+  String get settingsDescription => '包含所有设置的屏幕（深色模式、同步等）';
 
   @override
-  String get profileDescription => 'Screen with your profile';
+  String get profileDescription => '您的个人资料屏幕';
 
   @override
-  String get todayDescription => 'Only today minds';
+  String get todayDescription => '仅今天的笔记';
 
   @override
-  String get debugMenuDescription =>
-      'Developer tools for toggling experimental features';
+  String get debugMenuDescription => '用于切换实验性功能的开发者工具';
 
   @override
-  String get noMindsForThisDay => 'No minds for this day';
+  String get noMindsForThisDay => '这一天没有笔记';
 
   @override
   String showMindsForPeriod(String period) {
-    return 'Show minds for $period';
+    return '显示$period的笔记';
   }
 
   @override
-  String get week => 'Week';
+  String get week => '周';
 
   @override
-  String get password => 'Password';
+  String get password => '密码';
 
   @override
-  String get archivePassword => 'Archive password';
+  String get archivePassword => '归档密码';
 
   @override
-  String get enterPassword => 'Enter password';
+  String get enterPassword => '输入密码';
 
   @override
-  String get confirmPassword => 'Confirm password';
+  String get confirmPassword => '确认密码';
 
   @override
-  String get reenterPassword => 'Re-enter password';
+  String get reenterPassword => '重新输入密码';
 
   @override
-  String get passwordsDoNotMatch => 'Passwords do not match';
+  String get passwordsDoNotMatch => '密码不匹配';
 
   @override
-  String get exportPassword => 'Export to ZIP';
+  String get exportPassword => '导出为ZIP';
 
   @override
-  String get exportPasswordDescription =>
-      'Add a password to encrypt your export. You can skip this for unencrypted export.';
+  String get exportPasswordDescription => '添加密码以加密您的导出。您可以跳过此步骤进行不加密导出。';
 
   @override
-  String get importPassword => 'Enter password';
+  String get importPassword => '输入密码';
 
   @override
-  String get importPasswordDescription =>
-      'This file is password-protected. Please enter the password to decrypt.';
+  String get importPasswordDescription => '此文件受密码保护。请输入密码以解密。';
 
   @override
-  String get skipPassword => 'Skip (no password)';
+  String get skipPassword => '跳过（无密码）';
 
   @override
-  String get continue_ => 'Continue';
+  String get continue_ => '继续';
 
   @override
-  String get incorrectPassword => 'Incorrect password';
+  String get incorrectPassword => '密码错误';
 
   @override
-  String get incorrectPasswordMessage =>
-      'The password you entered is incorrect. Please try again.';
+  String get incorrectPasswordMessage => '您输入的密码不正确。请重试。';
 
   @override
-  String get corruptedFile => 'Corrupted file';
+  String get corruptedFile => '文件已损坏';
 
   @override
-  String get invalidFormat => 'Invalid format';
+  String get invalidFormat => '格式无效';
 
   @override
-  String get missingAudioFiles => 'Some audio files are missing';
+  String get missingAudioFiles => '某些音频文件缺失';
 
   @override
-  String get insufficientStorage => 'Insufficient storage';
+  String get insufficientStorage => '存储空间不足';
 
   @override
-  String get unknownError => 'Unknown error';
+  String get unknownError => '未知错误';
 
   @override
-  String get retry => 'Retry';
+  String get retry => '重试';
 
   @override
-  String get ok => 'OK';
+  String get ok => '确定';
 
   @override
-  String get exportSuccess => 'Export successful';
+  String get exportSuccess => '导出成功';
 
   @override
-  String get exportError => 'Export failed';
+  String get exportError => '导出失败';
 
   @override
-  String get importSuccess => 'Import successful';
+  String get importSuccess => '导入成功';
 
   @override
-  String get importError => 'Import failed';
+  String get importError => '导入失败';
 
   @override
-  String get mindsToExport => 'Minds';
+  String get mindsToExport => '笔记';
 
   @override
-  String get audioFilesToExport => 'Audio files';
+  String get audioFilesToExport => '音频文件';
 
   @override
-  String get mindsExported => 'Minds exported';
+  String get mindsExported => '笔记已导出';
 
   @override
-  String get audioFilesExported => 'Audio files exported';
+  String get audioFilesExported => '音频文件已导出';
 
   @override
-  String get mindsImported => 'Minds imported';
+  String get mindsImported => '笔记已导入';
 
   @override
-  String get audioFilesImported => 'Audio files imported';
+  String get audioFilesImported => '音频文件已导入';
 
   @override
-  String get onboardingMind1 => 'Hello!';
+  String get onboardingMind1 => '你好！';
 
   @override
-  String get onboardingMind2 =>
-      'I\'m keklist - a personal diary of short notes';
+  String get onboardingMind2 => '我是keklist - 一个短笔记的个人日记';
 
   @override
-  String get onboardingMind2Comment1 => 'Notes can be commented on';
+  String get onboardingMind2Comment1 => '笔记可以添加评论';
 
   @override
-  String get onboardingMind2Comment2 => 'To open a note, tap on it';
+  String get onboardingMind2Comment2 => '要打开笔记，请点击它';
 
   @override
-  String get onboardingMind3 =>
-      'In the \'Calendar\' tab, all notes are displayed by days, weeks, and months';
+  String get onboardingMind3 => '在\'日历\'标签页中，所有笔记按天、周和月显示';
 
   @override
-  String get onboardingMind4 =>
-      'The \'Analytics\' tab shows brief statistics of your entries';
+  String get onboardingMind4 => '\'分析\'标签页显示您条目的简要统计信息';
 
   @override
-  String get onboardingMind5 => 'All notes are stored only on your phone';
+  String get onboardingMind5 => '所有笔记仅存储在您的手机上';
 
   @override
-  String get onboardingMind5Comment1 =>
-      'When changing phones, use the Import/Export feature';
+  String get onboardingMind5Comment1 => '更换手机时，请使用导入/导出功能';
 
   @override
-  String get deleteOnboardingMindsTitle => 'Delete tutorial notes?';
+  String get deleteOnboardingMindsTitle => '删除教程笔记？';
 
   @override
-  String get deleteOnboardingMindsMessage =>
-      'You\'ve created your first mind! Would you like to delete the tutorial notes?';
+  String get deleteOnboardingMindsMessage => '您已创建了第一条笔记！要删除教程笔记吗？';
 
   @override
-  String get keepTutorial => 'Keep';
+  String get keepTutorial => '保留';
 
   @override
-  String get deleteTutorial => 'Delete';
+  String get deleteTutorial => '删除';
 }

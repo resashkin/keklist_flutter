@@ -163,268 +163,269 @@ class AppLocalizationsSr extends AppLocalizations {
   String get clearCache => 'Очисти кеш';
 
   @override
-  String get activeTabs => 'Active tabs';
+  String get activeTabs => 'Активне картице';
 
   @override
-  String get hiddenTabs => 'Hidden tabs';
+  String get hiddenTabs => 'Скривене картице';
 
   @override
-  String get error => 'Error';
+  String get error => 'Грешка';
 
   @override
-  String get startDiscussion => 'Start discussion';
+  String get startDiscussion => 'Почни дискусију';
 
   @override
-  String get send => 'SEND';
+  String get send => 'ПОШАЉИ';
 
   @override
-  String get updateYourNickname => 'Update your nickname';
+  String get updateYourNickname => 'Ажурирај свој надимак';
 
   @override
-  String get yourNickname => 'Your nickname';
+  String get yourNickname => 'Твој надимак';
 
   @override
-  String get create => 'Write';
+  String get create => 'Напиши';
 
   @override
-  String get yourFolderName => 'Your folder name';
+  String get yourFolderName => 'Назив твог фолдера';
 
   @override
-  String get noMindsInSelectedPeriod => 'No minds in selected period';
+  String get noMindsInSelectedPeriod => 'Нема белешки у изабраном периоду';
 
   @override
-  String get noMindsForPeriod => 'No minds for this period';
+  String get noMindsForPeriod => 'Нема белешки за овај период';
 
   @override
-  String get selectPeriod => 'Select period ...';
+  String get selectPeriod => 'Изабери период ...';
 
   @override
-  String get digest => 'Digest';
+  String get digest => 'Сажетак';
 
   @override
-  String get minds => 'Minds';
+  String get minds => 'Белешке';
 
   @override
-  String get searchForYourNotes => 'Search for your notes';
+  String get searchForYourNotes => 'Претражи своје белешке';
 
   @override
-  String get searchYourEmoji => 'Search your emoji...';
+  String get searchYourEmoji => 'Претражи свој емоџи...';
 
   @override
-  String get writeSomething => 'Write something...';
+  String get writeSomething => 'Напиши нешто...';
 
   @override
-  String get topMinds => 'Top minds';
+  String get topMinds => 'Топ белешке';
 
   @override
-  String get todayMinds => 'Today minds';
+  String get todayMinds => 'Данашње белешке';
 
   @override
-  String get randomMind => 'Random mind';
+  String get randomMind => 'Случајна белешка';
 
   @override
-  String get spectrum => 'Spectrum';
+  String get spectrum => 'Спектар';
 
   @override
   String get youDidNotCollectAnyEntriesYet =>
-      'You did not collect any entries yet';
+      'Још увек ниси прикупио ниједан унос';
 
   @override
   String get pleaseAuthenticateToShowContent =>
-      'Please authenticate to show content of your mind';
+      'Молим те аутентификуј се да би приказао садржај твоје белешке';
 
   @override
-  String get areYouSure => 'Are you sure?';
+  String get areYouSure => 'Да ли сте сигурни?';
 
   @override
   String get cannotRemoveMainScreen =>
-      'Cannot remove main screen. You will loose option to setup tabs.';
+      'Није могуће уклонити главни екран. Изгубићеш опцију да подесиш картице.';
 
   @override
-  String get today => 'Today';
+  String get today => 'Данас';
 
   @override
-  String get yesterday => 'Yesterday';
+  String get yesterday => 'Јуче';
 
   @override
-  String get thisWeek => 'This week';
+  String get thisWeek => 'Ова недеља';
 
   @override
-  String get lastTwoWeeks => 'Last 2 weeks';
+  String get lastTwoWeeks => 'Последње 2 недеље';
 
   @override
-  String get thisMonth => 'This month';
+  String get thisMonth => 'Овај месец';
 
   @override
-  String get thisYear => 'This year';
+  String get thisYear => 'Ова година';
 
   @override
-  String get calendarDescription => 'Main screen with Calendar of entries';
+  String get calendarDescription => 'Главни екран са календаром уноса';
 
   @override
-  String get insightsDescription => 'Statistics all yours entries';
+  String get insightsDescription => 'Статистика свих твојих уноса';
 
   @override
   String get settingsDescription =>
-      'Screen with all settings (dark mode, sync and etc.)';
+      'Екран са свим подешавањима (тамни режим, синхронизација итд.)';
 
   @override
-  String get profileDescription => 'Screen with your profile';
+  String get profileDescription => 'Екран са твојим профилом';
 
   @override
-  String get todayDescription => 'Only today minds';
+  String get todayDescription => 'Само данашње белешке';
 
   @override
   String get debugMenuDescription =>
-      'Developer tools for toggling experimental features';
+      'Алати за програмере за укључивање експерименталних функција';
 
   @override
-  String get noMindsForThisDay => 'No minds for this day';
+  String get noMindsForThisDay => 'Нема белешки за овај дан';
 
   @override
   String showMindsForPeriod(String period) {
-    return 'Show minds for $period';
+    return 'Прикажи белешке за $period';
   }
 
   @override
-  String get week => 'Week';
+  String get week => 'Недеља';
 
   @override
-  String get password => 'Password';
+  String get password => 'Лозинка';
 
   @override
-  String get archivePassword => 'Archive password';
+  String get archivePassword => 'Лозинка архиве';
 
   @override
-  String get enterPassword => 'Enter password';
+  String get enterPassword => 'Унеси лозинку';
 
   @override
-  String get confirmPassword => 'Confirm password';
+  String get confirmPassword => 'Потврди лозинку';
 
   @override
-  String get reenterPassword => 'Re-enter password';
+  String get reenterPassword => 'Поново унеси лозинку';
 
   @override
-  String get passwordsDoNotMatch => 'Passwords do not match';
+  String get passwordsDoNotMatch => 'Лозинке се не подударају';
 
   @override
-  String get exportPassword => 'Export to ZIP';
+  String get exportPassword => 'Извоз у ZIP';
 
   @override
   String get exportPasswordDescription =>
-      'Add a password to encrypt your export. You can skip this for unencrypted export.';
+      'Додај лозинку да шифрујеш свој извоз. Можеш да прескочиш ово за нешифровани извоз.';
 
   @override
-  String get importPassword => 'Enter password';
+  String get importPassword => 'Унеси лозинку';
 
   @override
   String get importPasswordDescription =>
-      'This file is password-protected. Please enter the password to decrypt.';
+      'Овај фајл је заштићен лозинком. Унеси лозинку за дешифровање.';
 
   @override
-  String get skipPassword => 'Skip (no password)';
+  String get skipPassword => 'Прескочи (без лозинке)';
 
   @override
-  String get continue_ => 'Continue';
+  String get continue_ => 'Настави';
 
   @override
-  String get incorrectPassword => 'Incorrect password';
+  String get incorrectPassword => 'Нетачна лозинка';
 
   @override
   String get incorrectPasswordMessage =>
-      'The password you entered is incorrect. Please try again.';
+      'Лозинка коју си унео је нетачна. Покушај поново.';
 
   @override
-  String get corruptedFile => 'Corrupted file';
+  String get corruptedFile => 'Оштећени фајл';
 
   @override
-  String get invalidFormat => 'Invalid format';
+  String get invalidFormat => 'Неважећи формат';
 
   @override
-  String get missingAudioFiles => 'Some audio files are missing';
+  String get missingAudioFiles => 'Неки аудио фајлови недостају';
 
   @override
-  String get insufficientStorage => 'Insufficient storage';
+  String get insufficientStorage => 'Недовољно простора за складиштење';
 
   @override
-  String get unknownError => 'Unknown error';
+  String get unknownError => 'Непозната грешка';
 
   @override
-  String get retry => 'Retry';
+  String get retry => 'Покушај поново';
 
   @override
-  String get ok => 'OK';
+  String get ok => 'У реду';
 
   @override
-  String get exportSuccess => 'Export successful';
+  String get exportSuccess => 'Извоз успешан';
 
   @override
-  String get exportError => 'Export failed';
+  String get exportError => 'Извоз није успео';
 
   @override
-  String get importSuccess => 'Import successful';
+  String get importSuccess => 'Увоз успешан';
 
   @override
-  String get importError => 'Import failed';
+  String get importError => 'Увоз није успео';
 
   @override
-  String get mindsToExport => 'Minds';
+  String get mindsToExport => 'Белешке';
 
   @override
-  String get audioFilesToExport => 'Audio files';
+  String get audioFilesToExport => 'Аудио фајлови';
 
   @override
-  String get mindsExported => 'Minds exported';
+  String get mindsExported => 'Белешке извезене';
 
   @override
-  String get audioFilesExported => 'Audio files exported';
+  String get audioFilesExported => 'Аудио фајлови извезени';
 
   @override
-  String get mindsImported => 'Minds imported';
+  String get mindsImported => 'Белешке увезене';
 
   @override
-  String get audioFilesImported => 'Audio files imported';
+  String get audioFilesImported => 'Аудио фајлови увезени';
 
   @override
-  String get onboardingMind1 => 'Hello!';
+  String get onboardingMind1 => 'Здраво!';
 
   @override
   String get onboardingMind2 =>
-      'I\'m keklist - a personal diary of short notes';
+      'Ја сам keklist - лични дневник кратких белешки';
 
   @override
-  String get onboardingMind2Comment1 => 'Notes can be commented on';
+  String get onboardingMind2Comment1 => 'Белешке могу бити коментарисане';
 
   @override
-  String get onboardingMind2Comment2 => 'To open a note, tap on it';
+  String get onboardingMind2Comment2 => 'Да отвориш белешку, притисни на њу';
 
   @override
   String get onboardingMind3 =>
-      'In the \'Calendar\' tab, all notes are displayed by days, weeks, and months';
+      'У картици \'Календар\' све белешке су приказане по данима, недељама и месецима';
 
   @override
   String get onboardingMind4 =>
-      'The \'Analytics\' tab shows brief statistics of your entries';
+      'Картица \'Аналитика\' приказује кратку статистику твојих уноса';
 
   @override
-  String get onboardingMind5 => 'All notes are stored only on your phone';
+  String get onboardingMind5 =>
+      'Све белешке су сачуване само на твојом телефону';
 
   @override
   String get onboardingMind5Comment1 =>
-      'When changing phones, use the Import/Export feature';
+      'При промени телефона, користи функцију Увоз/Извоз';
 
   @override
-  String get deleteOnboardingMindsTitle => 'Delete tutorial notes?';
+  String get deleteOnboardingMindsTitle => 'Обрисати белешке из туторијала?';
 
   @override
   String get deleteOnboardingMindsMessage =>
-      'You\'ve created your first mind! Would you like to delete the tutorial notes?';
+      'Направио си своју прву белешку! Да ли желиш да обришеш белешке из туторијала?';
 
   @override
-  String get keepTutorial => 'Keep';
+  String get keepTutorial => 'Задржи';
 
   @override
-  String get deleteTutorial => 'Delete';
+  String get deleteTutorial => 'Обриши';
 }
 
 /// The translations for Serbian, using the Latin script (`sr_Latn`).
