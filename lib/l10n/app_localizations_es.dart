@@ -163,10 +163,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get clearCache => 'Limpiar caché';
 
   @override
-  String get developerModeEnabled =>
-      '🔧 ¡Modo desarrollador habilitado! ¡La pestaña Menú Debug ahora está disponible!';
-
-  @override
   String get activeTabs => 'Pestañas activas';
 
   @override
@@ -180,12 +176,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get send => 'ENVIAR';
-
-  @override
-  String get translateContent => 'Traducir contenido';
-
-  @override
-  String get sensitiveContent => 'Contenido sensible';
 
   @override
   String get updateYourNickname => 'Actualizar tu apodo';

@@ -423,12 +423,6 @@ abstract class AppLocalizations {
   /// **'Clear cache'**
   String get clearCache;
 
-  /// Developer mode enabled message
-  ///
-  /// In en, this message translates to:
-  /// **'🔧 Developer mode enabled! Debug Menu tab is now available!'**
-  String get developerModeEnabled;
-
   /// Active tabs section header
   ///
   /// In en, this message translates to:
@@ -458,18 +452,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'SEND'**
   String get send;
-
-  /// Translate content debug option
-  ///
-  /// In en, this message translates to:
-  /// **'Translate content'**
-  String get translateContent;
-
-  /// Sensitive content debug option
-  ///
-  /// In en, this message translates to:
-  /// **'Sensitive content'**
-  String get sensitiveContent;
 
   /// Update nickname dialog title
   ///

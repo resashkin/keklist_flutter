@@ -163,265 +163,266 @@ class AppLocalizationsJa extends AppLocalizations {
   String get clearCache => 'キャッシュをクリア';
 
   @override
-  String get developerModeEnabled =>
-      '🔧 開発者モードが有効になりました！Debug Menuタブが利用可能になりました！';
+  String get activeTabs => 'Active tabs';
 
   @override
-  String get activeTabs => 'アクティブなタブ';
+  String get hiddenTabs => 'Hidden tabs';
 
   @override
-  String get hiddenTabs => '非表示のタブ';
+  String get error => 'Error';
 
   @override
-  String get error => 'エラー';
+  String get startDiscussion => 'Start discussion';
 
   @override
-  String get startDiscussion => 'ディスカッションを開始';
+  String get send => 'SEND';
 
   @override
-  String get send => '送信';
+  String get updateYourNickname => 'Update your nickname';
 
   @override
-  String get translateContent => 'コンテンツを翻訳';
+  String get yourNickname => 'Your nickname';
 
   @override
-  String get sensitiveContent => '機密コンテンツ';
+  String get create => 'Write';
 
   @override
-  String get updateYourNickname => 'ニックネームを更新';
+  String get yourFolderName => 'Your folder name';
 
   @override
-  String get yourNickname => 'あなたのニックネーム';
+  String get noMindsInSelectedPeriod => 'No minds in selected period';
 
   @override
-  String get create => '書く';
+  String get noMindsForPeriod => 'No minds for this period';
 
   @override
-  String get yourFolderName => 'フォルダ名';
+  String get selectPeriod => 'Select period ...';
 
   @override
-  String get noMindsInSelectedPeriod => '選択した期間にメモがありません';
+  String get digest => 'Digest';
 
   @override
-  String get noMindsForPeriod => 'この期間にメモがありません';
+  String get minds => 'Minds';
 
   @override
-  String get selectPeriod => '期間を選択...';
+  String get searchForYourNotes => 'Search for your notes';
 
   @override
-  String get digest => 'ダイジェスト';
+  String get searchYourEmoji => 'Search your emoji...';
 
   @override
-  String get minds => 'メモ';
+  String get writeSomething => 'Write something...';
 
   @override
-  String get searchForYourNotes => 'メモを検索';
+  String get topMinds => 'Top minds';
 
   @override
-  String get searchYourEmoji => '絵文字を検索...';
+  String get todayMinds => 'Today minds';
 
   @override
-  String get writeSomething => '何か書いてください...';
+  String get randomMind => 'Random mind';
 
   @override
-  String get topMinds => 'トップメモ';
+  String get spectrum => 'Spectrum';
 
   @override
-  String get todayMinds => '今日のメモ';
+  String get youDidNotCollectAnyEntriesYet =>
+      'You did not collect any entries yet';
 
   @override
-  String get randomMind => 'ランダムメモ';
+  String get pleaseAuthenticateToShowContent =>
+      'Please authenticate to show content of your mind';
 
   @override
-  String get spectrum => 'スペクトラム';
+  String get areYouSure => 'Are you sure?';
 
   @override
-  String get youDidNotCollectAnyEntriesYet => 'まだエントリを収集していません';
+  String get cannotRemoveMainScreen =>
+      'Cannot remove main screen. You will loose option to setup tabs.';
 
   @override
-  String get pleaseAuthenticateToShowContent => 'メモの内容を表示するには認証してください';
+  String get today => 'Today';
 
   @override
-  String get areYouSure => '本当によろしいですか？';
+  String get yesterday => 'Yesterday';
 
   @override
-  String get cannotRemoveMainScreen => 'メイン画面を削除することはできません。タブの設定オプションが失われます。';
+  String get thisWeek => 'This week';
 
   @override
-  String get today => '今日';
+  String get lastTwoWeeks => 'Last 2 weeks';
 
   @override
-  String get yesterday => '昨日';
+  String get thisMonth => 'This month';
 
   @override
-  String get thisWeek => '今週';
+  String get thisYear => 'This year';
 
   @override
-  String get lastTwoWeeks => '過去2週間';
+  String get calendarDescription => 'Main screen with Calendar of entries';
 
   @override
-  String get thisMonth => '今月';
+  String get insightsDescription => 'Statistics all yours entries';
 
   @override
-  String get thisYear => '今年';
+  String get settingsDescription =>
+      'Screen with all settings (dark mode, sync and etc.)';
 
   @override
-  String get calendarDescription => 'エントリのカレンダーがあるメイン画面';
+  String get profileDescription => 'Screen with your profile';
 
   @override
-  String get insightsDescription => 'すべてのエントリの統計';
+  String get todayDescription => 'Only today minds';
 
   @override
-  String get settingsDescription => 'すべての設定画面（ダークモード、同期など）';
+  String get debugMenuDescription =>
+      'Developer tools for toggling experimental features';
 
   @override
-  String get profileDescription => 'プロフィール画面';
-
-  @override
-  String get todayDescription => '今日のメモのみ';
-
-  @override
-  String get debugMenuDescription => '実験的機能を切り替える開発者ツール';
-
-  @override
-  String get noMindsForThisDay => 'この日のメモはありません';
+  String get noMindsForThisDay => 'No minds for this day';
 
   @override
   String showMindsForPeriod(String period) {
-    return '$periodのメモを表示';
+    return 'Show minds for $period';
   }
 
   @override
-  String get week => '週';
+  String get week => 'Week';
 
   @override
-  String get password => 'パスワード';
+  String get password => 'Password';
 
   @override
-  String get archivePassword => 'アーカイブパスワード';
+  String get archivePassword => 'Archive password';
 
   @override
-  String get enterPassword => 'パスワードを入力';
+  String get enterPassword => 'Enter password';
 
   @override
-  String get confirmPassword => 'パスワードを確認';
+  String get confirmPassword => 'Confirm password';
 
   @override
-  String get reenterPassword => 'パスワードを再入力';
+  String get reenterPassword => 'Re-enter password';
 
   @override
-  String get passwordsDoNotMatch => 'パスワードが一致しません';
+  String get passwordsDoNotMatch => 'Passwords do not match';
 
   @override
-  String get exportPassword => 'エクスポートをパスワードで保護しますか？';
+  String get exportPassword => 'Export to ZIP';
 
   @override
   String get exportPasswordDescription =>
-      'エクスポートを暗号化するためにパスワードを追加します。暗号化しない場合はスキップできます。';
+      'Add a password to encrypt your export. You can skip this for unencrypted export.';
 
   @override
-  String get importPassword => 'パスワードを入力';
+  String get importPassword => 'Enter password';
 
   @override
   String get importPasswordDescription =>
-      'このファイルはパスワードで保護されています。復号化するためにパスワードを入力してください。';
+      'This file is password-protected. Please enter the password to decrypt.';
 
   @override
-  String get skipPassword => 'スキップ（パスワードなし）';
+  String get skipPassword => 'Skip (no password)';
 
   @override
-  String get continue_ => '続ける';
+  String get continue_ => 'Continue';
 
   @override
-  String get incorrectPassword => 'パスワードが正しくありません';
+  String get incorrectPassword => 'Incorrect password';
 
   @override
-  String get incorrectPasswordMessage => '入力されたパスワードが正しくありません。もう一度お試しください。';
+  String get incorrectPasswordMessage =>
+      'The password you entered is incorrect. Please try again.';
 
   @override
-  String get corruptedFile => '破損したファイル';
+  String get corruptedFile => 'Corrupted file';
 
   @override
-  String get invalidFormat => '無効な形式';
+  String get invalidFormat => 'Invalid format';
 
   @override
-  String get missingAudioFiles => '一部の音声ファイルが見つかりません';
+  String get missingAudioFiles => 'Some audio files are missing';
 
   @override
-  String get insufficientStorage => 'ストレージ容量が不足しています';
+  String get insufficientStorage => 'Insufficient storage';
 
   @override
-  String get unknownError => '不明なエラー';
+  String get unknownError => 'Unknown error';
 
   @override
-  String get retry => '再試行';
+  String get retry => 'Retry';
 
   @override
   String get ok => 'OK';
 
   @override
-  String get exportSuccess => 'エクスポート成功';
+  String get exportSuccess => 'Export successful';
 
   @override
-  String get exportError => 'エクスポート失敗';
+  String get exportError => 'Export failed';
 
   @override
-  String get importSuccess => 'インポート成功';
+  String get importSuccess => 'Import successful';
 
   @override
-  String get importError => 'インポート失敗';
+  String get importError => 'Import failed';
 
   @override
-  String get mindsToExport => 'マインド';
+  String get mindsToExport => 'Minds';
 
   @override
-  String get audioFilesToExport => '音声ファイル';
+  String get audioFilesToExport => 'Audio files';
 
   @override
-  String get mindsExported => 'マインドをエクスポートしました';
+  String get mindsExported => 'Minds exported';
 
   @override
-  String get audioFilesExported => '音声ファイルをエクスポートしました';
+  String get audioFilesExported => 'Audio files exported';
 
   @override
-  String get mindsImported => 'マインドをインポートしました';
+  String get mindsImported => 'Minds imported';
 
   @override
-  String get audioFilesImported => '音声ファイルをインポートしました';
+  String get audioFilesImported => 'Audio files imported';
 
   @override
-  String get onboardingMind1 => 'こんにちは！';
+  String get onboardingMind1 => 'Hello!';
 
   @override
-  String get onboardingMind2 => '私はkeklist - 短いメモの個人日記です';
+  String get onboardingMind2 =>
+      'I\'m keklist - a personal diary of short notes';
 
   @override
-  String get onboardingMind2Comment1 => 'メモにコメントできます';
+  String get onboardingMind2Comment1 => 'Notes can be commented on';
 
   @override
-  String get onboardingMind2Comment2 => 'メモを開くには、タップしてください';
+  String get onboardingMind2Comment2 => 'To open a note, tap on it';
 
   @override
-  String get onboardingMind3 => '「カレンダー」タブでは、すべてのメモが日、週、月ごとに表示されます';
+  String get onboardingMind3 =>
+      'In the \'Calendar\' tab, all notes are displayed by days, weeks, and months';
 
   @override
-  String get onboardingMind4 => '「統計」タブでは、エントリーの簡単な統計が表示されます';
+  String get onboardingMind4 =>
+      'The \'Analytics\' tab shows brief statistics of your entries';
 
   @override
-  String get onboardingMind5 => 'すべてのメモは携帯電話にのみ保存されます';
+  String get onboardingMind5 => 'All notes are stored only on your phone';
 
   @override
-  String get onboardingMind5Comment1 => '電話を変更する場合は、インポート/エクスポート機能を使用してください';
+  String get onboardingMind5Comment1 =>
+      'When changing phones, use the Import/Export feature';
 
   @override
-  String get deleteOnboardingMindsTitle => 'チュートリアルメモを削除しますか？';
+  String get deleteOnboardingMindsTitle => 'Delete tutorial notes?';
 
   @override
-  String get deleteOnboardingMindsMessage => '最初のメモを作成しました！チュートリアルメモを削除しますか？';
+  String get deleteOnboardingMindsMessage =>
+      'You\'ve created your first mind! Would you like to delete the tutorial notes?';
 
   @override
-  String get keepTutorial => '保持';
+  String get keepTutorial => 'Keep';
 
   @override
-  String get deleteTutorial => '削除';
+  String get deleteTutorial => 'Delete';
 }

@@ -163,275 +163,266 @@ class AppLocalizationsRu extends AppLocalizations {
   String get clearCache => 'Очистить кэш';
 
   @override
-  String get developerModeEnabled =>
-      '🔧 Режим разработчика включен! Вкладка Debug Menu теперь доступна!';
+  String get activeTabs => 'Active tabs';
 
   @override
-  String get activeTabs => 'Активные вкладки';
+  String get hiddenTabs => 'Hidden tabs';
 
   @override
-  String get hiddenTabs => 'Скрытые вкладки';
+  String get error => 'Error';
 
   @override
-  String get error => 'Ошибка';
+  String get startDiscussion => 'Start discussion';
 
   @override
-  String get startDiscussion => 'Начать обсуждение';
+  String get send => 'SEND';
 
   @override
-  String get send => 'ОТПРАВИТЬ';
+  String get updateYourNickname => 'Update your nickname';
 
   @override
-  String get translateContent => 'Перевести содержимое';
+  String get yourNickname => 'Your nickname';
 
   @override
-  String get sensitiveContent => 'Конфиденциальный контент';
+  String get create => 'Write';
 
   @override
-  String get updateYourNickname => 'Обновить ваш никнейм';
+  String get yourFolderName => 'Your folder name';
 
   @override
-  String get yourNickname => 'Ваш никнейм';
+  String get noMindsInSelectedPeriod => 'No minds in selected period';
 
   @override
-  String get create => 'Написать';
+  String get noMindsForPeriod => 'No minds for this period';
 
   @override
-  String get yourFolderName => 'Название вашей папки';
+  String get selectPeriod => 'Select period ...';
 
   @override
-  String get noMindsInSelectedPeriod => 'Нет заметок в выбранном периоде';
+  String get digest => 'Digest';
 
   @override
-  String get noMindsForPeriod => 'Нет заметок за этот период';
+  String get minds => 'Minds';
 
   @override
-  String get selectPeriod => 'Выбрать период ...';
+  String get searchForYourNotes => 'Search for your notes';
 
   @override
-  String get digest => 'Сводка';
+  String get searchYourEmoji => 'Search your emoji...';
 
   @override
-  String get minds => 'Заметки';
+  String get writeSomething => 'Write something...';
 
   @override
-  String get searchForYourNotes => 'Поиск по вашим заметкам';
+  String get topMinds => 'Top minds';
 
   @override
-  String get searchYourEmoji => 'Поиск вашего эмодзи...';
+  String get todayMinds => 'Today minds';
 
   @override
-  String get writeSomething => 'Напишите что-нибудь...';
+  String get randomMind => 'Random mind';
 
   @override
-  String get topMinds => 'Топ заметок';
-
-  @override
-  String get todayMinds => 'Заметки сегодня';
-
-  @override
-  String get randomMind => 'Случайная заметка';
-
-  @override
-  String get spectrum => 'Спектр';
+  String get spectrum => 'Spectrum';
 
   @override
   String get youDidNotCollectAnyEntriesYet =>
-      'Вы еще не собрали ни одной записи';
+      'You did not collect any entries yet';
 
   @override
   String get pleaseAuthenticateToShowContent =>
-      'Пожалуйста, аутентифицируйтесь, чтобы показать содержимое вашей заметки';
+      'Please authenticate to show content of your mind';
 
   @override
-  String get areYouSure => 'Вы уверены?';
+  String get areYouSure => 'Are you sure?';
 
   @override
   String get cannotRemoveMainScreen =>
-      'Нельзя удалить главный экран. Вы потеряете возможность настройки вкладок.';
+      'Cannot remove main screen. You will loose option to setup tabs.';
 
   @override
-  String get today => 'Сегодня';
+  String get today => 'Today';
 
   @override
-  String get yesterday => 'Вчера';
+  String get yesterday => 'Yesterday';
 
   @override
-  String get thisWeek => 'На этой неделе';
+  String get thisWeek => 'This week';
 
   @override
-  String get lastTwoWeeks => 'За последние 2 недели';
+  String get lastTwoWeeks => 'Last 2 weeks';
 
   @override
-  String get thisMonth => 'В этом месяце';
+  String get thisMonth => 'This month';
 
   @override
-  String get thisYear => 'В этом году';
+  String get thisYear => 'This year';
 
   @override
-  String get calendarDescription => 'Главный экран с календарем записей';
+  String get calendarDescription => 'Main screen with Calendar of entries';
 
   @override
-  String get insightsDescription => 'Статистика всех ваших записей';
+  String get insightsDescription => 'Statistics all yours entries';
 
   @override
   String get settingsDescription =>
-      'Экран со всеми настройками (темный режим, синхронизация и т.д.)';
+      'Screen with all settings (dark mode, sync and etc.)';
 
   @override
-  String get profileDescription => 'Экран с вашим профилем';
+  String get profileDescription => 'Screen with your profile';
 
   @override
-  String get todayDescription => 'Только сегодняшние заметки';
+  String get todayDescription => 'Only today minds';
 
   @override
   String get debugMenuDescription =>
-      'Инструменты разработчика для переключения экспериментальных функций';
+      'Developer tools for toggling experimental features';
 
   @override
-  String get noMindsForThisDay => 'Нет заметок на этот день';
+  String get noMindsForThisDay => 'No minds for this day';
 
   @override
   String showMindsForPeriod(String period) {
-    return 'Показать заметки за $period';
+    return 'Show minds for $period';
   }
 
   @override
-  String get week => 'Неделя';
+  String get week => 'Week';
 
   @override
-  String get password => 'Пароль';
+  String get password => 'Password';
 
   @override
-  String get archivePassword => 'Пароль для архива';
+  String get archivePassword => 'Archive password';
 
   @override
-  String get enterPassword => 'Введите пароль';
+  String get enterPassword => 'Enter password';
 
   @override
-  String get confirmPassword => 'Подтвердите пароль';
+  String get confirmPassword => 'Confirm password';
 
   @override
-  String get reenterPassword => 'Введите пароль повторно';
+  String get reenterPassword => 'Re-enter password';
 
   @override
-  String get passwordsDoNotMatch => 'Пароли не совпадают';
+  String get passwordsDoNotMatch => 'Passwords do not match';
 
   @override
-  String get exportPassword => 'Экспорт в ZIP';
+  String get exportPassword => 'Export to ZIP';
 
   @override
   String get exportPasswordDescription =>
-      'Добавьте пароль для шифрования экспорта. Вы можете пропустить это для незашифрованного экспорта.';
+      'Add a password to encrypt your export. You can skip this for unencrypted export.';
 
   @override
-  String get importPassword => 'Введите пароль';
+  String get importPassword => 'Enter password';
 
   @override
   String get importPasswordDescription =>
-      'Этот файл защищен паролем. Пожалуйста, введите пароль для расшифровки.';
+      'This file is password-protected. Please enter the password to decrypt.';
 
   @override
-  String get skipPassword => 'Пропустить (без пароля)';
+  String get skipPassword => 'Skip (no password)';
 
   @override
-  String get continue_ => 'Продолжить';
+  String get continue_ => 'Continue';
 
   @override
-  String get incorrectPassword => 'Неверный пароль';
+  String get incorrectPassword => 'Incorrect password';
 
   @override
   String get incorrectPasswordMessage =>
-      'Введенный вами пароль неверен. Пожалуйста, попробуйте снова.';
+      'The password you entered is incorrect. Please try again.';
 
   @override
-  String get corruptedFile => 'Поврежденный файл';
+  String get corruptedFile => 'Corrupted file';
 
   @override
-  String get invalidFormat => 'Неверный формат';
+  String get invalidFormat => 'Invalid format';
 
   @override
-  String get missingAudioFiles => 'Некоторые аудиофайлы отсутствуют';
+  String get missingAudioFiles => 'Some audio files are missing';
 
   @override
-  String get insufficientStorage => 'Недостаточно места';
+  String get insufficientStorage => 'Insufficient storage';
 
   @override
-  String get unknownError => 'Неизвестная ошибка';
+  String get unknownError => 'Unknown error';
 
   @override
-  String get retry => 'Повторить';
+  String get retry => 'Retry';
 
   @override
   String get ok => 'OK';
 
   @override
-  String get exportSuccess => 'Экспорт успешен';
+  String get exportSuccess => 'Export successful';
 
   @override
-  String get exportError => 'Ошибка экспорта';
+  String get exportError => 'Export failed';
 
   @override
-  String get importSuccess => 'Импорт успешен';
+  String get importSuccess => 'Import successful';
 
   @override
-  String get importError => 'Ошибка импорта';
+  String get importError => 'Import failed';
 
   @override
-  String get mindsToExport => 'Заметок';
+  String get mindsToExport => 'Minds';
 
   @override
-  String get audioFilesToExport => 'Аудиофайлов';
+  String get audioFilesToExport => 'Audio files';
 
   @override
-  String get mindsExported => 'Заметок экспортировано';
+  String get mindsExported => 'Minds exported';
 
   @override
-  String get audioFilesExported => 'Аудиофайлов экспортировано';
+  String get audioFilesExported => 'Audio files exported';
 
   @override
-  String get mindsImported => 'Заметок импортировано';
+  String get mindsImported => 'Minds imported';
 
   @override
-  String get audioFilesImported => 'Аудиофайлов импортировано';
+  String get audioFilesImported => 'Audio files imported';
 
   @override
-  String get onboardingMind1 => 'Привет!';
+  String get onboardingMind1 => 'Hello!';
 
   @override
-  String get onboardingMind2 => 'Я keklist - личный дневник коротких заметок';
+  String get onboardingMind2 =>
+      'I\'m keklist - a personal diary of short notes';
 
   @override
-  String get onboardingMind2Comment1 => 'Заметки можно комментировать';
+  String get onboardingMind2Comment1 => 'Notes can be commented on';
 
   @override
-  String get onboardingMind2Comment2 => 'Чтобы открыть заметку, нажмите на неё';
+  String get onboardingMind2Comment2 => 'To open a note, tap on it';
 
   @override
   String get onboardingMind3 =>
-      'Во вкладке \'Календарь\' все заметки отображаются по дням, неделям и месяцам';
+      'In the \'Calendar\' tab, all notes are displayed by days, weeks, and months';
 
   @override
   String get onboardingMind4 =>
-      'Вкладка \'Аналитика\' показывает краткую статистику ваших записей';
+      'The \'Analytics\' tab shows brief statistics of your entries';
 
   @override
-  String get onboardingMind5 => 'Все заметки хранятся только на вашем телефоне';
+  String get onboardingMind5 => 'All notes are stored only on your phone';
 
   @override
   String get onboardingMind5Comment1 =>
-      'При смене телефона используйте функцию Импорт/Экспорт';
+      'When changing phones, use the Import/Export feature';
 
   @override
-  String get deleteOnboardingMindsTitle => 'Удалить обучающие заметки?';
+  String get deleteOnboardingMindsTitle => 'Delete tutorial notes?';
 
   @override
   String get deleteOnboardingMindsMessage =>
-      'Вы создали свою первую заметку! Хотите удалить обучающие заметки?';
+      'You\'ve created your first mind! Would you like to delete the tutorial notes?';
 
   @override
-  String get keepTutorial => 'Оставить';
+  String get keepTutorial => 'Keep';
 
   @override
-  String get deleteTutorial => 'Удалить';
+  String get deleteTutorial => 'Delete';
 }

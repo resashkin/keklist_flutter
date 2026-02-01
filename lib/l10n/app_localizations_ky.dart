@@ -163,10 +163,6 @@ class AppLocalizationsKy extends AppLocalizations {
   String get clearCache => 'Кэшти тазалоо';
 
   @override
-  String get developerModeEnabled =>
-      '🔧 Өнүктүрүүчү режими иштетилди! Debug Menu табы азыр жеткиликтүү!';
-
-  @override
   String get activeTabs => 'Актив табтар';
 
   @override
@@ -180,12 +176,6 @@ class AppLocalizationsKy extends AppLocalizations {
 
   @override
   String get send => 'ЖӨНӨТҮҮ';
-
-  @override
-  String get translateContent => 'Мазмунду которуу';
-
-  @override
-  String get sensitiveContent => 'Сезимтал мазмун';
 
   @override
   String get updateYourNickname => 'Никнэмиңизди жаңылоо';

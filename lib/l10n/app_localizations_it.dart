@@ -163,10 +163,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get clearCache => 'Cancella cache';
 
   @override
-  String get developerModeEnabled =>
-      '🔧 Modalità sviluppatore abilitata! Il tab Debug Menu è ora disponibile!';
-
-  @override
   String get activeTabs => 'Tab attivi';
 
   @override
@@ -180,12 +176,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get send => 'INVIA';
-
-  @override
-  String get translateContent => 'Traduci contenuto';
-
-  @override
-  String get sensitiveContent => 'Contenuto sensibile';
 
   @override
   String get updateYourNickname => 'Aggiorna il tuo nickname';
