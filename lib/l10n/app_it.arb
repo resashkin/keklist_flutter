@@ -394,9 +394,5 @@
     "onboardingMind3": "Nella scheda 'Calendario', tutte le note sono visualizzate per giorni, settimane e mesi",
     "onboardingMind4": "La scheda 'Statistiche' mostra brevi statistiche delle tue voci",
     "onboardingMind5": "Tutte le note sono memorizzate solo sul tuo telefono",
-    "onboardingMind5Comment1": "Quando cambi telefono, usa la funzione Importa/Esporta",
-    "deleteOnboardingMindsTitle": "Eliminare le note del tutorial?",
-    "deleteOnboardingMindsMessage": "Hai creato la tua prima nota! Vuoi eliminare le note del tutorial?",
-    "keepTutorial": "Mantieni",
-    "deleteTutorial": "Elimina"
+    "onboardingMind6": "Per creare una nuova nota, tocca 'Scrivi'"
 }

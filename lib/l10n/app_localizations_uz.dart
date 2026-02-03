@@ -411,20 +411,6 @@ class AppLocalizationsUz extends AppLocalizations {
       'Barcha yozuvlar faqat telefoningizda saqlanadi';
 
   @override
-  String get onboardingMind5Comment1 =>
-      'Telefon almashtirganda Import/Eksport funksiyasidan foydalaning';
-
-  @override
-  String get deleteOnboardingMindsTitle =>
-      'O\'quv yozuvlarini o\'chirish kerakmi?';
-
-  @override
-  String get deleteOnboardingMindsMessage =>
-      'Siz birinchi yozuvingizni yaratdingiz! O\'quv yozuvlarini o\'chirmoqchimisiz?';
-
-  @override
-  String get keepTutorial => 'Saqlash';
-
-  @override
-  String get deleteTutorial => 'O\'chirish';
+  String get onboardingMind6 =>
+      'Yangi yozuv yaratish uchun \'Yozish\' tugmasini bosing';
 }

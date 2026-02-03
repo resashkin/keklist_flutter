@@ -394,9 +394,5 @@
     "onboardingMind3": "'Kalendar' yorlig'ida barcha yozuvlar kunlar, haftalar va oylar bo'yicha ko'rsatiladi",
     "onboardingMind4": "'Analitika' yorlig'i yozuvlaringizning qisqacha statistikasini ko'rsatadi",
     "onboardingMind5": "Barcha yozuvlar faqat telefoningizda saqlanadi",
-    "onboardingMind5Comment1": "Telefon almashtirganda Import/Eksport funksiyasidan foydalaning",
-    "deleteOnboardingMindsTitle": "O'quv yozuvlarini o'chirish kerakmi?",
-    "deleteOnboardingMindsMessage": "Siz birinchi yozuvingizni yaratdingiz! O'quv yozuvlarini o'chirmoqchimisiz?",
-    "keepTutorial": "Saqlash",
-    "deleteTutorial": "O'chirish"
+    "onboardingMind6": "Yangi yozuv yaratish uchun 'Yozish' tugmasini bosing"
 }

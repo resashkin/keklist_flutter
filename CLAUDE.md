@@ -138,6 +138,69 @@ The app supports 11 languages (en, ru, es, it, de, ja, kk, ky, uz, zh, sr). Loca
 - After modifying ARB files, run `flutter gen-l10n` to regenerate localization code
 - Access translations via `AppLocalizations.of(context)!.translationKey`
 
+#### Handling Quotes in ARB Files
+
+**IMPORTANT**: ARB files are JSON files. Follow these rules for strings containing quotes:
+
+1. **To include double quotes in a string**: Use `\"` (single backslash + quote)
+   ```json
+   "key": "Click \"Button\" to continue"
+   ```
+   Result: Click "Button" to continue
+
+2. **DO NOT double-escape**: `\\\"` will display backslashes in the UI
+   ```json
+   "key": "Click \\\"Button\\\""  ❌ WRONG - displays: Click \"Button\"
+   ```
+
+3. **Single quotes don't need escaping**: Can be used directly
+   ```json
+   "key": "Click 'Button' to continue"
+   ```
+   Result: Click 'Button' to continue
+
+4. **Language-specific quotation marks**: Different languages use different conventions
+   - English: "double" or 'single'
+   - Russian/German: «guillemets»
+   - Japanese: 「corner brackets」
+   - Choose appropriate style for each language, all work in ARB files without escaping
+
+#### Removing Unused Localization Keys
+
+**IMPORTANT**: When removing UI features or dialogs, always clean up their unused localization keys:
+
+1. **Remove from ALL 11 language files**: Keys must be removed from all ARB files:
+   - `app_en.arb`, `app_ru.arb`, `app_es.arb`, `app_it.arb`, `app_de.arb`
+   - `app_ja.arb`, `app_kk.arb`, `app_ky.arb`, `app_uz.arb`, `app_zh.arb`
+   - `app_sr.arb`, `app_sr_Latn.arb`
+
+2. **Remove both key and metadata**: In files that have metadata (like English), remove both:
+   ```json
+   "unusedKey": "Some text",  ❌ Remove this
+   "@unusedKey": {            ❌ Remove this too
+       "description": "..."
+   },
+   ```
+
+3. **Fix trailing commas**: After removing the last key in a file, remove the comma from the previous key:
+   ```json
+   "lastKey": "Text",  ❌ Remove comma
+   }
+   ```
+   Should be:
+   ```json
+   "lastKey": "Text"   ✅ No comma before closing brace
+   }
+   ```
+
+4. **Regenerate localization**: After removing keys, run `flutter gen-l10n` to update generated files
+
+5. **Why this matters**: Unused localization keys:
+   - Increase app bundle size
+   - Create maintenance burden
+   - Confuse future developers
+   - Make translation updates more expensive
+
 ### Environment Variables
 
 Environment variables are stored in `dotenv` file (not committed, template shown):

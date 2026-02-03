@@ -410,19 +410,5 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboardingMind5 => 'All notes are stored only on your phone';
 
   @override
-  String get onboardingMind5Comment1 =>
-      'When changing phones, use the Import/Export feature';
-
-  @override
-  String get deleteOnboardingMindsTitle => 'Delete tutorial notes?';
-
-  @override
-  String get deleteOnboardingMindsMessage =>
-      'You\'ve created your first mind! Would you like to delete the tutorial notes?';
-
-  @override
-  String get keepTutorial => 'Keep';
-
-  @override
-  String get deleteTutorial => 'Delete';
+  String get onboardingMind6 => 'To create new note tap \'Write\'';
 }

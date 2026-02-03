@@ -394,9 +394,5 @@
     "onboardingMind3": "En la pestaña 'Calendario', todas las notas se muestran por días, semanas y meses",
     "onboardingMind4": "La pestaña 'Estadísticas' muestra breves estadísticas de tus entradas",
     "onboardingMind5": "Todas las notas se almacenan solo en tu teléfono",
-    "onboardingMind5Comment1": "Al cambiar de teléfono, usa la función Importar/Exportar",
-    "deleteOnboardingMindsTitle": "¿Eliminar notas del tutorial?",
-    "deleteOnboardingMindsMessage": "¡Has creado tu primera nota! ¿Te gustaría eliminar las notas del tutorial?",
-    "keepTutorial": "Mantener",
-    "deleteTutorial": "Eliminar"
+    "onboardingMind6": "Para crear una nueva nota, toca 'Escribir'"
 }

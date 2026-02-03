@@ -36,18 +36,17 @@ Mind(
 
 ## Mind Structure
 
-### Parent Minds (5 total)
+### Parent Minds (6 total)
 - **ID**: `ONBOARDING_<uuid>` (prefixed with `ONBOARDING_`)
 - **rootId**: `null` (they are root minds)
-- **Emojis**: 👋, 😊, 📅, 🧙, 🔒
+- **Emojis**: 👋, 😊, 📅, 🧙, 🔒, 👇
 - **Translations**: Function references to `AppLocalizations` (type-safe, no string keys!)
 
-### Comment Minds (3 total)
+### Comment Minds (2 total)
 - **ID**: `<uuid>` (regular UUID)
 - **rootId**: Parent mind's ID (e.g., `ONBOARDING_<parent-uuid>`)
 - **Parents**:
   - Mind 2 (😊) has 2 comments
-  - Mind 5 (🔒) has 1 comment
 
 ## Localization Approach
 
@@ -158,8 +157,8 @@ Comprehensive tests are in `test/presentation/blocs/lazy_onboarding_bloc/lazy_on
 
 ### Test Philosophy
 - **Focus on structure, not content**: Tests verify correct number of minds, ID prefixes, and parent-child relationships
-- **No hardcoded text checks**: Translations are implementation details that change with languages
-- **Mock translations simply**: Return generic strings like "Text 1", "Comment 1" to satisfy non-null requirements
+- **No string content validation**: Translations are implementation details - existence of onboarding minds is sufficient
+- **Localization uses fallback**: Tests use English localization fallback automatically, no manual mocking needed
 
 ### Test Coverage
 
@@ -170,11 +169,12 @@ Comprehensive tests are in `test/presentation/blocs/lazy_onboarding_bloc/lazy_on
    - ✅ Doesn't show when conditions not met
 
 2. **LazyOnboardingCreate**
-   - ✅ Creates correct count: 8 total (5 parents + 3 comments)
+   - ✅ Creates correct count: 8 total (6 parents + 2 comments)
    - ✅ Parent minds have `ONBOARDING_` prefix in ID
    - ✅ Parent minds have `rootId = null`
    - ✅ Comment minds reference parent IDs in `rootId`
    - ✅ All comment rootIds point to valid parent minds
+   - ℹ️ Note: Tests verify structure only, not string content
 
 3. **LazyOnboardingDelete**
    - ✅ Deletes all parent onboarding minds

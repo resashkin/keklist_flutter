@@ -413,19 +413,6 @@ class AppLocalizationsDe extends AppLocalizations {
       'Alle Notizen werden nur auf Ihrem Telefon gespeichert';
 
   @override
-  String get onboardingMind5Comment1 =>
-      'Verwenden Sie beim Wechsel des Telefons die Import/Export-Funktion';
-
-  @override
-  String get deleteOnboardingMindsTitle => 'Tutorial-Notizen löschen?';
-
-  @override
-  String get deleteOnboardingMindsMessage =>
-      'Sie haben Ihre erste Notiz erstellt! Möchten Sie die Tutorial-Notizen löschen?';
-
-  @override
-  String get keepTutorial => 'Behalten';
-
-  @override
-  String get deleteTutorial => 'Löschen';
+  String get onboardingMind6 =>
+      'Um eine neue Notiz zu erstellen, tippen Sie auf \'Schreiben\'';
 }

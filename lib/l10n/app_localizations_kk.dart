@@ -410,19 +410,6 @@ class AppLocalizationsKk extends AppLocalizations {
   String get onboardingMind5 => 'Барлық жазбалар тек телефоныңызда сақталады';
 
   @override
-  String get onboardingMind5Comment1 =>
-      'Телефонды ауыстырғанда Импорт/Экспорт функциясын пайдаланыңыз';
-
-  @override
-  String get deleteOnboardingMindsTitle => 'Оқыту жазбаларын жою керек пе?';
-
-  @override
-  String get deleteOnboardingMindsMessage =>
-      'Сіз алғашқы жазбаңызды жасадыңыз! Оқыту жазбаларын жойғыңыз келе ме?';
-
-  @override
-  String get keepTutorial => 'Сақтау';
-
-  @override
-  String get deleteTutorial => 'Жою';
+  String get onboardingMind6 =>
+      'Жаңа жазба жасау үшін \'Жазу\' түймесін басыңыз';
 }

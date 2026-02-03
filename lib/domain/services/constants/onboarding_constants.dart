@@ -23,6 +23,7 @@ class OnboardingConstants {
     OnboardingMindData(emoji: '📅', translation: (l10n) => l10n.onboardingMind3, sortIndex: 2),
     OnboardingMindData(emoji: '🧙', translation: (l10n) => l10n.onboardingMind4, sortIndex: 3),
     OnboardingMindData(emoji: '🔒', translation: (l10n) => l10n.onboardingMind5, sortIndex: 4),
+    OnboardingMindData(emoji: '👇', translation: (l10n) => l10n.onboardingMind6, sortIndex: 5),
   ];
 
   // Comment minds (children of parent minds) - indexed by parent sortIndex
@@ -31,9 +32,6 @@ class OnboardingConstants {
       (l10n) => l10n.onboardingMind2Comment1,
       (l10n) => l10n.onboardingMind2Comment2,
     ], // Comments for mind 2
-    4: [
-      (l10n) => l10n.onboardingMind5Comment1,
-    ], // Comment for mind 5
   };
 }
 

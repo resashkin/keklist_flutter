@@ -119,7 +119,7 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
               sendEventToBloc<MindBloc>(MindUpdateMobileWidgets());
             }
 
-            // Check if we should show onboarding deletion dialog
+            // Automatically delete onboarding minds after first real mind is created
             if (!_hasShownOnboardingDialog) {
               final realMinds = state.values.where(
                 (m) => !OnboardingConstants.isOnboardingMind(m.id, m.rootId),
@@ -131,7 +131,9 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
 
               if (realMinds.length == 1 && onboardingMinds.isNotEmpty) {
                 _hasShownOnboardingDialog = true;
-                _showDeleteOnboardingDialog();
+                // Automatically delete onboarding minds and mark as seen
+                sendEventToBloc<LazyOnboardingBloc>(LazyOnboardingDelete());
+                sendEventToBloc<LazyOnboardingBloc>(LazyOnboardingMarkAsSeen());
               }
             }
           } else if (state is MindSearching) {
@@ -485,29 +487,5 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
         ),
       ),
     );
-  }
-
-  Future<void> _showDeleteOnboardingDialog() async {
-    final result = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(context.l10n.deleteOnboardingMindsTitle),
-        content: Text(context.l10n.deleteOnboardingMindsMessage),
-        actions: [
-          TextButton(
-            child: Text(context.l10n.keepTutorial),
-            onPressed: () => Navigator.of(context).pop(false),
-          ),
-          TextButton(
-            child: Text(context.l10n.deleteTutorial),
-            onPressed: () => Navigator.of(context).pop(true),
-          ),
-        ],
-      ),
-    );
-
-    if (result == true && mounted) {
-      sendEventToBloc<LazyOnboardingBloc>(LazyOnboardingDelete());
-    }
   }
 }

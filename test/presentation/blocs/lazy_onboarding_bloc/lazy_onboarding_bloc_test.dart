@@ -5,7 +5,6 @@ import 'package:keklist/domain/repositories/settings/settings_repository.dart';
 import 'package:keklist/domain/services/constants/onboarding_constants.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/domain/services/language_manager.dart';
-import 'package:keklist/l10n/app_localizations.dart';
 import 'package:keklist/presentation/blocs/lazy_onboarding_bloc/lazy_onboarding_bloc.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -14,8 +13,6 @@ class MockMindRepository extends Mock implements MindRepository {}
 class MockSettingsRepository extends Mock implements SettingsRepository {}
 
 class MockBuildContext extends Mock implements BuildContext {}
-
-class MockAppLocalizations extends Mock implements AppLocalizations {}
 
 void main() {
   late MockMindRepository mockMindRepository;
@@ -64,6 +61,7 @@ void main() {
           language: SupportedLanguage.english,
           dataSchemaVersion: 0,
           hasSeenLazyOnboarding: true,
+          isDebugMenuVisible: false,
         ),
       );
 
@@ -90,6 +88,7 @@ void main() {
           language: SupportedLanguage.english,
           dataSchemaVersion: 0,
           hasSeenLazyOnboarding: false,
+          isDebugMenuVisible: false,
         ),
       );
 
@@ -125,6 +124,7 @@ void main() {
           language: SupportedLanguage.english,
           dataSchemaVersion: 0,
           hasSeenLazyOnboarding: false,
+          isDebugMenuVisible: false,
         ),
       );
 
@@ -167,6 +167,7 @@ void main() {
           language: SupportedLanguage.english,
           dataSchemaVersion: 0,
           hasSeenLazyOnboarding: false,
+          isDebugMenuVisible: false,
         ),
       );
 
@@ -197,22 +198,16 @@ void main() {
   });
 
   group('LazyOnboardingCreate', () {
-    test('should create correct number of minds with proper structure', () async {
+    test('should create onboarding minds with correct structure', () async {
+      // NOTE: This test only verifies structure (counts, IDs, relationships)
+      // It does NOT validate string content - existence is sufficient
+
       // Arrange
       final mockContext = MockBuildContext();
-      final mockL10n = MockAppLocalizations();
 
-      when(() => AppLocalizations.of(mockContext)).thenReturn(mockL10n);
-
-      // Mock all translation getters to return non-empty strings
-      when(() => mockL10n.onboardingMind1).thenReturn('Text 1');
-      when(() => mockL10n.onboardingMind2).thenReturn('Text 2');
-      when(() => mockL10n.onboardingMind2Comment1).thenReturn('Comment 1');
-      when(() => mockL10n.onboardingMind2Comment2).thenReturn('Comment 2');
-      when(() => mockL10n.onboardingMind3).thenReturn('Text 3');
-      when(() => mockL10n.onboardingMind4).thenReturn('Text 4');
-      when(() => mockL10n.onboardingMind5).thenReturn('Text 5');
-      when(() => mockL10n.onboardingMind5Comment1).thenReturn('Comment 5');
+      // Mock the BuildContext to return null for localization lookup
+      // This will cause the extension to use AppLocalizationsEn() as fallback
+      when(() => mockContext.dependOnInheritedWidgetOfExactType<InheritedWidget>()).thenReturn(null);
 
       List<Mind> createdMinds = [];
       when(() => mockMindRepository.createMinds(minds: any(named: 'minds'))).thenAnswer((invocation) async {
@@ -223,15 +218,16 @@ void main() {
       bloc.add(LazyOnboardingCreate(context: mockContext));
       await Future.delayed(const Duration(milliseconds: 100));
 
-      // Assert
+      // Assert - Only verify structure, not content
       verify(() => mockMindRepository.createMinds(minds: any(named: 'minds'))).called(1);
 
-      // Verify correct total: 5 parents + 3 comments = 8 minds
+      // Verify minds were created (existence check only)
+      expect(createdMinds.isNotEmpty, true);
       expect(createdMinds.length, 8);
 
-      // Verify parent minds structure
+      // Verify parent minds have correct structure
       final parentMinds = createdMinds.where((m) => m.rootId == null).toList();
-      expect(parentMinds.length, 5);
+      expect(parentMinds.length, 6);
 
       // All parent minds should have ONBOARDING_ prefix
       for (final parent in parentMinds) {
@@ -239,9 +235,9 @@ void main() {
         expect(parent.rootId, null);
       }
 
-      // Verify comment minds structure
+      // Verify comment minds have correct structure
       final commentMinds = createdMinds.where((m) => m.rootId != null).toList();
-      expect(commentMinds.length, 3);
+      expect(commentMinds.length, 2);
 
       // All comments should reference a parent mind
       for (final comment in commentMinds) {
@@ -269,10 +265,10 @@ void main() {
       final commentId2 = 'comment-2';
 
       when(() => mockMindRepository.obtainMinds()).thenAnswer((_) async => [
-            _createMind(id: onboardingParentId1, rootId: null),
-            _createMind(id: onboardingParentId2, rootId: null),
-            _createMind(id: commentId1, rootId: onboardingParentId1),
-            _createMind(id: commentId2, rootId: onboardingParentId2),
+            _createMind(id: onboardingParentId1, rootId: null, dayIndex: 0),
+            _createMind(id: onboardingParentId2, rootId: null, dayIndex: 0),
+            _createMind(id: commentId1, rootId: onboardingParentId1, dayIndex: 0),
+            _createMind(id: commentId2, rootId: onboardingParentId2, dayIndex: 0),
           ]);
 
       when(() => mockMindRepository.deleteMindsWhere(any())).thenAnswer((_) async {});
@@ -299,6 +295,7 @@ void main() {
         language: SupportedLanguage.english,
         dataSchemaVersion: 0,
         hasSeenLazyOnboarding: false,
+        isDebugMenuVisible: false,
       );
 
       when(() => mockSettingsRepository.value).thenReturn(currentSettings);

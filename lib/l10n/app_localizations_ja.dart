@@ -401,18 +401,5 @@ class AppLocalizationsJa extends AppLocalizations {
   String get onboardingMind5 => 'すべてのメモはあなたのスマートフォンにのみ保存されます';
 
   @override
-  String get onboardingMind5Comment1 =>
-      'スマートフォンを変更する際は、インポート/エクスポート機能を使用してください';
-
-  @override
-  String get deleteOnboardingMindsTitle => 'チュートリアルノートを削除しますか？';
-
-  @override
-  String get deleteOnboardingMindsMessage => '最初のメモを作成しました！チュートリアルノートを削除しますか？';
-
-  @override
-  String get keepTutorial => '保持';
-
-  @override
-  String get deleteTutorial => '削除';
+  String get onboardingMind6 => '新しいメモを作成するには、\'書く\'をタップしてください';
 }

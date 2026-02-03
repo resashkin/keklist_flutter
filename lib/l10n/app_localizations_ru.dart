@@ -409,19 +409,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get onboardingMind5 => 'Все заметки хранятся только на вашем телефоне';
 
   @override
-  String get onboardingMind5Comment1 =>
-      'При смене телефона используйте функцию Импорт/Экспорт';
-
-  @override
-  String get deleteOnboardingMindsTitle => 'Удалить заметки обучения?';
-
-  @override
-  String get deleteOnboardingMindsMessage =>
-      'Вы создали свою первую заметку! Хотите удалить заметки из обучения?';
-
-  @override
-  String get keepTutorial => 'Оставить';
-
-  @override
-  String get deleteTutorial => 'Удалить';
+  String get onboardingMind6 =>
+      'Чтобы создать новую заметку, нажмите \'Написать\'';
 }

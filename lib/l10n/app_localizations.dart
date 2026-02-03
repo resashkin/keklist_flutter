@@ -891,35 +891,11 @@ abstract class AppLocalizations {
   /// **'All notes are stored only on your phone'**
   String get onboardingMind5;
 
-  /// Data portability explanation
+  /// Instruction to create new note
   ///
   /// In en, this message translates to:
-  /// **'When changing phones, use the Import/Export feature'**
-  String get onboardingMind5Comment1;
-
-  /// Alert dialog title for deleting onboarding minds
-  ///
-  /// In en, this message translates to:
-  /// **'Delete tutorial notes?'**
-  String get deleteOnboardingMindsTitle;
-
-  /// Alert dialog message for deleting onboarding minds
-  ///
-  /// In en, this message translates to:
-  /// **'You\'ve created your first mind! Would you like to delete the tutorial notes?'**
-  String get deleteOnboardingMindsMessage;
-
-  /// Button to keep onboarding minds
-  ///
-  /// In en, this message translates to:
-  /// **'Keep'**
-  String get keepTutorial;
-
-  /// Button to delete onboarding minds
-  ///
-  /// In en, this message translates to:
-  /// **'Delete'**
-  String get deleteTutorial;
+  /// **'To create new note tap \'Write\''**
+  String get onboardingMind6;
 }
 
 class _AppLocalizationsDelegate

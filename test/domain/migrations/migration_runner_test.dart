@@ -57,6 +57,7 @@ void main() {
           language: SupportedLanguage.english,
           dataSchemaVersion: 1,
           hasSeenLazyOnboarding: false,
+          isDebugMenuVisible: false,
         ),
       );
 
@@ -78,6 +79,7 @@ void main() {
           language: SupportedLanguage.english,
           dataSchemaVersion: 0,
           hasSeenLazyOnboarding: false,
+          isDebugMenuVisible: false,
         ),
       );
 
@@ -96,23 +98,23 @@ void main() {
           language: SupportedLanguage.english,
           dataSchemaVersion: 0,
           hasSeenLazyOnboarding: false,
+          isDebugMenuVisible: false,
         ),
       );
 
       when(() => mockMindRepo.values).thenReturn([]);
-      when(() => mockSettingsRepo.updateSettings(any()))
-          .thenAnswer((_) async {});
+      when(() => mockSettingsRepo.updateSettings(any())).thenAnswer((_) async {});
 
       final result = await runner.runPendingMigrations();
 
       expect(result, true);
 
       // Verify that updateSettings was called with version = 1
-      verify(() => mockSettingsRepo.updateSettings(any(
-            that: predicate<KeklistSettings>(
-              (settings) => settings.dataSchemaVersion == 1,
-            ),
-          ))).called(1);
+      verify(
+        () => mockSettingsRepo.updateSettings(
+          any(that: predicate<KeklistSettings>((settings) => settings.dataSchemaVersion == 1)),
+        ),
+      ).called(1);
     });
 
     test('handles migration failure gracefully', () async {

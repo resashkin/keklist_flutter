@@ -394,9 +394,5 @@
     "onboardingMind3": "U kartici 'Kalendar', sve beleške su prikazane po danima, nedeljama i mesecima",
     "onboardingMind4": "Kartica 'Analitika' prikazuje kratku statistiku vaših unosa",
     "onboardingMind5": "Sve beleške se čuvaju samo na vašem telefonu",
-    "onboardingMind5Comment1": "Prilikom promene telefona, koristite funkciju Uvoz/Izvoz",
-    "deleteOnboardingMindsTitle": "Obrisati beleške iz tutorijala?",
-    "deleteOnboardingMindsMessage": "Napravili ste prvu belešku! Želite li obrisati beleške iz tutorijala?",
-    "keepTutorial": "Zadrži",
-    "deleteTutorial": "Obriši"
+    "onboardingMind6": "Da kreirate novu belešku, dodirnite 'Piši'"
 }

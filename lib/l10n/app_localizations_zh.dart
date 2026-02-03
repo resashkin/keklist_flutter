@@ -398,17 +398,5 @@ class AppLocalizationsZh extends AppLocalizations {
   String get onboardingMind5 => '所有笔记仅存储在您的手机上';
 
   @override
-  String get onboardingMind5Comment1 => '更换手机时，请使用导入/导出功能';
-
-  @override
-  String get deleteOnboardingMindsTitle => '删除教程笔记？';
-
-  @override
-  String get deleteOnboardingMindsMessage => '您已创建了第一条笔记！要删除教程笔记吗？';
-
-  @override
-  String get keepTutorial => '保留';
-
-  @override
-  String get deleteTutorial => '删除';
+  String get onboardingMind6 => '要创建新笔记，请点击\'写入\'';
 }

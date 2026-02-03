@@ -411,21 +411,7 @@ class AppLocalizationsSr extends AppLocalizations {
       'Све белешке су сачуване само на твојом телефону';
 
   @override
-  String get onboardingMind5Comment1 =>
-      'При промени телефона, користи функцију Увоз/Извоз';
-
-  @override
-  String get deleteOnboardingMindsTitle => 'Обрисати белешке из туторијала?';
-
-  @override
-  String get deleteOnboardingMindsMessage =>
-      'Направио си своју прву белешку! Да ли желиш да обришеш белешке из туторијала?';
-
-  @override
-  String get keepTutorial => 'Задржи';
-
-  @override
-  String get deleteTutorial => 'Обриши';
+  String get onboardingMind6 => 'Да креирате нову белешку, додирните \'Пиши\'';
 }
 
 /// The translations for Serbian, using the Latin script (`sr_Latn`).
@@ -834,19 +820,5 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
   String get onboardingMind5 => 'Sve beleške se čuvaju samo na vašem telefonu';
 
   @override
-  String get onboardingMind5Comment1 =>
-      'Prilikom promene telefona, koristite funkciju Uvoz/Izvoz';
-
-  @override
-  String get deleteOnboardingMindsTitle => 'Obrisati beleške iz tutorijala?';
-
-  @override
-  String get deleteOnboardingMindsMessage =>
-      'Napravili ste prvu belešku! Želite li obrisati beleške iz tutorijala?';
-
-  @override
-  String get keepTutorial => 'Zadrži';
-
-  @override
-  String get deleteTutorial => 'Obriši';
+  String get onboardingMind6 => 'Da kreirate novu belešku, dodirnite \'Piši\'';
 }
