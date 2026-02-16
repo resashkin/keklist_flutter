@@ -194,10 +194,6 @@
     "@clearCache": {
         "description": "Pulsante cancella cache"
     },
-    "developerModeEnabled": "🔧 Modalità sviluppatore abilitata! Il tab Debug Menu è ora disponibile!",
-    "@developerModeEnabled": {
-        "description": "Messaggio modalità sviluppatore abilitata"
-    },
     "activeTabs": "Tab attivi",
     "@activeTabs": {
         "description": "Intestazione sezione tab attivi"
@@ -217,14 +213,6 @@
     "send": "INVIA",
     "@send": {
         "description": "Pulsante invia"
-    },
-    "translateContent": "Traduci contenuto",
-    "@translateContent": {
-        "description": "Opzione debug traduci contenuto"
-    },
-    "sensitiveContent": "Contenuto sensibile",
-    "@sensitiveContent": {
-        "description": "Opzione debug contenuto sensibile"
     },
     "updateYourNickname": "Aggiorna il tuo nickname",
     "@updateYourNickname": {
@@ -398,5 +386,13 @@
     "mindsExported": "Mind esportate",
     "audioFilesExported": "File audio esportati",
     "mindsImported": "Mind importate",
-    "audioFilesImported": "File audio importati"
+    "audioFilesImported": "File audio importati",
+    "onboardingMind1": "Ciao!",
+    "onboardingMind2": "Sono keklist - un diario personale di note brevi",
+    "onboardingMind2Comment1": "Le note possono essere commentate",
+    "onboardingMind2Comment2": "Per aprire una nota, toccala",
+    "onboardingMind3": "Nella scheda 'Calendario', tutte le note sono visualizzate per giorni, settimane e mesi",
+    "onboardingMind4": "La scheda 'Statistiche' mostra brevi statistiche delle tue voci",
+    "onboardingMind5": "Tutte le note sono memorizzate solo sul tuo telefono",
+    "onboardingMind6": "Per creare una nuova nota, tocca 'Scrivi'"
 }

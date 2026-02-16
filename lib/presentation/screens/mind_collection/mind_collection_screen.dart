@@ -9,6 +9,8 @@ import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bloc.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_event.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_state.dart';
+import 'package:keklist/presentation/blocs/lazy_onboarding_bloc/lazy_onboarding_bloc.dart';
+import 'package:keklist/domain/services/constants/onboarding_constants.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/core/helpers/extensions/state_extensions.dart';
 import 'package:keklist/presentation/core/helpers/platform_utils.dart';
@@ -69,6 +71,7 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
   bool _isInsightsVisible = true;
   bool _isMonthView = false;
   final bool _isDemoMode = false;
+  bool _hasShownOnboardingDialog = false;
 
   bool get _shouldShowTitles => _settingsDataState?.settings.shouldShowTitles ?? true;
 
@@ -115,11 +118,42 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
             if (DeviceUtils.safeGetPlatform() == SupportedPlatform.iOS) {
               sendEventToBloc<MindBloc>(MindUpdateMobileWidgets());
             }
+
+            // Automatically delete onboarding minds after first real mind is created
+            if (!_hasShownOnboardingDialog) {
+              final realMinds = state.values.where(
+                (m) => !OnboardingConstants.isOnboardingMind(m.id, m.rootId),
+              ).toList();
+
+              final onboardingMinds = state.values.where(
+                (m) => OnboardingConstants.isOnboardingMind(m.id, m.rootId),
+              ).toList();
+
+              if (realMinds.length == 1 && onboardingMinds.isNotEmpty) {
+                _hasShownOnboardingDialog = true;
+                // Automatically delete onboarding minds and mark as seen
+                sendEventToBloc<LazyOnboardingBloc>(LazyOnboardingDelete());
+                sendEventToBloc<LazyOnboardingBloc>(LazyOnboardingMarkAsSeen());
+              }
+            }
           } else if (state is MindSearching) {
             setState(() => _searchingMindState = state);
           }
         },
       )?.disposed(by: this);
+
+      // Lazy onboarding check
+      subscribeToBloc<LazyOnboardingBloc>(
+        onNewState: (state) {
+          if (state is LazyOnboardingNeeded && state.shouldShow) {
+            sendEventToBloc<LazyOnboardingBloc>(
+              LazyOnboardingCreate(context: context),
+            );
+            sendEventToBloc<LazyOnboardingBloc>(LazyOnboardingMarkAsSeen());
+          }
+        },
+      )?.disposed(by: this);
+      sendEventToBloc<LazyOnboardingBloc>(LazyOnboardingCheck());
 
       // Auth removed - no authentication required
 

@@ -423,12 +423,6 @@ abstract class AppLocalizations {
   /// **'Clear cache'**
   String get clearCache;
 
-  /// Developer mode enabled message
-  ///
-  /// In en, this message translates to:
-  /// **'🔧 Developer mode enabled! Debug Menu tab is now available!'**
-  String get developerModeEnabled;
-
   /// Active tabs section header
   ///
   /// In en, this message translates to:
@@ -458,18 +452,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'SEND'**
   String get send;
-
-  /// Translate content debug option
-  ///
-  /// In en, this message translates to:
-  /// **'Translate content'**
-  String get translateContent;
-
-  /// Sensitive content debug option
-  ///
-  /// In en, this message translates to:
-  /// **'Sensitive content'**
-  String get sensitiveContent;
 
   /// Update nickname dialog title
   ///
@@ -866,6 +848,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Audio files imported'**
   String get audioFilesImported;
+
+  /// First onboarding mind greeting
+  ///
+  /// In en, this message translates to:
+  /// **'Hello!'**
+  String get onboardingMind1;
+
+  /// Explanation of what keklist is
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m keklist - a personal diary of short notes'**
+  String get onboardingMind2;
+
+  /// Comment explaining commenting feature
+  ///
+  /// In en, this message translates to:
+  /// **'Notes can be commented on'**
+  String get onboardingMind2Comment1;
+
+  /// Comment explaining how to open notes
+  ///
+  /// In en, this message translates to:
+  /// **'To open a note, tap on it'**
+  String get onboardingMind2Comment2;
+
+  /// Explanation of Calendar tab
+  ///
+  /// In en, this message translates to:
+  /// **'In the \'Calendar\' tab, all notes are displayed by days, weeks, and months'**
+  String get onboardingMind3;
+
+  /// Explanation of Analytics tab
+  ///
+  /// In en, this message translates to:
+  /// **'The \'Analytics\' tab shows brief statistics of your entries'**
+  String get onboardingMind4;
+
+  /// Privacy explanation
+  ///
+  /// In en, this message translates to:
+  /// **'All notes are stored only on your phone'**
+  String get onboardingMind5;
+
+  /// Instruction to create new note
+  ///
+  /// In en, this message translates to:
+  /// **'To create new note tap \'Write\''**
+  String get onboardingMind6;
 }
 
 class _AppLocalizationsDelegate

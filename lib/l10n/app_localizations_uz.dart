@@ -163,10 +163,6 @@ class AppLocalizationsUz extends AppLocalizations {
   String get clearCache => 'Keshni tozalash';
 
   @override
-  String get developerModeEnabled =>
-      '🔧 Dasturchi rejimi yoqildi! Debug Menu tabi endi mavjud!';
-
-  @override
   String get activeTabs => 'Faol tablar';
 
   @override
@@ -180,12 +176,6 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get send => 'YUBORISH';
-
-  @override
-  String get translateContent => 'Kontentni tarjima qilish';
-
-  @override
-  String get sensitiveContent => 'Hassos kontent';
 
   @override
   String get updateYourNickname => 'Niknamingizni yangilash';
@@ -394,4 +384,33 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get audioFilesImported => 'Audio fayllar import qilindi';
+
+  @override
+  String get onboardingMind1 => 'Salom!';
+
+  @override
+  String get onboardingMind2 =>
+      'Men keklist - qisqa yozuvlarning shaxsiy kundaligiman';
+
+  @override
+  String get onboardingMind2Comment1 => 'Yozuvlarga sharh qoldirish mumkin';
+
+  @override
+  String get onboardingMind2Comment2 => 'Yozuvni ochish uchun uni bosing';
+
+  @override
+  String get onboardingMind3 =>
+      '\'Kalendar\' yorlig\'ida barcha yozuvlar kunlar, haftalar va oylar bo\'yicha ko\'rsatiladi';
+
+  @override
+  String get onboardingMind4 =>
+      '\'Analitika\' yorlig\'i yozuvlaringizning qisqacha statistikasini ko\'rsatadi';
+
+  @override
+  String get onboardingMind5 =>
+      'Barcha yozuvlar faqat telefoningizda saqlanadi';
+
+  @override
+  String get onboardingMind6 =>
+      'Yangi yozuv yaratish uchun \'Yozish\' tugmasini bosing';
 }

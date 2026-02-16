@@ -52,7 +52,7 @@ final class _InsightsScreenState extends KekWidgetState<InsightsScreen> {
             final int crossAxisCellCount = constraints.maxWidth > 600 ? 2 : 3;
             return BoolWidget(
               condition: _minds.isNotEmpty,
-              falseChild: MindCollectionEmptyDayWidget.noInsights(),
+              falseChild: MindCollectionEmptyDayWidget.noInsights(context: context),
               trueChild: SingleChildScrollView(
                 child: StaggeredGrid.count(
                   axisDirection: AxisDirection.down,

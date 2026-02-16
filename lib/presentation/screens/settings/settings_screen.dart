@@ -20,6 +20,7 @@ import 'package:keklist/presentation/core/helpers/platform_utils.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/screens/actions/action_model.dart';
 import 'package:keklist/presentation/screens/actions/actions_screen.dart';
+import 'package:keklist/presentation/screens/debug_menu/debug_menu_screen.dart';
 import 'package:keklist/presentation/screens/language_picker/language_picker_screen.dart';
 import 'package:keklist/presentation/screens/settings/widgets/password_input_bottom_sheet.dart';
 import 'package:keklist/presentation/screens/tabs_settings/tabs_settings_screen.dart';
@@ -42,6 +43,8 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   //bool _isSensitiveContentShowed = false;
   bool _isDarkMode = false;
   String? translateLanguageCode;
+  int _appBarTapCount = 0;
+  bool _isDebugMenuVisible = false;
 
   @override
   void initState() {
@@ -53,6 +56,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
           case SettingsDataState state:
             setState(() {
               _isDarkMode = state.settings.isDarkMode;
+              _isDebugMenuVisible = state.settings.isDebugMenuVisible;
             });
             break;
           case SettingsShowMessage state:
@@ -104,9 +108,29 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     // final darkSettingsListBackground = CupertinoColors.black;
 
     return Scaffold(
-      appBar: AppBar(title: Text(context.l10n.settings)),
+      appBar: AppBar(
+        title: GestureDetector(
+          onTap: _handleAppBarTap,
+          child: Text(context.l10n.settings),
+        ),
+      ),
       body: SettingsList(
         sections: [
+          SettingsSection(
+            title: Text(context.l10n.userData.toUpperCase()),
+            tiles: [
+              SettingsTile(
+                title: Text(context.l10n.exportData),
+                leading: const Icon(Icons.upload, color: Colors.redAccent),
+                onPressed: (BuildContext context) => _handleExport(),
+              ),
+              SettingsTile(
+                title: Text(context.l10n.importData),
+                leading: const Icon(Icons.download, color: Colors.greenAccent),
+                onPressed: (BuildContext context) => _handleImport(),
+              ),
+            ],
+          ),
           SettingsSection(
             title: Text('APPLICATION'),
             tiles: [
@@ -157,21 +181,6 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
             ],
           ),
           SettingsSection(
-            title: Text(context.l10n.userData.toUpperCase()),
-            tiles: [
-              SettingsTile(
-                title: Text(context.l10n.exportData),
-                leading: const Icon(Icons.upload, color: Colors.redAccent),
-                onPressed: (BuildContext context) => _handleExport(),
-              ),
-              SettingsTile(
-                title: Text(context.l10n.importData),
-                leading: const Icon(Icons.download, color: Colors.greenAccent),
-                onPressed: (BuildContext context) => _handleImport(),
-              ),
-            ],
-          ),
-          SettingsSection(
             title: Text(context.l10n.appearance.toUpperCase()),
             tiles: [
               SettingsTile.navigation(
@@ -207,6 +216,12 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
                 leading: const Icon(Icons.dashboard, color: Colors.blue),
                 onPressed: (_) => _showTabsSettings(),
               ),
+              if (_isDebugMenuVisible)
+                SettingsTile.navigation(
+                  title: Text(context.l10n.debugMenu),
+                  leading: const Icon(Icons.bug_report, color: Colors.orange),
+                  onPressed: (_) => _showDebugMenu(),
+                ),
             ],
           ),
           SettingsSection(
@@ -290,7 +305,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   Future<void> _openAppNews() async {
     final Uri uri = Uri.parse(KeklistConstants.newsTelegramChannelURL);
     if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: .externalApplication);
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
     }
   }
 
@@ -319,6 +334,33 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     Navigator.of(
       context,
     ).push<void>(BackSwipePageRoute<void>(builder: (BuildContext context) => const TabsSettingsScreen()));
+  }
+
+  void _showDebugMenu() {
+    Navigator.of(context).push<void>(BackSwipePageRoute<void>(builder: (BuildContext context) => const DebugMenuScreen()));
+  }
+
+  void _handleAppBarTap() {
+    if (_isDebugMenuVisible) return; // Already visible, no need to count
+
+    setState(() {
+      _appBarTapCount++;
+    });
+
+    if (_appBarTapCount >= 10) {
+      sendEventToBloc<SettingsBloc>(const SettingsEnableDebugMenu());
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Debug menu enabled'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+
+      setState(() {
+        _appBarTapCount = 0;
+      });
+    }
   }
 
   Future<void> _clearCache() async {

@@ -24,6 +24,8 @@ final class KeklistSettings {
   final String? userName;
   final SupportedLanguage language;
   final int dataSchemaVersion;
+  final bool hasSeenLazyOnboarding;
+  final bool isDebugMenuVisible;
 
   KeklistSettings({
     required this.isMindContentVisible,
@@ -33,6 +35,8 @@ final class KeklistSettings {
     required this.userName,
     required this.language,
     required this.dataSchemaVersion,
+    required this.hasSeenLazyOnboarding,
+    required this.isDebugMenuVisible,
   });
 
   SettingsObject toObject() => SettingsObject()
@@ -42,7 +46,9 @@ final class KeklistSettings {
     ..shouldShowTitles = shouldShowTitles
     ..userName = userName
     ..language = language.code
-    ..dataSchemaVersion = dataSchemaVersion;
+    ..dataSchemaVersion = dataSchemaVersion
+    ..hasSeenLazyOnboarding = hasSeenLazyOnboarding
+    ..isDebugMenuVisible = isDebugMenuVisible;
 
   factory KeklistSettings.initial() => KeklistSettings(
         isMindContentVisible: true,
@@ -52,6 +58,8 @@ final class KeklistSettings {
         userName: null,
         language: _detectDeviceLocale(),
         dataSchemaVersion: 0,
+        hasSeenLazyOnboarding: false,
+        isDebugMenuVisible: false,
       );
 
   /// Detect device locale and return supported language or fallback to English

@@ -163,10 +163,6 @@ class AppLocalizationsSr extends AppLocalizations {
   String get clearCache => 'Очисти кеш';
 
   @override
-  String get developerModeEnabled =>
-      '🔧 Режим програмера укључен! Debug Menu картица је сада доступна!';
-
-  @override
   String get activeTabs => 'Активне картице';
 
   @override
@@ -182,22 +178,16 @@ class AppLocalizationsSr extends AppLocalizations {
   String get send => 'ПОШАЉИ';
 
   @override
-  String get translateContent => 'Преведи садржај';
-
-  @override
-  String get sensitiveContent => 'Осетљиви садржај';
-
-  @override
   String get updateYourNickname => 'Ажурирај свој надимак';
 
   @override
-  String get yourNickname => 'Ваш надимак';
+  String get yourNickname => 'Твој надимак';
 
   @override
   String get create => 'Напиши';
 
   @override
-  String get yourFolderName => 'Име ваше фасцикле';
+  String get yourFolderName => 'Назив твог фолдера';
 
   @override
   String get noMindsInSelectedPeriod => 'Нема белешки у изабраном периоду';
@@ -215,13 +205,13 @@ class AppLocalizationsSr extends AppLocalizations {
   String get minds => 'Белешке';
 
   @override
-  String get searchForYourNotes => 'Претражи ваше белешке';
+  String get searchForYourNotes => 'Претражи своје белешке';
 
   @override
-  String get searchYourEmoji => 'Претражи ваше емоџи...';
+  String get searchYourEmoji => 'Претражи свој емоџи...';
 
   @override
-  String get writeSomething => 'Напишите нешто...';
+  String get writeSomething => 'Напиши нешто...';
 
   @override
   String get topMinds => 'Топ белешке';
@@ -230,25 +220,25 @@ class AppLocalizationsSr extends AppLocalizations {
   String get todayMinds => 'Данашње белешке';
 
   @override
-  String get randomMind => 'Насумична белешка';
+  String get randomMind => 'Случајна белешка';
 
   @override
   String get spectrum => 'Спектар';
 
   @override
   String get youDidNotCollectAnyEntriesYet =>
-      'Још нисте прикупили ниједан унос';
+      'Још увек ниси прикупио ниједан унос';
 
   @override
   String get pleaseAuthenticateToShowContent =>
-      'Молимо аутентификујте се да прикажете садржај ваше белешке';
+      'Молим те аутентификуј се да би приказао садржај твоје белешке';
 
   @override
   String get areYouSure => 'Да ли сте сигурни?';
 
   @override
   String get cannotRemoveMainScreen =>
-      'Не можете уклонити главни екран. Изгубићете могућност подешавања картица.';
+      'Није могуће уклонити главни екран. Изгубићеш опцију да подесиш картице.';
 
   @override
   String get today => 'Данас';
@@ -257,36 +247,36 @@ class AppLocalizationsSr extends AppLocalizations {
   String get yesterday => 'Јуче';
 
   @override
-  String get thisWeek => 'Ове недеље';
+  String get thisWeek => 'Ова недеља';
 
   @override
-  String get lastTwoWeeks => 'За последња 2 месеца';
+  String get lastTwoWeeks => 'Последње 2 недеље';
 
   @override
-  String get thisMonth => 'Овог месеца';
+  String get thisMonth => 'Овај месец';
 
   @override
-  String get thisYear => 'Ове године';
+  String get thisYear => 'Ова година';
 
   @override
   String get calendarDescription => 'Главни екран са календаром уноса';
 
   @override
-  String get insightsDescription => 'Статистика свих ваших уноса';
+  String get insightsDescription => 'Статистика свих твојих уноса';
 
   @override
   String get settingsDescription =>
-      'Екран са свим подешавањима (тамни режим, синхронизација и сл.)';
+      'Екран са свим подешавањима (тамни режим, синхронизација итд.)';
 
   @override
-  String get profileDescription => 'Екран са вашим профилом';
+  String get profileDescription => 'Екран са твојим профилом';
 
   @override
   String get todayDescription => 'Само данашње белешке';
 
   @override
   String get debugMenuDescription =>
-      'Алати за програмере за пребацивање експерименталних функција';
+      'Алати за програмере за укључивање експерименталних функција';
 
   @override
   String get noMindsForThisDay => 'Нема белешки за овај дан';
@@ -318,18 +308,18 @@ class AppLocalizationsSr extends AppLocalizations {
   String get passwordsDoNotMatch => 'Лозинке се не подударају';
 
   @override
-  String get exportPassword => 'Заштитити извоз лозинком?';
+  String get exportPassword => 'Извоз у ZIP';
 
   @override
   String get exportPasswordDescription =>
-      'Додај лозинку да шифрујеш извоз. Можеш прескочити за нешифровани извоз.';
+      'Додај лозинку да шифрујеш свој извоз. Можеш да прескочиш ово за нешифровани извоз.';
 
   @override
   String get importPassword => 'Унеси лозинку';
 
   @override
   String get importPasswordDescription =>
-      'Овај фајл је заштићен лозинком. Унеси лозинку да дешифрујеш.';
+      'Овај фајл је заштићен лозинком. Унеси лозинку за дешифровање.';
 
   @override
   String get skipPassword => 'Прескочи (без лозинке)';
@@ -354,7 +344,7 @@ class AppLocalizationsSr extends AppLocalizations {
   String get missingAudioFiles => 'Неки аудио фајлови недостају';
 
   @override
-  String get insufficientStorage => 'Недовољно меморије';
+  String get insufficientStorage => 'Недовољно простора за складиштење';
 
   @override
   String get unknownError => 'Непозната грешка';
@@ -363,37 +353,65 @@ class AppLocalizationsSr extends AppLocalizations {
   String get retry => 'Покушај поново';
 
   @override
-  String get ok => 'OK';
+  String get ok => 'У реду';
 
   @override
   String get exportSuccess => 'Извоз успешан';
 
   @override
-  String get exportError => 'Извоз неуспешан';
+  String get exportError => 'Извоз није успео';
 
   @override
   String get importSuccess => 'Увоз успешан';
 
   @override
-  String get importError => 'Увоз неуспешан';
+  String get importError => 'Увоз није успео';
 
   @override
-  String get mindsToExport => 'Умови';
+  String get mindsToExport => 'Белешке';
 
   @override
   String get audioFilesToExport => 'Аудио фајлови';
 
   @override
-  String get mindsExported => 'Умови извезени';
+  String get mindsExported => 'Белешке извезене';
 
   @override
   String get audioFilesExported => 'Аудио фајлови извезени';
 
   @override
-  String get mindsImported => 'Умови увезени';
+  String get mindsImported => 'Белешке увезене';
 
   @override
   String get audioFilesImported => 'Аудио фајлови увезени';
+
+  @override
+  String get onboardingMind1 => 'Здраво!';
+
+  @override
+  String get onboardingMind2 =>
+      'Ја сам keklist - лични дневник кратких белешки';
+
+  @override
+  String get onboardingMind2Comment1 => 'Белешке могу бити коментарисане';
+
+  @override
+  String get onboardingMind2Comment2 => 'Да отвориш белешку, притисни на њу';
+
+  @override
+  String get onboardingMind3 =>
+      'У картици \'Календар\' све белешке су приказане по данима, недељама и месецима';
+
+  @override
+  String get onboardingMind4 =>
+      'Картица \'Аналитика\' приказује кратку статистику твојих уноса';
+
+  @override
+  String get onboardingMind5 =>
+      'Све белешке су сачуване само на твојом телефону';
+
+  @override
+  String get onboardingMind6 => 'Да креирате нову белешку, додирните \'Пиши\'';
 }
 
 /// The translations for Serbian, using the Latin script (`sr_Latn`).
@@ -555,10 +573,6 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
   String get clearCache => 'Obriši keš';
 
   @override
-  String get developerModeEnabled =>
-      '🔧 Režim programera omogućen! Debug Menu tab je sada dostupan!';
-
-  @override
   String get activeTabs => 'Aktivni tabovi';
 
   @override
@@ -572,12 +586,6 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
 
   @override
   String get send => 'POŠALJI';
-
-  @override
-  String get translateContent => 'Prevedi sadržaj';
-
-  @override
-  String get sensitiveContent => 'Osetljiv sadržaj';
 
   @override
   String get updateYourNickname => 'Ažuriraj svoj nadimak';
@@ -786,4 +794,31 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
 
   @override
   String get audioFilesImported => 'Audio fajlovi uvezeni';
+
+  @override
+  String get onboardingMind1 => 'Zdravo!';
+
+  @override
+  String get onboardingMind2 =>
+      'Ja sam keklist - lični dnevnik kratkih beleški';
+
+  @override
+  String get onboardingMind2Comment1 => 'Beleške mogu biti komentarisane';
+
+  @override
+  String get onboardingMind2Comment2 => 'Da otvorite belešku, dotaknite je';
+
+  @override
+  String get onboardingMind3 =>
+      'U kartici \'Kalendar\', sve beleške su prikazane po danima, nedeljama i mesecima';
+
+  @override
+  String get onboardingMind4 =>
+      'Kartica \'Analitika\' prikazuje kratku statistiku vaših unosa';
+
+  @override
+  String get onboardingMind5 => 'Sve beleške se čuvaju samo na vašem telefonu';
+
+  @override
+  String get onboardingMind6 => 'Da kreirate novu belešku, dodirnite \'Piši\'';
 }

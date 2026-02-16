@@ -31,6 +31,22 @@ Build AAB and upload to Play Store internal testing track
 
 Build AAB only (for testing)
 
+### android distribute_firebase
+
+```sh
+[bundle exec] fastlane android distribute_firebase
+```
+
+Build APK and distribute to Firebase App Distribution
+
+### android distribute_firebase_with_notes
+
+```sh
+[bundle exec] fastlane android distribute_firebase_with_notes
+```
+
+Build APK and distribute to Firebase with custom release notes
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.

@@ -163,10 +163,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get clearCache => 'キャッシュをクリア';
 
   @override
-  String get developerModeEnabled =>
-      '🔧 開発者モードが有効になりました！Debug Menuタブが利用可能になりました！';
-
-  @override
   String get activeTabs => 'アクティブなタブ';
 
   @override
@@ -182,12 +178,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get send => '送信';
 
   @override
-  String get translateContent => 'コンテンツを翻訳';
-
-  @override
-  String get sensitiveContent => '機密コンテンツ';
-
-  @override
   String get updateYourNickname => 'ニックネームを更新';
 
   @override
@@ -197,13 +187,13 @@ class AppLocalizationsJa extends AppLocalizations {
   String get create => '書く';
 
   @override
-  String get yourFolderName => 'フォルダ名';
+  String get yourFolderName => 'あなたのフォルダー名';
 
   @override
-  String get noMindsInSelectedPeriod => '選択した期間にメモがありません';
+  String get noMindsInSelectedPeriod => '選択した期間にメモはありません';
 
   @override
-  String get noMindsForPeriod => 'この期間にメモがありません';
+  String get noMindsForPeriod => 'この期間のメモはありません';
 
   @override
   String get selectPeriod => '期間を選択...';
@@ -230,22 +220,22 @@ class AppLocalizationsJa extends AppLocalizations {
   String get todayMinds => '今日のメモ';
 
   @override
-  String get randomMind => 'ランダムメモ';
+  String get randomMind => 'ランダムなメモ';
 
   @override
   String get spectrum => 'スペクトラム';
 
   @override
-  String get youDidNotCollectAnyEntriesYet => 'まだエントリを収集していません';
+  String get youDidNotCollectAnyEntriesYet => 'まだエントリーを収集していません';
 
   @override
   String get pleaseAuthenticateToShowContent => 'メモの内容を表示するには認証してください';
 
   @override
-  String get areYouSure => '本当によろしいですか？';
+  String get areYouSure => 'よろしいですか？';
 
   @override
-  String get cannotRemoveMainScreen => 'メイン画面を削除することはできません。タブの設定オプションが失われます。';
+  String get cannotRemoveMainScreen => 'メイン画面は削除できません。タブを設定するオプションが失われます。';
 
   @override
   String get today => '今日';
@@ -266,22 +256,22 @@ class AppLocalizationsJa extends AppLocalizations {
   String get thisYear => '今年';
 
   @override
-  String get calendarDescription => 'エントリのカレンダーがあるメイン画面';
+  String get calendarDescription => 'エントリーのカレンダーがあるメイン画面';
 
   @override
-  String get insightsDescription => 'すべてのエントリの統計';
+  String get insightsDescription => 'すべてのエントリーの統計';
 
   @override
-  String get settingsDescription => 'すべての設定画面（ダークモード、同期など）';
+  String get settingsDescription => 'すべての設定の画面（ダークモード、同期など）';
 
   @override
-  String get profileDescription => 'プロフィール画面';
+  String get profileDescription => 'あなたのプロフィールの画面';
 
   @override
   String get todayDescription => '今日のメモのみ';
 
   @override
-  String get debugMenuDescription => '実験的機能を切り替える開発者ツール';
+  String get debugMenuDescription => '実験的な機能を切り替えるための開発者ツール';
 
   @override
   String get noMindsForThisDay => 'この日のメモはありません';
@@ -313,7 +303,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get passwordsDoNotMatch => 'パスワードが一致しません';
 
   @override
-  String get exportPassword => 'エクスポートをパスワードで保護しますか？';
+  String get exportPassword => 'ZIPにエクスポート';
 
   @override
   String get exportPasswordDescription =>
@@ -360,32 +350,56 @@ class AppLocalizationsJa extends AppLocalizations {
   String get ok => 'OK';
 
   @override
-  String get exportSuccess => 'エクスポート成功';
+  String get exportSuccess => 'エクスポートに成功しました';
 
   @override
-  String get exportError => 'エクスポート失敗';
+  String get exportError => 'エクスポートに失敗しました';
 
   @override
-  String get importSuccess => 'インポート成功';
+  String get importSuccess => 'インポートに成功しました';
 
   @override
-  String get importError => 'インポート失敗';
+  String get importError => 'インポートに失敗しました';
 
   @override
-  String get mindsToExport => 'マインド';
+  String get mindsToExport => 'メモ';
 
   @override
   String get audioFilesToExport => '音声ファイル';
 
   @override
-  String get mindsExported => 'マインドをエクスポートしました';
+  String get mindsExported => 'メモをエクスポートしました';
 
   @override
   String get audioFilesExported => '音声ファイルをエクスポートしました';
 
   @override
-  String get mindsImported => 'マインドをインポートしました';
+  String get mindsImported => 'メモをインポートしました';
 
   @override
   String get audioFilesImported => '音声ファイルをインポートしました';
+
+  @override
+  String get onboardingMind1 => 'こんにちは！';
+
+  @override
+  String get onboardingMind2 => '私はkeklist - 短いメモの個人日記です';
+
+  @override
+  String get onboardingMind2Comment1 => 'メモにはコメントを付けることができます';
+
+  @override
+  String get onboardingMind2Comment2 => 'メモを開くには、タップしてください';
+
+  @override
+  String get onboardingMind3 => '「カレンダー」タブでは、すべてのメモが日、週、月ごとに表示されます';
+
+  @override
+  String get onboardingMind4 => '「分析」タブでは、エントリーの簡単な統計が表示されます';
+
+  @override
+  String get onboardingMind5 => 'すべてのメモはあなたのスマートフォンにのみ保存されます';
+
+  @override
+  String get onboardingMind6 => '新しいメモを作成するには、\'書く\'をタップしてください';
 }

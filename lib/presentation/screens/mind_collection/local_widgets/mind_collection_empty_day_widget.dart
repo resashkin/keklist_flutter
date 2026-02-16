@@ -19,17 +19,17 @@ final class MindCollectionEmptyDayWidget extends StatelessWidget {
     );
   }
 
-  factory MindCollectionEmptyDayWidget.noMindsForDay({String? text}) {
+  factory MindCollectionEmptyDayWidget.noMindsForDay({required BuildContext context, String? text}) {
     return MindCollectionEmptyDayWidget(
       emoji: '😔',
-      text: text ?? 'No minds for this day',
+      text: text ?? context.l10n.noMindsForThisDay,
     );
   }
 
-  factory MindCollectionEmptyDayWidget.noInsights({String? text}) {
+  factory MindCollectionEmptyDayWidget.noInsights({required BuildContext context, String? text}) {
     return MindCollectionEmptyDayWidget(
       emoji: '😔',
-      text: text ?? 'You did not collect any entries yet',
+      text: text ?? context.l10n.youDidNotCollectAnyEntriesYet,
     );
   }
 

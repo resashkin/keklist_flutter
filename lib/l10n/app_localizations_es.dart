@@ -163,10 +163,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get clearCache => 'Limpiar caché';
 
   @override
-  String get developerModeEnabled =>
-      '🔧 ¡Modo desarrollador habilitado! ¡La pestaña Menú Debug ahora está disponible!';
-
-  @override
   String get activeTabs => 'Pestañas activas';
 
   @override
@@ -180,12 +176,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get send => 'ENVIAR';
-
-  @override
-  String get translateContent => 'Traducir contenido';
-
-  @override
-  String get sensitiveContent => 'Contenido sensible';
 
   @override
   String get updateYourNickname => 'Actualizar tu apodo';
@@ -396,4 +386,32 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get audioFilesImported => 'Archivos de audio importados';
+
+  @override
+  String get onboardingMind1 => '¡Hola!';
+
+  @override
+  String get onboardingMind2 =>
+      'Soy keklist - un diario personal de notas cortas';
+
+  @override
+  String get onboardingMind2Comment1 => 'Las notas se pueden comentar';
+
+  @override
+  String get onboardingMind2Comment2 => 'Para abrir una nota, tócala';
+
+  @override
+  String get onboardingMind3 =>
+      'En la pestaña \'Calendario\', todas las notas se muestran por días, semanas y meses';
+
+  @override
+  String get onboardingMind4 =>
+      'La pestaña \'Estadísticas\' muestra breves estadísticas de tus entradas';
+
+  @override
+  String get onboardingMind5 =>
+      'Todas las notas se almacenan solo en tu teléfono';
+
+  @override
+  String get onboardingMind6 => 'Para crear una nueva nota, toca \'Escribir\'';
 }

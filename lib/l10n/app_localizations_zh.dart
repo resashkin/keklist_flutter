@@ -162,9 +162,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get clearCache => '清除缓存';
 
   @override
-  String get developerModeEnabled => '🔧 开发者模式已启用！Debug Menu标签页现在可用！';
-
-  @override
   String get activeTabs => '活动标签页';
 
   @override
@@ -180,12 +177,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get send => '发送';
 
   @override
-  String get translateContent => '翻译内容';
-
-  @override
-  String get sensitiveContent => '敏感内容';
-
-  @override
   String get updateYourNickname => '更新您的昵称';
 
   @override
@@ -198,7 +189,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get yourFolderName => '您的文件夹名称';
 
   @override
-  String get noMindsInSelectedPeriod => '所选期间内没有笔记';
+  String get noMindsInSelectedPeriod => '所选期间没有笔记';
 
   @override
   String get noMindsForPeriod => '此期间没有笔记';
@@ -225,7 +216,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get topMinds => '热门笔记';
 
   @override
-  String get todayMinds => '今日笔记';
+  String get todayMinds => '今天的笔记';
 
   @override
   String get randomMind => '随机笔记';
@@ -237,7 +228,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get youDidNotCollectAnyEntriesYet => '您还没有收集任何条目';
 
   @override
-  String get pleaseAuthenticateToShowContent => '请验证身份以显示您的笔记内容';
+  String get pleaseAuthenticateToShowContent => '请进行身份验证以显示您的笔记内容';
 
   @override
   String get areYouSure => '您确定吗？';
@@ -255,7 +246,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get thisWeek => '本周';
 
   @override
-  String get lastTwoWeeks => '过去2周';
+  String get lastTwoWeeks => '最近2周';
 
   @override
   String get thisMonth => '本月';
@@ -267,7 +258,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get calendarDescription => '带有条目日历的主屏幕';
 
   @override
-  String get insightsDescription => '所有条目的统计';
+  String get insightsDescription => '所有条目的统计信息';
 
   @override
   String get settingsDescription => '包含所有设置的屏幕（深色模式、同步等）';
@@ -276,13 +267,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get profileDescription => '您的个人资料屏幕';
 
   @override
-  String get todayDescription => '仅今日笔记';
+  String get todayDescription => '仅今天的笔记';
 
   @override
-  String get debugMenuDescription => '用于切换实验功能的开发工具';
+  String get debugMenuDescription => '用于切换实验性功能的开发者工具';
 
   @override
-  String get noMindsForThisDay => '今天没有笔记';
+  String get noMindsForThisDay => '这一天没有笔记';
 
   @override
   String showMindsForPeriod(String period) {
@@ -296,7 +287,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get password => '密码';
 
   @override
-  String get archivePassword => '存档密码';
+  String get archivePassword => '归档密码';
 
   @override
   String get enterPassword => '输入密码';
@@ -311,16 +302,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get passwordsDoNotMatch => '密码不匹配';
 
   @override
-  String get exportPassword => '是否为导出设置密码保护？';
+  String get exportPassword => '导出为ZIP';
 
   @override
-  String get exportPasswordDescription => '添加密码以加密您的导出。您可以跳过此步骤以进行未加密的导出。';
+  String get exportPasswordDescription => '添加密码以加密您的导出。您可以跳过此步骤进行不加密导出。';
 
   @override
   String get importPassword => '输入密码';
 
   @override
-  String get importPasswordDescription => '此文件已加密保护。请输入密码以解密。';
+  String get importPasswordDescription => '此文件受密码保护。请输入密码以解密。';
 
   @override
   String get skipPassword => '跳过（无密码）';
@@ -341,7 +332,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get invalidFormat => '格式无效';
 
   @override
-  String get missingAudioFiles => '部分音频文件丢失';
+  String get missingAudioFiles => '某些音频文件缺失';
 
   @override
   String get insufficientStorage => '存储空间不足';
@@ -368,20 +359,44 @@ class AppLocalizationsZh extends AppLocalizations {
   String get importError => '导入失败';
 
   @override
-  String get mindsToExport => '思绪';
+  String get mindsToExport => '笔记';
 
   @override
   String get audioFilesToExport => '音频文件';
 
   @override
-  String get mindsExported => '思绪已导出';
+  String get mindsExported => '笔记已导出';
 
   @override
   String get audioFilesExported => '音频文件已导出';
 
   @override
-  String get mindsImported => '思绪已导入';
+  String get mindsImported => '笔记已导入';
 
   @override
   String get audioFilesImported => '音频文件已导入';
+
+  @override
+  String get onboardingMind1 => '你好！';
+
+  @override
+  String get onboardingMind2 => '我是keklist - 一个短笔记的个人日记';
+
+  @override
+  String get onboardingMind2Comment1 => '笔记可以添加评论';
+
+  @override
+  String get onboardingMind2Comment2 => '要打开笔记，请点击它';
+
+  @override
+  String get onboardingMind3 => '在\'日历\'标签页中，所有笔记按天、周和月显示';
+
+  @override
+  String get onboardingMind4 => '\'分析\'标签页显示您条目的简要统计信息';
+
+  @override
+  String get onboardingMind5 => '所有笔记仅存储在您的手机上';
+
+  @override
+  String get onboardingMind6 => '要创建新笔记，请点击\'写入\'';
 }

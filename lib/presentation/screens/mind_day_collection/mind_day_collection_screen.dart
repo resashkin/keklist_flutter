@@ -200,7 +200,7 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
               onOptions: (Mind mind) => _showActions(context, mind),
               mindIdsToChildren: _mindIdsToChildren,
             ),
-            falseChild: MindCollectionEmptyDayWidget.noMindsForDay(),
+            falseChild: MindCollectionEmptyDayWidget.noMindsForDay(context: context),
             // falseChild: _MindInteractiveZeroCase(
             //   title: 'No created minds for today. Pick emoji to create one.',
             //   suggestions: suggestions,

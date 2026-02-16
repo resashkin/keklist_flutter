@@ -163,10 +163,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get clearCache => 'Clear cache';
 
   @override
-  String get developerModeEnabled =>
-      '🔧 Developer mode enabled! Debug Menu tab is now available!';
-
-  @override
   String get activeTabs => 'Active tabs';
 
   @override
@@ -180,12 +176,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get send => 'SEND';
-
-  @override
-  String get translateContent => 'Translate content';
-
-  @override
-  String get sensitiveContent => 'Sensitive content';
 
   @override
   String get updateYourNickname => 'Update your nickname';
@@ -394,4 +384,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get audioFilesImported => 'Audio files imported';
+
+  @override
+  String get onboardingMind1 => 'Hello!';
+
+  @override
+  String get onboardingMind2 =>
+      'I\'m keklist - a personal diary of short notes';
+
+  @override
+  String get onboardingMind2Comment1 => 'Notes can be commented on';
+
+  @override
+  String get onboardingMind2Comment2 => 'To open a note, tap on it';
+
+  @override
+  String get onboardingMind3 =>
+      'In the \'Calendar\' tab, all notes are displayed by days, weeks, and months';
+
+  @override
+  String get onboardingMind4 =>
+      'The \'Analytics\' tab shows brief statistics of your entries';
+
+  @override
+  String get onboardingMind5 => 'All notes are stored only on your phone';
+
+  @override
+  String get onboardingMind6 => 'To create new note tap \'Write\'';
 }

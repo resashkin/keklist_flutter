@@ -163,10 +163,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get clearCache => 'Очистить кэш';
 
   @override
-  String get developerModeEnabled =>
-      '🔧 Режим разработчика включен! Вкладка Debug Menu теперь доступна!';
-
-  @override
   String get activeTabs => 'Активные вкладки';
 
   @override
@@ -182,13 +178,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get send => 'ОТПРАВИТЬ';
 
   @override
-  String get translateContent => 'Перевести содержимое';
-
-  @override
-  String get sensitiveContent => 'Конфиденциальный контент';
-
-  @override
-  String get updateYourNickname => 'Обновить ваш никнейм';
+  String get updateYourNickname => 'Обновите ваш никнейм';
 
   @override
   String get yourNickname => 'Ваш никнейм';
@@ -206,7 +196,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get noMindsForPeriod => 'Нет заметок за этот период';
 
   @override
-  String get selectPeriod => 'Выбрать период ...';
+  String get selectPeriod => 'Выберите период ...';
 
   @override
   String get digest => 'Сводка';
@@ -215,7 +205,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get minds => 'Заметки';
 
   @override
-  String get searchForYourNotes => 'Поиск по вашим заметкам';
+  String get searchForYourNotes => 'Поиск ваших заметок';
 
   @override
   String get searchYourEmoji => 'Поиск вашего эмодзи...';
@@ -227,7 +217,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get topMinds => 'Топ заметок';
 
   @override
-  String get todayMinds => 'Заметки сегодня';
+  String get todayMinds => 'Сегодняшние заметки';
 
   @override
   String get randomMind => 'Случайная заметка';
@@ -241,14 +231,14 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get pleaseAuthenticateToShowContent =>
-      'Пожалуйста, аутентифицируйтесь, чтобы показать содержимое вашей заметки';
+      'Пожалуйста, пройдите аутентификацию для отображения содержимого вашей заметки';
 
   @override
   String get areYouSure => 'Вы уверены?';
 
   @override
   String get cannotRemoveMainScreen =>
-      'Нельзя удалить главный экран. Вы потеряете возможность настройки вкладок.';
+      'Невозможно удалить главный экран. Вы потеряете возможность настраивать вкладки.';
 
   @override
   String get today => 'Сегодня';
@@ -257,16 +247,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get yesterday => 'Вчера';
 
   @override
-  String get thisWeek => 'На этой неделе';
+  String get thisWeek => 'Эта неделя';
 
   @override
-  String get lastTwoWeeks => 'За последние 2 недели';
+  String get lastTwoWeeks => 'Последние 2 недели';
 
   @override
-  String get thisMonth => 'В этом месяце';
+  String get thisMonth => 'Этот месяц';
 
   @override
-  String get thisYear => 'В этом году';
+  String get thisYear => 'Этот год';
 
   @override
   String get calendarDescription => 'Главный экран с календарем записей';
@@ -289,7 +279,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'Инструменты разработчика для переключения экспериментальных функций';
 
   @override
-  String get noMindsForThisDay => 'Нет заметок на этот день';
+  String get noMindsForThisDay => 'Нет заметок за этот день';
 
   @override
   String showMindsForPeriod(String period) {
@@ -303,7 +293,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get password => 'Пароль';
 
   @override
-  String get archivePassword => 'Пароль для архива';
+  String get archivePassword => 'Пароль архива';
 
   @override
   String get enterPassword => 'Введите пароль';
@@ -342,7 +332,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get incorrectPasswordMessage =>
-      'Введенный вами пароль неверен. Пожалуйста, попробуйте снова.';
+      'Введенный пароль неверен. Пожалуйста, попробуйте снова.';
 
   @override
   String get corruptedFile => 'Поврежденный файл';
@@ -354,7 +344,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get missingAudioFiles => 'Некоторые аудиофайлы отсутствуют';
 
   @override
-  String get insufficientStorage => 'Недостаточно места';
+  String get insufficientStorage => 'Недостаточно памяти';
 
   @override
   String get unknownError => 'Неизвестная ошибка';
@@ -366,32 +356,59 @@ class AppLocalizationsRu extends AppLocalizations {
   String get ok => 'OK';
 
   @override
-  String get exportSuccess => 'Экспорт успешен';
+  String get exportSuccess => 'Экспорт выполнен успешно';
 
   @override
-  String get exportError => 'Ошибка экспорта';
+  String get exportError => 'Экспорт не удался';
 
   @override
-  String get importSuccess => 'Импорт успешен';
+  String get importSuccess => 'Импорт выполнен успешно';
 
   @override
-  String get importError => 'Ошибка импорта';
+  String get importError => 'Импорт не удался';
 
   @override
-  String get mindsToExport => 'Заметок';
+  String get mindsToExport => 'Заметки';
 
   @override
-  String get audioFilesToExport => 'Аудиофайлов';
+  String get audioFilesToExport => 'Аудиофайлы';
 
   @override
-  String get mindsExported => 'Заметок экспортировано';
+  String get mindsExported => 'Заметки экспортированы';
 
   @override
-  String get audioFilesExported => 'Аудиофайлов экспортировано';
+  String get audioFilesExported => 'Аудиофайлы экспортированы';
 
   @override
-  String get mindsImported => 'Заметок импортировано';
+  String get mindsImported => 'Заметки импортированы';
 
   @override
-  String get audioFilesImported => 'Аудиофайлов импортировано';
+  String get audioFilesImported => 'Аудиофайлы импортированы';
+
+  @override
+  String get onboardingMind1 => 'Привет!';
+
+  @override
+  String get onboardingMind2 => 'Я keklist - личный дневник коротких заметок';
+
+  @override
+  String get onboardingMind2Comment1 => 'Заметки можно комментировать';
+
+  @override
+  String get onboardingMind2Comment2 => 'Чтобы открыть заметку, нажмите на неё';
+
+  @override
+  String get onboardingMind3 =>
+      'На вкладке \'Календарь\' все заметки отображаются по дням, неделям и месяцам';
+
+  @override
+  String get onboardingMind4 =>
+      'Вкладка \'Аналитика\' показывает краткую статистику ваших записей';
+
+  @override
+  String get onboardingMind5 => 'Все заметки хранятся только на вашем телефоне';
+
+  @override
+  String get onboardingMind6 =>
+      'Чтобы создать новую заметку, нажмите \'Написать\'';
 }

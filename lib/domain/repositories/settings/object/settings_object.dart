@@ -29,6 +29,12 @@ final class SettingsObject extends HiveObject {
   @HiveField(8, defaultValue: 0)
   late int dataSchemaVersion;
 
+  @HiveField(9, defaultValue: false)
+  late bool hasSeenLazyOnboarding;
+
+  @HiveField(10, defaultValue: false)
+  late bool isDebugMenuVisible;
+
   SettingsObject();
 
   KeklistSettings toSettings() => KeklistSettings(
@@ -39,5 +45,7 @@ final class SettingsObject extends HiveObject {
         userName: userName,
         language: SupportedLanguage.fromCode(language),
         dataSchemaVersion: dataSchemaVersion,
+        hasSeenLazyOnboarding: hasSeenLazyOnboarding,
+        isDebugMenuVisible: isDebugMenuVisible,
       );
 }

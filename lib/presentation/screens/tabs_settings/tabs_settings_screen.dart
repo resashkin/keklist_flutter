@@ -4,7 +4,6 @@ import 'package:keklist/domain/repositories/tabs/models/tabs_settings.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bloc.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_event.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_state.dart';
-import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
@@ -24,7 +23,6 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
   final List<TabModel> _selectedTabModels = [];
   final List<TabModel> _hiddenTabModels = [];
   final List<BottomNavigationBarItem> _tabItems = [];
-  bool _isDeveloperModeEnabled = false;
 
   @override
   void initState() {
@@ -36,11 +34,13 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
           _selectedIndex = 0;
           _selectedTabModels
             ..clear()
-            ..addAll(state.selectedTabs);
+            ..addAll(state.selectedTabs.where((tab) => tab.type != TabType.debugMenu));
           _hiddenTabModels
             ..clear()
-            ..addAll(state.hiddenTabs.where((tab) => tab.type != TabType.debugMenu || _isDeveloperModeEnabled));
-          final Iterable<BottomNavigationBarItem> items = state.selectedTabs.map(
+            ..addAll(state.hiddenTabs.where((tab) => tab.type != TabType.debugMenu));
+          final Iterable<BottomNavigationBarItem> items = state.selectedTabs
+              .where((tab) => tab.type != TabType.debugMenu)
+              .map(
             (item) => BottomNavigationBarItem(
               icon: item.type.materialIcon,
               label: item.type.localizedLabel(context),
@@ -50,16 +50,6 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
             ..clear()
             ..addAll(items);
         });
-      }
-    })?.disposed(by: this);
-
-    subscribeToBloc<DebugMenuBloc>(onNewState: (state) {
-      if (state is DebugMenuDataState) {
-        setState(() {
-          _isDeveloperModeEnabled = state.isDeveloperModeEnabled;
-        });
-        // Refresh tabs when developer mode state changes
-        sendEventToBloc<TabsContainerBloc>(TabsContainerGetCurrentState());
       }
     })?.disposed(by: this);
 
@@ -86,22 +76,7 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
         ),
       ),
       appBar: AppBar(
-        title: GestureDetector(
-          onLongPress: () {
-            if (!_isDeveloperModeEnabled) {
-              sendEventToBloc<DebugMenuBloc>(DebugMenuEnableDeveloperMode());
-              ScaffoldMessenger.of(context)
-                ..hideCurrentSnackBar()
-                ..showSnackBar(
-                  SnackBar(
-                    content: Text(context.l10n.developerModeEnabled),
-                    duration: Duration(seconds: 3),
-                  ),
-                );
-            }
-          },
-          child: Text(context.l10n.tabsSettings),
-        ),
+        title: Text(context.l10n.tabsSettings),
       ),
       body: ReorderableListView.builder(
         itemCount: listItems.length,

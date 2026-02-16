@@ -163,10 +163,6 @@ class AppLocalizationsKy extends AppLocalizations {
   String get clearCache => 'Кэшти тазалоо';
 
   @override
-  String get developerModeEnabled =>
-      '🔧 Өнүктүрүүчү режими иштетилди! Debug Menu табы азыр жеткиликтүү!';
-
-  @override
   String get activeTabs => 'Актив табтар';
 
   @override
@@ -180,12 +176,6 @@ class AppLocalizationsKy extends AppLocalizations {
 
   @override
   String get send => 'ЖӨНӨТҮҮ';
-
-  @override
-  String get translateContent => 'Мазмунду которуу';
-
-  @override
-  String get sensitiveContent => 'Сезимтал мазмун';
 
   @override
   String get updateYourNickname => 'Никнэмиңизди жаңылоо';
@@ -394,4 +384,32 @@ class AppLocalizationsKy extends AppLocalizations {
 
   @override
   String get audioFilesImported => 'Аудио файлдар импортталды';
+
+  @override
+  String get onboardingMind1 => 'Салам!';
+
+  @override
+  String get onboardingMind2 =>
+      'Мен keklist - кыска жазуулардын жеке күндөлүгүмүн';
+
+  @override
+  String get onboardingMind2Comment1 => 'Жазууларга комментарий жазса болот';
+
+  @override
+  String get onboardingMind2Comment2 => 'Жазууну ачуу үчүн аны басыңыз';
+
+  @override
+  String get onboardingMind3 =>
+      '\'Жылнаама\' өтмөгүндө бардык жазуулар күндөр, жумалар жана айлар боюнча көрсөтүлөт';
+
+  @override
+  String get onboardingMind4 =>
+      '\'Аналитика\' өтмөгү жазууларыңыздын кыскача статистикасын көрсөтөт';
+
+  @override
+  String get onboardingMind5 => 'Бардык жазуулар телефонуңузда гана сакталат';
+
+  @override
+  String get onboardingMind6 =>
+      'Жаңы жазуу жасоо үчүн \'Жазуу\' баскычын басыңыз';
 }

@@ -163,10 +163,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get clearCache => 'Cache leeren';
 
   @override
-  String get developerModeEnabled =>
-      '🔧 Entwicklermodus aktiviert! Debug Menu Tab ist jetzt verfügbar!';
-
-  @override
   String get activeTabs => 'Aktive Tabs';
 
   @override
@@ -176,19 +172,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get error => 'Fehler';
 
   @override
-  String get startDiscussion => 'Diskussion starten';
+  String get startDiscussion => 'Diskussion beginnen';
 
   @override
   String get send => 'SENDEN';
 
   @override
-  String get translateContent => 'Inhalt übersetzen';
-
-  @override
-  String get sensitiveContent => 'Sensible Inhalte';
-
-  @override
-  String get updateYourNickname => 'Ihren Spitznamen aktualisieren';
+  String get updateYourNickname => 'Aktualisieren Sie Ihren Spitznamen';
 
   @override
   String get yourNickname => 'Ihr Spitzname';
@@ -207,7 +197,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get noMindsForPeriod => 'Keine Notizen für diesen Zeitraum';
 
   @override
-  String get selectPeriod => 'Zeitraum auswählen...';
+  String get selectPeriod => 'Zeitraum auswählen ...';
 
   @override
   String get digest => 'Zusammenfassung';
@@ -216,16 +206,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get minds => 'Notizen';
 
   @override
-  String get searchForYourNotes => 'Ihre Notizen durchsuchen';
+  String get searchForYourNotes => 'Suchen Sie nach Ihren Notizen';
 
   @override
-  String get searchYourEmoji => 'Ihr Emoji suchen...';
+  String get searchYourEmoji => 'Suchen Sie nach Ihrem Emoji...';
 
   @override
   String get writeSomething => 'Schreiben Sie etwas...';
 
   @override
-  String get topMinds => 'Top Notizen';
+  String get topMinds => 'Top-Notizen';
 
   @override
   String get todayMinds => 'Heutige Notizen';
@@ -249,7 +239,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get cannotRemoveMainScreen =>
-      'Hauptbildschirm kann nicht entfernt werden. Sie verlieren die Möglichkeit, Tabs einzurichten.';
+      'Hauptbildschirm kann nicht entfernt werden. Sie verlieren die Option, Tabs einzurichten.';
 
   @override
   String get today => 'Heute';
@@ -264,7 +254,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get lastTwoWeeks => 'Letzte 2 Wochen';
 
   @override
-  String get thisMonth => 'Diesen Monat';
+  String get thisMonth => 'Dieser Monat';
 
   @override
   String get thisYear => 'Dieses Jahr';
@@ -277,7 +267,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingsDescription =>
-      'Bildschirm mit allen Einstellungen (Dunkelmodus, Sync usw.)';
+      'Bildschirm mit allen Einstellungen (Dunkler Modus, Synchronisierung usw.)';
 
   @override
   String get profileDescription => 'Bildschirm mit Ihrem Profil';
@@ -287,14 +277,14 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get debugMenuDescription =>
-      'Entwicklertools zum Umschalten experimenteller Funktionen';
+      'Entwickler-Tools zum Umschalten experimenteller Funktionen';
 
   @override
   String get noMindsForThisDay => 'Keine Notizen für diesen Tag';
 
   @override
   String showMindsForPeriod(String period) {
-    return 'Notizen für $period anzeigen';
+    return 'Notizen anzeigen für $period';
   }
 
   @override
@@ -319,18 +309,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get passwordsDoNotMatch => 'Passwörter stimmen nicht überein';
 
   @override
-  String get exportPassword => 'Export mit Passwort schützen?';
+  String get exportPassword => 'In ZIP exportieren';
 
   @override
   String get exportPasswordDescription =>
-      'Fügen Sie ein Passwort hinzu, um Ihren Export zu verschlüsseln. Sie können dies überspringen für unverschlüsselten Export.';
+      'Fügen Sie ein Passwort hinzu, um Ihren Export zu verschlüsseln. Sie können dies für einen unverschlüsselten Export überspringen.';
 
   @override
   String get importPassword => 'Passwort eingeben';
 
   @override
   String get importPasswordDescription =>
-      'Diese Datei ist passwortgeschützt. Bitte geben Sie das Passwort zum Entschlüsseln ein.';
+      'Diese Datei ist passwortgeschützt. Bitte geben Sie das Passwort zur Entschlüsselung ein.';
 
   @override
   String get skipPassword => 'Überspringen (kein Passwort)';
@@ -355,7 +345,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get missingAudioFiles => 'Einige Audiodateien fehlen';
 
   @override
-  String get insufficientStorage => 'Unzureichender Speicher';
+  String get insufficientStorage => 'Unzureichender Speicherplatz';
 
   @override
   String get unknownError => 'Unbekannter Fehler';
@@ -395,4 +385,34 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get audioFilesImported => 'Audiodateien importiert';
+
+  @override
+  String get onboardingMind1 => 'Hallo!';
+
+  @override
+  String get onboardingMind2 =>
+      'Ich bin keklist - ein persönliches Tagebuch für kurze Notizen';
+
+  @override
+  String get onboardingMind2Comment1 => 'Notizen können kommentiert werden';
+
+  @override
+  String get onboardingMind2Comment2 =>
+      'Um eine Notiz zu öffnen, tippen Sie darauf';
+
+  @override
+  String get onboardingMind3 =>
+      'Im Tab \'Kalender\' werden alle Notizen nach Tagen, Wochen und Monaten angezeigt';
+
+  @override
+  String get onboardingMind4 =>
+      'Der Tab \'Analytik\' zeigt eine kurze Statistik Ihrer Einträge';
+
+  @override
+  String get onboardingMind5 =>
+      'Alle Notizen werden nur auf Ihrem Telefon gespeichert';
+
+  @override
+  String get onboardingMind6 =>
+      'Um eine neue Notiz zu erstellen, tippen Sie auf \'Schreiben\'';
 }
