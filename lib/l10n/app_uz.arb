@@ -394,5 +394,8 @@
     "onboardingMind3": "'Kalendar' yorlig'ida barcha yozuvlar kunlar, haftalar va oylar bo'yicha ko'rsatiladi",
     "onboardingMind4": "'Analitika' yorlig'i yozuvlaringizning qisqacha statistikasini ko'rsatadi",
     "onboardingMind5": "Barcha yozuvlar faqat telefoningizda saqlanadi",
-    "onboardingMind6": "Yangi yozuv yaratish uchun 'Yozish' tugmasini bosing"
+    "onboardingMind6": "Yangi yozuv yaratish uchun 'Yozish' tugmasini bosing",
+    "viewPhotos": "Rasmlarni ko'rish",
+    "noPhotosForDay": "Bu kun uchun rasmlar topilmadi",
+    "photosFromDay": "{date} kunidagi rasmlar"
 }

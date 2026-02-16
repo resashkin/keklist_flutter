@@ -128,5 +128,8 @@
     "yesterday": "昨日",
     "youDidNotCollectAnyEntriesYet": "まだエントリーを収集していません",
     "yourFolderName": "あなたのフォルダー名",
-    "yourNickname": "あなたのニックネーム"
+    "yourNickname": "あなたのニックネーム",
+    "viewPhotos": "写真を見る",
+    "noPhotosForDay": "この日の写真が見つかりません",
+    "photosFromDay": "{date}の写真"
 }

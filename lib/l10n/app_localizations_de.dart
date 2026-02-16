@@ -415,4 +415,15 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get onboardingMind6 =>
       'Um eine neue Notiz zu erstellen, tippen Sie auf \'Schreiben\'';
+
+  @override
+  String get viewPhotos => 'Fotos ansehen';
+
+  @override
+  String get noPhotosForDay => 'Keine Fotos für diesen Tag gefunden';
+
+  @override
+  String photosFromDay(String date) {
+    return 'Fotos vom $date';
+  }
 }

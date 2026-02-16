@@ -128,5 +128,8 @@
     "yesterday": "昨天",
     "youDidNotCollectAnyEntriesYet": "您还没有收集任何条目",
     "yourFolderName": "您的文件夹名称",
-    "yourNickname": "您的昵称"
+    "yourNickname": "您的昵称",
+    "viewPhotos": "查看照片",
+    "noPhotosForDay": "未找到当天的照片",
+    "photosFromDay": "{date}的照片"
 }

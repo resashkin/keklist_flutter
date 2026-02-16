@@ -399,4 +399,15 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get onboardingMind6 => '要创建新笔记，请点击\'写入\'';
+
+  @override
+  String get viewPhotos => '查看照片';
+
+  @override
+  String get noPhotosForDay => '未找到当天的照片';
+
+  @override
+  String photosFromDay(String date) {
+    return '$date的照片';
+  }
 }

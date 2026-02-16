@@ -411,4 +411,15 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get onboardingMind6 =>
       'Чтобы создать новую заметку, нажмите \'Написать\'';
+
+  @override
+  String get viewPhotos => 'Посмотреть фото';
+
+  @override
+  String get noPhotosForDay => 'Нет фотографий за этот день';
+
+  @override
+  String photosFromDay(String date) {
+    return 'Фото от $date';
+  }
 }

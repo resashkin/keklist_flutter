@@ -402,4 +402,15 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get onboardingMind6 => '新しいメモを作成するには、\'書く\'をタップしてください';
+
+  @override
+  String get viewPhotos => '写真を見る';
+
+  @override
+  String get noPhotosForDay => 'この日の写真が見つかりません';
+
+  @override
+  String photosFromDay(String date) {
+    return '$dateの写真';
+  }
 }

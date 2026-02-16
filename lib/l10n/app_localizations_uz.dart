@@ -413,4 +413,15 @@ class AppLocalizationsUz extends AppLocalizations {
   @override
   String get onboardingMind6 =>
       'Yangi yozuv yaratish uchun \'Yozish\' tugmasini bosing';
+
+  @override
+  String get viewPhotos => 'Rasmlarni ko\'rish';
+
+  @override
+  String get noPhotosForDay => 'Bu kun uchun rasmlar topilmadi';
+
+  @override
+  String photosFromDay(String date) {
+    return '$date kunidagi rasmlar';
+  }
 }

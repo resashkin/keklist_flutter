@@ -412,6 +412,17 @@ class AppLocalizationsSr extends AppLocalizations {
 
   @override
   String get onboardingMind6 => 'Да креирате нову белешку, додирните \'Пиши\'';
+
+  @override
+  String get viewPhotos => 'Погледај фотографије';
+
+  @override
+  String get noPhotosForDay => 'Нема фотографија за овај дан';
+
+  @override
+  String photosFromDay(String date) {
+    return 'Фотографије од $date';
+  }
 }
 
 /// The translations for Serbian, using the Latin script (`sr_Latn`).
@@ -821,4 +832,15 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
 
   @override
   String get onboardingMind6 => 'Da kreirate novu belešku, dodirnite \'Piši\'';
+
+  @override
+  String get viewPhotos => 'Pogledaj fotografije';
+
+  @override
+  String get noPhotosForDay => 'Nema fotografija za ovaj dan';
+
+  @override
+  String photosFromDay(String date) {
+    return 'Fotografije od $date';
+  }
 }

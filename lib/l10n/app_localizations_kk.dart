@@ -412,4 +412,15 @@ class AppLocalizationsKk extends AppLocalizations {
   @override
   String get onboardingMind6 =>
       'Жаңа жазба жасау үшін \'Жазу\' түймесін басыңыз';
+
+  @override
+  String get viewPhotos => 'Фотосуреттерді қарау';
+
+  @override
+  String get noPhotosForDay => 'Бұл күнге фотосуреттер табылмады';
+
+  @override
+  String photosFromDay(String date) {
+    return '$date күнінің фотосуреттері';
+  }
 }

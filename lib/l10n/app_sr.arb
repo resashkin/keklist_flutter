@@ -128,5 +128,8 @@
     "yesterday": "Јуче",
     "youDidNotCollectAnyEntriesYet": "Још увек ниси прикупио ниједан унос",
     "yourFolderName": "Назив твог фолдера",
-    "yourNickname": "Твој надимак"
+    "yourNickname": "Твој надимак",
+    "viewPhotos": "Погледај фотографије",
+    "noPhotosForDay": "Нема фотографија за овај дан",
+    "photosFromDay": "Фотографије од {date}"
 }

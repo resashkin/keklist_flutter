@@ -896,6 +896,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'To create new note tap \'Write\''**
   String get onboardingMind6;
+
+  /// Button text to open gallery for Mind day
+  ///
+  /// In en, this message translates to:
+  /// **'View Photos'**
+  String get viewPhotos;
+
+  /// Empty state message when day has no photos
+  ///
+  /// In en, this message translates to:
+  /// **'No photos found for this day'**
+  String get noPhotosForDay;
+
+  /// Gallery screen title showing date
+  ///
+  /// In en, this message translates to:
+  /// **'Photos from {date}'**
+  String photosFromDay(String date);
 }
 
 class _AppLocalizationsDelegate

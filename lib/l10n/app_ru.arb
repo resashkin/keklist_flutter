@@ -128,5 +128,8 @@
     "yesterday": "Вчера",
     "youDidNotCollectAnyEntriesYet": "Вы еще не собрали ни одной записи",
     "yourFolderName": "Название вашей папки",
-    "yourNickname": "Ваш никнейм"
+    "yourNickname": "Ваш никнейм",
+    "viewPhotos": "Посмотреть фото",
+    "noPhotosForDay": "Нет фотографий за этот день",
+    "photosFromDay": "Фото от {date}"
 }

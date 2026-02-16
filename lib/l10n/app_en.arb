@@ -523,5 +523,22 @@
     "onboardingMind6": "To create new note tap 'Write'",
     "@onboardingMind6": {
         "description": "Instruction to create new note"
+    },
+    "viewPhotos": "View Photos",
+    "@viewPhotos": {
+        "description": "Button text to open gallery for Mind day"
+    },
+    "noPhotosForDay": "No photos found for this day",
+    "@noPhotosForDay": {
+        "description": "Empty state message when day has no photos"
+    },
+    "photosFromDay": "Photos from {date}",
+    "@photosFromDay": {
+        "description": "Gallery screen title showing date",
+        "placeholders": {
+            "date": {
+                "type": "String"
+            }
+        }
     }
 }
