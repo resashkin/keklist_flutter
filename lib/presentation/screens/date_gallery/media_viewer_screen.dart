@@ -4,16 +4,16 @@ import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:video_player/video_player.dart';
 
-final class DateGalleryPreviewScreen extends StatefulWidget {
+final class MediaViewerScreen extends StatefulWidget {
   final AssetEntity asset;
 
-  const DateGalleryPreviewScreen({super.key, required this.asset});
+  const MediaViewerScreen({super.key, required this.asset});
 
   @override
-  State<DateGalleryPreviewScreen> createState() => _DateGalleryPreviewScreenState();
+  State<MediaViewerScreen> createState() => _MediaViewerScreenState();
 }
 
-final class _DateGalleryPreviewScreenState extends State<DateGalleryPreviewScreen> {
+final class _MediaViewerScreenState extends State<MediaViewerScreen> {
   File? _file;
   bool _isLoading = true;
   VideoPlayerController? _videoController;

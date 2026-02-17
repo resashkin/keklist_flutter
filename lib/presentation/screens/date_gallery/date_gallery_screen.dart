@@ -5,7 +5,7 @@ import 'package:keklist/presentation/core/extensions/localization_extensions.dar
 import 'package:keklist/presentation/core/helpers/date_utils.dart' as kek_date;
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/screens/date_gallery/bloc/date_gallery_bloc.dart';
-import 'package:keklist/presentation/screens/date_gallery/date_gallery_preview_screen.dart';
+import 'package:keklist/presentation/screens/date_gallery/media_viewer_screen.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
 
@@ -36,14 +36,9 @@ final class _DateGalleryScreenState extends KekWidgetState<DateGalleryScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(context.l10n.photosFromDay(formattedDate)),
-        leading: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+        leading: IconButton(icon: const Icon(Icons.close), onPressed: () => Navigator.of(context).pop()),
       ),
-      body: BlocBuilder<DateGalleryBloc, DateGalleryState>(
-        builder: (context, state) => _buildBody(context, state),
-      ),
+      body: BlocBuilder<DateGalleryBloc, DateGalleryState>(builder: (context, state) => _buildBody(context, state)),
     );
   }
 
@@ -73,10 +68,7 @@ final class _DateGalleryScreenState extends KekWidgetState<DateGalleryScreen> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: () => PhotoManager.openSetting(),
-                child: const Text('Open Settings'),
-              ),
+              ElevatedButton(onPressed: () => PhotoManager.openSetting(), child: const Text('Open Settings')),
             ],
           ),
         ),
@@ -125,12 +117,7 @@ final class _DateGalleryScreenState extends KekWidgetState<DateGalleryScreen> {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          AssetEntityImage(
-            asset,
-            isOriginal: false,
-            thumbnailSize: const ThumbnailSize.square(200),
-            fit: BoxFit.cover,
-          ),
+          AssetEntityImage(asset, isOriginal: false, thumbnailSize: const ThumbnailSize.square(200), fit: BoxFit.cover),
           if (asset.type == AssetType.video)
             Positioned(
               bottom: 4,
@@ -146,10 +133,7 @@ final class _DateGalleryScreenState extends KekWidgetState<DateGalleryScreen> {
                   children: [
                     const Icon(Icons.play_arrow, color: Colors.white, size: 16),
                     const SizedBox(width: 2),
-                    Text(
-                      _formatDuration(asset.duration),
-                      style: const TextStyle(color: Colors.white, fontSize: 12),
-                    ),
+                    Text(_formatDuration(asset.duration), style: const TextStyle(color: Colors.white, fontSize: 12)),
                   ],
                 ),
               ),
@@ -166,10 +150,6 @@ final class _DateGalleryScreenState extends KekWidgetState<DateGalleryScreen> {
   }
 
   void _openPreview(BuildContext context, AssetEntity asset) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => DateGalleryPreviewScreen(asset: asset),
-      ),
-    );
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => MediaViewerScreen(asset: asset)));
   }
 }
