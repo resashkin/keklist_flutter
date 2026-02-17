@@ -4,16 +4,16 @@ import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:video_player/video_player.dart';
 
-final class GalleryPreviewScreen extends StatefulWidget {
+final class DateGalleryPreviewScreen extends StatefulWidget {
   final AssetEntity asset;
 
-  const GalleryPreviewScreen({super.key, required this.asset});
+  const DateGalleryPreviewScreen({super.key, required this.asset});
 
   @override
-  State<GalleryPreviewScreen> createState() => _GalleryPreviewScreenState();
+  State<DateGalleryPreviewScreen> createState() => _DateGalleryPreviewScreenState();
 }
 
-final class _GalleryPreviewScreenState extends State<GalleryPreviewScreen> {
+final class _DateGalleryPreviewScreenState extends State<DateGalleryPreviewScreen> {
   File? _file;
   bool _isLoading = true;
   VideoPlayerController? _videoController;
@@ -43,7 +43,6 @@ final class _GalleryPreviewScreenState extends State<GalleryPreviewScreen> {
       _file = file;
     });
 
-    // Initialize video player for videos
     if (widget.asset.type == AssetType.video) {
       _videoController = VideoPlayerController.file(file);
       await _videoController!.initialize();
@@ -124,7 +123,6 @@ final class _GalleryPreviewScreenState extends State<GalleryPreviewScreen> {
             child: VideoPlayer(controller),
           ),
         ),
-        // Play/Pause overlay
         GestureDetector(
           onTap: () {
             setState(() {
@@ -145,7 +143,7 @@ final class _GalleryPreviewScreenState extends State<GalleryPreviewScreen> {
                 child: Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.5),
+                    color: Colors.black.withValues(alpha: 0.5),
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
@@ -158,7 +156,6 @@ final class _GalleryPreviewScreenState extends State<GalleryPreviewScreen> {
             ),
           ),
         ),
-        // Video progress bar
         Positioned(
           bottom: 0,
           left: 0,
@@ -178,7 +175,7 @@ final class _GalleryPreviewScreenState extends State<GalleryPreviewScreen> {
           end: Alignment.bottomCenter,
           colors: [
             Colors.transparent,
-            Colors.black.withOpacity(0.7),
+            Colors.black.withValues(alpha: 0.7),
           ],
         ),
       ),

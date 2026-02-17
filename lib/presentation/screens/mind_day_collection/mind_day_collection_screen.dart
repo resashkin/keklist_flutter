@@ -18,7 +18,7 @@ import 'package:keklist/presentation/screens/actions/action_model.dart';
 import 'package:keklist/presentation/screens/actions/actions_screen.dart';
 import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_collection_empty_day_widget.dart';
 import 'package:keklist/presentation/screens/mind_creator/mind_creator_screen.dart';
-import 'package:keklist/presentation/screens/mind_gallery/mind_gallery_screen.dart';
+import 'package:keklist/presentation/screens/date_gallery/date_gallery_screen.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/messaged_list/mind_monolog_list_widget.dart';
@@ -293,8 +293,8 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
 
   void _openGallery() {
     Navigator.of(context).push(
-      BackSwipePageRoute(
-        builder: (_) => MindGalleryScreen(dayIndex: dayIndex),
+      MaterialPageRoute(
+        builder: (_) => DateGalleryScreen(dayIndex: dayIndex),
       ),
     );
   }

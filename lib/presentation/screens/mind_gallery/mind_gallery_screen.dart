@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/core/helpers/date_utils.dart' as kek_date;
-import 'package:keklist/presentation/screens/mind_gallery/gallery_preview_screen.dart';
+import 'package:keklist/presentation/screens/date_gallery/date_gallery_preview_screen.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
 import 'package:intl/intl.dart';
@@ -65,15 +65,19 @@ final class _MindGalleryScreenState extends State<MindGalleryScreen> {
       ),
     );
 
-    // Collect all assets from all albums
-    final List<AssetEntity> allAssets = [];
+    // Collect all assets from all albums, deduplicated by id
+    // (same asset can appear in multiple albums like Camera Roll + Recents + Favorites)
+    final Map<String, AssetEntity> assetMap = {};
     for (final AssetPathEntity path in paths) {
       final List<AssetEntity> assets = await path.getAssetListRange(
         start: 0,
         end: await path.assetCountAsync,
       );
-      allAssets.addAll(assets);
+      for (final asset in assets) {
+        assetMap[asset.id] = asset;
+      }
     }
+    final List<AssetEntity> allAssets = assetMap.values.toList();
 
     // Filter assets by the exact date (in case the filterOption didn't work perfectly)
     final List<AssetEntity> filteredAssets = allAssets.where((asset) {
@@ -234,7 +238,7 @@ final class _MindGalleryScreenState extends State<MindGalleryScreen> {
   void _openPreview(AssetEntity asset) {
     Navigator.of(context).push(
       BackSwipePageRoute(
-        builder: (_) => GalleryPreviewScreen(asset: asset),
+        builder: (_) => DateGalleryPreviewScreen(asset: asset),
       ),
     );
   }
