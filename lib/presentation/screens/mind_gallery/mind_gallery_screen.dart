@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide DateUtils;
 import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
-import 'package:keklist/presentation/core/helpers/date_utils.dart' as kek_date;
+import 'package:keklist/presentation/core/helpers/date_utils.dart';
 import 'package:keklist/presentation/screens/date_gallery/date_gallery_preview_screen.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
@@ -44,7 +44,7 @@ final class _MindGalleryScreenState extends State<MindGalleryScreen> {
     }
 
     // Convert dayIndex to date range
-    final DateTime date = kek_date.DateUtils.getDateFromDayIndex(widget.dayIndex);
+    final DateTime date = DateUtils.getDateFromDayIndex(widget.dayIndex);
     final DateTime startOfDay = DateTime(date.year, date.month, date.day);
     final DateTime endOfDay = startOfDay.add(const Duration(days: 1));
 
@@ -102,7 +102,7 @@ final class _MindGalleryScreenState extends State<MindGalleryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final DateTime date = kek_date.DateUtils.getDateFromDayIndex(widget.dayIndex);
+    final DateTime date = DateUtils.getDateFromDayIndex(widget.dayIndex);
     final String formattedDate = DateFormat.yMMMMd(Localizations.localeOf(context).toString()).format(date);
 
     return Scaffold(
