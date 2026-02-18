@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:swipeable_page_route/swipeable_page_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
@@ -150,6 +151,6 @@ final class _DateGalleryScreenState extends KekWidgetState<DateGalleryScreen> {
   }
 
   void _openPreview(BuildContext context, AssetEntity asset) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) => MediaViewerScreen(asset: asset)));
+    Navigator.of(context).push(SwipeablePageRoute(canSwipe: false, builder: (_) => MediaViewerScreen(asset: asset)));
   }
 }

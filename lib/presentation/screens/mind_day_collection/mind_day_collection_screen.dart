@@ -3,7 +3,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart' hide DateUtils;
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
+import 'package:swipeable_page_route/swipeable_page_route.dart';
 import 'package:gap/gap.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
@@ -285,7 +285,7 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
 
   void _showMindInfo(Mind mind) {
     Navigator.of(context).push(
-      BackSwipePageRoute(
+      SwipeablePageRoute(
         builder: (_) => MindInfoScreen(rootMind: mind, allMinds: allMinds),
       ),
     );
@@ -293,7 +293,7 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
 
   void _openGallery() {
     Navigator.of(context).push(
-      MaterialPageRoute(
+      SwipeablePageRoute(
         builder: (_) => DateGalleryScreen(dayIndex: dayIndex),
       ),
     );
@@ -365,7 +365,7 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
 
   void _showAllMinds(Mind mind) {
     Navigator.of(context).push(
-      BackSwipePageRoute(
+      SwipeablePageRoute(
         builder: (_) => MindOneEmojiCollectionScreen(emoji: mind.emoji, allMinds: allMinds),
       ),
     );

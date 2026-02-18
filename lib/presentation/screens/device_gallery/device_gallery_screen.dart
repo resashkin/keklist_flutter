@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart' hide DateUtils;
-import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
+import 'package:keklist/presentation/screens/date_gallery/media_viewer_screen.dart';
+import 'package:swipeable_page_route/swipeable_page_route.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/core/helpers/date_utils.dart';
-import 'package:keklist/presentation/screens/date_gallery/date_gallery_preview_screen.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
 import 'package:intl/intl.dart';
 
-final class MindGalleryScreen extends StatefulWidget {
+final class DeviceGalleryScreen extends StatefulWidget {
   final int dayIndex;
 
-  const MindGalleryScreen({super.key, required this.dayIndex});
+  const DeviceGalleryScreen({super.key, required this.dayIndex});
 
   @override
-  State<MindGalleryScreen> createState() => _MindGalleryScreenState();
+  State<DeviceGalleryScreen> createState() => _DeviceGalleryScreenState();
 }
 
-final class _MindGalleryScreenState extends State<MindGalleryScreen> {
+final class _DeviceGalleryScreenState extends State<DeviceGalleryScreen> {
   List<AssetEntity>? _assets;
   bool _isLoading = true;
   bool _permissionDenied = false;
@@ -52,16 +52,9 @@ final class _MindGalleryScreenState extends State<MindGalleryScreen> {
     final List<AssetPathEntity> paths = await PhotoManager.getAssetPathList(
       type: RequestType.common, // Photos and videos
       filterOption: FilterOptionGroup(
-        imageOption: const FilterOption(
-          sizeConstraint: SizeConstraint(ignoreSize: true),
-        ),
-        videoOption: const FilterOption(
-          sizeConstraint: SizeConstraint(ignoreSize: true),
-        ),
-        createTimeCond: DateTimeCond(
-          min: startOfDay,
-          max: endOfDay,
-        ),
+        imageOption: const FilterOption(sizeConstraint: SizeConstraint(ignoreSize: true)),
+        videoOption: const FilterOption(sizeConstraint: SizeConstraint(ignoreSize: true)),
+        createTimeCond: DateTimeCond(min: startOfDay, max: endOfDay),
       ),
     );
 
@@ -69,10 +62,7 @@ final class _MindGalleryScreenState extends State<MindGalleryScreen> {
     // (same asset can appear in multiple albums like Camera Roll + Recents + Favorites)
     final Map<String, AssetEntity> assetMap = {};
     for (final AssetPathEntity path in paths) {
-      final List<AssetEntity> assets = await path.getAssetListRange(
-        start: 0,
-        end: await path.assetCountAsync,
-      );
+      final List<AssetEntity> assets = await path.getAssetListRange(start: 0, end: await path.assetCountAsync);
       for (final asset in assets) {
         assetMap[asset.id] = asset;
       }
@@ -108,10 +98,7 @@ final class _MindGalleryScreenState extends State<MindGalleryScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(context.l10n.photosFromDay(formattedDate)),
-        leading: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+        leading: IconButton(icon: const Icon(Icons.close), onPressed: () => Navigator.of(context).pop()),
       ),
       body: _buildBody(),
     );
@@ -138,14 +125,14 @@ final class _MindGalleryScreenState extends State<MindGalleryScreen> {
               ),
               const SizedBox(height: 8),
               Text(
-                'Permission denied. Please enable photo access in settings.',
+                'Permission denied. Please enable photo access in settings.', // TODO: add to localization
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
               ElevatedButton(
                 onPressed: () => PhotoManager.openSetting(),
-                child: const Text('Open Settings'),
+                child: const Text('Open Settings'), // TODO: add to localizationd
               ),
             ],
           ),
@@ -195,31 +182,20 @@ final class _MindGalleryScreenState extends State<MindGalleryScreen> {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          AssetEntityImage(
-            asset,
-            isOriginal: false,
-            thumbnailSize: const ThumbnailSize.square(200),
-            fit: BoxFit.cover,
-          ),
+          AssetEntityImage(asset, isOriginal: false, thumbnailSize: const ThumbnailSize.square(200), fit: BoxFit.cover),
           if (asset.type == AssetType.video)
             Positioned(
               bottom: 4,
               right: 4,
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.7),
-                  borderRadius: BorderRadius.circular(4),
-                ),
+                decoration: BoxDecoration(color: Colors.black.withOpacity(0.7), borderRadius: BorderRadius.circular(4)),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Icon(Icons.play_arrow, color: Colors.white, size: 16),
                     const SizedBox(width: 2),
-                    Text(
-                      _formatDuration(asset.duration),
-                      style: const TextStyle(color: Colors.white, fontSize: 12),
-                    ),
+                    Text(_formatDuration(asset.duration), style: const TextStyle(color: Colors.white, fontSize: 12)),
                   ],
                 ),
               ),
@@ -236,10 +212,6 @@ final class _MindGalleryScreenState extends State<MindGalleryScreen> {
   }
 
   void _openPreview(AssetEntity asset) {
-    Navigator.of(context).push(
-      BackSwipePageRoute(
-        builder: (_) => DateGalleryPreviewScreen(asset: asset),
-      ),
-    );
+    Navigator.of(context).push(SwipeablePageRoute(canSwipe: false, builder: (_) => MediaViewerScreen(asset: asset)));
   }
 }

@@ -75,7 +75,7 @@ dependencies:
   streaming_shared_preferences: ^2.0.0
   json_serializable: ^6.8.0
   json_annotation: ^4.9.0
-  full_swipe_back_gesture: ^0.1.0
+  swipeable_page_route: ^0.4.8
   image_picker: ^1.2.0
   logarte: ^1.4.0
   purchases_flutter: ^9.8.0
