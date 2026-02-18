@@ -397,5 +397,12 @@
     "onboardingMind6": "Para crear una nueva nota, toca 'Escribir'",
     "viewPhotos": "Ver fotos",
     "noPhotosForDay": "No se encontraron fotos para este día",
-    "photosFromDay": "Fotos del {date}"
+    "photosFromDay": "Fotos del {date}",
+    "sources": "Fuentes",
+    "sourcesMinds": "Mentes",
+    "sourcesMindsSubtitle": "Tus pensamientos y momentos",
+    "sourcesPhotoVideo": "Foto y video",
+    "sourcesPhotoVideoSubtitle": "Fotos y videos del dispositivo para este día",
+    "otherSources": "Otras fuentes",
+    "licenses": "Licencias"
 }

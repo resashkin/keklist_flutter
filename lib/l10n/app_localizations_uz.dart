@@ -424,4 +424,26 @@ class AppLocalizationsUz extends AppLocalizations {
   String photosFromDay(String date) {
     return '$date kunidagi rasmlar';
   }
+
+  @override
+  String get sources => 'Manbalar';
+
+  @override
+  String get sourcesMinds => 'Fikrlar';
+
+  @override
+  String get sourcesMindsSubtitle => 'Sizning fikr va lahzalaringiz';
+
+  @override
+  String get sourcesPhotoVideo => 'Foto va video';
+
+  @override
+  String get sourcesPhotoVideoSubtitle =>
+      'Ushbu kun uchun qurilma foto va videolari';
+
+  @override
+  String get otherSources => 'Boshqa manbalar';
+
+  @override
+  String get licenses => 'Litsenziyalar';
 }

@@ -540,5 +540,33 @@
                 "type": "String"
             }
         }
+    },
+    "sources": "Sources",
+    "@sources": {
+        "description": "Sources section title"
+    },
+    "sourcesMinds": "Minds",
+    "@sourcesMinds": {
+        "description": "Minds source item title"
+    },
+    "sourcesMindsSubtitle": "Your thoughts and moments",
+    "@sourcesMindsSubtitle": {
+        "description": "Minds source item subtitle"
+    },
+    "sourcesPhotoVideo": "Photo & video",
+    "@sourcesPhotoVideo": {
+        "description": "Photo and video source item title"
+    },
+    "sourcesPhotoVideoSubtitle": "Device photos and videos for this day",
+    "@sourcesPhotoVideoSubtitle": {
+        "description": "Photo and video source item subtitle"
+    },
+    "otherSources": "Other sources",
+    "@otherSources": {
+        "description": "Other sources section title"
+    },
+    "licenses": "Licenses",
+    "@licenses": {
+        "description": "Licenses menu item"
     }
 }

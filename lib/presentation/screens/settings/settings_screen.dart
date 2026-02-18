@@ -242,6 +242,11 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
                 leading: const Icon(Icons.privacy_tip, color: Colors.grey),
                 onPressed: (BuildContext context) => _openPrivacyPolicy(),
               ),
+              SettingsTile.navigation(
+                title: Text(context.l10n.licenses),
+                leading: const Icon(Icons.description_outlined, color: Colors.grey),
+                onPressed: (BuildContext context) => showLicensePage(context: context),
+              ),
             ],
           ),
           SettingsSection(

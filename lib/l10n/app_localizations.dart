@@ -914,6 +914,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Photos from {date}'**
   String photosFromDay(String date);
+
+  /// Sources section title
+  ///
+  /// In en, this message translates to:
+  /// **'Sources'**
+  String get sources;
+
+  /// Minds source item title
+  ///
+  /// In en, this message translates to:
+  /// **'Minds'**
+  String get sourcesMinds;
+
+  /// Minds source item subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Your thoughts and moments'**
+  String get sourcesMindsSubtitle;
+
+  /// Photo and video source item title
+  ///
+  /// In en, this message translates to:
+  /// **'Photo & video'**
+  String get sourcesPhotoVideo;
+
+  /// Photo and video source item subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Device photos and videos for this day'**
+  String get sourcesPhotoVideoSubtitle;
+
+  /// Other sources section title
+  ///
+  /// In en, this message translates to:
+  /// **'Other sources'**
+  String get otherSources;
+
+  /// Licenses menu item
+  ///
+  /// In en, this message translates to:
+  /// **'Licenses'**
+  String get licenses;
 }
 
 class _AppLocalizationsDelegate

@@ -410,4 +410,25 @@ class AppLocalizationsZh extends AppLocalizations {
   String photosFromDay(String date) {
     return '$date的照片';
   }
+
+  @override
+  String get sources => '来源';
+
+  @override
+  String get sourcesMinds => '想法';
+
+  @override
+  String get sourcesMindsSubtitle => '你的想法和时刻';
+
+  @override
+  String get sourcesPhotoVideo => '照片和视频';
+
+  @override
+  String get sourcesPhotoVideoSubtitle => '本日设备的照片和视频';
+
+  @override
+  String get otherSources => '其他来源';
+
+  @override
+  String get licenses => '许可证';
 }

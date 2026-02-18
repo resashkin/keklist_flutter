@@ -131,5 +131,12 @@
     "yourNickname": "Твој надимак",
     "viewPhotos": "Погледај фотографије",
     "noPhotosForDay": "Нема фотографија за овај дан",
-    "photosFromDay": "Фотографије од {date}"
+    "photosFromDay": "Фотографије од {date}",
+    "sources": "Извори",
+    "sourcesMinds": "Мисли",
+    "sourcesMindsSubtitle": "Ваше мисли и тренуци",
+    "sourcesPhotoVideo": "Фотографије и видео",
+    "sourcesPhotoVideoSubtitle": "Фотографије и видео снимци уређаја за овај дан",
+    "otherSources": "Други извори",
+    "licenses": "Лиценце"
 }

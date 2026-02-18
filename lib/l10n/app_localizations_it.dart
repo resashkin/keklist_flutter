@@ -424,4 +424,26 @@ class AppLocalizationsIt extends AppLocalizations {
   String photosFromDay(String date) {
     return 'Foto del $date';
   }
+
+  @override
+  String get sources => 'Sorgenti';
+
+  @override
+  String get sourcesMinds => 'Menti';
+
+  @override
+  String get sourcesMindsSubtitle => 'I tuoi pensieri e momenti';
+
+  @override
+  String get sourcesPhotoVideo => 'Foto e video';
+
+  @override
+  String get sourcesPhotoVideoSubtitle =>
+      'Foto e video del dispositivo per questo giorno';
+
+  @override
+  String get otherSources => 'Altre sorgenti';
+
+  @override
+  String get licenses => 'Licenze';
 }

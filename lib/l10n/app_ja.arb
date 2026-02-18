@@ -131,5 +131,12 @@
     "yourNickname": "あなたのニックネーム",
     "viewPhotos": "写真を見る",
     "noPhotosForDay": "この日の写真が見つかりません",
-    "photosFromDay": "{date}の写真"
+    "photosFromDay": "{date}の写真",
+    "sources": "ソース",
+    "sourcesMinds": "マインド",
+    "sourcesMindsSubtitle": "あなたの思考と瞬間",
+    "sourcesPhotoVideo": "写真・動画",
+    "sourcesPhotoVideoSubtitle": "この日のデバイスの写真と動画",
+    "otherSources": "その他のソース",
+    "licenses": "ライセンス"
 }

@@ -131,5 +131,12 @@
     "yourNickname": "Ваш никнейм",
     "viewPhotos": "Посмотреть фото",
     "noPhotosForDay": "Нет фотографий за этот день",
-    "photosFromDay": "Фото от {date}"
+    "photosFromDay": "Фото от {date}",
+    "sources": "Источники",
+    "sourcesMinds": "Мысли",
+    "sourcesMindsSubtitle": "Ваши мысли и моменты",
+    "sourcesPhotoVideo": "Фото и видео",
+    "sourcesPhotoVideoSubtitle": "Фотографии и видео устройства за этот день",
+    "otherSources": "Другие источники",
+    "licenses": "Лицензии"
 }

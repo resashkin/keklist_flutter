@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:gap/gap.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/day_media_tile/day_media_preview_cubit.dart';
 import 'package:photo_manager/photo_manager.dart';
@@ -28,7 +29,7 @@ final class DayMediaTileWidget extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    'Photo & video',
+                    context.l10n.sourcesPhotoVideo,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const Spacer(),
@@ -53,7 +54,7 @@ final class DayMediaTileWidget extends StatelessWidget {
               if (data.assets.isEmpty)
                 Center(
                   child: Text(
-                    'No photos for this day',
+                    context.l10n.noPhotosForDay,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: Theme.of(context).colorScheme.onSurfaceVariant,
                         ),

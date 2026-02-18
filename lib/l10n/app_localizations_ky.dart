@@ -423,4 +423,26 @@ class AppLocalizationsKy extends AppLocalizations {
   String photosFromDay(String date) {
     return '$date күнүнүн сүрөттөрү';
   }
+
+  @override
+  String get sources => 'Булактар';
+
+  @override
+  String get sourcesMinds => 'Ойлор';
+
+  @override
+  String get sourcesMindsSubtitle => 'Сиздин ойлоруңуз жана учурларыңыз';
+
+  @override
+  String get sourcesPhotoVideo => 'Сүрөт жана видео';
+
+  @override
+  String get sourcesPhotoVideoSubtitle =>
+      'Бул күн үчүн түзмөктүн сүрөттөрү жана видеолору';
+
+  @override
+  String get otherSources => 'Башка булактар';
+
+  @override
+  String get licenses => 'Лицензиялар';
 }

@@ -397,5 +397,12 @@
     "onboardingMind6": "Yangi yozuv yaratish uchun 'Yozish' tugmasini bosing",
     "viewPhotos": "Rasmlarni ko'rish",
     "noPhotosForDay": "Bu kun uchun rasmlar topilmadi",
-    "photosFromDay": "{date} kunidagi rasmlar"
+    "photosFromDay": "{date} kunidagi rasmlar",
+    "sources": "Manbalar",
+    "sourcesMinds": "Fikrlar",
+    "sourcesMindsSubtitle": "Sizning fikr va lahzalaringiz",
+    "sourcesPhotoVideo": "Foto va video",
+    "sourcesPhotoVideoSubtitle": "Ushbu kun uchun qurilma foto va videolari",
+    "otherSources": "Boshqa manbalar",
+    "licenses": "Litsenziyalar"
 }

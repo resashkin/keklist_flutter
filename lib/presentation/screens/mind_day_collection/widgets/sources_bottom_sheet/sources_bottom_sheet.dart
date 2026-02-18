@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 
 final class SourcesBottomSheet extends StatelessWidget {
   final bool isPhotoVideoEnabled;
@@ -19,21 +20,21 @@ final class SourcesBottomSheet extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: Text(
-            'Sources',
+            context.l10n.sources,
             style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
         _SourceItem(
           icon: Icons.emoji_emotions_outlined,
-          title: 'Minds',
-          subtitle: 'Your thoughts and moments',
+          title: context.l10n.sourcesMinds,
+          subtitle: context.l10n.sourcesMindsSubtitle,
           checked: true,
           enabled: false,
         ),
         _SourceItem(
           icon: Icons.photo_library_outlined,
-          title: 'Photo & video',
-          subtitle: 'Device photos and videos for this day',
+          title: context.l10n.sourcesPhotoVideo,
+          subtitle: context.l10n.sourcesPhotoVideoSubtitle,
           checked: isPhotoVideoEnabled,
           enabled: true,
           onTap: () => onPhotoVideoToggled(!isPhotoVideoEnabled),

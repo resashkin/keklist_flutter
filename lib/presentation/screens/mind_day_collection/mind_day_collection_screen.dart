@@ -154,7 +154,7 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
           ),
           IconButton(
             icon: const Icon(Icons.tune),
-            tooltip: 'Sources',
+            tooltip: context.l10n.sources,
             onPressed: () => _showSources(),
           ),
           BoolWidget(
@@ -235,7 +235,7 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
                         children: [
                           Padding(
                             padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
-                            child: Text('Other sources', style: Theme.of(context).textTheme.titleSmall),
+                            child: Text(context.l10n.otherSources, style: Theme.of(context).textTheme.titleSmall),
                           ),
                           DayMediaTileWidget(
                             data: state,

@@ -423,6 +423,28 @@ class AppLocalizationsSr extends AppLocalizations {
   String photosFromDay(String date) {
     return 'Фотографије од $date';
   }
+
+  @override
+  String get sources => 'Извори';
+
+  @override
+  String get sourcesMinds => 'Мисли';
+
+  @override
+  String get sourcesMindsSubtitle => 'Ваше мисли и тренуци';
+
+  @override
+  String get sourcesPhotoVideo => 'Фотографије и видео';
+
+  @override
+  String get sourcesPhotoVideoSubtitle =>
+      'Фотографије и видео снимци уређаја за овај дан';
+
+  @override
+  String get otherSources => 'Други извори';
+
+  @override
+  String get licenses => 'Лиценце';
 }
 
 /// The translations for Serbian, using the Latin script (`sr_Latn`).
@@ -843,4 +865,26 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
   String photosFromDay(String date) {
     return 'Fotografije od $date';
   }
+
+  @override
+  String get sources => 'Izvori';
+
+  @override
+  String get sourcesMinds => 'Misli';
+
+  @override
+  String get sourcesMindsSubtitle => 'Vaše misli i trenuci';
+
+  @override
+  String get sourcesPhotoVideo => 'Fotografije i video';
+
+  @override
+  String get sourcesPhotoVideoSubtitle =>
+      'Fotografije i video snimci uređaja za ovaj dan';
+
+  @override
+  String get otherSources => 'Drugi izvori';
+
+  @override
+  String get licenses => 'Licence';
 }
