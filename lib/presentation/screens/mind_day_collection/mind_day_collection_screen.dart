@@ -34,6 +34,10 @@ import 'package:keklist/presentation/screens/mind_one_emoji_collection/mind_one_
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/domain/services/entities/mind_note_content.dart';
+import 'package:keklist/presentation/screens/mind_day_collection/widgets/day_media_tile/day_media_preview_cubit.dart';
+import 'package:keklist/presentation/screens/mind_day_collection/widgets/day_media_tile/day_media_tile_widget.dart';
+import 'package:keklist/presentation/screens/mind_day_collection/widgets/sources_bottom_sheet/sources_bottom_sheet.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 final class MindDayCollectionScreen extends StatefulWidget {
   final int initialDayIndex;
@@ -56,6 +60,8 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
   Map<String, List<Mind>> get _mindIdsToChildren => MindUtils.convertToMindChildren(minds: allMinds);
 
   bool _isMindContentVisible = false;
+  bool _isPhotoVideoSourceEnabled = false;
+  final DayMediaPreviewCubit _mediaPreviewCubit = DayMediaPreviewCubit();
   Mind? _editableMind;
 
   DebugMenuDataState? _debugMenuState;
@@ -83,9 +89,14 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
     subscribeToBloc<SettingsBloc>(
       onNewState: (state) {
         if (state is SettingsDataState) {
+          final bool enabled = state.settings.isPhotoVideoSourceEnabled;
           setState(() {
             _isMindContentVisible = state.settings.isMindContentVisible;
           });
+          if (enabled != _isPhotoVideoSourceEnabled) {
+            setState(() => _isPhotoVideoSourceEnabled = enabled);
+            if (enabled) _mediaPreviewCubit.load(dayIndex);
+          }
         }
       },
     )?.disposed(by: this);
@@ -142,9 +153,9 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
             },
           ),
           IconButton(
-            icon: const Icon(Icons.photo_library_outlined),
-            onPressed: () => _openGallery(),
-            tooltip: context.l10n.viewPhotos,
+            icon: const Icon(Icons.tune),
+            tooltip: 'Sources',
+            onPressed: () => _showSources(),
           ),
           BoolWidget(
             condition:
@@ -194,25 +205,52 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
             ),
           ],
         ),
-        child: SingleChildScrollView(
+        child: LayoutBuilder(
+          builder: (context, constraints) => SingleChildScrollView(
           physics: FlutterConstants.mobileOverscrollPhysics,
           controller: _scrollController,
           padding: const EdgeInsets.only(bottom: 150), // FAB offset.
-          child: BoolWidget(
-            condition: _dayMinds.isNotEmpty,
-            trueChild: MindMonologListWidget(
-              minds: _dayMinds,
-              onTap: (Mind mind) => _showMindInfo(mind),
-              onOptions: (Mind mind) => _showActions(context, mind),
-              mindIdsToChildren: _mindIdsToChildren,
-            ),
-            falseChild: MindCollectionEmptyDayWidget.noMindsForDay(context: context),
-            // falseChild: _MindInteractiveZeroCase(
-            //   title: 'No created minds for today. Pick emoji to create one.',
-            //   suggestions: suggestions,
-            //   onEmojiTap: (emoji) => _showMindCreator(initialEmoji: emoji),
-            // ),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              BoolWidget(
+                condition: _dayMinds.isNotEmpty,
+                trueChild: MindMonologListWidget(
+                  minds: _dayMinds,
+                  onTap: (Mind mind) => _showMindInfo(mind),
+                  onOptions: (Mind mind) => _showActions(context, mind),
+                  mindIdsToChildren: _mindIdsToChildren,
+                ),
+                falseChild: MindCollectionEmptyDayWidget.noMindsForDay(context: context),
+              ),
+              if (_isPhotoVideoSourceEnabled)
+                BlocBuilder<DayMediaPreviewCubit, DayMediaPreviewState>(
+                  bloc: _mediaPreviewCubit,
+                  builder: (context, state) {
+                    if (state is DayMediaPreviewData && state.total > 0) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
+                            child: Text('Other sources', style: Theme.of(context).textTheme.titleSmall),
+                          ),
+                          DayMediaTileWidget(
+                            data: state,
+                            onTap: () => _openGallery(),
+                          ),
+                        ],
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
+                ),
+            ],
           ),
+          ),
+        ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -231,7 +269,7 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
   @override
   void dispose() {
     cancelSubscriptions();
-
+    _mediaPreviewCubit.close();
     super.dispose();
   }
 
@@ -299,11 +337,26 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
     );
   }
 
+  void _showSources() {
+    showBarModalBottomSheet(
+      context: context,
+      builder: (_) => SourcesBottomSheet(
+        isPhotoVideoEnabled: _isPhotoVideoSourceEnabled,
+        onPhotoVideoToggled: (enabled) {
+          sendEventToBloc<SettingsBloc>(
+            SettingsTogglePhotoVideoSource(isEnabled: enabled),
+          );
+        },
+      ),
+    );
+  }
+
   void _switchToDayIndex(int dayIndex) {
     _scrollController.jumpTo(0);
     setState(() {
       this.dayIndex = dayIndex;
     });
+    if (_isPhotoVideoSourceEnabled) _mediaPreviewCubit.load(dayIndex);
   }
 
   void _switchToDayIndexWithScrollToTop(int dayIndex) {
@@ -312,6 +365,7 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
     setState(() {
       this.dayIndex = dayIndex;
     });
+    if (_isPhotoVideoSourceEnabled) _mediaPreviewCubit.load(dayIndex);
   }
 
   void _switchToDayIndexWithScrollToBottom(int dayIndex) {
@@ -320,6 +374,7 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
     setState(() {
       this.dayIndex = dayIndex;
     });
+    if (_isPhotoVideoSourceEnabled) _mediaPreviewCubit.load(dayIndex);
   }
 
   void _vibrate() {

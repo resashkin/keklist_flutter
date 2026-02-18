@@ -48,6 +48,7 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     on<SettingsUpdateShouldShowTitlesMode>(_updateShouldShowTitlesMode);
     on<SettingsChangeLanguage>(_changeLanguage);
     on<SettingsEnableDebugMenu>(_enableDebugMenu);
+    on<SettingsTogglePhotoVideoSource>(_togglePhotoVideoSource);
 
     _repository.stream.listen((settings) => add(SettingsGet())).disposed(by: this);
   }
@@ -317,8 +318,16 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
       dataSchemaVersion: currentSettings.dataSchemaVersion,
       hasSeenLazyOnboarding: currentSettings.hasSeenLazyOnboarding,
       isDebugMenuVisible: true,
+      isPhotoVideoSourceEnabled: currentSettings.isPhotoVideoSourceEnabled,
     );
     await _repository.updateSettings(updatedSettings);
+  }
+
+  FutureOr<void> _togglePhotoVideoSource(
+    SettingsTogglePhotoVideoSource event,
+    Emitter<SettingsState> emit,
+  ) async {
+    await _repository.updateIsPhotoVideoSourceEnabled(event.isEnabled);
   }
 
   // FutureOr<void> _exportToEncryptedImage(

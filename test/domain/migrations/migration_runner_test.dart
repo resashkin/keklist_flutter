@@ -40,6 +40,7 @@ void main() {
         dataSchemaVersion: 0,
         hasSeenLazyOnboarding: false,
         isDebugMenuVisible: false,
+        isPhotoVideoSourceEnabled: false,
       ),
     );
   });
@@ -58,6 +59,7 @@ void main() {
           dataSchemaVersion: 1,
           hasSeenLazyOnboarding: false,
           isDebugMenuVisible: false,
+          isPhotoVideoSourceEnabled: false,
         ),
       );
 
@@ -80,6 +82,7 @@ void main() {
           dataSchemaVersion: 0,
           hasSeenLazyOnboarding: false,
           isDebugMenuVisible: false,
+          isPhotoVideoSourceEnabled: false,
         ),
       );
 
@@ -99,6 +102,7 @@ void main() {
           dataSchemaVersion: 0,
           hasSeenLazyOnboarding: false,
           isDebugMenuVisible: false,
+          isPhotoVideoSourceEnabled: false,
         ),
       );
 

@@ -25,13 +25,15 @@ class SettingsObjectAdapter extends TypeAdapter<SettingsObject> {
       ..language = fields[7] == null ? 'en' : fields[7] as String
       ..dataSchemaVersion = fields[8] == null ? 0 : fields[8] as int
       ..hasSeenLazyOnboarding = fields[9] == null ? false : fields[9] as bool
-      ..isDebugMenuVisible = fields[10] == null ? false : fields[10] as bool;
+      ..isDebugMenuVisible = fields[10] == null ? false : fields[10] as bool
+      ..isPhotoVideoSourceEnabled =
+          fields[11] == null ? false : fields[11] as bool;
   }
 
   @override
   void write(BinaryWriter writer, SettingsObject obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.isMindContentVisible)
       ..writeByte(1)
@@ -49,7 +51,9 @@ class SettingsObjectAdapter extends TypeAdapter<SettingsObject> {
       ..writeByte(9)
       ..write(obj.hasSeenLazyOnboarding)
       ..writeByte(10)
-      ..write(obj.isDebugMenuVisible);
+      ..write(obj.isDebugMenuVisible)
+      ..writeByte(11)
+      ..write(obj.isPhotoVideoSourceEnabled);
   }
 
   @override

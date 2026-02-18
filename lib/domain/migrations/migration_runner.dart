@@ -69,6 +69,7 @@ class MigrationRunner {
                 dataSchemaVersion: migration.version,
                 hasSeenLazyOnboarding: updatedSettings.hasSeenLazyOnboarding,
                 isDebugMenuVisible: updatedSettings.isDebugMenuVisible,
+                isPhotoVideoSourceEnabled: updatedSettings.isPhotoVideoSourceEnabled,
               ),
             );
 
