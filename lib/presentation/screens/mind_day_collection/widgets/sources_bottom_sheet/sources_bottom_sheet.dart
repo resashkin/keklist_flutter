@@ -64,15 +64,25 @@ final class _SourceItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color mutedColor = Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.38);
+    final Color subtitleColor = enabled
+        ? Theme.of(context).colorScheme.onSurfaceVariant
+        : mutedColor;
     return ListTile(
-      leading: Icon(icon),
-      title: Text(title),
-      subtitle: Text(subtitle),
-      trailing: Icon(
-        checked ? Icons.check_circle : Icons.circle_outlined,
-        color: checked
-            ? Theme.of(context).colorScheme.primary
-            : Theme.of(context).colorScheme.onSurfaceVariant,
+      titleAlignment: ListTileTitleAlignment.top,
+      horizontalTitleGap: 8.0,
+      leading: Padding(
+        padding: const EdgeInsets.only(top: 4.0),
+        child: Icon(icon, color: enabled ? null : mutedColor),
+      ),
+      title: Text(title, style: enabled ? null : TextStyle(color: mutedColor)),
+      subtitle: Text(
+        subtitle,
+        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: subtitleColor),
+      ),
+      trailing: Switch.adaptive(
+        value: checked,
+        onChanged: enabled ? (_) => onTap?.call() : null,
       ),
       onTap: enabled ? onTap : null,
     );
