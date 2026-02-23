@@ -407,9 +407,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get noPhotosForDay => '未找到当天的照片';
 
   @override
-  String photosFromDay(String date) {
-    return '$date的照片';
-  }
+  String get dateGallerySubtitle => '本日的媒体文件';
 
   @override
   String get sources => '来源';

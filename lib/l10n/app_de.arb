@@ -131,7 +131,7 @@
     "yourNickname": "Ihr Spitzname",
     "viewPhotos": "Fotos ansehen",
     "noPhotosForDay": "Keine Fotos für diesen Tag gefunden",
-    "photosFromDay": "Fotos vom {date}",
+    "dateGallerySubtitle": "Mediendateien für diesen Tag",
     "sources": "Quellen",
     "sourcesMinds": "Gedanken",
     "sourcesMindsSubtitle": "Deine Gedanken und Momente",

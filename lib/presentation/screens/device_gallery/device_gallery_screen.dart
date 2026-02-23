@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart' hide DateUtils;
+import 'package:keklist/domain/constants.dart';
 import 'package:keklist/presentation/screens/date_gallery/media_viewer_screen.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/core/helpers/date_utils.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
-import 'package:intl/intl.dart';
 
 final class DeviceGalleryScreen extends StatefulWidget {
   final int dayIndex;
@@ -92,12 +92,21 @@ final class _DeviceGalleryScreenState extends State<DeviceGalleryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final Locale locale = Localizations.localeOf(context);
     final DateTime date = DateUtils.getDateFromDayIndex(widget.dayIndex);
-    final String formattedDate = DateFormat.yMMMMd(Localizations.localeOf(context).toString()).format(date);
+    final String yearSuffix = date.year == DateTime.now().year ? '' : ' ${date.year}';
+    final String formattedDay = '${DateFormatters.dayMonthFormat(locale).format(date)}$yearSuffix';
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.l10n.photosFromDay(formattedDate)),
+        centerTitle: true,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(formattedDay, style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500)),
+            Text(context.l10n.dateGallerySubtitle, style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.w300)),
+          ],
+        ),
         leading: IconButton(icon: const Icon(Icons.close), onPressed: () => Navigator.of(context).pop()),
       ),
       body: _buildBody(),

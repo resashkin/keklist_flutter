@@ -420,9 +420,7 @@ class AppLocalizationsSr extends AppLocalizations {
   String get noPhotosForDay => 'Нема фотографија за овај дан';
 
   @override
-  String photosFromDay(String date) {
-    return 'Фотографије од $date';
-  }
+  String get dateGallerySubtitle => 'Медиjске датотеке за овај дан';
 
   @override
   String get sources => 'Извори';
@@ -862,9 +860,7 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
   String get noPhotosForDay => 'Nema fotografija za ovaj dan';
 
   @override
-  String photosFromDay(String date) {
-    return 'Fotografije od $date';
-  }
+  String get dateGallerySubtitle => 'Medijske datoteke za ovaj dan';
 
   @override
   String get sources => 'Izvori';

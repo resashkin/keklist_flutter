@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
+import 'package:keklist/domain/constants.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/core/helpers/date_utils.dart' as kek_date;
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
@@ -31,12 +31,21 @@ final class _DateGalleryScreenState extends KekWidgetState<DateGalleryScreen> {
   }
 
   Widget _buildScaffold(BuildContext context) {
+    final Locale locale = Localizations.localeOf(context);
     final DateTime date = kek_date.DateUtils.getDateFromDayIndex(widget.dayIndex);
-    final String formattedDate = DateFormat.yMMMMd(Localizations.localeOf(context).toString()).format(date);
+    final String yearSuffix = date.year == DateTime.now().year ? '' : ' ${date.year}';
+    final String formattedDay = '${DateFormatters.dayMonthFormat(locale).format(date)}$yearSuffix';
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.l10n.photosFromDay(formattedDate)),
+        centerTitle: true,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(formattedDay, style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500)),
+            Text(context.l10n.dateGallerySubtitle, style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.w300)),
+          ],
+        ),
         leading: IconButton(icon: const Icon(Icons.close), onPressed: () => Navigator.of(context).pop()),
       ),
       body: BlocBuilder<DateGalleryBloc, DateGalleryState>(builder: (context, state) => _buildBody(context, state)),
@@ -113,12 +122,13 @@ final class _DateGalleryScreenState extends KekWidgetState<DateGalleryScreen> {
   }
 
   Widget _buildThumbnail(BuildContext context, AssetEntity asset) {
+    final int thumbSize = (200 * MediaQuery.devicePixelRatioOf(context)).round();
     return GestureDetector(
       onTap: () => _openPreview(context, asset),
       child: Stack(
         fit: StackFit.expand,
         children: [
-          AssetEntityImage(asset, isOriginal: false, thumbnailSize: const ThumbnailSize.square(200), fit: BoxFit.cover),
+          AssetEntityImage(asset, isOriginal: false, thumbnailSize: ThumbnailSize.square(thumbSize), fit: BoxFit.cover),
           if (asset.type == AssetType.video)
             Positioned(
               bottom: 4,

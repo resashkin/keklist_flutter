@@ -420,9 +420,7 @@ class AppLocalizationsKk extends AppLocalizations {
   String get noPhotosForDay => 'Бұл күнге фотосуреттер табылмады';
 
   @override
-  String photosFromDay(String date) {
-    return '$date күнінің фотосуреттері';
-  }
+  String get dateGallerySubtitle => 'Осы күнгі медиафайлдар';
 
   @override
   String get sources => 'Дереккөздер';

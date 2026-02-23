@@ -131,7 +131,7 @@
     "yourNickname": "あなたのニックネーム",
     "viewPhotos": "写真を見る",
     "noPhotosForDay": "この日の写真が見つかりません",
-    "photosFromDay": "{date}の写真",
+    "dateGallerySubtitle": "この日のメディアファイル",
     "sources": "ソース",
     "sourcesMinds": "マインド",
     "sourcesMindsSubtitle": "あなたの思考と瞬間",

@@ -909,11 +909,11 @@ abstract class AppLocalizations {
   /// **'No photos found for this day'**
   String get noPhotosForDay;
 
-  /// Gallery screen title showing date
+  /// Date gallery screen subtitle
   ///
   /// In en, this message translates to:
-  /// **'Photos from {date}'**
-  String photosFromDay(String date);
+  /// **'Media files for this day'**
+  String get dateGallerySubtitle;
 
   /// Sources section title
   ///

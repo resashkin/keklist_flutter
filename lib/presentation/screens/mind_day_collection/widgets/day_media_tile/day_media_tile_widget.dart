@@ -16,7 +16,7 @@ final class DayMediaTileWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
         child: Container(
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.surfaceContainerHighest,
@@ -66,6 +66,7 @@ final class DayMediaTileWidget extends StatelessWidget {
                     const double gap = 4.0;
                     final double size =
                         (constraints.maxWidth - gap * (data.assets.length - 1)) / data.assets.length;
+                    final int thumbSize = (size * MediaQuery.devicePixelRatioOf(context)).round();
                     return Row(
                       spacing: gap,
                       children: data.assets
@@ -75,7 +76,7 @@ final class DayMediaTileWidget extends StatelessWidget {
                               child: AssetEntityImage(
                                 asset,
                                 isOriginal: false,
-                                thumbnailSize: ThumbnailSize.square(size.round()),
+                                thumbnailSize: ThumbnailSize.square(thumbSize),
                                 fit: BoxFit.cover,
                                 width: size,
                                 height: size,

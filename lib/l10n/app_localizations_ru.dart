@@ -419,9 +419,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get noPhotosForDay => 'Нет фотографий за этот день';
 
   @override
-  String photosFromDay(String date) {
-    return 'Фото от $date';
-  }
+  String get dateGallerySubtitle => 'Медиафайлы за этот день';
 
   @override
   String get sources => 'Источники';

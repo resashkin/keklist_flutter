@@ -397,7 +397,7 @@
     "onboardingMind6": "Yangi yozuv yaratish uchun 'Yozish' tugmasini bosing",
     "viewPhotos": "Rasmlarni ko'rish",
     "noPhotosForDay": "Bu kun uchun rasmlar topilmadi",
-    "photosFromDay": "{date} kunidagi rasmlar",
+    "dateGallerySubtitle": "Ushbu kunning media fayllari",
     "sources": "Manbalar",
     "sourcesMinds": "Fikrlar",
     "sourcesMindsSubtitle": "Sizning fikr va lahzalaringiz",

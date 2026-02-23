@@ -397,7 +397,7 @@
     "onboardingMind6": "Жаңы жазуу жасоо үчүн 'Жазуу' баскычын басыңыз",
     "viewPhotos": "Сүрөттөрдү көрүү",
     "noPhotosForDay": "Бул күндө сүрөттөр табылган жок",
-    "photosFromDay": "{date} күнүнүн сүрөттөрү",
+    "dateGallerySubtitle": "Бул күндүн медиа файлдары",
     "sources": "Булактар",
     "sourcesMinds": "Ойлор",
     "sourcesMindsSubtitle": "Сиздин ойлоруңуз жана учурларыңыз",

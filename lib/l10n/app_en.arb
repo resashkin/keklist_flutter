@@ -532,14 +532,9 @@
     "@noPhotosForDay": {
         "description": "Empty state message when day has no photos"
     },
-    "photosFromDay": "Photos from {date}",
-    "@photosFromDay": {
-        "description": "Gallery screen title showing date",
-        "placeholders": {
-            "date": {
-                "type": "String"
-            }
-        }
+    "dateGallerySubtitle": "Media files for this day",
+    "@dateGallerySubtitle": {
+        "description": "Date gallery screen subtitle"
     },
     "sources": "Sources",
     "@sources": {

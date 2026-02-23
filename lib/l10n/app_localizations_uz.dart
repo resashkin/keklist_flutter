@@ -421,9 +421,7 @@ class AppLocalizationsUz extends AppLocalizations {
   String get noPhotosForDay => 'Bu kun uchun rasmlar topilmadi';
 
   @override
-  String photosFromDay(String date) {
-    return '$date kunidagi rasmlar';
-  }
+  String get dateGallerySubtitle => 'Ushbu kunning media fayllari';
 
   @override
   String get sources => 'Manbalar';

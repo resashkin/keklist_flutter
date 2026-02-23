@@ -397,7 +397,7 @@
     "onboardingMind6": "Жаңа жазба жасау үшін 'Жазу' түймесін басыңыз",
     "viewPhotos": "Фотосуреттерді қарау",
     "noPhotosForDay": "Бұл күнге фотосуреттер табылмады",
-    "photosFromDay": "{date} күнінің фотосуреттері",
+    "dateGallerySubtitle": "Осы күнгі медиафайлдар",
     "sources": "Дереккөздер",
     "sourcesMinds": "Ойлар",
     "sourcesMindsSubtitle": "Сіздің ойларыңыз бен сәттеріңіз",

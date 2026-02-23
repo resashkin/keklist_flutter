@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:video_player/video_player.dart';
 
 final class MediaViewerScreen extends StatefulWidget {
@@ -17,6 +18,9 @@ final class _MediaViewerScreenState extends State<MediaViewerScreen> {
   File? _file;
   bool _isLoading = true;
   VideoPlayerController? _videoController;
+
+  double _dragOffsetY = 0.0;
+  double _backgroundOpacity = 1.0;
 
   @override
   void initState() {
@@ -53,10 +57,34 @@ final class _MediaViewerScreenState extends State<MediaViewerScreen> {
     }
   }
 
+  Future<void> _shareMedia() async {
+    final File? file = _file;
+    if (file == null) return;
+    await SharePlus.instance.share(ShareParams(files: [XFile(file.path)]));
+  }
+
+  void _onVerticalDragUpdate(DragUpdateDetails details) {
+    setState(() {
+      _dragOffsetY += details.delta.dy;
+      _backgroundOpacity = (1.0 - (_dragOffsetY.abs() / 350.0)).clamp(0.0, 1.0);
+    });
+  }
+
+  void _onVerticalDragEnd(DragEndDetails details) {
+    if (_dragOffsetY.abs() > 120 || details.velocity.pixelsPerSecond.dy.abs() > 800) {
+      Navigator.of(context).pop();
+    } else {
+      setState(() {
+        _dragOffsetY = 0.0;
+        _backgroundOpacity = 1.0;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.black.withValues(alpha: _backgroundOpacity),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -64,9 +92,23 @@ final class _MediaViewerScreenState extends State<MediaViewerScreen> {
           icon: const Icon(Icons.close, color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
+        actions: [
+          if (_file != null)
+            IconButton(
+              icon: const Icon(Icons.share_outlined, color: Colors.white),
+              onPressed: _shareMedia,
+            ),
+        ],
       ),
       extendBodyBehindAppBar: true,
-      body: _buildBody(),
+      body: GestureDetector(
+        onVerticalDragUpdate: _onVerticalDragUpdate,
+        onVerticalDragEnd: _onVerticalDragEnd,
+        child: Transform.translate(
+          offset: Offset(0, _dragOffsetY),
+          child: _buildBody(),
+        ),
+      ),
     );
   }
 
@@ -92,16 +134,24 @@ final class _MediaViewerScreenState extends State<MediaViewerScreen> {
   }
 
   Widget _buildImageViewer(File file) {
-    return PhotoView(
-      imageProvider: FileImage(file),
-      minScale: PhotoViewComputedScale.contained,
-      maxScale: PhotoViewComputedScale.covered * 3,
-      backgroundDecoration: const BoxDecoration(color: Colors.black),
-      loadingBuilder: (context, event) => const Center(
-        child: CircularProgressIndicator(color: Colors.white),
-      ),
-      errorBuilder: (context, error, stackTrace) => const Center(
-        child: Icon(Icons.error_outline, color: Colors.white, size: 64),
+    // PhotoViewGestureDetectorScope yields the vertical drag gesture to the
+    // parent GestureDetector whenever the image cannot pan further vertically
+    // (i.e. at minimum/contained scale, or at the top/bottom edge when zoomed).
+    // This lets pinch-zoom, double-tap-zoom, and pan all coexist naturally with
+    // the swipe-to-dismiss gesture handled by the parent.
+    return PhotoViewGestureDetectorScope(
+      axis: Axis.vertical,
+      child: PhotoView(
+        imageProvider: FileImage(file),
+        minScale: PhotoViewComputedScale.contained,
+        maxScale: PhotoViewComputedScale.covered * 3,
+        backgroundDecoration: const BoxDecoration(color: Colors.transparent),
+        loadingBuilder: (context, event) => const Center(
+          child: CircularProgressIndicator(color: Colors.white),
+        ),
+        errorBuilder: (context, error, stackTrace) => const Center(
+          child: Icon(Icons.error_outline, color: Colors.white, size: 64),
+        ),
       ),
     );
   }

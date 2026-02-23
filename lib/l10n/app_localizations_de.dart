@@ -423,9 +423,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get noPhotosForDay => 'Keine Fotos für diesen Tag gefunden';
 
   @override
-  String photosFromDay(String date) {
-    return 'Fotos vom $date';
-  }
+  String get dateGallerySubtitle => 'Mediendateien für diesen Tag';
 
   @override
   String get sources => 'Quellen';

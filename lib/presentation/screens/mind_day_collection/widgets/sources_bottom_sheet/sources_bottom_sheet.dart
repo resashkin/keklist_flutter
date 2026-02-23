@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
+import 'package:photo_manager/photo_manager.dart';
 
 final class SourcesBottomSheet extends StatelessWidget {
   final bool isPhotoVideoEnabled;
@@ -37,7 +38,20 @@ final class SourcesBottomSheet extends StatelessWidget {
           subtitle: context.l10n.sourcesPhotoVideoSubtitle,
           checked: isPhotoVideoEnabled,
           enabled: true,
-          onTap: () => onPhotoVideoToggled(!isPhotoVideoEnabled),
+          onTap: () {
+            final bool newValue = !isPhotoVideoEnabled;
+            if (!newValue) {
+              onPhotoVideoToggled(false);
+              return;
+            }
+            PhotoManager.requestPermissionExtend().then((permission) {
+              if (permission.isAuth) {
+                onPhotoVideoToggled(true);
+              } else {
+                PhotoManager.openSetting();
+              }
+            });
+          },
         ),
         SafeArea(child: const SizedBox(height: 8.0)),
       ],

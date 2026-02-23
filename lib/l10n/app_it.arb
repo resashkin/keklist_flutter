@@ -397,7 +397,7 @@
     "onboardingMind6": "Per creare una nuova nota, tocca 'Scrivi'",
     "viewPhotos": "Visualizza foto",
     "noPhotosForDay": "Nessuna foto trovata per questo giorno",
-    "photosFromDay": "Foto del {date}",
+    "dateGallerySubtitle": "File multimediali di questo giorno",
     "sources": "Sorgenti",
     "sourcesMinds": "Menti",
     "sourcesMindsSubtitle": "I tuoi pensieri e momenti",
