@@ -450,6 +450,15 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
                 rootId: null,
               );
               sendEventToBloc<MindBloc>(event);
+              Future.delayed(const Duration(milliseconds: 300), () {
+                if (_scrollController.hasClients) {
+                  _scrollController.animateTo(
+                    0,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeOut,
+                  );
+                }
+              });
             } else {
               final Mind mindForEdit = _editableMind!.copyWith(note: text, emoji: emoji);
               sendEventToBloc<MindBloc>(MindEdit(mind: mindForEdit));
