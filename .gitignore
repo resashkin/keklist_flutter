@@ -151,3 +151,6 @@ firebase-debug.log
 
 # FVM Version Cache
 .fvm/
+
+# fastlane reports
+report.xml
