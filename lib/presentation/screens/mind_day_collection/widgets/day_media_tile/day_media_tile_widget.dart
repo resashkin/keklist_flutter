@@ -40,46 +40,53 @@ final class DayMediaTileWidget extends StatelessWidget {
               else
                 LayoutBuilder(
                   builder: (context, constraints) {
+                    const int kSlots = 5;
                     const double gap = 4.0;
-                    final double size = (constraints.maxWidth - gap * (data.assets.length - 1)) / data.assets.length;
+                    final double size = (constraints.maxWidth - gap * (kSlots - 1)) / kSlots;
                     final int thumbSize = (size * MediaQuery.devicePixelRatioOf(context)).round();
                     final bool hasMore = data.total > data.assets.length;
                     final int remaining = data.total - (data.assets.length - 1);
-                    return Row(
-                      spacing: gap,
-                      children: data.assets.asMap().entries.map((entry) {
-                        final bool isLast = entry.key == data.assets.length - 1;
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(6.0),
-                          child: Stack(
-                            children: [
-                              AssetEntityImage(
-                                entry.value,
-                                isOriginal: false,
-                                thumbnailSize: ThumbnailSize.square(thumbSize),
-                                fit: BoxFit.cover,
-                                width: size,
-                                height: size,
-                              ),
-                              if (isLast && hasMore)
-                                Container(
+                    return SizedBox(
+                      height: size,
+                      child: Row(
+                        mainAxisAlignment: data.assets.length < kSlots
+                            ? MainAxisAlignment.center
+                            : MainAxisAlignment.start,
+                        spacing: gap,
+                        children: data.assets.asMap().entries.map((entry) {
+                          final bool isLast = entry.key == data.assets.length - 1;
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(6.0),
+                            child: Stack(
+                              children: [
+                                AssetEntityImage(
+                                  entry.value,
+                                  isOriginal: false,
+                                  thumbnailSize: ThumbnailSize.square(thumbSize),
+                                  fit: BoxFit.cover,
                                   width: size,
                                   height: size,
-                                  color: Colors.black54,
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    '+$remaining',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: size * 0.28,
-                                      fontWeight: FontWeight.bold,
+                                ),
+                                if (isLast && hasMore)
+                                  Container(
+                                    width: size,
+                                    height: size,
+                                    color: Colors.black54,
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      '+$remaining',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: size * 0.28,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
-                                ),
-                            ],
-                          ),
-                        );
-                      }).toList(),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                      ),
                     );
                   },
                 ),

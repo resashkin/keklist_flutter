@@ -46,10 +46,10 @@ final class MindDayCollectionScreen extends StatefulWidget {
 
   @override
   // ignore: no_logic_in_create_state
-  State<MindDayCollectionScreen> createState() => _MindDayCollectionScreenState(dayIndex: initialDayIndex);
+  State<MindDayCollectionScreen> createState() => MindDayCollectionScreenState(dayIndex: initialDayIndex);
 }
 
-final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollectionScreen> {
+final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectionScreen> {
   int dayIndex;
   final List<Mind> allMinds = [];
 
@@ -68,7 +68,7 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
 
   Iterable<String> suggestions = KeklistConstants.defaultEmojiesToPick;
 
-  _MindDayCollectionScreenState({required this.dayIndex});
+  MindDayCollectionScreenState({required this.dayIndex});
 
   @override
   void initState() {
@@ -337,6 +337,8 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
       ),
     );
   }
+
+  void goToToday() => _switchToDayIndex(DateUtils.getTodayIndex());
 
   void _switchToDayIndex(int dayIndex) {
     _scrollController.jumpTo(0);
