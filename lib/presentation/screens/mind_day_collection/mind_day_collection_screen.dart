@@ -131,27 +131,24 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text('$formattedDay$yearSuffix', style: const TextStyle(fontSize: 16.0, fontWeight: .w500)),
-            Text(
-              DateFormatters.formatWeekday(dayDate, locale),
-              style: const TextStyle(fontSize: 14.0, fontWeight: .w300),
-            ),
-          ],
+        title: GestureDetector(
+          onTap: () async {
+            final int? selectedDayIndex = await _showDateSwitcherToNewDay();
+            if (selectedDayIndex == null) return;
+            _switchToDayIndex(selectedDayIndex);
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text('$formattedDay$yearSuffix', style: const TextStyle(fontSize: 16.0, fontWeight: .w500)),
+              Text(
+                DateFormatters.formatWeekday(dayDate, locale),
+                style: const TextStyle(fontSize: 14.0, fontWeight: .w300),
+              ),
+            ],
+          ),
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.calendar_month),
-            onPressed: () async {
-              final int? selectedDayIndex = await _showDateSwitcherToNewDay();
-              if (selectedDayIndex == null) {
-                return;
-              }
-              _switchToDayIndex(selectedDayIndex);
-            },
-          ),
           IconButton(icon: const Icon(Icons.tune), tooltip: context.l10n.sources, onPressed: () => _showSources()),
           BoolWidget(
             condition:
