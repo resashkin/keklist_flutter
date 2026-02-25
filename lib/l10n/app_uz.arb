@@ -398,6 +398,7 @@
     "viewPhotos": "Rasmlarni ko'rish",
     "noPhotosForDay": "Bu kun uchun rasmlar topilmadi",
     "dateGallerySubtitle": "Ushbu kunning media fayllari",
+    "dayMediaFilesCount": "{count} ta media fayl shu kun uchun",
     "sources": "Manbalar",
     "sourcesMinds": "Fikrlar",
     "sourcesMindsSubtitle": "Sizning fikr va lahzalaringiz",

@@ -425,6 +425,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get dateGallerySubtitle => 'Archivos multimedia de este día';
 
   @override
+  String dayMediaFilesCount(int count) {
+    return '$count archivos multimedia de este día';
+  }
+
+  @override
   String get sources => 'Fuentes';
 
   @override

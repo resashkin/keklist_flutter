@@ -68,7 +68,7 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
       body: BoolWidget(
         condition: _filteredMinds.isNotEmpty,
         falseChild: Center(
-          child: MindCollectionEmptyDayWidget.noMinds(context: context, text: widget.emptyStateMessage),
+          child: MindCollectionEmptyStateWidget.noMinds(context: context, text: widget.emptyStateMessage),
         ),
         trueChild: Scrollbar(
           child: ListView.builder(

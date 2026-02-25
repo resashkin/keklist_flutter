@@ -410,6 +410,11 @@ class AppLocalizationsZh extends AppLocalizations {
   String get dateGallerySubtitle => '本日的媒体文件';
 
   @override
+  String dayMediaFilesCount(int count) {
+    return '$count个媒体文件';
+  }
+
+  @override
   String get sources => '来源';
 
   @override

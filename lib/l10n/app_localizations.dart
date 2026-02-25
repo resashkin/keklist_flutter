@@ -915,6 +915,12 @@ abstract class AppLocalizations {
   /// **'Media files for this day'**
   String get dateGallerySubtitle;
 
+  /// Subtitle showing count of media files for the day
+  ///
+  /// In en, this message translates to:
+  /// **'{count} media files for this day'**
+  String dayMediaFilesCount(int count);
+
   /// Sources section title
   ///
   /// In en, this message translates to:

@@ -152,11 +152,7 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
               _switchToDayIndex(selectedDayIndex);
             },
           ),
-          IconButton(
-            icon: const Icon(Icons.tune),
-            tooltip: context.l10n.sources,
-            onPressed: () => _showSources(),
-          ),
+          IconButton(icon: const Icon(Icons.tune), tooltip: context.l10n.sources, onPressed: () => _showSources()),
           BoolWidget(
             condition:
                 _debugMenuState?.debugMenuItems.firstWhereOrNull(
@@ -207,50 +203,47 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
         ),
         child: LayoutBuilder(
           builder: (context, constraints) => SingleChildScrollView(
-          physics: FlutterConstants.mobileOverscrollPhysics,
-          controller: _scrollController,
-          padding: const EdgeInsets.only(bottom: 150), // FAB offset.
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: constraints.maxHeight),
-            child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              BoolWidget(
-                condition: _dayMinds.isNotEmpty,
-                trueChild: MindMonologListWidget(
-                  minds: _dayMinds,
-                  onTap: (Mind mind) => _showMindInfo(mind),
-                  onOptions: (Mind mind) => _showActions(context, mind),
-                  mindIdsToChildren: _mindIdsToChildren,
-                ),
-                falseChild: MindCollectionEmptyDayWidget.noMindsForDay(context: context),
+            physics: FlutterConstants.mobileOverscrollPhysics,
+            controller: _scrollController,
+            padding: const EdgeInsets.only(bottom: 150), // FAB offset.
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  BoolWidget(
+                    condition: _dayMinds.isNotEmpty,
+                    trueChild: MindMonologListWidget(
+                      minds: _dayMinds,
+                      onTap: (Mind mind) => _showMindInfo(mind),
+                      onOptions: (Mind mind) => _showActions(context, mind),
+                      mindIdsToChildren: _mindIdsToChildren,
+                    ),
+                    falseChild: MindCollectionEmptyStateWidget.noMindsForDay(context: context),
+                  ),
+                  if (_isPhotoVideoSourceEnabled)
+                    BlocBuilder<DayMediaPreviewCubit, DayMediaPreviewState>(
+                      bloc: _mediaPreviewCubit,
+                      builder: (context, state) {
+                        if (state is DayMediaPreviewData) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
+                                child: Text(context.l10n.otherSources, style: Theme.of(context).textTheme.titleSmall),
+                              ),
+                              DayMediaTileWidget(data: state, onTap: () => _openGallery()),
+                            ],
+                          );
+                        }
+                        return const SizedBox.shrink();
+                      },
+                    ),
+                ],
               ),
-              if (_isPhotoVideoSourceEnabled)
-                BlocBuilder<DayMediaPreviewCubit, DayMediaPreviewState>(
-                  bloc: _mediaPreviewCubit,
-                  builder: (context, state) {
-                    if (state is DayMediaPreviewData && state.total > 0) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
-                            child: Text(context.l10n.otherSources, style: Theme.of(context).textTheme.titleSmall),
-                          ),
-                          DayMediaTileWidget(
-                            data: state,
-                            onTap: () => _openGallery(),
-                          ),
-                        ],
-                      );
-                    }
-                    return const SizedBox.shrink();
-                  },
-                ),
-            ],
+            ),
           ),
-          ),
-        ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -330,11 +323,7 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
   }
 
   void _openGallery() {
-    Navigator.of(context).push(
-      SwipeablePageRoute(
-        builder: (_) => DateGalleryScreen(dayIndex: dayIndex),
-      ),
-    );
+    Navigator.of(context).push(SwipeablePageRoute(builder: (_) => DateGalleryScreen(dayIndex: dayIndex)));
   }
 
   void _showSources() {
@@ -343,9 +332,7 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
       builder: (_) => SourcesBottomSheet(
         isPhotoVideoEnabled: _isPhotoVideoSourceEnabled,
         onPhotoVideoToggled: (enabled) {
-          sendEventToBloc<SettingsBloc>(
-            SettingsTogglePhotoVideoSource(isEnabled: enabled),
-          );
+          sendEventToBloc<SettingsBloc>(SettingsTogglePhotoVideoSource(isEnabled: enabled));
         },
       ),
     );
@@ -452,11 +439,7 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
               sendEventToBloc<MindBloc>(event);
               Future.delayed(const Duration(milliseconds: 300), () {
                 if (_scrollController.hasClients) {
-                  _scrollController.animateTo(
-                    0,
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeOut,
-                  );
+                  _scrollController.animateTo(0, duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
                 }
               });
             } else {

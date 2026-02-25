@@ -398,6 +398,7 @@
     "viewPhotos": "Сүрөттөрдү көрүү",
     "noPhotosForDay": "Бул күндө сүрөттөр табылган жок",
     "dateGallerySubtitle": "Бул күндүн медиа файлдары",
+    "dayMediaFilesCount": "{count} медиа файл бул күнгө",
     "sources": "Булактар",
     "sourcesMinds": "Ойлор",
     "sourcesMindsSubtitle": "Сиздин ойлоруңуз жана учурларыңыз",

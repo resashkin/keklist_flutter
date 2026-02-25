@@ -422,6 +422,11 @@ class AppLocalizationsRu extends AppLocalizations {
   String get dateGallerySubtitle => 'Медиафайлы за этот день';
 
   @override
+  String dayMediaFilesCount(int count) {
+    return '$count медиафайлов за этот день';
+  }
+
+  @override
   String get sources => 'Источники';
 
   @override

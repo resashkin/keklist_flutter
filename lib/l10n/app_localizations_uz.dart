@@ -424,6 +424,11 @@ class AppLocalizationsUz extends AppLocalizations {
   String get dateGallerySubtitle => 'Ushbu kunning media fayllari';
 
   @override
+  String dayMediaFilesCount(int count) {
+    return '$count ta media fayl shu kun uchun';
+  }
+
+  @override
   String get sources => 'Manbalar';
 
   @override

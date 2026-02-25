@@ -423,6 +423,11 @@ class AppLocalizationsKk extends AppLocalizations {
   String get dateGallerySubtitle => 'Осы күнгі медиафайлдар';
 
   @override
+  String dayMediaFilesCount(int count) {
+    return '$count медиафайл осы күнге';
+  }
+
+  @override
   String get sources => 'Дереккөздер';
 
   @override

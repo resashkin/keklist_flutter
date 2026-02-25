@@ -132,6 +132,7 @@
     "viewPhotos": "Fotos ansehen",
     "noPhotosForDay": "Keine Fotos für diesen Tag gefunden",
     "dateGallerySubtitle": "Mediendateien für diesen Tag",
+    "dayMediaFilesCount": "{count} Mediendateien für diesen Tag",
     "sources": "Quellen",
     "sourcesMinds": "Gedanken",
     "sourcesMindsSubtitle": "Deine Gedanken und Momente",

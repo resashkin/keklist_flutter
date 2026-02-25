@@ -398,6 +398,7 @@
     "viewPhotos": "Visualizza foto",
     "noPhotosForDay": "Nessuna foto trovata per questo giorno",
     "dateGallerySubtitle": "File multimediali di questo giorno",
+    "dayMediaFilesCount": "{count} file multimediali di questo giorno",
     "sources": "Sorgenti",
     "sourcesMinds": "Menti",
     "sourcesMindsSubtitle": "I tuoi pensieri e momenti",

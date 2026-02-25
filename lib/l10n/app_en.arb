@@ -536,6 +536,15 @@
     "@dateGallerySubtitle": {
         "description": "Date gallery screen subtitle"
     },
+    "dayMediaFilesCount": "{count} media files for this day",
+    "@dayMediaFilesCount": {
+        "description": "Subtitle showing count of media files for the day",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
     "sources": "Sources",
     "@sources": {
         "description": "Sources section title"

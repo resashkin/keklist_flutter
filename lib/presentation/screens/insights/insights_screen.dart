@@ -28,15 +28,19 @@ final class _InsightsScreenState extends KekWidgetState<InsightsScreen> {
   void initState() {
     super.initState();
 
-    context.read<MindBloc>().stream.listen((state) {
-      if (state is MindList) {
-        setState(() {
-          _minds
-            ..clear()
-            ..addAll(state.values);
-        });
-      }
-    }).disposed(by: this);
+    context
+        .read<MindBloc>()
+        .stream
+        .listen((state) {
+          if (state is MindList) {
+            setState(() {
+              _minds
+                ..clear()
+                ..addAll(state.values);
+            });
+          }
+        })
+        .disposed(by: this);
 
     context.read<MindBloc>().add(MindGetList());
   }
@@ -52,7 +56,7 @@ final class _InsightsScreenState extends KekWidgetState<InsightsScreen> {
             final int crossAxisCellCount = constraints.maxWidth > 600 ? 2 : 3;
             return BoolWidget(
               condition: _minds.isNotEmpty,
-              falseChild: MindCollectionEmptyDayWidget.noInsights(context: context),
+              falseChild: MindCollectionEmptyStateWidget.noInsights(context: context),
               trueChild: SingleChildScrollView(
                 child: StaggeredGrid.count(
                   axisDirection: AxisDirection.down,
@@ -93,12 +97,8 @@ final class _InsightsScreenState extends KekWidgetState<InsightsScreen> {
   }
 
   void _showDayCollectionScreen({required int groupDayIndex}) {
-    Navigator.of(context).push(
-      SwipeablePageRoute(
-        builder: (context) => MindDayCollectionScreen(
-          initialDayIndex: groupDayIndex,
-        ),
-      ),
-    );
+    Navigator.of(
+      context,
+    ).push(SwipeablePageRoute(builder: (context) => MindDayCollectionScreen(initialDayIndex: groupDayIndex)));
   }
 }

@@ -42,9 +42,11 @@ final class DayMediaPreviewCubit extends Cubit<DayMediaPreviewState> {
 
     final Map<String, AssetEntity> assetMap = {};
     for (final AssetPathEntity path in paths) {
+      final int count = await path.assetCountAsync;
+      if (count == 0) continue;
       final List<AssetEntity> assets = await path.getAssetListRange(
         start: 0,
-        end: await path.assetCountAsync,
+        end: count,
       );
       for (final AssetEntity asset in assets) {
         assetMap[asset.id] = asset;

@@ -426,6 +426,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get dateGallerySubtitle => 'Mediendateien für diesen Tag';
 
   @override
+  String dayMediaFilesCount(int count) {
+    return '$count Mediendateien für diesen Tag';
+  }
+
+  @override
   String get sources => 'Quellen';
 
   @override

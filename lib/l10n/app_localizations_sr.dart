@@ -423,6 +423,11 @@ class AppLocalizationsSr extends AppLocalizations {
   String get dateGallerySubtitle => 'Медиjске датотеке за овај дан';
 
   @override
+  String dayMediaFilesCount(int count) {
+    return '$count медијских датотека за овај дан';
+  }
+
+  @override
   String get sources => 'Извори';
 
   @override
@@ -861,6 +866,11 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
 
   @override
   String get dateGallerySubtitle => 'Medijske datoteke za ovaj dan';
+
+  @override
+  String dayMediaFilesCount(int count) {
+    return '$count medijskih datoteka za ovaj dan';
+  }
 
   @override
   String get sources => 'Izvori';

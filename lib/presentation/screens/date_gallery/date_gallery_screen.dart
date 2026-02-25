@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:swipeable_page_route/swipeable_page_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keklist/domain/constants.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
@@ -39,12 +39,19 @@ final class _DateGalleryScreenState extends KekWidgetState<DateGalleryScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(formattedDay, style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500)),
-            Text(context.l10n.dateGallerySubtitle, style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.w300)),
-          ],
+        title: BlocBuilder<DateGalleryBloc, DateGalleryState>(
+          builder: (context, state) {
+            final String subtitle = state is DateGalleryDataState
+                ? context.l10n.dayMediaFilesCount(state.assets.length)
+                : context.l10n.dateGallerySubtitle;
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(formattedDay, style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500)),
+                Text(subtitle, style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.w300)),
+              ],
+            );
+          },
         ),
         leading: IconButton(icon: const Icon(Icons.close), onPressed: () => Navigator.of(context).pop()),
       ),
@@ -161,6 +168,16 @@ final class _DateGalleryScreenState extends KekWidgetState<DateGalleryScreen> {
   }
 
   void _openPreview(BuildContext context, AssetEntity asset) {
-    Navigator.of(context).push(SwipeablePageRoute(canSwipe: false, builder: (_) => MediaViewerScreen(asset: asset)));
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        opaque: false,
+        fullscreenDialog: true,
+        pageBuilder: (_, __, ___) => MediaViewerScreen(asset: asset),
+        transitionsBuilder: (_, animation, __, child) => FadeTransition(
+          opacity: CurvedAnimation(parent: animation, curve: Curves.easeIn),
+          child: child,
+        ),
+      ),
+    );
   }
 }

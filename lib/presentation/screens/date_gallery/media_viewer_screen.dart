@@ -21,6 +21,7 @@ final class _MediaViewerScreenState extends State<MediaViewerScreen> {
 
   double _dragOffsetY = 0.0;
   double _backgroundOpacity = 1.0;
+  bool _isDragging = false;
 
   @override
   void initState() {
@@ -50,6 +51,7 @@ final class _MediaViewerScreenState extends State<MediaViewerScreen> {
     if (widget.asset.type == AssetType.video) {
       _videoController = VideoPlayerController.file(file);
       await _videoController!.initialize();
+      _videoController!.addListener(() => setState(() {}));
       setState(() => _isLoading = false);
       _videoController!.play();
     } else {
@@ -61,6 +63,10 @@ final class _MediaViewerScreenState extends State<MediaViewerScreen> {
     final File? file = _file;
     if (file == null) return;
     await SharePlus.instance.share(ShareParams(files: [XFile(file.path)]));
+  }
+
+  void _onVerticalDragStart(DragStartDetails _) {
+    setState(() => _isDragging = true);
   }
 
   void _onVerticalDragUpdate(DragUpdateDetails details) {
@@ -77,6 +83,7 @@ final class _MediaViewerScreenState extends State<MediaViewerScreen> {
       setState(() {
         _dragOffsetY = 0.0;
         _backgroundOpacity = 1.0;
+        _isDragging = false;
       });
     }
   }
@@ -88,20 +95,29 @@ final class _MediaViewerScreenState extends State<MediaViewerScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.close, color: Colors.white),
-          onPressed: () => Navigator.of(context).pop(),
+        leading: AnimatedOpacity(
+          opacity: _isDragging ? 0.0 : 1.0,
+          duration: const Duration(milliseconds: 150),
+          child: IconButton(
+            icon: const Icon(Icons.close, color: Colors.white),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
         ),
         actions: [
           if (_file != null)
-            IconButton(
-              icon: const Icon(Icons.share_outlined, color: Colors.white),
-              onPressed: _shareMedia,
+            AnimatedOpacity(
+              opacity: _isDragging ? 0.0 : 1.0,
+              duration: const Duration(milliseconds: 150),
+              child: IconButton(
+                icon: const Icon(Icons.share_outlined, color: Colors.white),
+                onPressed: _shareMedia,
+              ),
             ),
         ],
       ),
       extendBodyBehindAppBar: true,
       body: GestureDetector(
+        onVerticalDragStart: _onVerticalDragStart,
         onVerticalDragUpdate: _onVerticalDragUpdate,
         onVerticalDragEnd: _onVerticalDragEnd,
         child: Transform.translate(
@@ -216,46 +232,72 @@ final class _MediaViewerScreenState extends State<MediaViewerScreen> {
     );
   }
 
+  void _seekBy(int seconds) {
+    final VideoPlayerController? controller = _videoController;
+    if (controller == null) return;
+    final Duration target = controller.value.position + Duration(seconds: seconds);
+    controller.seekTo(target.isNegative ? Duration.zero : target);
+  }
+
   Widget _buildVideoControls(VideoPlayerController controller) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [
-            Colors.transparent,
-            Colors.black.withValues(alpha: 0.7),
-          ],
+          colors: [Colors.transparent, Colors.black.withValues(alpha: 0.7)],
         ),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          VideoProgressIndicator(
-            controller,
-            allowScrubbing: true,
-            colors: const VideoProgressColors(
-              playedColor: Colors.white,
-              bufferedColor: Colors.white30,
-              backgroundColor: Colors.white10,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                _formatDuration(controller.value.position),
-                style: const TextStyle(color: Colors.white, fontSize: 12),
+              VideoProgressIndicator(
+                controller,
+                allowScrubbing: true,
+                colors: const VideoProgressColors(
+                  playedColor: Colors.white,
+                  bufferedColor: Colors.white30,
+                  backgroundColor: Colors.white10,
+                ),
               ),
-              Text(
-                _formatDuration(controller.value.duration),
-                style: const TextStyle(color: Colors.white, fontSize: 12),
+              const SizedBox(height: 4),
+              Row(
+                children: [
+                  Text(
+                    _formatDuration(controller.value.position),
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () => _seekBy(-10),
+                    child: const SizedBox(
+                      width: 56,
+                      height: 44,
+                      child: Center(child: Icon(Icons.replay_10, color: Colors.white, size: 28)),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => _seekBy(10),
+                    child: const SizedBox(
+                      width: 56,
+                      height: 44,
+                      child: Center(child: Icon(Icons.forward_10, color: Colors.white, size: 28)),
+                    ),
+                  ),
+                  const Spacer(),
+                  Text(
+                    _formatDuration(controller.value.duration),
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                ],
               ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }

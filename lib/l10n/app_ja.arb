@@ -132,6 +132,7 @@
     "viewPhotos": "写真を見る",
     "noPhotosForDay": "この日の写真が見つかりません",
     "dateGallerySubtitle": "この日のメディアファイル",
+    "dayMediaFilesCount": "{count}件のメディアファイル",
     "sources": "ソース",
     "sourcesMinds": "マインド",
     "sourcesMindsSubtitle": "あなたの思考と瞬間",

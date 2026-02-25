@@ -398,6 +398,7 @@
     "viewPhotos": "Pogledaj fotografije",
     "noPhotosForDay": "Nema fotografija za ovaj dan",
     "dateGallerySubtitle": "Medijske datoteke za ovaj dan",
+    "dayMediaFilesCount": "{count} medijskih datoteka za ovaj dan",
     "sources": "Izvori",
     "sourcesMinds": "Misli",
     "sourcesMindsSubtitle": "Vaše misli i trenuci",

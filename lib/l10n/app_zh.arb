@@ -132,6 +132,7 @@
     "viewPhotos": "查看照片",
     "noPhotosForDay": "未找到当天的照片",
     "dateGallerySubtitle": "本日的媒体文件",
+    "dayMediaFilesCount": "{count}个媒体文件",
     "sources": "来源",
     "sourcesMinds": "想法",
     "sourcesMindsSubtitle": "你的想法和时刻",
