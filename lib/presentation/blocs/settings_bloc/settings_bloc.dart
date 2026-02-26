@@ -48,6 +48,7 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     on<SettingsUpdateShouldShowTitlesMode>(_updateShouldShowTitlesMode);
     on<SettingsChangeLanguage>(_changeLanguage);
     on<SettingsEnableDebugMenu>(_enableDebugMenu);
+    on<SettingsTogglePhotoVideoSource>(_togglePhotoVideoSource);
 
     _repository.stream.listen((settings) => add(SettingsGet())).disposed(by: this);
   }
@@ -171,7 +172,7 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     final Iterable<Mind> minds = _mindRepository.values;
     // Конвертация в CSV и шаринг.
     final List<List<String>> csvEntryList = minds.map((entry) => entry.toCSVEntry()).toList(growable: false);
-    final String csv = const ListToCsvConverter(fieldDelimiter: ';').convert(csvEntryList);
+    final String csv = const CsvEncoder(fieldDelimiter: ';').convert(csvEntryList);
     final Directory temporaryDirectory = await getTemporaryDirectory();
     final String formattedDateString = DateTime.now().toString().replaceAll('.', '-');
     final File csvFile = File('${temporaryDirectory.path}/keklist_minds_$formattedDateString.csv');
@@ -207,10 +208,7 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
       return;
     }
 
-    final List<List<dynamic>> rawRows = const CsvToListConverter(
-      fieldDelimiter: ';',
-      shouldParseNumbers: false,
-    ).convert(csvContent);
+    final List<List<dynamic>> rawRows = const CsvDecoder(fieldDelimiter: ';').convert(csvContent);
 
     if (rawRows.isEmpty) {
       return;
@@ -317,8 +315,16 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
       dataSchemaVersion: currentSettings.dataSchemaVersion,
       hasSeenLazyOnboarding: currentSettings.hasSeenLazyOnboarding,
       isDebugMenuVisible: true,
+      isPhotoVideoSourceEnabled: currentSettings.isPhotoVideoSourceEnabled,
     );
     await _repository.updateSettings(updatedSettings);
+  }
+
+  FutureOr<void> _togglePhotoVideoSource(
+    SettingsTogglePhotoVideoSource event,
+    Emitter<SettingsState> emit,
+  ) async {
+    await _repository.updateIsPhotoVideoSourceEnabled(event.isEnabled);
   }
 
   // FutureOr<void> _exportToEncryptedImage(

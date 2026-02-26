@@ -394,5 +394,16 @@
     "onboardingMind3": "Nella scheda 'Calendario', tutte le note sono visualizzate per giorni, settimane e mesi",
     "onboardingMind4": "La scheda 'Statistiche' mostra brevi statistiche delle tue voci",
     "onboardingMind5": "Tutte le note sono memorizzate solo sul tuo telefono",
-    "onboardingMind6": "Per creare una nuova nota, tocca 'Scrivi'"
+    "onboardingMind6": "Per creare una nuova nota, tocca 'Scrivi'",
+    "viewPhotos": "Visualizza foto",
+    "noPhotosForDay": "Nessuna foto trovata per questo giorno",
+    "dateGallerySubtitle": "File multimediali di questo giorno",
+    "dayMediaFilesCount": "{count} file multimediali di questo giorno",
+    "sources": "Sorgenti",
+    "sourcesMinds": "Menti",
+    "sourcesMindsSubtitle": "I tuoi pensieri e momenti",
+    "sourcesPhotoVideo": "Foto e video",
+    "sourcesPhotoVideoSubtitle": "Foto e video del dispositivo per questo giorno",
+    "otherSources": "Altre sorgenti",
+    "licenses": "Licenze"
 }

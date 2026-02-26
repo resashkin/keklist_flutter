@@ -402,4 +402,39 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get onboardingMind6 => '新しいメモを作成するには、\'書く\'をタップしてください';
+
+  @override
+  String get viewPhotos => '写真を見る';
+
+  @override
+  String get noPhotosForDay => 'この日の写真が見つかりません';
+
+  @override
+  String get dateGallerySubtitle => 'この日のメディアファイル';
+
+  @override
+  String dayMediaFilesCount(int count) {
+    return '$count件のメディアファイル';
+  }
+
+  @override
+  String get sources => 'ソース';
+
+  @override
+  String get sourcesMinds => 'マインド';
+
+  @override
+  String get sourcesMindsSubtitle => 'あなたの思考と瞬間';
+
+  @override
+  String get sourcesPhotoVideo => '写真・動画';
+
+  @override
+  String get sourcesPhotoVideoSubtitle => 'この日のデバイスの写真と動画';
+
+  @override
+  String get otherSources => 'その他のソース';
+
+  @override
+  String get licenses => 'ライセンス';
 }

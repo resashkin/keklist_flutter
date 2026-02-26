@@ -3,7 +3,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart' hide DateUtils;
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
+import 'package:swipeable_page_route/swipeable_page_route.dart';
 import 'package:gap/gap.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
@@ -18,6 +18,7 @@ import 'package:keklist/presentation/screens/actions/action_model.dart';
 import 'package:keklist/presentation/screens/actions/actions_screen.dart';
 import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_collection_empty_day_widget.dart';
 import 'package:keklist/presentation/screens/mind_creator/mind_creator_screen.dart';
+import 'package:keklist/presentation/screens/date_gallery/date_gallery_screen.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/messaged_list/mind_monolog_list_widget.dart';
@@ -33,6 +34,10 @@ import 'package:keklist/presentation/screens/mind_one_emoji_collection/mind_one_
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/domain/services/entities/mind_note_content.dart';
+import 'package:keklist/presentation/screens/mind_day_collection/widgets/day_media_tile/day_media_preview_cubit.dart';
+import 'package:keklist/presentation/screens/mind_day_collection/widgets/day_media_tile/day_media_tile_widget.dart';
+import 'package:keklist/presentation/screens/mind_day_collection/widgets/sources_bottom_sheet/sources_bottom_sheet.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 final class MindDayCollectionScreen extends StatefulWidget {
   final int initialDayIndex;
@@ -41,10 +46,10 @@ final class MindDayCollectionScreen extends StatefulWidget {
 
   @override
   // ignore: no_logic_in_create_state
-  State<MindDayCollectionScreen> createState() => _MindDayCollectionScreenState(dayIndex: initialDayIndex);
+  State<MindDayCollectionScreen> createState() => MindDayCollectionScreenState(dayIndex: initialDayIndex);
 }
 
-final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollectionScreen> {
+final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectionScreen> {
   int dayIndex;
   final List<Mind> allMinds = [];
 
@@ -55,13 +60,15 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
   Map<String, List<Mind>> get _mindIdsToChildren => MindUtils.convertToMindChildren(minds: allMinds);
 
   bool _isMindContentVisible = false;
+  bool _isPhotoVideoSourceEnabled = false;
+  final DayMediaPreviewCubit _mediaPreviewCubit = DayMediaPreviewCubit();
   Mind? _editableMind;
 
   DebugMenuDataState? _debugMenuState;
 
   Iterable<String> suggestions = KeklistConstants.defaultEmojiesToPick;
 
-  _MindDayCollectionScreenState({required this.dayIndex});
+  MindDayCollectionScreenState({required this.dayIndex});
 
   @override
   void initState() {
@@ -82,9 +89,14 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
     subscribeToBloc<SettingsBloc>(
       onNewState: (state) {
         if (state is SettingsDataState) {
+          final bool enabled = state.settings.isPhotoVideoSourceEnabled;
           setState(() {
             _isMindContentVisible = state.settings.isMindContentVisible;
           });
+          if (enabled != _isPhotoVideoSourceEnabled) {
+            setState(() => _isPhotoVideoSourceEnabled = enabled);
+            if (enabled) _mediaPreviewCubit.load(dayIndex);
+          }
         }
       },
     )?.disposed(by: this);
@@ -119,27 +131,25 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text('$formattedDay$yearSuffix', style: const TextStyle(fontSize: 16.0, fontWeight: .w500)),
-            Text(
-              DateFormatters.formatWeekday(dayDate, locale),
-              style: const TextStyle(fontSize: 14.0, fontWeight: .w300),
-            ),
-          ],
+        title: GestureDetector(
+          onTap: () async {
+            final int? selectedDayIndex = await _showDateSwitcherToNewDay();
+            if (selectedDayIndex == null) return;
+            _switchToDayIndex(selectedDayIndex);
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text('$formattedDay$yearSuffix', style: const TextStyle(fontSize: 16.0, fontWeight: .w500)),
+              Text(
+                DateFormatters.formatWeekday(dayDate, locale),
+                style: const TextStyle(fontSize: 14.0, fontWeight: .w300),
+              ),
+            ],
+          ),
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.calendar_month),
-            onPressed: () async {
-              final int? selectedDayIndex = await _showDateSwitcherToNewDay();
-              if (selectedDayIndex == null) {
-                return;
-              }
-              _switchToDayIndex(selectedDayIndex);
-            },
-          ),
+          IconButton(icon: const Icon(Icons.tune), tooltip: context.l10n.sources, onPressed: () => _showSources()),
           BoolWidget(
             condition:
                 _debugMenuState?.debugMenuItems.firstWhereOrNull(
@@ -188,24 +198,48 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
             ),
           ],
         ),
-        child: SingleChildScrollView(
-          physics: FlutterConstants.mobileOverscrollPhysics,
-          controller: _scrollController,
-          padding: const EdgeInsets.only(bottom: 150), // FAB offset.
-          child: BoolWidget(
-            condition: _dayMinds.isNotEmpty,
-            trueChild: MindMonologListWidget(
-              minds: _dayMinds,
-              onTap: (Mind mind) => _showMindInfo(mind),
-              onOptions: (Mind mind) => _showActions(context, mind),
-              mindIdsToChildren: _mindIdsToChildren,
+        child: LayoutBuilder(
+          builder: (context, constraints) => SingleChildScrollView(
+            physics: FlutterConstants.mobileOverscrollPhysics,
+            controller: _scrollController,
+            padding: const EdgeInsets.only(bottom: 150), // FAB offset.
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  BoolWidget(
+                    condition: _dayMinds.isNotEmpty,
+                    trueChild: MindMonologListWidget(
+                      minds: _dayMinds,
+                      onTap: (Mind mind) => _showMindInfo(mind),
+                      onOptions: (Mind mind) => _showActions(context, mind),
+                      mindIdsToChildren: _mindIdsToChildren,
+                    ),
+                    falseChild: MindCollectionEmptyStateWidget.noMindsForDay(context: context),
+                  ),
+                  if (_isPhotoVideoSourceEnabled)
+                    BlocBuilder<DayMediaPreviewCubit, DayMediaPreviewState>(
+                      bloc: _mediaPreviewCubit,
+                      builder: (context, state) {
+                        if (state is DayMediaPreviewData) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
+                                child: Text(context.l10n.otherSources, style: Theme.of(context).textTheme.titleSmall),
+                              ),
+                              DayMediaTileWidget(data: state, onTap: () => _openGallery()),
+                            ],
+                          );
+                        }
+                        return const SizedBox.shrink();
+                      },
+                    ),
+                ],
+              ),
             ),
-            falseChild: MindCollectionEmptyDayWidget.noMindsForDay(context: context),
-            // falseChild: _MindInteractiveZeroCase(
-            //   title: 'No created minds for today. Pick emoji to create one.',
-            //   suggestions: suggestions,
-            //   onEmojiTap: (emoji) => _showMindCreator(initialEmoji: emoji),
-            // ),
           ),
         ),
       ),
@@ -225,7 +259,7 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
   @override
   void dispose() {
     cancelSubscriptions();
-
+    _mediaPreviewCubit.close();
     super.dispose();
   }
 
@@ -239,7 +273,6 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
         if (canAuthenticate) {
           final bool didAuthenticate = await auth.authenticate(
             localizedReason: context.l10n.pleaseAuthenticateToShowContent,
-            options: const AuthenticationOptions(useErrorDialogs: false),
           );
           if (didAuthenticate) {
             setState(() {
@@ -279,17 +312,36 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
 
   void _showMindInfo(Mind mind) {
     Navigator.of(context).push(
-      BackSwipePageRoute(
+      SwipeablePageRoute(
         builder: (_) => MindInfoScreen(rootMind: mind, allMinds: allMinds),
       ),
     );
   }
+
+  void _openGallery() {
+    Navigator.of(context).push(SwipeablePageRoute(builder: (_) => DateGalleryScreen(dayIndex: dayIndex)));
+  }
+
+  void _showSources() {
+    showBarModalBottomSheet(
+      context: context,
+      builder: (_) => SourcesBottomSheet(
+        isPhotoVideoEnabled: _isPhotoVideoSourceEnabled,
+        onPhotoVideoToggled: (enabled) {
+          sendEventToBloc<SettingsBloc>(SettingsTogglePhotoVideoSource(isEnabled: enabled));
+        },
+      ),
+    );
+  }
+
+  void goToToday() => _switchToDayIndex(DateUtils.getTodayIndex());
 
   void _switchToDayIndex(int dayIndex) {
     _scrollController.jumpTo(0);
     setState(() {
       this.dayIndex = dayIndex;
     });
+    if (_isPhotoVideoSourceEnabled) _mediaPreviewCubit.load(dayIndex);
   }
 
   void _switchToDayIndexWithScrollToTop(int dayIndex) {
@@ -298,6 +350,7 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
     setState(() {
       this.dayIndex = dayIndex;
     });
+    if (_isPhotoVideoSourceEnabled) _mediaPreviewCubit.load(dayIndex);
   }
 
   void _switchToDayIndexWithScrollToBottom(int dayIndex) {
@@ -306,6 +359,7 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
     setState(() {
       this.dayIndex = dayIndex;
     });
+    if (_isPhotoVideoSourceEnabled) _mediaPreviewCubit.load(dayIndex);
   }
 
   void _vibrate() {
@@ -351,7 +405,7 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
 
   void _showAllMinds(Mind mind) {
     Navigator.of(context).push(
-      BackSwipePageRoute(
+      SwipeablePageRoute(
         builder: (_) => MindOneEmojiCollectionScreen(emoji: mind.emoji, allMinds: allMinds),
       ),
     );
@@ -381,6 +435,11 @@ final class _MindDayCollectionScreenState extends KekWidgetState<MindDayCollecti
                 rootId: null,
               );
               sendEventToBloc<MindBloc>(event);
+              Future.delayed(const Duration(milliseconds: 300), () {
+                if (_scrollController.hasClients) {
+                  _scrollController.animateTo(0, duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
+                }
+              });
             } else {
               final Mind mindForEdit = _editableMind!.copyWith(note: text, emoji: emoji);
               sendEventToBloc<MindBloc>(MindEdit(mind: mindForEdit));

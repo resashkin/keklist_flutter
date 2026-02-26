@@ -128,5 +128,16 @@
     "yesterday": "Gestern",
     "youDidNotCollectAnyEntriesYet": "Sie haben noch keine Einträge gesammelt",
     "yourFolderName": "Ihr Ordnername",
-    "yourNickname": "Ihr Spitzname"
+    "yourNickname": "Ihr Spitzname",
+    "viewPhotos": "Fotos ansehen",
+    "noPhotosForDay": "Keine Fotos für diesen Tag gefunden",
+    "dateGallerySubtitle": "Mediendateien für diesen Tag",
+    "dayMediaFilesCount": "{count} Mediendateien für diesen Tag",
+    "sources": "Quellen",
+    "sourcesMinds": "Gedanken",
+    "sourcesMindsSubtitle": "Deine Gedanken und Momente",
+    "sourcesPhotoVideo": "Foto & Video",
+    "sourcesPhotoVideoSubtitle": "Gerätefotos und -videos für diesen Tag",
+    "otherSources": "Andere Quellen",
+    "licenses": "Lizenzen"
 }

@@ -411,4 +411,40 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get onboardingMind6 =>
       'Чтобы создать новую заметку, нажмите \'Написать\'';
+
+  @override
+  String get viewPhotos => 'Посмотреть фото';
+
+  @override
+  String get noPhotosForDay => 'Нет фотографий за этот день';
+
+  @override
+  String get dateGallerySubtitle => 'Медиафайлы за этот день';
+
+  @override
+  String dayMediaFilesCount(int count) {
+    return '$count медиафайлов за этот день';
+  }
+
+  @override
+  String get sources => 'Источники';
+
+  @override
+  String get sourcesMinds => 'Мысли';
+
+  @override
+  String get sourcesMindsSubtitle => 'Ваши мысли и моменты';
+
+  @override
+  String get sourcesPhotoVideo => 'Фото и видео';
+
+  @override
+  String get sourcesPhotoVideoSubtitle =>
+      'Фотографии и видео устройства за этот день';
+
+  @override
+  String get otherSources => 'Другие источники';
+
+  @override
+  String get licenses => 'Лицензии';
 }

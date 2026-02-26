@@ -17,14 +17,14 @@ The project uses code generation for Hive models, JSON serialization, and locali
 ./scripts/generate.sh
 
 # Generate Hive adapters and JSON serialization (.g.dart files)
-dart run build_runner build --delete-conflicting-outputs
+fvm dart run build_runner build --delete-conflicting-outputs
 
 # Generate localization files from ARB files
-flutter gen-l10n
+fvm flutter gen-l10n
 
 # Clean generated files
-dart run build_runner clean
-flutter clean
+fvm dart run build_runner clean
+fvm flutter clean
 ```
 
 **Important**: After modifying Hive model classes (with `@HiveType` annotations) or classes with `@JsonSerializable`, you MUST run code generation to update the `.g.dart` files.
@@ -33,30 +33,30 @@ flutter clean
 
 ```bash
 # Run on specific platform
-flutter run -d <device>
+fvm flutter run -d <device>
 
 # Run in release mode
-flutter run --release
+fvm flutter run --release
 ```
 
 ### Testing
 
 ```bash
 # Run all tests
-flutter test
+fvm flutter test
 
 # Run specific test file
-flutter test test/domain/services/entities/mind_note_content_test.dart
+fvm flutter test test/domain/services/entities/mind_note_content_test.dart
 
 # Run tests with coverage
-flutter test --coverage
+fvm flutter test --coverage
 ```
 
 ### Linting
 
 ```bash
 # Analyze code
-flutter analyze
+fvm flutter analyze
 ```
 
 ## Architecture

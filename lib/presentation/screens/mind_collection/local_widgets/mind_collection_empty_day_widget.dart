@@ -2,35 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/core/widgets/mind_widget.dart';
 
-final class MindCollectionEmptyDayWidget extends StatelessWidget {
+final class MindCollectionEmptyStateWidget extends StatelessWidget {
   final String emoji;
   final String text;
 
-  const MindCollectionEmptyDayWidget({
-    super.key,
-    required this.emoji,
-    required this.text,
-  });
+  const MindCollectionEmptyStateWidget({super.key, required this.emoji, required this.text});
 
-  factory MindCollectionEmptyDayWidget.noMinds({required BuildContext context, String? text}) {
-    return MindCollectionEmptyDayWidget(
-      emoji: '😔',
-      text: text ?? context.l10n.noMindsForPeriod,
-    );
+  factory MindCollectionEmptyStateWidget.noMinds({required BuildContext context, String? text}) {
+    return MindCollectionEmptyStateWidget(emoji: '😔', text: text ?? context.l10n.noMindsForPeriod);
   }
 
-  factory MindCollectionEmptyDayWidget.noMindsForDay({required BuildContext context, String? text}) {
-    return MindCollectionEmptyDayWidget(
-      emoji: '😔',
-      text: text ?? context.l10n.noMindsForThisDay,
-    );
+  factory MindCollectionEmptyStateWidget.noMindsForDay({required BuildContext context, String? text}) {
+    return MindCollectionEmptyStateWidget(emoji: '😔', text: text ?? context.l10n.noMindsForThisDay);
   }
 
-  factory MindCollectionEmptyDayWidget.noInsights({required BuildContext context, String? text}) {
-    return MindCollectionEmptyDayWidget(
-      emoji: '😔',
-      text: text ?? context.l10n.youDidNotCollectAnyEntriesYet,
-    );
+  factory MindCollectionEmptyStateWidget.noInsights({required BuildContext context, String? text}) {
+    return MindCollectionEmptyStateWidget(emoji: '😔', text: text ?? context.l10n.youDidNotCollectAnyEntriesYet);
+  }
+
+  factory MindCollectionEmptyStateWidget.noMediaForDay({required BuildContext context}) {
+    return MindCollectionEmptyStateWidget(emoji: '📷', text: context.l10n.noPhotosForDay);
   }
 
   static const ColorFilter greyscale = ColorFilter.matrix(<double>[
@@ -65,18 +56,10 @@ final class MindCollectionEmptyDayWidget extends StatelessWidget {
         const SizedBox(height: 16.0),
         ColorFiltered(
           colorFilter: greyscale,
-          child: MindWidget.sized(
-            item: emoji,
-            size: MindSize.medium,
-            isHighlighted: false,
-            badge: null,
-          ),
+          child: MindWidget.sized(item: emoji, size: MindSize.medium, isHighlighted: false, badge: null),
         ),
         const SizedBox(height: 8),
-        Text(
-          text,
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
+        Text(text, style: Theme.of(context).textTheme.bodyMedium),
         const SizedBox(height: 16.0),
       ],
     );

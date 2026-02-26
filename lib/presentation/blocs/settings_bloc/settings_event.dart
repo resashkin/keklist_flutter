@@ -71,3 +71,8 @@ final class SettingsChangeLanguage extends SettingsEvent {
 final class SettingsEnableDebugMenu extends SettingsEvent {
   const SettingsEnableDebugMenu();
 }
+
+final class SettingsTogglePhotoVideoSource extends SettingsEvent {
+  final bool isEnabled;
+  const SettingsTogglePhotoVideoSource({required this.isEnabled});
+}

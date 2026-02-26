@@ -412,4 +412,40 @@ class AppLocalizationsKk extends AppLocalizations {
   @override
   String get onboardingMind6 =>
       'Жаңа жазба жасау үшін \'Жазу\' түймесін басыңыз';
+
+  @override
+  String get viewPhotos => 'Фотосуреттерді қарау';
+
+  @override
+  String get noPhotosForDay => 'Бұл күнге фотосуреттер табылмады';
+
+  @override
+  String get dateGallerySubtitle => 'Осы күнгі медиафайлдар';
+
+  @override
+  String dayMediaFilesCount(int count) {
+    return '$count медиафайл осы күнге';
+  }
+
+  @override
+  String get sources => 'Дереккөздер';
+
+  @override
+  String get sourcesMinds => 'Ойлар';
+
+  @override
+  String get sourcesMindsSubtitle => 'Сіздің ойларыңыз бен сәттеріңіз';
+
+  @override
+  String get sourcesPhotoVideo => 'Фото және бейне';
+
+  @override
+  String get sourcesPhotoVideoSubtitle =>
+      'Осы күнгі құрылғының фотолары мен бейнелері';
+
+  @override
+  String get otherSources => 'Басқа дереккөздер';
+
+  @override
+  String get licenses => 'Лицензиялар';
 }

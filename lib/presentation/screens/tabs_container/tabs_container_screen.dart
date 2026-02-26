@@ -26,6 +26,8 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
   int _selectedTabIndex = 0;
   final List<BottomNavigationBarItem> _items = [];
   final List<Widget> _bodyWidgets = [];
+  List<TabType> _tabTypes = [];
+  final GlobalKey<MindDayCollectionScreenState> _todayKey = GlobalKey();
 
   @override
   void initState() {
@@ -45,7 +47,8 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
             ..clear()
             ..addAll(items);
 
-          final Iterable<Widget> bodyWidgets = state.selectedTabs.map((item) => item.type).map(_bodyWidgetByType);
+          _tabTypes = state.selectedTabs.map((item) => item.type).toList();
+          final Iterable<Widget> bodyWidgets = _tabTypes.map(_bodyWidgetByType);
           _bodyWidgets
             ..clear()
             ..addAll(bodyWidgets);
@@ -77,8 +80,15 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
           trueChild: AdaptiveBottomNavigationBar(
             items: List.of(_items.length >= 2 ? _items : _getFakeItems()),
             selectedIndex: _selectedTabIndex,
-            onTap: (tabIndex) =>
-                sendEventToBloc<TabsContainerBloc>(TabsContainerChangeSelectedTab(selectedIndex: tabIndex)),
+            onTap: (tabIndex) {
+              if (tabIndex == _selectedTabIndex &&
+                  tabIndex < _tabTypes.length &&
+                  _tabTypes[tabIndex] == TabType.today) {
+                _todayKey.currentState?.goToToday();
+              } else {
+                sendEventToBloc<TabsContainerBloc>(TabsContainerChangeSelectedTab(selectedIndex: tabIndex));
+              }
+            },
           ),
           falseChild: SizedBox.shrink(),
         ),
@@ -106,7 +116,7 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
       case TabType.settings:
         return SettingsScreen();
       case TabType.today:
-        return MindDayCollectionScreen(initialDayIndex: DateUtils.getTodayIndex());
+        return MindDayCollectionScreen(key: _todayKey, initialDayIndex: DateUtils.getTodayIndex());
       case TabType.debugMenu:
         return DebugMenuScreen();
     }

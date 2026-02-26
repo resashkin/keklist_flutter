@@ -45,7 +45,7 @@ final class _MindAudioRecorderSheetState extends State<MindAudioRecorderSheet> {
       canPop: !_isRecording,
       child: Container(
         decoration: BoxDecoration(
-          color: theme.scaffoldBackgroundColor,
+          color: theme.colorScheme.surface,
           borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
         ),
         child: Column(

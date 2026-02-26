@@ -19,12 +19,10 @@ final class LazyOnboardingBloc extends Bloc<LazyOnboardingEvent, LazyOnboardingS
   final MindRepository _mindRepository;
   final SettingsRepository _settingsRepository;
 
-  LazyOnboardingBloc({
-    required MindRepository mindRepository,
-    required SettingsRepository settingsRepository,
-  })  : _mindRepository = mindRepository,
-        _settingsRepository = settingsRepository,
-        super(LazyOnboardingInitial()) {
+  LazyOnboardingBloc({required MindRepository mindRepository, required SettingsRepository settingsRepository})
+    : _mindRepository = mindRepository,
+      _settingsRepository = settingsRepository,
+      super(LazyOnboardingInitial()) {
     on<LazyOnboardingCheck>(_onCheck);
     on<LazyOnboardingCreate>(_onCreate);
     on<LazyOnboardingDelete>(_onDelete);
@@ -32,10 +30,7 @@ final class LazyOnboardingBloc extends Bloc<LazyOnboardingEvent, LazyOnboardingS
     on<LazyOnboardingReset>(_onReset);
   }
 
-  Future<void> _onCheck(
-    LazyOnboardingCheck event,
-    Emitter<LazyOnboardingState> emit,
-  ) async {
+  Future<void> _onCheck(LazyOnboardingCheck event, Emitter<LazyOnboardingState> emit) async {
     // If user has already seen onboarding, don't show it again
     if (_settingsRepository.value.hasSeenLazyOnboarding) {
       emit(LazyOnboardingNeeded(shouldShow: false));
@@ -53,10 +48,7 @@ final class LazyOnboardingBloc extends Bloc<LazyOnboardingEvent, LazyOnboardingS
     emit(LazyOnboardingNeeded(shouldShow: shouldShow));
   }
 
-  Future<void> _onCreate(
-    LazyOnboardingCreate event,
-    Emitter<LazyOnboardingState> emit,
-  ) async {
+  Future<void> _onCreate(LazyOnboardingCreate event, Emitter<LazyOnboardingState> emit) async {
     final todayDayIndex = kek_date_utils.DateUtils.getTodayIndex();
     final uuid = const Uuid();
     final l10n = event.context.l10n;
@@ -101,14 +93,9 @@ final class LazyOnboardingBloc extends Bloc<LazyOnboardingEvent, LazyOnboardingS
     emit(LazyOnboardingCreated());
   }
 
-  Future<void> _onDelete(
-    LazyOnboardingDelete event,
-    Emitter<LazyOnboardingState> emit,
-  ) async {
+  Future<void> _onDelete(LazyOnboardingDelete event, Emitter<LazyOnboardingState> emit) async {
     // Delete all parent onboarding minds (those with ONBOARDING_ prefix)
-    await _mindRepository.deleteMindsWhere(
-      (mind) => OnboardingConstants.isOnboardingMindId(mind.id),
-    );
+    await _mindRepository.deleteMindsWhere((mind) => OnboardingConstants.isOnboardingMindId(mind.id));
 
     // Delete all comment minds (children of onboarding parent minds)
     final allMinds = await _mindRepository.obtainMinds();
@@ -117,17 +104,12 @@ final class LazyOnboardingBloc extends Bloc<LazyOnboardingEvent, LazyOnboardingS
         .map((mind) => mind.id)
         .toSet();
 
-    await _mindRepository.deleteMindsWhere(
-      (mind) => mind.rootId != null && onboardingParentIds.contains(mind.rootId),
-    );
+    await _mindRepository.deleteMindsWhere((mind) => mind.rootId != null && onboardingParentIds.contains(mind.rootId));
 
     emit(LazyOnboardingDeleted());
   }
 
-  Future<void> _onMarkAsSeen(
-    LazyOnboardingMarkAsSeen event,
-    Emitter<LazyOnboardingState> emit,
-  ) async {
+  Future<void> _onMarkAsSeen(LazyOnboardingMarkAsSeen event, Emitter<LazyOnboardingState> emit) async {
     final currentSettings = _settingsRepository.value;
     final updatedSettings = KeklistSettings(
       isMindContentVisible: currentSettings.isMindContentVisible,
@@ -139,19 +121,15 @@ final class LazyOnboardingBloc extends Bloc<LazyOnboardingEvent, LazyOnboardingS
       dataSchemaVersion: currentSettings.dataSchemaVersion,
       hasSeenLazyOnboarding: true,
       isDebugMenuVisible: currentSettings.isDebugMenuVisible,
+      isPhotoVideoSourceEnabled: currentSettings.isPhotoVideoSourceEnabled,
     );
 
     await _settingsRepository.updateSettings(updatedSettings);
   }
 
-  Future<void> _onReset(
-    LazyOnboardingReset event,
-    Emitter<LazyOnboardingState> emit,
-  ) async {
+  Future<void> _onReset(LazyOnboardingReset event, Emitter<LazyOnboardingState> emit) async {
     // Delete all existing onboarding minds first
-    await _mindRepository.deleteMindsWhere(
-      (mind) => OnboardingConstants.isOnboardingMindId(mind.id),
-    );
+    await _mindRepository.deleteMindsWhere((mind) => OnboardingConstants.isOnboardingMindId(mind.id));
 
     final allMinds = await _mindRepository.obtainMinds();
     final onboardingParentIds = allMinds
@@ -159,9 +137,7 @@ final class LazyOnboardingBloc extends Bloc<LazyOnboardingEvent, LazyOnboardingS
         .map((mind) => mind.id)
         .toSet();
 
-    await _mindRepository.deleteMindsWhere(
-      (mind) => mind.rootId != null && onboardingParentIds.contains(mind.rootId),
-    );
+    await _mindRepository.deleteMindsWhere((mind) => mind.rootId != null && onboardingParentIds.contains(mind.rootId));
 
     // Reset the flag in settings
     final currentSettings = _settingsRepository.value;
@@ -175,6 +151,7 @@ final class LazyOnboardingBloc extends Bloc<LazyOnboardingEvent, LazyOnboardingS
       dataSchemaVersion: currentSettings.dataSchemaVersion,
       hasSeenLazyOnboarding: false,
       isDebugMenuVisible: currentSettings.isDebugMenuVisible,
+      isPhotoVideoSourceEnabled: currentSettings.isPhotoVideoSourceEnabled,
     );
 
     await _settingsRepository.updateSettings(updatedSettings);

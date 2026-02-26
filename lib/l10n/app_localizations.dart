@@ -896,6 +896,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'To create new note tap \'Write\''**
   String get onboardingMind6;
+
+  /// Button text to open gallery for Mind day
+  ///
+  /// In en, this message translates to:
+  /// **'View Photos'**
+  String get viewPhotos;
+
+  /// Empty state message when day has no photos
+  ///
+  /// In en, this message translates to:
+  /// **'No photos found for this day'**
+  String get noPhotosForDay;
+
+  /// Date gallery screen subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Media files for this day'**
+  String get dateGallerySubtitle;
+
+  /// Subtitle showing count of media files for the day
+  ///
+  /// In en, this message translates to:
+  /// **'{count} media files for this day'**
+  String dayMediaFilesCount(int count);
+
+  /// Sources section title
+  ///
+  /// In en, this message translates to:
+  /// **'Sources'**
+  String get sources;
+
+  /// Minds source item title
+  ///
+  /// In en, this message translates to:
+  /// **'Minds'**
+  String get sourcesMinds;
+
+  /// Minds source item subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Your thoughts and moments'**
+  String get sourcesMindsSubtitle;
+
+  /// Photo and video source item title
+  ///
+  /// In en, this message translates to:
+  /// **'Photo & video'**
+  String get sourcesPhotoVideo;
+
+  /// Photo and video source item subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Device photos and videos for this day'**
+  String get sourcesPhotoVideoSubtitle;
+
+  /// Other sources section title
+  ///
+  /// In en, this message translates to:
+  /// **'Other sources'**
+  String get otherSources;
+
+  /// Licenses menu item
+  ///
+  /// In en, this message translates to:
+  /// **'Licenses'**
+  String get licenses;
 }
 
 class _AppLocalizationsDelegate

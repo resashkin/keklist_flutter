@@ -413,4 +413,40 @@ class AppLocalizationsUz extends AppLocalizations {
   @override
   String get onboardingMind6 =>
       'Yangi yozuv yaratish uchun \'Yozish\' tugmasini bosing';
+
+  @override
+  String get viewPhotos => 'Rasmlarni ko\'rish';
+
+  @override
+  String get noPhotosForDay => 'Bu kun uchun rasmlar topilmadi';
+
+  @override
+  String get dateGallerySubtitle => 'Ushbu kunning media fayllari';
+
+  @override
+  String dayMediaFilesCount(int count) {
+    return '$count ta media fayl shu kun uchun';
+  }
+
+  @override
+  String get sources => 'Manbalar';
+
+  @override
+  String get sourcesMinds => 'Fikrlar';
+
+  @override
+  String get sourcesMindsSubtitle => 'Sizning fikr va lahzalaringiz';
+
+  @override
+  String get sourcesPhotoVideo => 'Foto va video';
+
+  @override
+  String get sourcesPhotoVideoSubtitle =>
+      'Ushbu kun uchun qurilma foto va videolari';
+
+  @override
+  String get otherSources => 'Boshqa manbalar';
+
+  @override
+  String get licenses => 'Litsenziyalar';
 }

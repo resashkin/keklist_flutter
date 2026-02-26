@@ -6,7 +6,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
+import 'package:swipeable_page_route/swipeable_page_route.dart';
 import 'package:keklist/domain/constants.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/domain/services/entities/mind_note_content.dart';
@@ -242,6 +242,11 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
                 leading: const Icon(Icons.privacy_tip, color: Colors.grey),
                 onPressed: (BuildContext context) => _openPrivacyPolicy(),
               ),
+              SettingsTile.navigation(
+                title: Text(context.l10n.licenses),
+                leading: const Icon(Icons.description_outlined, color: Colors.grey),
+                onPressed: (BuildContext context) => showLicensePage(context: context),
+              ),
             ],
           ),
           SettingsSection(
@@ -260,7 +265,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   }
 
   void _showLanguagePicker() {
-    Navigator.of(context).push(BackSwipePageRoute(builder: (context) => const LanguagePickerScreen()));
+    Navigator.of(context).push(SwipeablePageRoute(builder: (context) => const LanguagePickerScreen()));
   }
 
   Future<void> _openEmailFeedbackForm() async {
@@ -323,7 +328,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
 
   void _showWhatsNew() {
     Navigator.of(context).push<void>(
-      BackSwipePageRoute<void>(
+      SwipeablePageRoute<void>(
         builder: (BuildContext context) =>
             WebPageScreen(title: context.l10n.whatsNew, initialUri: Uri.parse(KeklistConstants.whatsNewURL)),
       ),
@@ -333,11 +338,11 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   void _showTabsSettings() {
     Navigator.of(
       context,
-    ).push<void>(BackSwipePageRoute<void>(builder: (BuildContext context) => const TabsSettingsScreen()));
+    ).push<void>(SwipeablePageRoute<void>(builder: (BuildContext context) => const TabsSettingsScreen()));
   }
 
   void _showDebugMenu() {
-    Navigator.of(context).push<void>(BackSwipePageRoute<void>(builder: (BuildContext context) => const DebugMenuScreen()));
+    Navigator.of(context).push<void>(SwipeablePageRoute<void>(builder: (BuildContext context) => const DebugMenuScreen()));
   }
 
   void _handleAppBarTap() {

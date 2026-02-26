@@ -83,7 +83,7 @@ class _PasswordInputBottomSheetState extends State<PasswordInputBottomSheet> {
 
     return Container(
       decoration: BoxDecoration(
-        color: theme.scaffoldBackgroundColor,
+        color: theme.colorScheme.surface,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
       ),
       child: Column(
