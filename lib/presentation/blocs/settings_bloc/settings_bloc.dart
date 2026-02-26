@@ -172,7 +172,7 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     final Iterable<Mind> minds = _mindRepository.values;
     // Конвертация в CSV и шаринг.
     final List<List<String>> csvEntryList = minds.map((entry) => entry.toCSVEntry()).toList(growable: false);
-    final String csv = const ListToCsvConverter(fieldDelimiter: ';').convert(csvEntryList);
+    final String csv = const CsvEncoder(fieldDelimiter: ';').convert(csvEntryList);
     final Directory temporaryDirectory = await getTemporaryDirectory();
     final String formattedDateString = DateTime.now().toString().replaceAll('.', '-');
     final File csvFile = File('${temporaryDirectory.path}/keklist_minds_$formattedDateString.csv');
@@ -208,10 +208,7 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
       return;
     }
 
-    final List<List<dynamic>> rawRows = const CsvToListConverter(
-      fieldDelimiter: ';',
-      shouldParseNumbers: false,
-    ).convert(csvContent);
+    final List<List<dynamic>> rawRows = const CsvDecoder(fieldDelimiter: ';').convert(csvContent);
 
     if (rawRows.isEmpty) {
       return;

@@ -273,7 +273,6 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
         if (canAuthenticate) {
           final bool didAuthenticate = await auth.authenticate(
             localizedReason: context.l10n.pleaseAuthenticateToShowContent,
-            options: const AuthenticationOptions(useErrorDialogs: false),
           );
           if (didAuthenticate) {
             setState(() {
