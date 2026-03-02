@@ -412,6 +412,42 @@ class AppLocalizationsSr extends AppLocalizations {
 
   @override
   String get onboardingMind6 => 'Да креирате нову белешку, додирните \'Пиши\'';
+
+  @override
+  String get viewPhotos => 'Погледај фотографије';
+
+  @override
+  String get noPhotosForDay => 'Нема фотографија за овај дан';
+
+  @override
+  String get dateGallerySubtitle => 'Медиjске датотеке за овај дан';
+
+  @override
+  String dayMediaFilesCount(int count) {
+    return '$count медијских датотека за овај дан';
+  }
+
+  @override
+  String get sources => 'Извори';
+
+  @override
+  String get sourcesMinds => 'Мисли';
+
+  @override
+  String get sourcesMindsSubtitle => 'Ваше мисли и тренуци';
+
+  @override
+  String get sourcesPhotoVideo => 'Фотографије и видео';
+
+  @override
+  String get sourcesPhotoVideoSubtitle =>
+      'Фотографије и видео снимци уређаја за овај дан';
+
+  @override
+  String get otherSources => 'Други извори';
+
+  @override
+  String get licenses => 'Лиценце';
 }
 
 /// The translations for Serbian, using the Latin script (`sr_Latn`).
@@ -821,4 +857,40 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
 
   @override
   String get onboardingMind6 => 'Da kreirate novu belešku, dodirnite \'Piši\'';
+
+  @override
+  String get viewPhotos => 'Pogledaj fotografije';
+
+  @override
+  String get noPhotosForDay => 'Nema fotografija za ovaj dan';
+
+  @override
+  String get dateGallerySubtitle => 'Medijske datoteke za ovaj dan';
+
+  @override
+  String dayMediaFilesCount(int count) {
+    return '$count medijskih datoteka za ovaj dan';
+  }
+
+  @override
+  String get sources => 'Izvori';
+
+  @override
+  String get sourcesMinds => 'Misli';
+
+  @override
+  String get sourcesMindsSubtitle => 'Vaše misli i trenuci';
+
+  @override
+  String get sourcesPhotoVideo => 'Fotografije i video';
+
+  @override
+  String get sourcesPhotoVideoSubtitle =>
+      'Fotografije i video snimci uređaja za ovaj dan';
+
+  @override
+  String get otherSources => 'Drugi izvori';
+
+  @override
+  String get licenses => 'Licence';
 }

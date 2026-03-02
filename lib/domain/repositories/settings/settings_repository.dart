@@ -14,6 +14,7 @@ abstract class SettingsRepository {
   FutureOr<void> updateShouldShowTitles(bool shouldShowTitles);
   FutureOr<void> updatePreviousAppVersion(String? previousAppVersion);
   FutureOr<void> updateLanguage(SupportedLanguage language);
+  FutureOr<void> updateIsPhotoVideoSourceEnabled(bool value);
 }
 
 final class KeklistSettings {
@@ -26,6 +27,7 @@ final class KeklistSettings {
   final int dataSchemaVersion;
   final bool hasSeenLazyOnboarding;
   final bool isDebugMenuVisible;
+  final bool isPhotoVideoSourceEnabled;
 
   KeklistSettings({
     required this.isMindContentVisible,
@@ -37,6 +39,7 @@ final class KeklistSettings {
     required this.dataSchemaVersion,
     required this.hasSeenLazyOnboarding,
     required this.isDebugMenuVisible,
+    required this.isPhotoVideoSourceEnabled,
   });
 
   SettingsObject toObject() => SettingsObject()
@@ -48,7 +51,8 @@ final class KeklistSettings {
     ..language = language.code
     ..dataSchemaVersion = dataSchemaVersion
     ..hasSeenLazyOnboarding = hasSeenLazyOnboarding
-    ..isDebugMenuVisible = isDebugMenuVisible;
+    ..isDebugMenuVisible = isDebugMenuVisible
+    ..isPhotoVideoSourceEnabled = isPhotoVideoSourceEnabled;
 
   factory KeklistSettings.initial() => KeklistSettings(
         isMindContentVisible: true,
@@ -60,6 +64,7 @@ final class KeklistSettings {
         dataSchemaVersion: 0,
         hasSeenLazyOnboarding: false,
         isDebugMenuVisible: false,
+        isPhotoVideoSourceEnabled: false,
       );
 
   /// Detect device locale and return supported language or fallback to English

@@ -3,7 +3,7 @@ description: Like TODO-List but keklist
 
 publish_to: "none"
 
-version: 4.4.0+112
+version: 4.5.0+118
 
 environment:
   sdk: ">=3.10.0"
@@ -14,7 +14,7 @@ dependencies:
   blur: ^4.0.0
   calendar_date_picker2: ^2.0.1
   cross_file: ^0.3.3+4
-  csv: ^6.0.0
+  csv: ^7.1.0
   cupertino_icons: ^1.0.5
   emojis: ^0.9.9
   encrypt: ^5.0.3
@@ -37,20 +37,25 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   intl: ^0.20.2
-  file_picker: ^8.0.5
+  file_picker: ^10.3.10
   modal_bottom_sheet: ^3.0.0-pre
   package_info_plus: ^9.0.0
   path_provider: ^2.0.12
+  photo_manager: ^3.8.3
+  photo_manager_image_provider: ^2.2.0
+  photo_view: ^0.15.0
   pointycastle: ^3.9.1
-  just_audio: ^0.9.40
+  just_audio: ^0.10.5
   rxdart: ^0.28.0
   scrollable_positioned_list: ^0.3.5
   settings_ui: ^2.0.2
   share_plus: ^12.0.0
-  syncfusion_flutter_charts: ^31.1.22
+  syncfusion_flutter_charts: ^32.2.7
   url_launcher: ^6.1.9
   uuid: ^4.2.1
+  video_player: ^2.10.1
   webview_flutter: ^4.1.0
+  wechat_assets_picker: ^10.1.0
   gap: ^3.0.1
   #home_widget: ^0.6.0
   #workmanager: ^0.5.2
@@ -59,10 +64,10 @@ dependencies:
   bottom_sheet: ^4.0.0
   action_sheet: ^1.0.4
   archive: ^4.0.7
-  haptic_feedback: ^0.5.1+1
+  haptic_feedback: ^0.6.4+3
   provider: ^6.1.2
   collection: ^1.18.0
-  local_auth: ^2.2.0
+  local_auth: ^3.0.1
   translator: ^1.0.0
   telegram_web_app: ^0.3.3
   auto_size_text: ^3.0.0
@@ -70,7 +75,7 @@ dependencies:
   streaming_shared_preferences: ^2.0.0
   json_serializable: ^6.8.0
   json_annotation: ^4.9.0
-  full_swipe_back_gesture: ^0.1.0
+  swipeable_page_route: ^0.4.8
   image_picker: ^1.2.0
   logarte: ^1.4.0
   purchases_flutter: ^9.8.0

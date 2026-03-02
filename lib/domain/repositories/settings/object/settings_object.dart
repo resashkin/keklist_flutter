@@ -35,6 +35,9 @@ final class SettingsObject extends HiveObject {
   @HiveField(10, defaultValue: false)
   late bool isDebugMenuVisible;
 
+  @HiveField(11, defaultValue: false)
+  late bool isPhotoVideoSourceEnabled;
+
   SettingsObject();
 
   KeklistSettings toSettings() => KeklistSettings(
@@ -47,5 +50,6 @@ final class SettingsObject extends HiveObject {
         dataSchemaVersion: dataSchemaVersion,
         hasSeenLazyOnboarding: hasSeenLazyOnboarding,
         isDebugMenuVisible: isDebugMenuVisible,
+        isPhotoVideoSourceEnabled: isPhotoVideoSourceEnabled,
       );
 }

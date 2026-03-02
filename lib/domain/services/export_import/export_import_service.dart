@@ -40,7 +40,7 @@ class ExportImportService {
 
       // Convert to CSV
       final csvEntryList = minds.map((mind) => mind.toCSVEntry()).toList();
-      final csv = const ListToCsvConverter(fieldDelimiter: ';').convert(csvEntryList);
+      final csv = const CsvEncoder(fieldDelimiter: ';').convert(csvEntryList);
 
       // Write to temporary file
       final tempDir = await getTemporaryDirectory();
@@ -70,7 +70,7 @@ class ExportImportService {
 
       // Create CSV content
       final csvEntryList = minds.map((mind) => mind.toCSVEntry()).toList();
-      final csv = const ListToCsvConverter(fieldDelimiter: ';').convert(csvEntryList);
+      final csv = const CsvEncoder(fieldDelimiter: ';').convert(csvEntryList);
 
       // Collect unique audio files
       final audioFiles = <String>{}; // Use Set to avoid duplicates
@@ -201,7 +201,7 @@ class ExportImportService {
         return const ImportFailure(error: ImportError.invalidFormat, details: 'CSV file is empty');
       }
 
-      final rawRows = const CsvToListConverter(fieldDelimiter: ';', shouldParseNumbers: false).convert(csvContent);
+      final rawRows = const CsvDecoder(fieldDelimiter: ';').convert(csvContent);
 
       if (rawRows.isEmpty) {
         return const ImportFailure(error: ImportError.invalidFormat, details: 'No data found in CSV file');
@@ -316,7 +316,7 @@ class ExportImportService {
 
       // Parse CSV
       final csvContent = utf8.decode(mindsFile.content as List<int>);
-      final rawRows = const CsvToListConverter(fieldDelimiter: ';', shouldParseNumbers: false).convert(csvContent);
+      final rawRows = const CsvDecoder(fieldDelimiter: ';').convert(csvContent);
 
       final mindsToImport = <Mind>[];
 

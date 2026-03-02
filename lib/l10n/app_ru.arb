@@ -128,5 +128,16 @@
     "yesterday": "Вчера",
     "youDidNotCollectAnyEntriesYet": "Вы еще не собрали ни одной записи",
     "yourFolderName": "Название вашей папки",
-    "yourNickname": "Ваш никнейм"
+    "yourNickname": "Ваш никнейм",
+    "viewPhotos": "Посмотреть фото",
+    "noPhotosForDay": "Нет фотографий за этот день",
+    "dateGallerySubtitle": "Медиафайлы за этот день",
+    "dayMediaFilesCount": "{count} медиафайлов за этот день",
+    "sources": "Источники",
+    "sourcesMinds": "Мысли",
+    "sourcesMindsSubtitle": "Ваши мысли и моменты",
+    "sourcesPhotoVideo": "Фото и видео",
+    "sourcesPhotoVideoSubtitle": "Фотографии и видео устройства за этот день",
+    "otherSources": "Другие источники",
+    "licenses": "Лицензии"
 }

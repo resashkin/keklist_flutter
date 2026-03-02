@@ -19,10 +19,13 @@ final class AdaptiveBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (kIsWeb || Platform.isAndroid) {
+      final ColorScheme colors = Theme.of(context).colorScheme;
       return BottomNavigationBar(
         items: items,
         currentIndex: selectedIndex,
         type: BottomNavigationBarType.fixed,
+        selectedItemColor: colors.primary,
+        unselectedItemColor: colors.onSurface.withValues(alpha: 0.4),
         onTap: onTap,
       );
     } else if (Platform.isIOS) {

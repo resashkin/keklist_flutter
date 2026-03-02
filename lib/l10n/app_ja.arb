@@ -128,5 +128,16 @@
     "yesterday": "昨日",
     "youDidNotCollectAnyEntriesYet": "まだエントリーを収集していません",
     "yourFolderName": "あなたのフォルダー名",
-    "yourNickname": "あなたのニックネーム"
+    "yourNickname": "あなたのニックネーム",
+    "viewPhotos": "写真を見る",
+    "noPhotosForDay": "この日の写真が見つかりません",
+    "dateGallerySubtitle": "この日のメディアファイル",
+    "dayMediaFilesCount": "{count}件のメディアファイル",
+    "sources": "ソース",
+    "sourcesMinds": "マインド",
+    "sourcesMindsSubtitle": "あなたの思考と瞬間",
+    "sourcesPhotoVideo": "写真・動画",
+    "sourcesPhotoVideoSubtitle": "この日のデバイスの写真と動画",
+    "otherSources": "その他のソース",
+    "licenses": "ライセンス"
 }

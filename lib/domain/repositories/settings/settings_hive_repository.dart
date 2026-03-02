@@ -79,4 +79,11 @@ final class SettingsHiveRepository implements SettingsRepository {
     settingsObject?.userName = userName;
     await settingsObject?.save();
   }
+
+  @override
+  FutureOr<void> updateIsPhotoVideoSourceEnabled(bool value) async {
+    final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.globalSettingsIndex);
+    settingsObject?.isPhotoVideoSourceEnabled = value;
+    await settingsObject?.save();
+  }
 }

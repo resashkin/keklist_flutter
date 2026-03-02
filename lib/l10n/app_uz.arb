@@ -394,5 +394,16 @@
     "onboardingMind3": "'Kalendar' yorlig'ida barcha yozuvlar kunlar, haftalar va oylar bo'yicha ko'rsatiladi",
     "onboardingMind4": "'Analitika' yorlig'i yozuvlaringizning qisqacha statistikasini ko'rsatadi",
     "onboardingMind5": "Barcha yozuvlar faqat telefoningizda saqlanadi",
-    "onboardingMind6": "Yangi yozuv yaratish uchun 'Yozish' tugmasini bosing"
+    "onboardingMind6": "Yangi yozuv yaratish uchun 'Yozish' tugmasini bosing",
+    "viewPhotos": "Rasmlarni ko'rish",
+    "noPhotosForDay": "Bu kun uchun rasmlar topilmadi",
+    "dateGallerySubtitle": "Ushbu kunning media fayllari",
+    "dayMediaFilesCount": "{count} ta media fayl shu kun uchun",
+    "sources": "Manbalar",
+    "sourcesMinds": "Fikrlar",
+    "sourcesMindsSubtitle": "Sizning fikr va lahzalaringiz",
+    "sourcesPhotoVideo": "Foto va video",
+    "sourcesPhotoVideoSubtitle": "Ushbu kun uchun qurilma foto va videolari",
+    "otherSources": "Boshqa manbalar",
+    "licenses": "Litsenziyalar"
 }

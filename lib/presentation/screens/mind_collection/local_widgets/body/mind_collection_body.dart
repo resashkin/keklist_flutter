@@ -129,12 +129,12 @@ final class _MindCollectionBody extends StatelessWidget {
                             : null,
                         child: BoolWidget(
                           condition: dayMinds.isEmpty,
-                          trueChild: MindCollectionEmptyDayWidget.noMinds(context: context),
+                          trueChild: MindCollectionEmptyStateWidget.noMinds(context: context),
                           falseChild: MindRowWidget(minds: dayMinds),
                         ),
                       ),
                     ),
-                  )
+                  ),
                 ],
               );
             },

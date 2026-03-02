@@ -132,6 +132,8 @@ Runner.ipa
 **/android/fastlane/.env
 **/android/fastlane/report.xml
 **/android/fastlane/test_output/
+android/fastlane/report.xml
+android/fastlane/test_output/
 keklist-881d8-3a03518875b0.json
 
 # dotenv
@@ -149,3 +151,6 @@ firebase-debug.log
 
 # FVM Version Cache
 .fvm/
+
+# fastlane reports
+report.xml

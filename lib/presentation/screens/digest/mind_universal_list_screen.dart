@@ -45,20 +45,20 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
           .where(widget.filterFunction)
           .where((element) => element.rootId == null)
           .sortedByProperty((mind) => mind.dayIndex)
-          .toList(
-            growable: false,
-          ),
+          .toList(growable: false),
     );
 
-    subscribeToBloc<MindBloc>(onNewState: (state) async {
-      if (state is MindList) {
-        setState(() {
-          _allMinds
-            ..clear()
-            ..addAll(state.values);
-        });
-      }
-    })?.disposed(by: this);
+    subscribeToBloc<MindBloc>(
+      onNewState: (state) async {
+        if (state is MindList) {
+          setState(() {
+            _allMinds
+              ..clear()
+              ..addAll(state.values);
+          });
+        }
+      },
+    )?.disposed(by: this);
   }
 
   @override
@@ -68,10 +68,7 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
       body: BoolWidget(
         condition: _filteredMinds.isNotEmpty,
         falseChild: Center(
-          child: MindCollectionEmptyDayWidget.noMinds(
-            context: context,
-            text: widget.emptyStateMessage,
-          ),
+          child: MindCollectionEmptyStateWidget.noMinds(context: context, text: widget.emptyStateMessage),
         ),
         trueChild: Scrollbar(
           child: ListView.builder(
@@ -79,7 +76,9 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
               final bool shouldShowTitle =
                   index == 0 || _filteredMinds[index].dayIndex != _filteredMinds[index - 1].dayIndex;
               final String title = DateFormatters.formatFullDate(
-                  DateUtils.getDateFromDayIndex(_filteredMinds[index].dayIndex), Localizations.localeOf(context));
+                DateUtils.getDateFromDayIndex(_filteredMinds[index].dayIndex),
+                Localizations.localeOf(context),
+              );
               final Mind mind = _filteredMinds[index];
               return Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -89,13 +88,7 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
                       condition: shouldShowTitle,
                       trueChild: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4.0),
-                        child: Text(
-                          title,
-                          style: const TextStyle(
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        child: Text(title, style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold)),
                       ),
                       falseChild: const SizedBox.shrink(),
                     ),

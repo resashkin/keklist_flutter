@@ -399,4 +399,39 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get onboardingMind6 => '要创建新笔记，请点击\'写入\'';
+
+  @override
+  String get viewPhotos => '查看照片';
+
+  @override
+  String get noPhotosForDay => '未找到当天的照片';
+
+  @override
+  String get dateGallerySubtitle => '本日的媒体文件';
+
+  @override
+  String dayMediaFilesCount(int count) {
+    return '$count个媒体文件';
+  }
+
+  @override
+  String get sources => '来源';
+
+  @override
+  String get sourcesMinds => '想法';
+
+  @override
+  String get sourcesMindsSubtitle => '你的想法和时刻';
+
+  @override
+  String get sourcesPhotoVideo => '照片和视频';
+
+  @override
+  String get sourcesPhotoVideoSubtitle => '本日设备的照片和视频';
+
+  @override
+  String get otherSources => '其他来源';
+
+  @override
+  String get licenses => '许可证';
 }

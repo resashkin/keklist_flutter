@@ -523,5 +523,54 @@
     "onboardingMind6": "To create new note tap 'Write'",
     "@onboardingMind6": {
         "description": "Instruction to create new note"
+    },
+    "viewPhotos": "View Photos",
+    "@viewPhotos": {
+        "description": "Button text to open gallery for Mind day"
+    },
+    "noPhotosForDay": "No photos found for this day",
+    "@noPhotosForDay": {
+        "description": "Empty state message when day has no photos"
+    },
+    "dateGallerySubtitle": "Media files for this day",
+    "@dateGallerySubtitle": {
+        "description": "Date gallery screen subtitle"
+    },
+    "dayMediaFilesCount": "{count} media files for this day",
+    "@dayMediaFilesCount": {
+        "description": "Subtitle showing count of media files for the day",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "sources": "Sources",
+    "@sources": {
+        "description": "Sources section title"
+    },
+    "sourcesMinds": "Minds",
+    "@sourcesMinds": {
+        "description": "Minds source item title"
+    },
+    "sourcesMindsSubtitle": "Your thoughts and moments",
+    "@sourcesMindsSubtitle": {
+        "description": "Minds source item subtitle"
+    },
+    "sourcesPhotoVideo": "Photo & video",
+    "@sourcesPhotoVideo": {
+        "description": "Photo and video source item title"
+    },
+    "sourcesPhotoVideoSubtitle": "Device photos and videos for this day",
+    "@sourcesPhotoVideoSubtitle": {
+        "description": "Photo and video source item subtitle"
+    },
+    "otherSources": "Other sources",
+    "@otherSources": {
+        "description": "Other sources section title"
+    },
+    "licenses": "Licenses",
+    "@licenses": {
+        "description": "Licenses menu item"
     }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:full_swipe_back_gesture/full_swipe_back_gesture.dart';
+import 'package:swipeable_page_route/swipeable_page_route.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
@@ -28,15 +28,19 @@ final class _InsightsScreenState extends KekWidgetState<InsightsScreen> {
   void initState() {
     super.initState();
 
-    context.read<MindBloc>().stream.listen((state) {
-      if (state is MindList) {
-        setState(() {
-          _minds
-            ..clear()
-            ..addAll(state.values);
-        });
-      }
-    }).disposed(by: this);
+    context
+        .read<MindBloc>()
+        .stream
+        .listen((state) {
+          if (state is MindList) {
+            setState(() {
+              _minds
+                ..clear()
+                ..addAll(state.values);
+            });
+          }
+        })
+        .disposed(by: this);
 
     context.read<MindBloc>().add(MindGetList());
   }
@@ -52,7 +56,7 @@ final class _InsightsScreenState extends KekWidgetState<InsightsScreen> {
             final int crossAxisCellCount = constraints.maxWidth > 600 ? 2 : 3;
             return BoolWidget(
               condition: _minds.isNotEmpty,
-              falseChild: MindCollectionEmptyDayWidget.noInsights(context: context),
+              falseChild: MindCollectionEmptyStateWidget.noInsights(context: context),
               trueChild: SingleChildScrollView(
                 child: StaggeredGrid.count(
                   axisDirection: AxisDirection.down,
@@ -93,12 +97,8 @@ final class _InsightsScreenState extends KekWidgetState<InsightsScreen> {
   }
 
   void _showDayCollectionScreen({required int groupDayIndex}) {
-    Navigator.of(context).push(
-      BackSwipePageRoute(
-        builder: (context) => MindDayCollectionScreen(
-          initialDayIndex: groupDayIndex,
-        ),
-      ),
-    );
+    Navigator.of(
+      context,
+    ).push(SwipeablePageRoute(builder: (context) => MindDayCollectionScreen(initialDayIndex: groupDayIndex)));
   }
 }

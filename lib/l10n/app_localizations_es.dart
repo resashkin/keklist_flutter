@@ -414,4 +414,40 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get onboardingMind6 => 'Para crear una nueva nota, toca \'Escribir\'';
+
+  @override
+  String get viewPhotos => 'Ver fotos';
+
+  @override
+  String get noPhotosForDay => 'No se encontraron fotos para este día';
+
+  @override
+  String get dateGallerySubtitle => 'Archivos multimedia de este día';
+
+  @override
+  String dayMediaFilesCount(int count) {
+    return '$count archivos multimedia de este día';
+  }
+
+  @override
+  String get sources => 'Fuentes';
+
+  @override
+  String get sourcesMinds => 'Mentes';
+
+  @override
+  String get sourcesMindsSubtitle => 'Tus pensamientos y momentos';
+
+  @override
+  String get sourcesPhotoVideo => 'Foto y video';
+
+  @override
+  String get sourcesPhotoVideoSubtitle =>
+      'Fotos y videos del dispositivo para este día';
+
+  @override
+  String get otherSources => 'Otras fuentes';
+
+  @override
+  String get licenses => 'Licencias';
 }

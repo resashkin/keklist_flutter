@@ -128,5 +128,16 @@
     "yesterday": "昨天",
     "youDidNotCollectAnyEntriesYet": "您还没有收集任何条目",
     "yourFolderName": "您的文件夹名称",
-    "yourNickname": "您的昵称"
+    "yourNickname": "您的昵称",
+    "viewPhotos": "查看照片",
+    "noPhotosForDay": "未找到当天的照片",
+    "dateGallerySubtitle": "本日的媒体文件",
+    "dayMediaFilesCount": "{count}个媒体文件",
+    "sources": "来源",
+    "sourcesMinds": "想法",
+    "sourcesMindsSubtitle": "你的想法和时刻",
+    "sourcesPhotoVideo": "照片和视频",
+    "sourcesPhotoVideoSubtitle": "本日设备的照片和视频",
+    "otherSources": "其他来源",
+    "licenses": "许可证"
 }

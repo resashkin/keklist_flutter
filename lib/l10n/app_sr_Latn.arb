@@ -394,5 +394,16 @@
     "onboardingMind3": "U kartici 'Kalendar', sve beleške su prikazane po danima, nedeljama i mesecima",
     "onboardingMind4": "Kartica 'Analitika' prikazuje kratku statistiku vaših unosa",
     "onboardingMind5": "Sve beleške se čuvaju samo na vašem telefonu",
-    "onboardingMind6": "Da kreirate novu belešku, dodirnite 'Piši'"
+    "onboardingMind6": "Da kreirate novu belešku, dodirnite 'Piši'",
+    "viewPhotos": "Pogledaj fotografije",
+    "noPhotosForDay": "Nema fotografija za ovaj dan",
+    "dateGallerySubtitle": "Medijske datoteke za ovaj dan",
+    "dayMediaFilesCount": "{count} medijskih datoteka za ovaj dan",
+    "sources": "Izvori",
+    "sourcesMinds": "Misli",
+    "sourcesMindsSubtitle": "Vaše misli i trenuci",
+    "sourcesPhotoVideo": "Fotografije i video",
+    "sourcesPhotoVideoSubtitle": "Fotografije i video snimci uređaja za ovaj dan",
+    "otherSources": "Drugi izvori",
+    "licenses": "Licence"
 }
