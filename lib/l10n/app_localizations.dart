@@ -951,11 +951,35 @@ abstract class AppLocalizations {
   /// **'Device photos and videos for this day'**
   String get sourcesPhotoVideoSubtitle;
 
-  /// Other sources section title
+  /// Media folder source item title
   ///
   /// In en, this message translates to:
-  /// **'Other sources'**
-  String get otherSources;
+  /// **'Media Folder'**
+  String get sourcesMediaFolder;
+
+  /// Media folder source item subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Photos & videos from a custom folder'**
+  String get sourcesMediaFolderSubtitle;
+
+  /// Media folder settings bottom sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Media Folder'**
+  String get mediaFolderSettings;
+
+  /// Message when no media folder is selected
+  ///
+  /// In en, this message translates to:
+  /// **'No folder selected'**
+  String get mediaFolderNoPath;
+
+  /// Button to pick a media folder
+  ///
+  /// In en, this message translates to:
+  /// **'Pick Folder'**
+  String get mediaFolderPickFolder;
 
   /// Licenses menu item
   ///

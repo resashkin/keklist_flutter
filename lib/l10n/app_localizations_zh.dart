@@ -430,7 +430,19 @@ class AppLocalizationsZh extends AppLocalizations {
   String get sourcesPhotoVideoSubtitle => '本日设备的照片和视频';
 
   @override
-  String get otherSources => '其他来源';
+  String get sourcesMediaFolder => '媒体文件夹';
+
+  @override
+  String get sourcesMediaFolderSubtitle => '来自自定义文件夹的照片和视频';
+
+  @override
+  String get mediaFolderSettings => '媒体文件夹';
+
+  @override
+  String get mediaFolderNoPath => '未选择文件夹';
+
+  @override
+  String get mediaFolderPickFolder => '选择文件夹';
 
   @override
   String get licenses => '许可证';

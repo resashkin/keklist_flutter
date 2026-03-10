@@ -123,7 +123,6 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
       BlocProvider(
         create: (context) => SettingsBloc(
           repository: mainInjector.get<SettingsRepository>(),
-          mindRepository: mainInjector.get<MindRepository>(),
           exportImportService: mainInjector.get<ExportImportService>(),
         ),
       ),

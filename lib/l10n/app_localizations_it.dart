@@ -445,7 +445,20 @@ class AppLocalizationsIt extends AppLocalizations {
       'Foto e video del dispositivo per questo giorno';
 
   @override
-  String get otherSources => 'Altre sorgenti';
+  String get sourcesMediaFolder => 'Cartella media';
+
+  @override
+  String get sourcesMediaFolderSubtitle =>
+      'Foto e video da una cartella personalizzata';
+
+  @override
+  String get mediaFolderSettings => 'Cartella media';
+
+  @override
+  String get mediaFolderNoPath => 'Nessuna cartella selezionata';
+
+  @override
+  String get mediaFolderPickFolder => 'Seleziona cartella';
 
   @override
   String get licenses => 'Licenze';

@@ -30,13 +30,18 @@ class SettingsObjectAdapter extends TypeAdapter<SettingsObject> {
           fields[11] == null ? false : fields[11] as bool
       ..isWeatherSourceEnabled = fields[12] == null ? false : fields[12] as bool
       ..weatherLatitude = fields[13] as double?
-      ..weatherLongitude = fields[14] as double?;
+      ..weatherLongitude = fields[14] as double?
+      ..isMediaFolderSourceEnabled =
+          fields[15] == null ? false : fields[15] as bool
+      ..mediaFolderPath = fields[16] as String?
+      ..isMediaFolderRecursive =
+          fields[17] == null ? false : fields[17] as bool;
   }
 
   @override
   void write(BinaryWriter writer, SettingsObject obj) {
     writer
-      ..writeByte(13)
+      ..writeByte(16)
       ..writeByte(0)
       ..write(obj.isMindContentVisible)
       ..writeByte(1)
@@ -62,7 +67,13 @@ class SettingsObjectAdapter extends TypeAdapter<SettingsObject> {
       ..writeByte(13)
       ..write(obj.weatherLatitude)
       ..writeByte(14)
-      ..write(obj.weatherLongitude);
+      ..write(obj.weatherLongitude)
+      ..writeByte(15)
+      ..write(obj.isMediaFolderSourceEnabled)
+      ..writeByte(16)
+      ..write(obj.mediaFolderPath)
+      ..writeByte(17)
+      ..write(obj.isMediaFolderRecursive);
   }
 
   @override

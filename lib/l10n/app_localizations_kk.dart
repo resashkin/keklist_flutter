@@ -444,7 +444,19 @@ class AppLocalizationsKk extends AppLocalizations {
       'Осы күнгі құрылғының фотолары мен бейнелері';
 
   @override
-  String get otherSources => 'Басқа дереккөздер';
+  String get sourcesMediaFolder => 'Медиа бума';
+
+  @override
+  String get sourcesMediaFolderSubtitle => 'Таңдалған бумадан фото мен бейне';
+
+  @override
+  String get mediaFolderSettings => 'Медиа бума';
+
+  @override
+  String get mediaFolderNoPath => 'Бума таңдалмаған';
+
+  @override
+  String get mediaFolderPickFolder => 'Буманы таңдау';
 
   @override
   String get licenses => 'Лицензиялар';

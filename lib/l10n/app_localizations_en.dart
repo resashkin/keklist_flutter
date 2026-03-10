@@ -443,7 +443,20 @@ class AppLocalizationsEn extends AppLocalizations {
       'Device photos and videos for this day';
 
   @override
-  String get otherSources => 'Other sources';
+  String get sourcesMediaFolder => 'Media Folder';
+
+  @override
+  String get sourcesMediaFolderSubtitle =>
+      'Photos & videos from a custom folder';
+
+  @override
+  String get mediaFolderSettings => 'Media Folder';
+
+  @override
+  String get mediaFolderNoPath => 'No folder selected';
+
+  @override
+  String get mediaFolderPickFolder => 'Pick Folder';
 
   @override
   String get licenses => 'Licenses';

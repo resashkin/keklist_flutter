@@ -433,7 +433,19 @@ class AppLocalizationsJa extends AppLocalizations {
   String get sourcesPhotoVideoSubtitle => 'この日のデバイスの写真と動画';
 
   @override
-  String get otherSources => 'その他のソース';
+  String get sourcesMediaFolder => 'メディアフォルダ';
+
+  @override
+  String get sourcesMediaFolderSubtitle => 'カスタムフォルダの写真と動画';
+
+  @override
+  String get mediaFolderSettings => 'メディアフォルダ';
+
+  @override
+  String get mediaFolderNoPath => 'フォルダが選択されていません';
+
+  @override
+  String get mediaFolderPickFolder => 'フォルダを選択';
 
   @override
   String get licenses => 'ライセンス';

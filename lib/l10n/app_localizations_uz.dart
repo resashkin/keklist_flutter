@@ -445,7 +445,20 @@ class AppLocalizationsUz extends AppLocalizations {
       'Ushbu kun uchun qurilma foto va videolari';
 
   @override
-  String get otherSources => 'Boshqa manbalar';
+  String get sourcesMediaFolder => 'Media papka';
+
+  @override
+  String get sourcesMediaFolderSubtitle =>
+      'Tanlangan papkadan foto va videolar';
+
+  @override
+  String get mediaFolderSettings => 'Media papka';
+
+  @override
+  String get mediaFolderNoPath => 'Papka tanlanmagan';
+
+  @override
+  String get mediaFolderPickFolder => 'Papkani tanlash';
 
   @override
   String get licenses => 'Litsenziyalar';

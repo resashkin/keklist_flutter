@@ -47,6 +47,15 @@ final class SettingsObject extends HiveObject {
   @HiveField(14, defaultValue: null)
   late double? weatherLongitude;
 
+  @HiveField(15, defaultValue: false)
+  late bool isMediaFolderSourceEnabled;
+
+  @HiveField(16, defaultValue: null)
+  late String? mediaFolderPath;
+
+  @HiveField(17, defaultValue: false)
+  late bool isMediaFolderRecursive;
+
   SettingsObject();
 
   KeklistSettings toSettings() => KeklistSettings(
@@ -63,5 +72,8 @@ final class SettingsObject extends HiveObject {
         isWeatherSourceEnabled: isWeatherSourceEnabled,
         weatherLatitude: weatherLatitude,
         weatherLongitude: weatherLongitude,
+        isMediaFolderSourceEnabled: isMediaFolderSourceEnabled,
+        mediaFolderPath: mediaFolderPath,
+        isMediaFolderRecursive: isMediaFolderRecursive,
       );
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart' hide DateUtils;
@@ -38,9 +40,14 @@ import 'package:keklist/domain/repositories/weather/weather_repository.dart';
 import 'package:keklist/presentation/cubits/weather/weather_cubit.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/day_media_tile/day_media_preview_cubit.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/day_media_tile/day_media_tile_widget.dart';
+import 'package:keklist/presentation/screens/mind_day_collection/widgets/day_media_tile/day_folder_media_preview_cubit.dart';
+import 'package:keklist/presentation/screens/mind_day_collection/widgets/day_media_tile/day_folder_media_tile_widget.dart';
+import 'package:keklist/presentation/screens/mind_day_collection/widgets/media_folder_settings_bottom_sheet/media_folder_settings_bottom_sheet.dart';
+import 'package:keklist/presentation/screens/mind_day_collection/widgets/photo_video_settings_bottom_sheet/photo_video_settings_bottom_sheet.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/sources_bottom_sheet/sources_bottom_sheet.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/weather_settings_bottom_sheet/weather_settings_bottom_sheet.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/weather_tile/weather_day_tile_widget.dart';
+import 'package:keklist/presentation/screens/date_gallery/folder_gallery_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
@@ -70,7 +77,11 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
   bool _isWeatherSourceEnabled = false;
   double? _weatherLatitude;
   double? _weatherLongitude;
+  bool _isMediaFolderSourceEnabled = false;
+  String? _mediaFolderPath;
+  bool _isMediaFolderRecursive = false;
   final DayMediaPreviewCubit _mediaPreviewCubit = DayMediaPreviewCubit();
+  final DayFolderMediaPreviewCubit _folderMediaPreviewCubit = DayFolderMediaPreviewCubit();
   WeatherCubit? _weatherCubit;
   Mind? _editableMind;
 
@@ -107,7 +118,7 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
           });
           if (photoEnabled != _isPhotoVideoSourceEnabled) {
             setState(() => _isPhotoVideoSourceEnabled = photoEnabled);
-            if (photoEnabled) _mediaPreviewCubit.load(dayIndex);
+            if (photoEnabled && !Platform.isAndroid) _mediaPreviewCubit.load(dayIndex);
           }
           final bool weatherEnabled = state.settings.isWeatherSourceEnabled;
           final double? lat = state.settings.weatherLatitude;
@@ -120,6 +131,21 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
             });
             if (weatherEnabled && lat != null && lon != null) {
               _weatherCubit?.loadForDay(dayIndex: dayIndex, latitude: lat, longitude: lon);
+            }
+          }
+          final bool folderEnabled = state.settings.isMediaFolderSourceEnabled;
+          final String? folderPath = state.settings.mediaFolderPath;
+          final bool folderRecursive = state.settings.isMediaFolderRecursive;
+          if (folderEnabled != _isMediaFolderSourceEnabled ||
+              folderPath != _mediaFolderPath ||
+              folderRecursive != _isMediaFolderRecursive) {
+            setState(() {
+              _isMediaFolderSourceEnabled = folderEnabled;
+              _mediaFolderPath = folderPath;
+              _isMediaFolderRecursive = folderRecursive;
+            });
+            if (folderEnabled && folderPath != null) {
+              _folderMediaPreviewCubit.load(dayIndex, folderPath, recursive: folderRecursive);
             }
           }
         }
@@ -243,20 +269,32 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
                     ),
                     falseChild: MindCollectionEmptyStateWidget.noMindsForDay(context: context),
                   ),
-                  if (_isPhotoVideoSourceEnabled)
+                  if ((_isPhotoVideoSourceEnabled && !Platform.isAndroid) || _isMediaFolderSourceEnabled)
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 12.0),
+                      child: _DottedDivider(),
+                    ),
+                  if (_isPhotoVideoSourceEnabled && !Platform.isAndroid)
                     BlocBuilder<DayMediaPreviewCubit, DayMediaPreviewState>(
                       bloc: _mediaPreviewCubit,
                       builder: (context, state) {
                         if (state is DayMediaPreviewData) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
-                                child: Text(context.l10n.otherSources, style: Theme.of(context).textTheme.titleSmall),
-                              ),
-                              DayMediaTileWidget(data: state, onTap: () => _openGallery()),
-                            ],
+                          return DayMediaTileWidget(data: state, onTap: () => _openGallery());
+                        }
+                        return const SizedBox.shrink();
+                      },
+                    ),
+                  if (_isMediaFolderSourceEnabled && _mediaFolderPath != null)
+                    BlocBuilder<DayFolderMediaPreviewCubit, DayFolderMediaPreviewState>(
+                      bloc: _folderMediaPreviewCubit,
+                      builder: (context, state) {
+                        if (state is DayFolderMediaPreviewLoading) {
+                          return const DayFolderMediaSkeletonTile();
+                        }
+                        if (state is DayFolderMediaPreviewData) {
+                          return DayFolderMediaTileWidget(
+                            data: state,
+                            onTap: () => _openFolderGallery(),
                           );
                         }
                         return const SizedBox.shrink();
@@ -298,6 +336,7 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
   void dispose() {
     cancelSubscriptions();
     _mediaPreviewCubit.close();
+    _folderMediaPreviewCubit.close();
     _weatherCubit?.close();
     super.dispose();
   }
@@ -361,6 +400,21 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
     Navigator.of(context).push(SwipeablePageRoute(builder: (_) => DateGalleryScreen(dayIndex: dayIndex)));
   }
 
+  void _openFolderGallery() {
+    final String? path = _mediaFolderPath;
+    if (path == null) return;
+    Navigator.of(context).push(
+      SwipeablePageRoute(
+        builder: (_) => FolderGalleryScreen(
+          dayIndex: dayIndex,
+          folderPath: path,
+          recursive: _isMediaFolderRecursive,
+          onSettings: () => _showMediaFolderSettings(),
+        ),
+      ),
+    );
+  }
+
   void _showSources() {
     showBarModalBottomSheet(
       context: context,
@@ -369,9 +423,38 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
         onPhotoVideoToggled: (enabled) {
           sendEventToBloc<SettingsBloc>(SettingsTogglePhotoVideoSource(isEnabled: enabled));
         },
+        onPhotoVideoSettings: () => _showPhotoVideoSettings(),
         isWeatherEnabled: _isWeatherSourceEnabled,
         onWeatherToggled: _onWeatherToggled,
         onWeatherSettings: () => _showWeatherSettings(),
+        isMediaFolderEnabled: _isMediaFolderSourceEnabled,
+        onMediaFolderToggled: (enabled) {
+          sendEventToBloc<SettingsBloc>(SettingsUpdateMediaFolderSource(isEnabled: enabled));
+        },
+        onMediaFolderSettings: () => _showMediaFolderSettings(),
+      ),
+    );
+  }
+
+  void _showPhotoVideoSettings() {
+    showBarModalBottomSheet(
+      context: context,
+      builder: (_) => const PhotoVideoSettingsBottomSheet(),
+    );
+  }
+
+  void _showMediaFolderSettings() {
+    showBarModalBottomSheet(
+      context: context,
+      builder: (_) => MediaFolderSettingsBottomSheet(
+        initialFolderPath: _mediaFolderPath,
+        isRecursive: _isMediaFolderRecursive,
+        onFolderPicked: (path) {
+          sendEventToBloc<SettingsBloc>(SettingsUpdateMediaFolderSource(folderPath: path));
+        },
+        onRecursiveChanged: (value) {
+          sendEventToBloc<SettingsBloc>(SettingsUpdateMediaFolderSource(isRecursive: value));
+        },
       ),
     );
   }
@@ -418,7 +501,8 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
     setState(() {
       this.dayIndex = dayIndex;
     });
-    if (_isPhotoVideoSourceEnabled) _mediaPreviewCubit.load(dayIndex);
+    if (_isPhotoVideoSourceEnabled && !Platform.isAndroid) _mediaPreviewCubit.load(dayIndex);
+    _reloadFolderMedia(dayIndex);
     _reloadWeather(dayIndex);
   }
 
@@ -428,7 +512,8 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
     setState(() {
       this.dayIndex = dayIndex;
     });
-    if (_isPhotoVideoSourceEnabled) _mediaPreviewCubit.load(dayIndex);
+    if (_isPhotoVideoSourceEnabled && !Platform.isAndroid) _mediaPreviewCubit.load(dayIndex);
+    _reloadFolderMedia(dayIndex);
     _reloadWeather(dayIndex);
   }
 
@@ -438,8 +523,15 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
     setState(() {
       this.dayIndex = dayIndex;
     });
-    if (_isPhotoVideoSourceEnabled) _mediaPreviewCubit.load(dayIndex);
+    if (_isPhotoVideoSourceEnabled && !Platform.isAndroid) _mediaPreviewCubit.load(dayIndex);
+    _reloadFolderMedia(dayIndex);
     _reloadWeather(dayIndex);
+  }
+
+  void _reloadFolderMedia(int dayIndex) {
+    if (_isMediaFolderSourceEnabled && _mediaFolderPath != null) {
+      _folderMediaPreviewCubit.load(dayIndex, _mediaFolderPath!, recursive: _isMediaFolderRecursive);
+    }
   }
 
   void _reloadWeather(int dayIndex) {
@@ -536,6 +628,37 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
       },
     );
   }
+}
+
+final class _DottedDivider extends StatelessWidget {
+  const _DottedDivider();
+
+  @override
+  Widget build(BuildContext context) => CustomPaint(
+        painter: _DottedLinePainter(color: Theme.of(context).dividerColor),
+        child: const SizedBox(height: 1, width: double.infinity),
+      );
+}
+
+final class _DottedLinePainter extends CustomPainter {
+  final Color color;
+  const _DottedLinePainter({required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..strokeWidth = 1;
+    const double dashWidth = 4.0, dashSpace = 4.0;
+    var x = 0.0;
+    while (x < size.width) {
+      canvas.drawLine(Offset(x, 0), Offset(x + dashWidth, 0), paint);
+      x += dashWidth + dashSpace;
+    }
+  }
+
+  @override
+  bool shouldRepaint(_DottedLinePainter old) => old.color != color;
 }
 
 final class _MindInteractiveZeroCase extends StatelessWidget {

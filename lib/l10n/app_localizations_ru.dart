@@ -443,7 +443,19 @@ class AppLocalizationsRu extends AppLocalizations {
       'Фотографии и видео устройства за этот день';
 
   @override
-  String get otherSources => 'Другие источники';
+  String get sourcesMediaFolder => 'Медиапапка';
+
+  @override
+  String get sourcesMediaFolderSubtitle => 'Фото и видео из выбранной папки';
+
+  @override
+  String get mediaFolderSettings => 'Медиапапка';
+
+  @override
+  String get mediaFolderNoPath => 'Папка не выбрана';
+
+  @override
+  String get mediaFolderPickFolder => 'Выбрать папку';
 
   @override
   String get licenses => 'Лицензии';

@@ -444,7 +444,20 @@ class AppLocalizationsSr extends AppLocalizations {
       'Фотографије и видео снимци уређаја за овај дан';
 
   @override
-  String get otherSources => 'Други извори';
+  String get sourcesMediaFolder => 'Медијска фасцикла';
+
+  @override
+  String get sourcesMediaFolderSubtitle =>
+      'Фотографије и видео из прилагођене фасцикле';
+
+  @override
+  String get mediaFolderSettings => 'Медијска фасцикла';
+
+  @override
+  String get mediaFolderNoPath => 'Нема изабране фасцикле';
+
+  @override
+  String get mediaFolderPickFolder => 'Изабери фасциклу';
 
   @override
   String get licenses => 'Лиценце';
@@ -953,7 +966,20 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
       'Fotografije i video snimci uređaja za ovaj dan';
 
   @override
-  String get otherSources => 'Drugi izvori';
+  String get sourcesMediaFolder => 'Medijska fascikla';
+
+  @override
+  String get sourcesMediaFolderSubtitle =>
+      'Fotografije i video iz prilagođene fascikle';
+
+  @override
+  String get mediaFolderSettings => 'Medijska fascikla';
+
+  @override
+  String get mediaFolderNoPath => 'Nema izabrane fascikle';
+
+  @override
+  String get mediaFolderPickFolder => 'Izaberi fasciklu';
 
   @override
   String get licenses => 'Licence';

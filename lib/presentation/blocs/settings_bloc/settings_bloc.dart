@@ -1,12 +1,9 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
-import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
 import 'package:keklist/domain/services/export_import/export_import_service.dart';
 import 'package:keklist/domain/services/export_import/models/export_result.dart';
@@ -14,8 +11,6 @@ import 'package:keklist/domain/services/export_import/models/import_result.dart'
 import 'package:keklist/domain/services/language_manager.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:share_plus/share_plus.dart';
 
 part 'settings_event.dart';
@@ -23,21 +18,12 @@ part 'settings_state.dart';
 
 final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with DisposeBag {
   final SettingsRepository _repository;
-  final MindRepository _mindRepository;
   final ExportImportService _exportImportService;
 
-  SettingsBloc({
-    required SettingsRepository repository,
-    required MindRepository mindRepository,
-    required ExportImportService exportImportService,
-  })  : _repository = repository,
-        _mindRepository = mindRepository,
-        _exportImportService = exportImportService,
-        super(
-          SettingsDataState(
-            settings: KeklistSettings.initial(),
-          ),
-        ) {
+  SettingsBloc({required SettingsRepository repository, required ExportImportService exportImportService})
+    : _repository = repository,
+      _exportImportService = exportImportService,
+      super(SettingsDataState(settings: KeklistSettings.initial())) {
     on<SettingsExport>(_export);
     on<SettingsImport>(_import);
     on<SettingsChangeMindContentVisibility>(_changeMindContentVisibility);
@@ -51,6 +37,7 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     on<SettingsTogglePhotoVideoSource>(_togglePhotoVideoSource);
     on<SettingsToggleWeatherSource>(_toggleWeatherSource);
     on<SettingsUpdateWeatherLocation>(_updateWeatherLocation);
+    on<SettingsUpdateMediaFolderSource>(_updateMediaFolderSource);
 
     _repository.stream.listen((settings) => add(SettingsGet())).disposed(by: this);
   }
@@ -99,11 +86,13 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
             );
 
             if (outputPath != null) {
-              emit(SettingsExportSuccess(
-                mindsCount: success.mindsCount,
-                audioFilesCount: success.audioFilesCount,
-                isEncrypted: success.isEncrypted,
-              ));
+              emit(
+                SettingsExportSuccess(
+                  mindsCount: success.mindsCount,
+                  audioFilesCount: success.audioFilesCount,
+                  isEncrypted: success.isEncrypted,
+                ),
+              );
             } else {
               // User cancelled the save dialog
               emit(SettingsLoadingState(false));
@@ -111,16 +100,20 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
           } else {
             // Share the exported file with explicit MIME type
             // Use application/zip for both .zip and .encrypted files
-            await SharePlus.instance.share(ShareParams(
-              files: [XFile(success.file.path, mimeType: 'application/zip')],
-              sharePositionOrigin: const Rect.fromLTWH(0, 0, 1, 1),
-            ));
+            await SharePlus.instance.share(
+              ShareParams(
+                files: [XFile(success.file.path, mimeType: 'application/zip')],
+                sharePositionOrigin: const Rect.fromLTWH(0, 0, 1, 1),
+              ),
+            );
 
-            emit(SettingsExportSuccess(
-              mindsCount: success.mindsCount,
-              audioFilesCount: success.audioFilesCount,
-              isEncrypted: success.isEncrypted,
-            ));
+            emit(
+              SettingsExportSuccess(
+                mindsCount: success.mindsCount,
+                audioFilesCount: success.audioFilesCount,
+                isEncrypted: success.isEncrypted,
+              ),
+            );
           }
           break;
 
@@ -138,130 +131,27 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     emit(SettingsLoadingState(true));
 
     try {
-      final result = await _exportImportService.importFromFile(
-        event.file,
-        password: event.password,
-      );
+      final result = await _exportImportService.importFromFile(event.file, password: event.password);
 
       emit(SettingsLoadingState(false));
 
       switch (result) {
         case ImportSuccess success:
-          emit(SettingsImportSuccess(
-            mindsCount: success.mindsCount,
-            audioFilesCount: success.audioFilesCount,
-          ));
+          emit(SettingsImportSuccess(mindsCount: success.mindsCount, audioFilesCount: success.audioFilesCount));
           break;
 
         case ImportFailure failure:
-          emit(SettingsImportError(
-            error: failure.error,
-            message: failure.message,
-          ));
+          emit(SettingsImportError(error: failure.error, message: failure.message));
           break;
       }
     } catch (e) {
       emit(SettingsLoadingState(false));
-      emit(SettingsImportError(
-        error: ImportError.unknownError,
-        message: 'Import failed: $e',
-      ));
+      emit(SettingsImportError(error: ImportError.unknownError, message: 'Import failed: $e'));
     }
-  }
-
-  FutureOr<void> _shareCSVFileWithMinds() async {
-    // Получение minds.
-    final Iterable<Mind> minds = _mindRepository.values;
-    // Конвертация в CSV и шаринг.
-    final List<List<String>> csvEntryList = minds.map((entry) => entry.toCSVEntry()).toList(growable: false);
-    final String csv = const CsvEncoder(fieldDelimiter: ';').convert(csvEntryList);
-    final Directory temporaryDirectory = await getTemporaryDirectory();
-    final String formattedDateString = DateTime.now().toString().replaceAll('.', '-');
-    final File csvFile = File('${temporaryDirectory.path}/keklist_minds_$formattedDateString.csv');
-    await csvFile.writeAsString(csv);
-    SharePlus.instance.share(ShareParams(
-      files: [XFile(csvFile.path)],
-      sharePositionOrigin: Rect.fromLTWH(0, 0, 1, 1),
-    ));
-  }
-
-  // TODO: add parsing one row to init of Mind
-
-  FutureOr<void> _importCSVFileWithMinds() async {
-    final FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: const ['csv'],
-      withData: true,
-    );
-    if (result == null || result.files.isEmpty) {
-      return;
-    }
-
-    final PlatformFile pickedFile = result.files.single;
-    String? csvContent;
-
-    if (pickedFile.bytes != null) {
-      csvContent = utf8.decode(pickedFile.bytes!);
-    } else if (pickedFile.path != null) {
-      csvContent = await File(pickedFile.path!).readAsString();
-    }
-
-    if (csvContent == null || csvContent.trim().isEmpty) {
-      return;
-    }
-
-    final List<List<dynamic>> rawRows = const CsvDecoder(fieldDelimiter: ';').convert(csvContent);
-
-    if (rawRows.isEmpty) {
-      return;
-    }
-
-    final List<Mind> mindsToImport = [];
-
-    for (final List<dynamic> row in rawRows) {
-      if (row.length < 7) {
-        continue;
-      }
-
-      try {
-        final String id = row[0].toString();
-        final String emoji = row[1].toString();
-        final String note = row[2].toString();
-        final int dayIndex = int.parse(row[3].toString());
-        final int sortIndex = int.parse(row[4].toString());
-        final DateTime creationDate = DateTime.parse(row[5].toString());
-        final String? rootIdRaw = row[6]?.toString();
-        final String? rootId = (rootIdRaw == null || rootIdRaw.isEmpty || rootIdRaw == 'null') ? null : rootIdRaw;
-
-        mindsToImport.add(
-          Mind(
-            id: id,
-            emoji: emoji,
-            note: note,
-            dayIndex: dayIndex,
-            creationDate: creationDate,
-            sortIndex: sortIndex,
-            rootId: rootId,
-          ),
-        );
-      } catch (_) {
-        continue;
-      }
-    }
-
-    if (mindsToImport.isEmpty) {
-      return;
-    }
-
-    await _mindRepository.createMinds(minds: mindsToImport);
   }
 
   FutureOr _getSettings(SettingsGet event, Emitter<SettingsState> emit) async {
-    emit(
-      SettingsDataState(
-        settings: _repository.value,
-      ),
-    );
+    emit(SettingsDataState(settings: _repository.value));
   }
 
   FutureOr<void> _disableShowingWhatsNewUntillNewVersion(
@@ -297,7 +187,9 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
   }
 
   FutureOr<void> _updateShouldShowTitlesMode(
-      SettingsUpdateShouldShowTitlesMode event, Emitter<SettingsState> emit) async {
+    SettingsUpdateShouldShowTitlesMode event,
+    Emitter<SettingsState> emit,
+  ) async {
     await _repository.updateShouldShowTitles(event.value);
   }
 
@@ -321,31 +213,30 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
       isWeatherSourceEnabled: currentSettings.isWeatherSourceEnabled,
       weatherLatitude: currentSettings.weatherLatitude,
       weatherLongitude: currentSettings.weatherLongitude,
+      isMediaFolderSourceEnabled: currentSettings.isMediaFolderSourceEnabled,
+      mediaFolderPath: currentSettings.mediaFolderPath,
+      isMediaFolderRecursive: currentSettings.isMediaFolderRecursive,
     );
     await _repository.updateSettings(updatedSettings);
   }
 
-  FutureOr<void> _togglePhotoVideoSource(
-    SettingsTogglePhotoVideoSource event,
-    Emitter<SettingsState> emit,
-  ) async {
+  FutureOr<void> _togglePhotoVideoSource(SettingsTogglePhotoVideoSource event, Emitter<SettingsState> emit) async {
     await _repository.updateIsPhotoVideoSourceEnabled(event.isEnabled);
   }
 
-  FutureOr<void> _toggleWeatherSource(
-    SettingsToggleWeatherSource event,
-    Emitter<SettingsState> emit,
-  ) async {
+  FutureOr<void> _toggleWeatherSource(SettingsToggleWeatherSource event, Emitter<SettingsState> emit) async {
     await _repository.updateWeatherSettings(isEnabled: event.isEnabled);
   }
 
-  FutureOr<void> _updateWeatherLocation(
-    SettingsUpdateWeatherLocation event,
-    Emitter<SettingsState> emit,
-  ) async {
-    await _repository.updateWeatherSettings(
-      latitude: event.latitude,
-      longitude: event.longitude,
+  FutureOr<void> _updateWeatherLocation(SettingsUpdateWeatherLocation event, Emitter<SettingsState> emit) async {
+    await _repository.updateWeatherSettings(latitude: event.latitude, longitude: event.longitude);
+  }
+
+  FutureOr<void> _updateMediaFolderSource(SettingsUpdateMediaFolderSource event, Emitter<SettingsState> emit) async {
+    await _repository.updateMediaFolderSource(
+      isEnabled: event.isEnabled,
+      folderPath: event.folderPath,
+      isRecursive: event.isRecursive,
     );
   }
 

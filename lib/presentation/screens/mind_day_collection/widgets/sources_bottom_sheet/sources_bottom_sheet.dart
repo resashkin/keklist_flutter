@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
@@ -6,17 +8,25 @@ import 'package:photo_manager/photo_manager.dart';
 final class SourcesBottomSheet extends StatelessWidget {
   final bool isPhotoVideoEnabled;
   final ValueChanged<bool> onPhotoVideoToggled;
+  final VoidCallback? onPhotoVideoSettings;
   final bool isWeatherEnabled;
   final ValueChanged<bool> onWeatherToggled;
   final VoidCallback? onWeatherSettings;
+  final bool isMediaFolderEnabled;
+  final ValueChanged<bool> onMediaFolderToggled;
+  final VoidCallback? onMediaFolderSettings;
 
   const SourcesBottomSheet({
     super.key,
     required this.isPhotoVideoEnabled,
     required this.onPhotoVideoToggled,
+    this.onPhotoVideoSettings,
     required this.isWeatherEnabled,
     required this.onWeatherToggled,
     this.onWeatherSettings,
+    required this.isMediaFolderEnabled,
+    required this.onMediaFolderToggled,
+    this.onMediaFolderSettings,
   });
 
   @override
@@ -39,26 +49,37 @@ final class SourcesBottomSheet extends StatelessWidget {
             checked: true,
             enabled: false,
           ),
-          _SourceItem(
-            icon: Icons.photo_library,
-            title: context.l10n.sourcesPhotoVideo,
-            subtitle: context.l10n.sourcesPhotoVideoSubtitle,
-            checked: isPhotoVideoEnabled,
-            enabled: true,
-            onTap: () {
-              final bool newValue = !isPhotoVideoEnabled;
-              if (!newValue) {
-                onPhotoVideoToggled(false);
-                return;
-              }
-              PhotoManager.requestPermissionExtend().then((permission) {
-                if (permission.isAuth) {
-                  onPhotoVideoToggled(true);
-                } else {
-                  PhotoManager.openSetting();
+          if (!Platform.isAndroid)
+            _SourceItem(
+              icon: Icons.photo_library,
+              title: context.l10n.sourcesPhotoVideo,
+              subtitle: context.l10n.sourcesPhotoVideoSubtitle,
+              checked: isPhotoVideoEnabled,
+              enabled: true,
+              onTap: () {
+                final bool newValue = !isPhotoVideoEnabled;
+                if (!newValue) {
+                  onPhotoVideoToggled(false);
+                  return;
                 }
-              });
-            },
+                PhotoManager.requestPermissionExtend().then((permission) {
+                  if (permission.isAuth) {
+                    onPhotoVideoToggled(true);
+                  } else {
+                    PhotoManager.openSetting();
+                  }
+                });
+              },
+              onSettings: onPhotoVideoSettings,
+            ),
+          _SourceItem(
+            icon: Icons.folder_open,
+            title: context.l10n.sourcesMediaFolder,
+            subtitle: context.l10n.sourcesMediaFolderSubtitle,
+            checked: isMediaFolderEnabled,
+            enabled: true,
+            onTap: () => onMediaFolderToggled(!isMediaFolderEnabled),
+            onSettings: onMediaFolderSettings,
           ),
           _SourceItem(
             icon: Icons.cloud,

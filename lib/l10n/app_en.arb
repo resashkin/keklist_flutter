@@ -565,9 +565,25 @@
     "@sourcesPhotoVideoSubtitle": {
         "description": "Photo and video source item subtitle"
     },
-    "otherSources": "Other sources",
-    "@otherSources": {
-        "description": "Other sources section title"
+    "sourcesMediaFolder": "Media Folder",
+    "@sourcesMediaFolder": {
+        "description": "Media folder source item title"
+    },
+    "sourcesMediaFolderSubtitle": "Photos & videos from a custom folder",
+    "@sourcesMediaFolderSubtitle": {
+        "description": "Media folder source item subtitle"
+    },
+    "mediaFolderSettings": "Media Folder",
+    "@mediaFolderSettings": {
+        "description": "Media folder settings bottom sheet title"
+    },
+    "mediaFolderNoPath": "No folder selected",
+    "@mediaFolderNoPath": {
+        "description": "Message when no media folder is selected"
+    },
+    "mediaFolderPickFolder": "Pick Folder",
+    "@mediaFolderPickFolder": {
+        "description": "Button to pick a media folder"
     },
     "licenses": "Licenses",
     "@licenses": {

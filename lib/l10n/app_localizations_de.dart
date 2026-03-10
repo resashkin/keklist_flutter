@@ -447,7 +447,20 @@ class AppLocalizationsDe extends AppLocalizations {
       'Gerätefotos und -videos für diesen Tag';
 
   @override
-  String get otherSources => 'Andere Quellen';
+  String get sourcesMediaFolder => 'Medienordner';
+
+  @override
+  String get sourcesMediaFolderSubtitle =>
+      'Fotos und Videos aus einem benutzerdefinierten Ordner';
+
+  @override
+  String get mediaFolderSettings => 'Medienordner';
+
+  @override
+  String get mediaFolderNoPath => 'Kein Ordner ausgewählt';
+
+  @override
+  String get mediaFolderPickFolder => 'Ordner auswählen';
 
   @override
   String get licenses => 'Lizenzen';

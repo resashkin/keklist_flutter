@@ -444,7 +444,20 @@ class AppLocalizationsKy extends AppLocalizations {
       'Бул күн үчүн түзмөктүн сүрөттөрү жана видеолору';
 
   @override
-  String get otherSources => 'Башка булактар';
+  String get sourcesMediaFolder => 'Медиа папка';
+
+  @override
+  String get sourcesMediaFolderSubtitle =>
+      'Тандалган папкадан сүрөттөр жана видеолор';
+
+  @override
+  String get mediaFolderSettings => 'Медиа папка';
+
+  @override
+  String get mediaFolderNoPath => 'Папка тандалган жок';
+
+  @override
+  String get mediaFolderPickFolder => 'Папканы тандоо';
 
   @override
   String get licenses => 'Лицензиялар';
