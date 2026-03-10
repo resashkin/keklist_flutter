@@ -448,4 +448,69 @@ class AppLocalizationsKy extends AppLocalizations {
 
   @override
   String get licenses => 'Лицензиялар';
+
+  @override
+  String get sourcesWeather => 'Аба ырайы';
+
+  @override
+  String get sourcesWeatherSubtitle =>
+      'Бул күн үчүн жергиликтүү аба ырайы шарттары';
+
+  @override
+  String get weatherSettings => 'Аба ырайы жөндөөлөрү';
+
+  @override
+  String get weatherLatitude => 'Кеңдик';
+
+  @override
+  String get weatherLongitude => 'Узундук';
+
+  @override
+  String get weatherSaveLocation => 'Жерди сактоо';
+
+  @override
+  String get weatherMoodImpact => 'Маанайга таасири';
+
+  @override
+  String get weatherNoLocation => 'Аба ырайын көрүү үчүн жерди коюңуз';
+
+  @override
+  String get weatherUseMyLocation => 'Менин жеримди колдонуу';
+
+  @override
+  String get weatherDetectingLocation => 'Жер аныкталууда...';
+
+  @override
+  String get weatherOrEnterManually => 'же кол менен киргизүү';
+
+  @override
+  String get weatherLocationError =>
+      'Жерди аныктоо мүмкүн болмоду. Кол менен киргизиңиз.';
+
+  @override
+  String get weatherLocationServicesDisabled =>
+      'Геолокация кызматтары өчүрүлгөн. Жөндөөлөрдө иштетиңиз.';
+
+  @override
+  String get weatherLocationPermissionDenied =>
+      'Геолокацияга уруксат берилген жок.';
+
+  @override
+  String get weatherLocationPermissionPermanentlyDenied =>
+      'Геолокацияга уруксат туруктуу берилген жок. Колдонмо жөндөөлөрү ачылууда.';
+
+  @override
+  String get weatherTemperature => 'Температура';
+
+  @override
+  String get weatherUvIndex => 'УК-индекс';
+
+  @override
+  String get weatherHumidity => 'Нымдуулук';
+
+  @override
+  String get weatherWindSpeed => 'Шамалдын ылдамдыгы';
+
+  @override
+  String get weatherPrecipitation => 'Жаан-чачын';
 }

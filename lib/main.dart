@@ -15,6 +15,8 @@ import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 import 'package:keklist/domain/repositories/mind/mind_hive_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_hive_repository.dart';
+import 'package:keklist/domain/repositories/weather/object/weather_cache_object.dart';
+import 'package:keklist/domain/repositories/weather/weather_repository.dart';
 import 'package:keklist/domain/migrations/migration_runner.dart';
 import 'package:keklist/domain/services/export_import/export_import_service.dart';
 import 'package:keklist/keklist_app.dart';
@@ -105,6 +107,7 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
   providers: [
     RepositoryProvider(create: (context) => mainInjector.get<MindRepository>()),
     RepositoryProvider(create: (context) => mainInjector.get<AppFileRepository>()),
+    RepositoryProvider(create: (context) => mainInjector.get<WeatherRepository>()),
   ],
   child: MultiBlocProvider(
     providers: [
@@ -173,6 +176,7 @@ Future<void> _initHive() async {
   Hive.registerAdapter<SettingsObject>(SettingsObjectAdapter());
   Hive.registerAdapter<MindObject>(MindObjectAdapter());
   Hive.registerAdapter<DebugMenuObject>(DebugMenuObjectAdapter());
+  Hive.registerAdapter<WeatherCacheObject>(WeatherCacheObjectAdapter());
   await Hive.initFlutter();
   final Box<SettingsObject> settingsBox = await Hive.openBox<SettingsObject>(HiveConstants.settingsBoxName);
   if (settingsBox.get(HiveConstants.globalSettingsIndex) == null) {
@@ -181,6 +185,7 @@ Future<void> _initHive() async {
   }
   final Box<MindObject> mindBox = await Hive.openBox<MindObject>(HiveConstants.mindBoxName);
   await Hive.openBox<DebugMenuObject>(HiveConstants.debugMenuBoxName);
+  await Hive.openBox<WeatherCacheObject>(HiveConstants.weatherCacheBoxName);
 
   // Run data migrations after boxes are opened
   await _runMigrations(settingsBox, mindBox);
@@ -201,44 +206,34 @@ final class _LoggerBlocObserver extends BlocObserver {
   void onEvent(Bloc bloc, Object? event) {
     super.onEvent(bloc, event);
 
-    if (kDebugMode) {
-      print('onEvent: $event');
-    }
+    print('onEvent: $event');
   }
 
   @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
     super.onError(bloc, error, stackTrace);
 
-    if (kDebugMode) {
-      print(error);
-    }
+    print(error);
   }
 
   @override
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
 
-    if (kDebugMode) {
-      print('onChange: ${bloc.state}');
-    }
+    print('onChange: ${bloc.state}');
   }
 
   @override
   void onClose(BlocBase bloc) {
     super.onClose(bloc);
 
-    if (kDebugMode) {
-      print('onClose: ${bloc.runtimeType}');
-    }
+    print('onClose: ${bloc.runtimeType}');
   }
 
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
 
-    if (kDebugMode) {
-      print('onTransition: $bloc.state');
-    }
+    print('onTransition: $bloc.state');
   }
 }

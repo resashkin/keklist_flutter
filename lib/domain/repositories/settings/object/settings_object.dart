@@ -38,6 +38,15 @@ final class SettingsObject extends HiveObject {
   @HiveField(11, defaultValue: false)
   late bool isPhotoVideoSourceEnabled;
 
+  @HiveField(12, defaultValue: false)
+  late bool isWeatherSourceEnabled;
+
+  @HiveField(13, defaultValue: null)
+  late double? weatherLatitude;
+
+  @HiveField(14, defaultValue: null)
+  late double? weatherLongitude;
+
   SettingsObject();
 
   KeklistSettings toSettings() => KeklistSettings(
@@ -51,5 +60,8 @@ final class SettingsObject extends HiveObject {
         hasSeenLazyOnboarding: hasSeenLazyOnboarding,
         isDebugMenuVisible: isDebugMenuVisible,
         isPhotoVideoSourceEnabled: isPhotoVideoSourceEnabled,
+        isWeatherSourceEnabled: isWeatherSourceEnabled,
+        weatherLatitude: weatherLatitude,
+        weatherLongitude: weatherLongitude,
       );
 }

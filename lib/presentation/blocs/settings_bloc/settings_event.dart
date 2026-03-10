@@ -76,3 +76,14 @@ final class SettingsTogglePhotoVideoSource extends SettingsEvent {
   final bool isEnabled;
   const SettingsTogglePhotoVideoSource({required this.isEnabled});
 }
+
+final class SettingsToggleWeatherSource extends SettingsEvent {
+  final bool isEnabled;
+  const SettingsToggleWeatherSource({required this.isEnabled});
+}
+
+final class SettingsUpdateWeatherLocation extends SettingsEvent {
+  final double latitude;
+  final double longitude;
+  const SettingsUpdateWeatherLocation({required this.latitude, required this.longitude});
+}

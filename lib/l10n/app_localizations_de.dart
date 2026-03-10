@@ -451,4 +451,70 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get licenses => 'Lizenzen';
+
+  @override
+  String get sourcesWeather => 'Wetter';
+
+  @override
+  String get sourcesWeatherSubtitle =>
+      'Lokale Wetterbedingungen für diesen Tag';
+
+  @override
+  String get weatherSettings => 'Wettereinstellungen';
+
+  @override
+  String get weatherLatitude => 'Breitengrad';
+
+  @override
+  String get weatherLongitude => 'Längengrad';
+
+  @override
+  String get weatherSaveLocation => 'Standort speichern';
+
+  @override
+  String get weatherMoodImpact => 'Einfluss auf die Stimmung';
+
+  @override
+  String get weatherNoLocation =>
+      'Standort in den Wettereinstellungen festlegen';
+
+  @override
+  String get weatherUseMyLocation => 'Meinen Standort verwenden';
+
+  @override
+  String get weatherDetectingLocation => 'Standort wird erkannt...';
+
+  @override
+  String get weatherOrEnterManually => 'oder manuell eingeben';
+
+  @override
+  String get weatherLocationError =>
+      'Standort konnte nicht erkannt werden. Bitte manuell eingeben.';
+
+  @override
+  String get weatherLocationServicesDisabled =>
+      'Standortdienste sind deaktiviert. Bitte in den Einstellungen aktivieren.';
+
+  @override
+  String get weatherLocationPermissionDenied =>
+      'Standortberechtigung verweigert.';
+
+  @override
+  String get weatherLocationPermissionPermanentlyDenied =>
+      'Standortberechtigung dauerhaft verweigert. App-Einstellungen werden geöffnet.';
+
+  @override
+  String get weatherTemperature => 'Temperatur';
+
+  @override
+  String get weatherUvIndex => 'UV-Index';
+
+  @override
+  String get weatherHumidity => 'Luftfeuchtigkeit';
+
+  @override
+  String get weatherWindSpeed => 'Windgeschwindigkeit';
+
+  @override
+  String get weatherPrecipitation => 'Niederschlag';
 }

@@ -87,6 +87,8 @@
 	<string>keklist needs access to photo library to import your backups from files</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>keklist needs access to your microphone only to record voice messages</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>keklist uses your location once to set the weather coordinates for your entries</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 </dict>

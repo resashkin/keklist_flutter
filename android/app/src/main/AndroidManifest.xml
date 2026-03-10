@@ -33,6 +33,9 @@
             android:value="2" />
     </application>
 
+    <!-- Location permission for weather feature -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
     <!-- Photo and video gallery permissions -->
     <!-- Android 13+ (API 33+) -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>

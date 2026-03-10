@@ -448,4 +448,69 @@ class AppLocalizationsKk extends AppLocalizations {
 
   @override
   String get licenses => 'Лицензиялар';
+
+  @override
+  String get sourcesWeather => 'Ауа райы';
+
+  @override
+  String get sourcesWeatherSubtitle =>
+      'Бұл күнгі жергілікті ауа райы жағдайлары';
+
+  @override
+  String get weatherSettings => 'Ауа райы параметрлері';
+
+  @override
+  String get weatherLatitude => 'Ендік';
+
+  @override
+  String get weatherLongitude => 'Бойлық';
+
+  @override
+  String get weatherSaveLocation => 'Орынды сақтау';
+
+  @override
+  String get weatherMoodImpact => 'Көңіл-күйге әсері';
+
+  @override
+  String get weatherNoLocation => 'Ауа райын көру үшін орынды орнатыңыз';
+
+  @override
+  String get weatherUseMyLocation => 'Менің орнымды пайдалану';
+
+  @override
+  String get weatherDetectingLocation => 'Орын анықталуда...';
+
+  @override
+  String get weatherOrEnterManually => 'немесе қолмен енгізу';
+
+  @override
+  String get weatherLocationError =>
+      'Орынды анықтау мүмкін болмады. Қолмен енгізіңіз.';
+
+  @override
+  String get weatherLocationServicesDisabled =>
+      'Геолокация қызметтері өшірілген. Параметрлерде қосыңыз.';
+
+  @override
+  String get weatherLocationPermissionDenied =>
+      'Геолокацияға рұқсат берілмеді.';
+
+  @override
+  String get weatherLocationPermissionPermanentlyDenied =>
+      'Геолокацияға рұқсат тұрақты түрде берілмеді. Қолданба параметрлері ашылуда.';
+
+  @override
+  String get weatherTemperature => 'Температура';
+
+  @override
+  String get weatherUvIndex => 'УК-индекс';
+
+  @override
+  String get weatherHumidity => 'Ылғалдылық';
+
+  @override
+  String get weatherWindSpeed => 'Жел жылдамдығы';
+
+  @override
+  String get weatherPrecipitation => 'Жауын-шашын';
 }

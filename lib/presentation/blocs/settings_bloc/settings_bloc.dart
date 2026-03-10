@@ -49,6 +49,8 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     on<SettingsChangeLanguage>(_changeLanguage);
     on<SettingsEnableDebugMenu>(_enableDebugMenu);
     on<SettingsTogglePhotoVideoSource>(_togglePhotoVideoSource);
+    on<SettingsToggleWeatherSource>(_toggleWeatherSource);
+    on<SettingsUpdateWeatherLocation>(_updateWeatherLocation);
 
     _repository.stream.listen((settings) => add(SettingsGet())).disposed(by: this);
   }
@@ -316,6 +318,9 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
       hasSeenLazyOnboarding: currentSettings.hasSeenLazyOnboarding,
       isDebugMenuVisible: true,
       isPhotoVideoSourceEnabled: currentSettings.isPhotoVideoSourceEnabled,
+      isWeatherSourceEnabled: currentSettings.isWeatherSourceEnabled,
+      weatherLatitude: currentSettings.weatherLatitude,
+      weatherLongitude: currentSettings.weatherLongitude,
     );
     await _repository.updateSettings(updatedSettings);
   }
@@ -325,6 +330,23 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     Emitter<SettingsState> emit,
   ) async {
     await _repository.updateIsPhotoVideoSourceEnabled(event.isEnabled);
+  }
+
+  FutureOr<void> _toggleWeatherSource(
+    SettingsToggleWeatherSource event,
+    Emitter<SettingsState> emit,
+  ) async {
+    await _repository.updateWeatherSettings(isEnabled: event.isEnabled);
+  }
+
+  FutureOr<void> _updateWeatherLocation(
+    SettingsUpdateWeatherLocation event,
+    Emitter<SettingsState> emit,
+  ) async {
+    await _repository.updateWeatherSettings(
+      latitude: event.latitude,
+      longitude: event.longitude,
+    );
   }
 
   // FutureOr<void> _exportToEncryptedImage(

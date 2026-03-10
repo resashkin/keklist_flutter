@@ -86,4 +86,14 @@ final class SettingsHiveRepository implements SettingsRepository {
     settingsObject?.isPhotoVideoSourceEnabled = value;
     await settingsObject?.save();
   }
+
+  @override
+  FutureOr<void> updateWeatherSettings({bool? isEnabled, double? latitude, double? longitude}) async {
+    final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.globalSettingsIndex);
+    if (settingsObject == null) return;
+    if (isEnabled != null) settingsObject.isWeatherSourceEnabled = isEnabled;
+    if (latitude != null) settingsObject.weatherLatitude = latitude;
+    if (longitude != null) settingsObject.weatherLongitude = longitude;
+    await settingsObject.save();
+  }
 }

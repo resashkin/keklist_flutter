@@ -447,4 +447,68 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get licenses => 'Licenses';
+
+  @override
+  String get sourcesWeather => 'Weather';
+
+  @override
+  String get sourcesWeatherSubtitle => 'Local weather conditions for this day';
+
+  @override
+  String get weatherSettings => 'Weather Settings';
+
+  @override
+  String get weatherLatitude => 'Latitude';
+
+  @override
+  String get weatherLongitude => 'Longitude';
+
+  @override
+  String get weatherSaveLocation => 'Save location';
+
+  @override
+  String get weatherMoodImpact => 'Mood Impact';
+
+  @override
+  String get weatherNoLocation =>
+      'Set location in weather settings to see weather';
+
+  @override
+  String get weatherUseMyLocation => 'Use my location';
+
+  @override
+  String get weatherDetectingLocation => 'Detecting location...';
+
+  @override
+  String get weatherOrEnterManually => 'or enter manually';
+
+  @override
+  String get weatherLocationError =>
+      'Could not detect location. Please enter manually.';
+
+  @override
+  String get weatherLocationServicesDisabled =>
+      'Location services are disabled. Please enable them in Settings.';
+
+  @override
+  String get weatherLocationPermissionDenied => 'Location permission denied.';
+
+  @override
+  String get weatherLocationPermissionPermanentlyDenied =>
+      'Location permission is permanently denied. Opening app settings.';
+
+  @override
+  String get weatherTemperature => 'Temperature';
+
+  @override
+  String get weatherUvIndex => 'UV Index';
+
+  @override
+  String get weatherHumidity => 'Humidity';
+
+  @override
+  String get weatherWindSpeed => 'Wind Speed';
+
+  @override
+  String get weatherPrecipitation => 'Precipitation';
 }

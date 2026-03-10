@@ -449,4 +449,69 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get licenses => 'Litsenziyalar';
+
+  @override
+  String get sourcesWeather => 'Ob-havo';
+
+  @override
+  String get sourcesWeatherSubtitle =>
+      'Ushbu kun uchun mahalliy ob-havo sharoitlari';
+
+  @override
+  String get weatherSettings => 'Ob-havo sozlamalari';
+
+  @override
+  String get weatherLatitude => 'Kenglik';
+
+  @override
+  String get weatherLongitude => 'Uzunlik';
+
+  @override
+  String get weatherSaveLocation => 'Joylashuvni saqlash';
+
+  @override
+  String get weatherMoodImpact => 'Kayfiyatga ta\'siri';
+
+  @override
+  String get weatherNoLocation =>
+      'Ob-havoni ko\'rish uchun joylashuvni sozlang';
+
+  @override
+  String get weatherUseMyLocation => 'Mening joylashuvimdan foydalanish';
+
+  @override
+  String get weatherDetectingLocation => 'Joylashuv aniqlanmoqda...';
+
+  @override
+  String get weatherOrEnterManually => 'yoki qo\'lda kiriting';
+
+  @override
+  String get weatherLocationError =>
+      'Joylashuvni aniqlab bo\'lmadi. Iltimos, qo\'lda kiriting.';
+
+  @override
+  String get weatherLocationServicesDisabled =>
+      'Joylashuv xizmatlari o\'chirilgan. Sozlamalarda yoqing.';
+
+  @override
+  String get weatherLocationPermissionDenied => 'Joylashuv ruxsati rad etildi.';
+
+  @override
+  String get weatherLocationPermissionPermanentlyDenied =>
+      'Joylashuv ruxsati doimiy ravishda rad etildi. Ilova sozlamalari ochilmoqda.';
+
+  @override
+  String get weatherTemperature => 'Harorat';
+
+  @override
+  String get weatherUvIndex => 'UV indeks';
+
+  @override
+  String get weatherHumidity => 'Namlik';
+
+  @override
+  String get weatherWindSpeed => 'Shamol tezligi';
+
+  @override
+  String get weatherPrecipitation => 'Yog\'ingarchilik';
 }

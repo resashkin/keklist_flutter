@@ -27,13 +27,16 @@ class SettingsObjectAdapter extends TypeAdapter<SettingsObject> {
       ..hasSeenLazyOnboarding = fields[9] == null ? false : fields[9] as bool
       ..isDebugMenuVisible = fields[10] == null ? false : fields[10] as bool
       ..isPhotoVideoSourceEnabled =
-          fields[11] == null ? false : fields[11] as bool;
+          fields[11] == null ? false : fields[11] as bool
+      ..isWeatherSourceEnabled = fields[12] == null ? false : fields[12] as bool
+      ..weatherLatitude = fields[13] as double?
+      ..weatherLongitude = fields[14] as double?;
   }
 
   @override
   void write(BinaryWriter writer, SettingsObject obj) {
     writer
-      ..writeByte(10)
+      ..writeByte(13)
       ..writeByte(0)
       ..write(obj.isMindContentVisible)
       ..writeByte(1)
@@ -53,7 +56,13 @@ class SettingsObjectAdapter extends TypeAdapter<SettingsObject> {
       ..writeByte(10)
       ..write(obj.isDebugMenuVisible)
       ..writeByte(11)
-      ..write(obj.isPhotoVideoSourceEnabled);
+      ..write(obj.isPhotoVideoSourceEnabled)
+      ..writeByte(12)
+      ..write(obj.isWeatherSourceEnabled)
+      ..writeByte(13)
+      ..write(obj.weatherLatitude)
+      ..writeByte(14)
+      ..write(obj.weatherLongitude);
   }
 
   @override

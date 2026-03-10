@@ -3,7 +3,7 @@ description: Like TODO-List but keklist
 
 publish_to: "none"
 
-version: 4.5.0+118
+version: 4.6.0+119
 
 environment:
   sdk: ">=3.10.0"
@@ -80,6 +80,8 @@ dependencies:
   logarte: ^1.4.0
   purchases_flutter: ^9.8.0
   purchases_ui_flutter: ^9.8.0
+  http: ^1.2.2
+  geolocator: ^13.0.0
   record: ^6.1.2
   just_waveform: ^0.0.7
   flutter_gen: ^5.9.0

@@ -450,4 +450,70 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get licenses => 'Licencias';
+
+  @override
+  String get sourcesWeather => 'Clima';
+
+  @override
+  String get sourcesWeatherSubtitle =>
+      'Condiciones meteorológicas locales para este día';
+
+  @override
+  String get weatherSettings => 'Configuración del clima';
+
+  @override
+  String get weatherLatitude => 'Latitud';
+
+  @override
+  String get weatherLongitude => 'Longitud';
+
+  @override
+  String get weatherSaveLocation => 'Guardar ubicación';
+
+  @override
+  String get weatherMoodImpact => 'Impacto en el estado de ánimo';
+
+  @override
+  String get weatherNoLocation =>
+      'Establece la ubicación en la configuración del clima';
+
+  @override
+  String get weatherUseMyLocation => 'Usar mi ubicación';
+
+  @override
+  String get weatherDetectingLocation => 'Detectando ubicación...';
+
+  @override
+  String get weatherOrEnterManually => 'o ingresar manualmente';
+
+  @override
+  String get weatherLocationError =>
+      'No se pudo detectar la ubicación. Por favor, ingrésela manualmente.';
+
+  @override
+  String get weatherLocationServicesDisabled =>
+      'Los servicios de ubicación están desactivados. Actívalos en Ajustes.';
+
+  @override
+  String get weatherLocationPermissionDenied =>
+      'Permiso de ubicación denegado.';
+
+  @override
+  String get weatherLocationPermissionPermanentlyDenied =>
+      'Permiso de ubicación denegado permanentemente. Abriendo ajustes de la app.';
+
+  @override
+  String get weatherTemperature => 'Temperatura';
+
+  @override
+  String get weatherUvIndex => 'Índice UV';
+
+  @override
+  String get weatherHumidity => 'Humedad';
+
+  @override
+  String get weatherWindSpeed => 'Velocidad del viento';
+
+  @override
+  String get weatherPrecipitation => 'Precipitación';
 }

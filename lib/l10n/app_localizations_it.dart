@@ -449,4 +449,70 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get licenses => 'Licenze';
+
+  @override
+  String get sourcesWeather => 'Meteo';
+
+  @override
+  String get sourcesWeatherSubtitle =>
+      'Condizioni meteorologiche locali per questo giorno';
+
+  @override
+  String get weatherSettings => 'Impostazioni meteo';
+
+  @override
+  String get weatherLatitude => 'Latitudine';
+
+  @override
+  String get weatherLongitude => 'Longitudine';
+
+  @override
+  String get weatherSaveLocation => 'Salva posizione';
+
+  @override
+  String get weatherMoodImpact => 'Impatto sull\'umore';
+
+  @override
+  String get weatherNoLocation =>
+      'Imposta la posizione nelle impostazioni meteo';
+
+  @override
+  String get weatherUseMyLocation => 'Usa la mia posizione';
+
+  @override
+  String get weatherDetectingLocation => 'Rilevamento posizione...';
+
+  @override
+  String get weatherOrEnterManually => 'o inserisci manualmente';
+
+  @override
+  String get weatherLocationError =>
+      'Impossibile rilevare la posizione. Inserisci manualmente.';
+
+  @override
+  String get weatherLocationServicesDisabled =>
+      'I servizi di localizzazione sono disabilitati. Attivali nelle impostazioni.';
+
+  @override
+  String get weatherLocationPermissionDenied =>
+      'Autorizzazione di localizzazione negata.';
+
+  @override
+  String get weatherLocationPermissionPermanentlyDenied =>
+      'Autorizzazione di localizzazione negata in modo permanente. Apertura impostazioni app.';
+
+  @override
+  String get weatherTemperature => 'Temperatura';
+
+  @override
+  String get weatherUvIndex => 'Indice UV';
+
+  @override
+  String get weatherHumidity => 'Umidità';
+
+  @override
+  String get weatherWindSpeed => 'Velocità del vento';
+
+  @override
+  String get weatherPrecipitation => 'Precipitazioni';
 }

@@ -11,6 +11,9 @@ final class _MindCollectionBody extends StatelessWidget {
   final Function getNowDayIndex;
   final bool shouldShowTitles;
   final bool isMonthView;
+  final bool isWeatherSourceEnabled;
+  final double? weatherLatitude;
+  final double? weatherLongitude;
 
   // Grid properties.
   final ScrollController monthGridScrollController;
@@ -29,6 +32,9 @@ final class _MindCollectionBody extends StatelessWidget {
     required this.isMonthView,
     required this.monthGridScrollController,
     required this.monthGridObserverController,
+    this.isWeatherSourceEnabled = false,
+    this.weatherLatitude,
+    this.weatherLongitude,
   });
 
   // static DateFormat _yearTitleFormatter(BuildContext context) =>
@@ -135,6 +141,12 @@ final class _MindCollectionBody extends StatelessWidget {
                       ),
                     ),
                   ),
+                  if (isWeatherSourceEnabled && weatherLatitude != null && weatherLongitude != null)
+                    WeatherPreviewCard(
+                      dayIndex: dayIndex,
+                      latitude: weatherLatitude!,
+                      longitude: weatherLongitude!,
+                    ),
                 ],
               );
             },

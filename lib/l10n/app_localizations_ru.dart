@@ -447,4 +447,68 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get licenses => 'Лицензии';
+
+  @override
+  String get sourcesWeather => 'Погода';
+
+  @override
+  String get sourcesWeatherSubtitle => 'Местные погодные условия за этот день';
+
+  @override
+  String get weatherSettings => 'Настройки погоды';
+
+  @override
+  String get weatherLatitude => 'Широта';
+
+  @override
+  String get weatherLongitude => 'Долгота';
+
+  @override
+  String get weatherSaveLocation => 'Сохранить местоположение';
+
+  @override
+  String get weatherMoodImpact => 'Влияние на настроение';
+
+  @override
+  String get weatherNoLocation => 'Укажите местоположение в настройках погоды';
+
+  @override
+  String get weatherUseMyLocation => 'Использовать моё местоположение';
+
+  @override
+  String get weatherDetectingLocation => 'Определение местоположения...';
+
+  @override
+  String get weatherOrEnterManually => 'или введите вручную';
+
+  @override
+  String get weatherLocationError =>
+      'Не удалось определить местоположение. Введите вручную.';
+
+  @override
+  String get weatherLocationServicesDisabled =>
+      'Службы геолокации отключены. Включите их в настройках.';
+
+  @override
+  String get weatherLocationPermissionDenied =>
+      'Разрешение на геолокацию отклонено.';
+
+  @override
+  String get weatherLocationPermissionPermanentlyDenied =>
+      'Доступ к геолокации заблокирован. Открываю настройки приложения.';
+
+  @override
+  String get weatherTemperature => 'Температура';
+
+  @override
+  String get weatherUvIndex => 'УФ-индекс';
+
+  @override
+  String get weatherHumidity => 'Влажность';
+
+  @override
+  String get weatherWindSpeed => 'Скорость ветра';
+
+  @override
+  String get weatherPrecipitation => 'Осадки';
 }

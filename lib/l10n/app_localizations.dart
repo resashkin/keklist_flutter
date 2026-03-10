@@ -962,6 +962,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Licenses'**
   String get licenses;
+
+  /// Weather source item title
+  ///
+  /// In en, this message translates to:
+  /// **'Weather'**
+  String get sourcesWeather;
+
+  /// Weather source item subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Local weather conditions for this day'**
+  String get sourcesWeatherSubtitle;
+
+  /// Weather settings bottom sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Weather Settings'**
+  String get weatherSettings;
+
+  /// Latitude input label
+  ///
+  /// In en, this message translates to:
+  /// **'Latitude'**
+  String get weatherLatitude;
+
+  /// Longitude input label
+  ///
+  /// In en, this message translates to:
+  /// **'Longitude'**
+  String get weatherLongitude;
+
+  /// Save location button
+  ///
+  /// In en, this message translates to:
+  /// **'Save location'**
+  String get weatherSaveLocation;
+
+  /// Mood impact section header in weather detail
+  ///
+  /// In en, this message translates to:
+  /// **'Mood Impact'**
+  String get weatherMoodImpact;
+
+  /// Message shown when weather location is not configured
+  ///
+  /// In en, this message translates to:
+  /// **'Set location in weather settings to see weather'**
+  String get weatherNoLocation;
+
+  /// Button to detect GPS location automatically
+  ///
+  /// In en, this message translates to:
+  /// **'Use my location'**
+  String get weatherUseMyLocation;
+
+  /// Button label while GPS is being read
+  ///
+  /// In en, this message translates to:
+  /// **'Detecting location...'**
+  String get weatherDetectingLocation;
+
+  /// Divider label between GPS button and manual input
+  ///
+  /// In en, this message translates to:
+  /// **'or enter manually'**
+  String get weatherOrEnterManually;
+
+  /// Generic GPS error
+  ///
+  /// In en, this message translates to:
+  /// **'Could not detect location. Please enter manually.'**
+  String get weatherLocationError;
+
+  /// Error when device location services are off
+  ///
+  /// In en, this message translates to:
+  /// **'Location services are disabled. Please enable them in Settings.'**
+  String get weatherLocationServicesDisabled;
+
+  /// Error when location permission is denied
+  ///
+  /// In en, this message translates to:
+  /// **'Location permission denied.'**
+  String get weatherLocationPermissionDenied;
+
+  /// Error when location permission is permanently denied
+  ///
+  /// In en, this message translates to:
+  /// **'Location permission is permanently denied. Opening app settings.'**
+  String get weatherLocationPermissionPermanentlyDenied;
+
+  /// Temperature parameter label
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature'**
+  String get weatherTemperature;
+
+  /// UV Index parameter label
+  ///
+  /// In en, this message translates to:
+  /// **'UV Index'**
+  String get weatherUvIndex;
+
+  /// Humidity parameter label
+  ///
+  /// In en, this message translates to:
+  /// **'Humidity'**
+  String get weatherHumidity;
+
+  /// Wind Speed parameter label
+  ///
+  /// In en, this message translates to:
+  /// **'Wind Speed'**
+  String get weatherWindSpeed;
+
+  /// Precipitation parameter label
+  ///
+  /// In en, this message translates to:
+  /// **'Precipitation'**
+  String get weatherPrecipitation;
 }
 
 class _AppLocalizationsDelegate

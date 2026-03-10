@@ -1,61 +1,78 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 final class SourcesBottomSheet extends StatelessWidget {
   final bool isPhotoVideoEnabled;
   final ValueChanged<bool> onPhotoVideoToggled;
+  final bool isWeatherEnabled;
+  final ValueChanged<bool> onWeatherToggled;
+  final VoidCallback? onWeatherSettings;
 
   const SourcesBottomSheet({
     super.key,
     required this.isPhotoVideoEnabled,
     required this.onPhotoVideoToggled,
+    required this.isWeatherEnabled,
+    required this.onWeatherToggled,
+    this.onWeatherSettings,
   });
 
   @override
   Widget build(BuildContext context) {
     return Material(
       child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text(
-            context.l10n.sources,
-            style: Theme.of(context).textTheme.titleLarge,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+            child: Text(
+              context.l10n.sources,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
           ),
-        ),
-        _SourceItem(
-          icon: Icons.emoji_emotions_outlined,
-          title: context.l10n.sourcesMinds,
-          subtitle: context.l10n.sourcesMindsSubtitle,
-          checked: true,
-          enabled: false,
-        ),
-        _SourceItem(
-          icon: Icons.photo_library_outlined,
-          title: context.l10n.sourcesPhotoVideo,
-          subtitle: context.l10n.sourcesPhotoVideoSubtitle,
-          checked: isPhotoVideoEnabled,
-          enabled: true,
-          onTap: () {
-            final bool newValue = !isPhotoVideoEnabled;
-            if (!newValue) {
-              onPhotoVideoToggled(false);
-              return;
-            }
-            PhotoManager.requestPermissionExtend().then((permission) {
-              if (permission.isAuth) {
-                onPhotoVideoToggled(true);
-              } else {
-                PhotoManager.openSetting();
+          _SourceItem(
+            icon: Icons.emoji_emotions,
+            title: context.l10n.sourcesMinds,
+            subtitle: context.l10n.sourcesMindsSubtitle,
+            checked: true,
+            enabled: false,
+          ),
+          _SourceItem(
+            icon: Icons.photo_library,
+            title: context.l10n.sourcesPhotoVideo,
+            subtitle: context.l10n.sourcesPhotoVideoSubtitle,
+            checked: isPhotoVideoEnabled,
+            enabled: true,
+            onTap: () {
+              final bool newValue = !isPhotoVideoEnabled;
+              if (!newValue) {
+                onPhotoVideoToggled(false);
+                return;
               }
-            });
-          },
-        ),
-        SafeArea(child: const SizedBox(height: 8.0)),
-      ],
-    ),
+              PhotoManager.requestPermissionExtend().then((permission) {
+                if (permission.isAuth) {
+                  onPhotoVideoToggled(true);
+                } else {
+                  PhotoManager.openSetting();
+                }
+              });
+            },
+          ),
+          _SourceItem(
+            icon: Icons.cloud,
+            title: context.l10n.sourcesWeather,
+            subtitle: context.l10n.sourcesWeatherSubtitle,
+            checked: isWeatherEnabled,
+            enabled: true,
+            showProBadge: true,
+            onTap: () => onWeatherToggled(!isWeatherEnabled),
+            onSettings: onWeatherSettings,
+          ),
+          SafeArea(child: const SizedBox(height: 8.0)),
+        ],
+      ),
     );
   }
 }
@@ -66,7 +83,9 @@ final class _SourceItem extends StatelessWidget {
   final String subtitle;
   final bool checked;
   final bool enabled;
+  final bool showProBadge;
   final VoidCallback? onTap;
+  final VoidCallback? onSettings;
 
   const _SourceItem({
     required this.icon,
@@ -74,7 +93,9 @@ final class _SourceItem extends StatelessWidget {
     required this.subtitle,
     required this.checked,
     required this.enabled,
+    this.showProBadge = false,
     this.onTap,
+    this.onSettings,
   });
 
   @override
@@ -84,22 +105,65 @@ final class _SourceItem extends StatelessWidget {
         ? Theme.of(context).colorScheme.onSurfaceVariant
         : mutedColor;
     return ListTile(
-      titleAlignment: ListTileTitleAlignment.top,
-      horizontalTitleGap: 8.0,
-      leading: Padding(
-        padding: const EdgeInsets.only(top: 4.0),
-        child: Icon(icon, color: enabled ? null : mutedColor),
+      dense: true,
+      horizontalTitleGap: 16.0,
+      leading: Icon(icon, color: enabled ? null : mutedColor),
+      title: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(title, style: enabled ? null : TextStyle(color: mutedColor)),
+          if (showProBadge) ...[
+            const Gap(6.0),
+            _ProBadge(),
+          ],
+        ],
       ),
-      title: Text(title, style: enabled ? null : TextStyle(color: mutedColor)),
       subtitle: Text(
         subtitle,
         style: Theme.of(context).textTheme.bodySmall?.copyWith(color: subtitleColor),
       ),
-      trailing: Switch.adaptive(
-        value: checked,
-        onChanged: enabled ? (_) => onTap?.call() : null,
-      ),
+      trailing: onSettings != null
+          ? Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.settings, size: 20),
+                  onPressed: onSettings,
+                ),
+                Switch.adaptive(
+                  value: checked,
+                  onChanged: enabled ? (_) => onTap?.call() : null,
+                ),
+              ],
+            )
+          : Switch.adaptive(
+              value: checked,
+              onChanged: enabled ? (_) => onTap?.call() : null,
+            ),
       onTap: enabled ? onTap : null,
+    );
+  }
+}
+
+final class _ProBadge extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
+      decoration: BoxDecoration(
+        border: Border.all(color: const Color(0xFFFFB800), width: 1.2),
+        borderRadius: BorderRadius.circular(4.0),
+      ),
+      child: Text(
+        'PRO',
+        style: TextStyle(
+          fontSize: 9.0,
+          fontWeight: FontWeight.bold,
+          color: const Color(0xFFFFB800),
+          height: 1.2,
+          letterSpacing: 0.5,
+        ),
+      ),
     );
   }
 }

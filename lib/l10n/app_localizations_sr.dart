@@ -448,6 +448,70 @@ class AppLocalizationsSr extends AppLocalizations {
 
   @override
   String get licenses => 'Лиценце';
+
+  @override
+  String get sourcesWeather => 'Временска прогноза';
+
+  @override
+  String get sourcesWeatherSubtitle => 'Локалне временске прилике за овај дан';
+
+  @override
+  String get weatherSettings => 'Подешавања временске прогнозе';
+
+  @override
+  String get weatherLatitude => 'Географска ширина';
+
+  @override
+  String get weatherLongitude => 'Географска дужина';
+
+  @override
+  String get weatherSaveLocation => 'Сачувај локацију';
+
+  @override
+  String get weatherMoodImpact => 'Утицај на расположење';
+
+  @override
+  String get weatherNoLocation =>
+      'Поставите локацију у подешавањима временске прогнозе';
+
+  @override
+  String get weatherUseMyLocation => 'Користи моју локацију';
+
+  @override
+  String get weatherDetectingLocation => 'Откривање локације...';
+
+  @override
+  String get weatherOrEnterManually => 'или унесите ручно';
+
+  @override
+  String get weatherLocationError =>
+      'Локација није могла бити откривена. Унесите ручно.';
+
+  @override
+  String get weatherLocationServicesDisabled =>
+      'Услуге локације су онемогућене. Омогућите их у подешавањима.';
+
+  @override
+  String get weatherLocationPermissionDenied => 'Дозвола за локацију одбијена.';
+
+  @override
+  String get weatherLocationPermissionPermanentlyDenied =>
+      'Дозвола за локацију је трајно одбијена. Отварање подешавања апликације.';
+
+  @override
+  String get weatherTemperature => 'Температура';
+
+  @override
+  String get weatherUvIndex => 'УВ индекс';
+
+  @override
+  String get weatherHumidity => 'Влажност';
+
+  @override
+  String get weatherWindSpeed => 'Брзина ветра';
+
+  @override
+  String get weatherPrecipitation => 'Падавине';
 }
 
 /// The translations for Serbian, using the Latin script (`sr_Latn`).
@@ -893,4 +957,68 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
 
   @override
   String get licenses => 'Licence';
+
+  @override
+  String get sourcesWeather => 'Vremenska prognoza';
+
+  @override
+  String get sourcesWeatherSubtitle => 'Lokalne vremenske prilike za ovaj dan';
+
+  @override
+  String get weatherSettings => 'Podešavanja vremenske prognoze';
+
+  @override
+  String get weatherLatitude => 'Geografska širina';
+
+  @override
+  String get weatherLongitude => 'Geografska dužina';
+
+  @override
+  String get weatherSaveLocation => 'Sačuvaj lokaciju';
+
+  @override
+  String get weatherMoodImpact => 'Uticaj na raspoloženje';
+
+  @override
+  String get weatherNoLocation =>
+      'Postavite lokaciju u podešavanjima vremenske prognoze';
+
+  @override
+  String get weatherUseMyLocation => 'Koristi moju lokaciju';
+
+  @override
+  String get weatherDetectingLocation => 'Otkrivanje lokacije...';
+
+  @override
+  String get weatherOrEnterManually => 'ili unesite ručno';
+
+  @override
+  String get weatherLocationError =>
+      'Lokacija nije mogla biti otkrivena. Unesite ručno.';
+
+  @override
+  String get weatherLocationServicesDisabled =>
+      'Usluge lokacije su onemogućene. Omogućite ih u podešavanjima.';
+
+  @override
+  String get weatherLocationPermissionDenied => 'Dozvola za lokaciju odbijena.';
+
+  @override
+  String get weatherLocationPermissionPermanentlyDenied =>
+      'Dozvola za lokaciju je trajno odbijena. Otvaranje podešavanja aplikacije.';
+
+  @override
+  String get weatherTemperature => 'Temperatura';
+
+  @override
+  String get weatherUvIndex => 'UV indeks';
+
+  @override
+  String get weatherHumidity => 'Vlažnost';
+
+  @override
+  String get weatherWindSpeed => 'Brzina vetra';
+
+  @override
+  String get weatherPrecipitation => 'Padavine';
 }

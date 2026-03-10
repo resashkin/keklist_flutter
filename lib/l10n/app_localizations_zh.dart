@@ -434,4 +434,65 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get licenses => '许可证';
+
+  @override
+  String get sourcesWeather => '天气';
+
+  @override
+  String get sourcesWeatherSubtitle => '本日当地天气状况';
+
+  @override
+  String get weatherSettings => '天气设置';
+
+  @override
+  String get weatherLatitude => '纬度';
+
+  @override
+  String get weatherLongitude => '经度';
+
+  @override
+  String get weatherSaveLocation => '保存位置';
+
+  @override
+  String get weatherMoodImpact => '对情绪的影响';
+
+  @override
+  String get weatherNoLocation => '请在天气设置中设置位置';
+
+  @override
+  String get weatherUseMyLocation => '使用我的位置';
+
+  @override
+  String get weatherDetectingLocation => '正在检测位置...';
+
+  @override
+  String get weatherOrEnterManually => '或手动输入';
+
+  @override
+  String get weatherLocationError => '无法检测位置，请手动输入。';
+
+  @override
+  String get weatherLocationServicesDisabled => '位置服务已关闭，请在设置中开启。';
+
+  @override
+  String get weatherLocationPermissionDenied => '位置权限被拒绝。';
+
+  @override
+  String get weatherLocationPermissionPermanentlyDenied =>
+      '位置权限被永久拒绝，正在打开应用设置。';
+
+  @override
+  String get weatherTemperature => '温度';
+
+  @override
+  String get weatherUvIndex => '紫外线指数';
+
+  @override
+  String get weatherHumidity => '湿度';
+
+  @override
+  String get weatherWindSpeed => '风速';
+
+  @override
+  String get weatherPrecipitation => '降水量';
 }

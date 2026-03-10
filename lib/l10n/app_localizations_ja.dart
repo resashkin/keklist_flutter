@@ -437,4 +437,65 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get licenses => 'ライセンス';
+
+  @override
+  String get sourcesWeather => '天気';
+
+  @override
+  String get sourcesWeatherSubtitle => 'この日の現地の気象状況';
+
+  @override
+  String get weatherSettings => '天気設定';
+
+  @override
+  String get weatherLatitude => '緯度';
+
+  @override
+  String get weatherLongitude => '経度';
+
+  @override
+  String get weatherSaveLocation => '場所を保存';
+
+  @override
+  String get weatherMoodImpact => '気分への影響';
+
+  @override
+  String get weatherNoLocation => '天気設定で場所を設定してください';
+
+  @override
+  String get weatherUseMyLocation => '現在地を使用';
+
+  @override
+  String get weatherDetectingLocation => '位置を検出中...';
+
+  @override
+  String get weatherOrEnterManually => 'または手動で入力';
+
+  @override
+  String get weatherLocationError => '位置を検出できませんでした。手動で入力してください。';
+
+  @override
+  String get weatherLocationServicesDisabled => '位置情報サービスが無効です。設定で有効にしてください。';
+
+  @override
+  String get weatherLocationPermissionDenied => '位置情報の許可が拒否されました。';
+
+  @override
+  String get weatherLocationPermissionPermanentlyDenied =>
+      '位置情報の許可が恒久的に拒否されています。アプリ設定を開きます。';
+
+  @override
+  String get weatherTemperature => '気温';
+
+  @override
+  String get weatherUvIndex => 'UV指数';
+
+  @override
+  String get weatherHumidity => '湿度';
+
+  @override
+  String get weatherWindSpeed => '風速';
+
+  @override
+  String get weatherPrecipitation => '降水量';
 }
