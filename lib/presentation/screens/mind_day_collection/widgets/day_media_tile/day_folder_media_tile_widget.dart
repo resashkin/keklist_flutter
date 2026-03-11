@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:keklist/native/android/media_folder_channel.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/screens/date_gallery/folder_media_item.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/day_media_tile/day_folder_media_preview_cubit.dart';
 
@@ -39,7 +40,7 @@ final class DayFolderMediaTileWidget extends StatelessWidget {
                 children: [
                   const Icon(Icons.folder_open, size: 18.0),
                   const SizedBox(width: 6.0),
-                  Text('Media Folder', style: Theme.of(context).textTheme.titleMedium),
+                  Text(context.l10n.sourcesMediaFolder, style: Theme.of(context).textTheme.titleMedium),
                   const Spacer(),
                   const Icon(Icons.arrow_forward_ios, size: 16.0),
                 ],

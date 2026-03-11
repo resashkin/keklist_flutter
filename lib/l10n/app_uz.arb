@@ -404,9 +404,9 @@
     "sourcesMindsSubtitle": "Sizning fikr va lahzalaringiz",
     "sourcesPhotoVideo": "Foto va video",
     "sourcesPhotoVideoSubtitle": "Ushbu kun uchun qurilma foto va videolari",
-    "sourcesMediaFolder": "Media papka",
+    "sourcesMediaFolder": "Media fayllar",
     "sourcesMediaFolderSubtitle": "Tanlangan papkadan foto va videolar",
-    "mediaFolderSettings": "Media papka",
+    "mediaFolderSettings": "Media fayllar",
     "mediaFolderNoPath": "Papka tanlanmagan",
     "mediaFolderPickFolder": "Papkani tanlash",
     "licenses": "Litsenziyalar",
@@ -429,5 +429,14 @@
     "weatherUvIndex": "UV indeks",
     "weatherHumidity": "Namlik",
     "weatherWindSpeed": "Shamol tezligi",
-    "weatherPrecipitation": "Yog'ingarchilik"
+    "weatherPrecipitation": "Yog'ingarchilik",
+    "audioRecordTitle": "Audio yozish",
+    "audioRecordTitleRecording": "Yozilmoqda…",
+    "audioRecordHint": "Saqlash uchun «To'xtatish»ni bosing.",
+    "audioRecordStart": "Boshlash",
+    "audioRecordStop": "To'xtatish",
+    "audioRecordCancel": "Bekor qilish",
+    "audioRecordPermissionError": "Audio yozish uchun mikrofon ruxsati talab qilinadi.",
+    "audioRecordStartError": "Yozishni boshlash imkoni bo'lmadi. Qayta urinib ko'ring.",
+    "audioRecordStopError": "Yozishni to'xtatish imkoni bo'lmadi. Qayta urinib ko'ring."
 }

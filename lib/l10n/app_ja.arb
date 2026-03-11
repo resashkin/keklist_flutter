@@ -138,9 +138,9 @@
     "sourcesMindsSubtitle": "あなたの思考と瞬間",
     "sourcesPhotoVideo": "写真・動画",
     "sourcesPhotoVideoSubtitle": "この日のデバイスの写真と動画",
-    "sourcesMediaFolder": "メディアフォルダ",
+    "sourcesMediaFolder": "メディアファイル",
     "sourcesMediaFolderSubtitle": "カスタムフォルダの写真と動画",
-    "mediaFolderSettings": "メディアフォルダ",
+    "mediaFolderSettings": "メディアファイル",
     "mediaFolderNoPath": "フォルダが選択されていません",
     "mediaFolderPickFolder": "フォルダを選択",
     "licenses": "ライセンス",
@@ -163,5 +163,14 @@
     "weatherUvIndex": "UV指数",
     "weatherHumidity": "湿度",
     "weatherWindSpeed": "風速",
-    "weatherPrecipitation": "降水量"
+    "weatherPrecipitation": "降水量",
+    "audioRecordTitle": "音声を録音",
+    "audioRecordTitleRecording": "録音中…",
+    "audioRecordHint": "「停止」をタップして保存します。",
+    "audioRecordStart": "開始",
+    "audioRecordStop": "停止",
+    "audioRecordCancel": "キャンセル",
+    "audioRecordPermissionError": "音声を録音するにはマイクの権限が必要です。",
+    "audioRecordStartError": "録音を開始できませんでした。もう一度お試しください。",
+    "audioRecordStopError": "録音を停止できませんでした。もう一度お試しください。"
 }

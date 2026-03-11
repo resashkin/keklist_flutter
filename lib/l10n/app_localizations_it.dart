@@ -445,14 +445,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Foto e video del dispositivo per questo giorno';
 
   @override
-  String get sourcesMediaFolder => 'Cartella media';
+  String get sourcesMediaFolder => 'File multimediali';
 
   @override
   String get sourcesMediaFolderSubtitle =>
       'Foto e video da una cartella personalizzata';
 
   @override
-  String get mediaFolderSettings => 'Cartella media';
+  String get mediaFolderSettings => 'File multimediali';
 
   @override
   String get mediaFolderNoPath => 'Nessuna cartella selezionata';
@@ -528,4 +528,34 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get weatherPrecipitation => 'Precipitazioni';
+
+  @override
+  String get audioRecordTitle => 'Registra audio';
+
+  @override
+  String get audioRecordTitleRecording => 'Registrazione…';
+
+  @override
+  String get audioRecordHint => 'Tocca Stop per salvare sul tuo dispositivo.';
+
+  @override
+  String get audioRecordStart => 'Avvia';
+
+  @override
+  String get audioRecordStop => 'Ferma';
+
+  @override
+  String get audioRecordCancel => 'Annulla';
+
+  @override
+  String get audioRecordPermissionError =>
+      'Il permesso per il microfono è necessario per registrare audio.';
+
+  @override
+  String get audioRecordStartError =>
+      'Impossibile avviare la registrazione. Riprova.';
+
+  @override
+  String get audioRecordStopError =>
+      'Impossibile fermare la registrazione. Riprova.';
 }

@@ -404,9 +404,9 @@
     "sourcesMindsSubtitle": "I tuoi pensieri e momenti",
     "sourcesPhotoVideo": "Foto e video",
     "sourcesPhotoVideoSubtitle": "Foto e video del dispositivo per questo giorno",
-    "sourcesMediaFolder": "Cartella media",
+    "sourcesMediaFolder": "File multimediali",
     "sourcesMediaFolderSubtitle": "Foto e video da una cartella personalizzata",
-    "mediaFolderSettings": "Cartella media",
+    "mediaFolderSettings": "File multimediali",
     "mediaFolderNoPath": "Nessuna cartella selezionata",
     "mediaFolderPickFolder": "Seleziona cartella",
     "licenses": "Licenze",
@@ -429,5 +429,14 @@
     "weatherUvIndex": "Indice UV",
     "weatherHumidity": "Umidità",
     "weatherWindSpeed": "Velocità del vento",
-    "weatherPrecipitation": "Precipitazioni"
+    "weatherPrecipitation": "Precipitazioni",
+    "audioRecordTitle": "Registra audio",
+    "audioRecordTitleRecording": "Registrazione…",
+    "audioRecordHint": "Tocca Stop per salvare sul tuo dispositivo.",
+    "audioRecordStart": "Avvia",
+    "audioRecordStop": "Ferma",
+    "audioRecordCancel": "Annulla",
+    "audioRecordPermissionError": "Il permesso per il microfono è necessario per registrare audio.",
+    "audioRecordStartError": "Impossibile avviare la registrazione. Riprova.",
+    "audioRecordStopError": "Impossibile fermare la registrazione. Riprova."
 }

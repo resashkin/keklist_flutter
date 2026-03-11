@@ -443,14 +443,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'Device photos and videos for this day';
 
   @override
-  String get sourcesMediaFolder => 'Media Folder';
+  String get sourcesMediaFolder => 'Media Files';
 
   @override
   String get sourcesMediaFolderSubtitle =>
       'Photos & videos from a custom folder';
 
   @override
-  String get mediaFolderSettings => 'Media Folder';
+  String get mediaFolderSettings => 'Media Files';
 
   @override
   String get mediaFolderNoPath => 'No folder selected';
@@ -524,4 +524,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get weatherPrecipitation => 'Precipitation';
+
+  @override
+  String get audioRecordTitle => 'Record audio';
+
+  @override
+  String get audioRecordTitleRecording => 'Recording…';
+
+  @override
+  String get audioRecordHint => 'Tap Stop to save to your device.';
+
+  @override
+  String get audioRecordStart => 'Start';
+
+  @override
+  String get audioRecordStop => 'Stop';
+
+  @override
+  String get audioRecordCancel => 'Cancel';
+
+  @override
+  String get audioRecordPermissionError =>
+      'Microphone permission is required to record audio.';
+
+  @override
+  String get audioRecordStartError =>
+      'Unable to start recording. Please try again.';
+
+  @override
+  String get audioRecordStopError =>
+      'Unable to stop the recording. Please try again.';
 }

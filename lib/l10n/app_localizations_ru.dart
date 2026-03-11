@@ -443,13 +443,13 @@ class AppLocalizationsRu extends AppLocalizations {
       'Фотографии и видео устройства за этот день';
 
   @override
-  String get sourcesMediaFolder => 'Медиапапка';
+  String get sourcesMediaFolder => 'Медиафайлы';
 
   @override
   String get sourcesMediaFolderSubtitle => 'Фото и видео из выбранной папки';
 
   @override
-  String get mediaFolderSettings => 'Медиапапка';
+  String get mediaFolderSettings => 'Медиафайлы';
 
   @override
   String get mediaFolderNoPath => 'Папка не выбрана';
@@ -523,4 +523,34 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get weatherPrecipitation => 'Осадки';
+
+  @override
+  String get audioRecordTitle => 'Запись аудио';
+
+  @override
+  String get audioRecordTitleRecording => 'Запись…';
+
+  @override
+  String get audioRecordHint => 'Нажмите «Стоп», чтобы сохранить запись.';
+
+  @override
+  String get audioRecordStart => 'Начать';
+
+  @override
+  String get audioRecordStop => 'Стоп';
+
+  @override
+  String get audioRecordCancel => 'Отмена';
+
+  @override
+  String get audioRecordPermissionError =>
+      'Для записи аудио необходимо разрешение на использование микрофона.';
+
+  @override
+  String get audioRecordStartError =>
+      'Не удалось начать запись. Попробуйте ещё раз.';
+
+  @override
+  String get audioRecordStopError =>
+      'Не удалось остановить запись. Попробуйте ещё раз.';
 }

@@ -138,9 +138,9 @@
     "sourcesMindsSubtitle": "Ваше мисли и тренуци",
     "sourcesPhotoVideo": "Фотографије и видео",
     "sourcesPhotoVideoSubtitle": "Фотографије и видео снимци уређаја за овај дан",
-    "sourcesMediaFolder": "Медијска фасцикла",
+    "sourcesMediaFolder": "Медијске датотеке",
     "sourcesMediaFolderSubtitle": "Фотографије и видео из прилагођене фасцикле",
-    "mediaFolderSettings": "Медијска фасцикла",
+    "mediaFolderSettings": "Медијске датотеке",
     "mediaFolderNoPath": "Нема изабране фасцикле",
     "mediaFolderPickFolder": "Изабери фасциклу",
     "licenses": "Лиценце",
@@ -163,5 +163,14 @@
     "weatherUvIndex": "УВ индекс",
     "weatherHumidity": "Влажност",
     "weatherWindSpeed": "Брзина ветра",
-    "weatherPrecipitation": "Падавине"
+    "weatherPrecipitation": "Падавине",
+    "audioRecordTitle": "Сними аудио",
+    "audioRecordTitleRecording": "Снима се…",
+    "audioRecordHint": "Тапните Стоп да сачувате на уређај.",
+    "audioRecordStart": "Почни",
+    "audioRecordStop": "Стоп",
+    "audioRecordCancel": "Откажи",
+    "audioRecordPermissionError": "Потребна је дозвола за микрофон за снимање звука.",
+    "audioRecordStartError": "Није могуће покренути снимање. Покушајте поново.",
+    "audioRecordStopError": "Није могуће зауставити снимање. Покушајте поново."
 }

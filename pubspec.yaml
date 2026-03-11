@@ -3,7 +3,7 @@ description: Like TODO-List but keklist
 
 publish_to: "none"
 
-version: 4.6.0+119
+version: 4.5.1+120
 
 environment:
   sdk: ">=3.10.0"
@@ -78,8 +78,8 @@ dependencies:
   swipeable_page_route: ^0.4.8
   image_picker: ^1.2.0
   logarte: ^1.4.0
-  purchases_flutter: ^9.8.0
-  purchases_ui_flutter: ^9.8.0
+  purchases_flutter: 9.12.3
+  purchases_ui_flutter: 9.12.3
   http: ^1.2.2
   geolocator: ^13.0.0
   record: ^6.1.2

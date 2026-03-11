@@ -404,9 +404,9 @@
     "sourcesMindsSubtitle": "Vaše misli i trenuci",
     "sourcesPhotoVideo": "Fotografije i video",
     "sourcesPhotoVideoSubtitle": "Fotografije i video snimci uređaja za ovaj dan",
-    "sourcesMediaFolder": "Medijska fascikla",
+    "sourcesMediaFolder": "Medijske datoteke",
     "sourcesMediaFolderSubtitle": "Fotografije i video iz prilagođene fascikle",
-    "mediaFolderSettings": "Medijska fascikla",
+    "mediaFolderSettings": "Medijske datoteke",
     "mediaFolderNoPath": "Nema izabrane fascikle",
     "mediaFolderPickFolder": "Izaberi fasciklu",
     "licenses": "Licence",
@@ -429,5 +429,14 @@
     "weatherUvIndex": "UV indeks",
     "weatherHumidity": "Vlažnost",
     "weatherWindSpeed": "Brzina vetra",
-    "weatherPrecipitation": "Padavine"
+    "weatherPrecipitation": "Padavine",
+    "audioRecordTitle": "Snimi audio",
+    "audioRecordTitleRecording": "Snima se…",
+    "audioRecordHint": "Tapnite Stop da sačuvate na uređaj.",
+    "audioRecordStart": "Počni",
+    "audioRecordStop": "Stop",
+    "audioRecordCancel": "Otkaži",
+    "audioRecordPermissionError": "Potrebna je dozvola za mikrofon za snimanje zvuka.",
+    "audioRecordStartError": "Nije moguće pokrenuti snimanje. Pokušajte ponovo.",
+    "audioRecordStopError": "Nije moguće zaustaviti snimanje. Pokušajte ponovo."
 }

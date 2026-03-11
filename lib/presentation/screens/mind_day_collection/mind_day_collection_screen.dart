@@ -301,7 +301,8 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
                         return const SizedBox.shrink();
                       },
                     ),
-                  if (_isWeatherSourceEnabled &&
+                  // TODO: re-enable weather source when ready
+                  if (false && _isWeatherSourceEnabled &&
                       _weatherLatitude != null &&
                       _weatherLongitude != null &&
                       _weatherCubit != null)
@@ -616,7 +617,11 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
               sendEventToBloc<MindBloc>(event);
               Future.delayed(const Duration(milliseconds: 300), () {
                 if (_scrollController.hasClients) {
-                  _scrollController.animateTo(0, duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
+                  _scrollController.animateTo(
+                    _scrollController.position.maxScrollExtent,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeOut,
+                  );
                 }
               });
             } else {

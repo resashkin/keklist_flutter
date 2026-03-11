@@ -444,14 +444,14 @@ class AppLocalizationsSr extends AppLocalizations {
       'Фотографије и видео снимци уређаја за овај дан';
 
   @override
-  String get sourcesMediaFolder => 'Медијска фасцикла';
+  String get sourcesMediaFolder => 'Медијске датотеке';
 
   @override
   String get sourcesMediaFolderSubtitle =>
       'Фотографије и видео из прилагођене фасцикле';
 
   @override
-  String get mediaFolderSettings => 'Медијска фасцикла';
+  String get mediaFolderSettings => 'Медијске датотеке';
 
   @override
   String get mediaFolderNoPath => 'Нема изабране фасцикле';
@@ -525,6 +525,36 @@ class AppLocalizationsSr extends AppLocalizations {
 
   @override
   String get weatherPrecipitation => 'Падавине';
+
+  @override
+  String get audioRecordTitle => 'Сними аудио';
+
+  @override
+  String get audioRecordTitleRecording => 'Снима се…';
+
+  @override
+  String get audioRecordHint => 'Тапните Стоп да сачувате на уређај.';
+
+  @override
+  String get audioRecordStart => 'Почни';
+
+  @override
+  String get audioRecordStop => 'Стоп';
+
+  @override
+  String get audioRecordCancel => 'Откажи';
+
+  @override
+  String get audioRecordPermissionError =>
+      'Потребна је дозвола за микрофон за снимање звука.';
+
+  @override
+  String get audioRecordStartError =>
+      'Није могуће покренути снимање. Покушајте поново.';
+
+  @override
+  String get audioRecordStopError =>
+      'Није могуће зауставити снимање. Покушајте поново.';
 }
 
 /// The translations for Serbian, using the Latin script (`sr_Latn`).
@@ -966,14 +996,14 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
       'Fotografije i video snimci uređaja za ovaj dan';
 
   @override
-  String get sourcesMediaFolder => 'Medijska fascikla';
+  String get sourcesMediaFolder => 'Medijske datoteke';
 
   @override
   String get sourcesMediaFolderSubtitle =>
       'Fotografije i video iz prilagođene fascikle';
 
   @override
-  String get mediaFolderSettings => 'Medijska fascikla';
+  String get mediaFolderSettings => 'Medijske datoteke';
 
   @override
   String get mediaFolderNoPath => 'Nema izabrane fascikle';
@@ -1047,4 +1077,34 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
 
   @override
   String get weatherPrecipitation => 'Padavine';
+
+  @override
+  String get audioRecordTitle => 'Snimi audio';
+
+  @override
+  String get audioRecordTitleRecording => 'Snima se…';
+
+  @override
+  String get audioRecordHint => 'Tapnite Stop da sačuvate na uređaj.';
+
+  @override
+  String get audioRecordStart => 'Počni';
+
+  @override
+  String get audioRecordStop => 'Stop';
+
+  @override
+  String get audioRecordCancel => 'Otkaži';
+
+  @override
+  String get audioRecordPermissionError =>
+      'Potrebna je dozvola za mikrofon za snimanje zvuka.';
+
+  @override
+  String get audioRecordStartError =>
+      'Nije moguće pokrenuti snimanje. Pokušajte ponovo.';
+
+  @override
+  String get audioRecordStopError =>
+      'Nije moguće zaustaviti snimanje. Pokušajte ponovo.';
 }

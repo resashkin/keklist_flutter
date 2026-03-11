@@ -138,9 +138,9 @@
     "sourcesMindsSubtitle": "你的想法和时刻",
     "sourcesPhotoVideo": "照片和视频",
     "sourcesPhotoVideoSubtitle": "本日设备的照片和视频",
-    "sourcesMediaFolder": "媒体文件夹",
+    "sourcesMediaFolder": "媒体文件",
     "sourcesMediaFolderSubtitle": "来自自定义文件夹的照片和视频",
-    "mediaFolderSettings": "媒体文件夹",
+    "mediaFolderSettings": "媒体文件",
     "mediaFolderNoPath": "未选择文件夹",
     "mediaFolderPickFolder": "选择文件夹",
     "licenses": "许可证",
@@ -163,5 +163,14 @@
     "weatherUvIndex": "紫外线指数",
     "weatherHumidity": "湿度",
     "weatherWindSpeed": "风速",
-    "weatherPrecipitation": "降水量"
+    "weatherPrecipitation": "降水量",
+    "audioRecordTitle": "录制音频",
+    "audioRecordTitleRecording": "录制中…",
+    "audioRecordHint": "点击停止以保存到设备。",
+    "audioRecordStart": "开始",
+    "audioRecordStop": "停止",
+    "audioRecordCancel": "取消",
+    "audioRecordPermissionError": "需要麦克风权限才能录制音频。",
+    "audioRecordStartError": "无法开始录制。请重试。",
+    "audioRecordStopError": "无法停止录制。请重试。"
 }

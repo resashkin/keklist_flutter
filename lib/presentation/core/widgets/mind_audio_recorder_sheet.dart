@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:record/record.dart';
 
 import 'package:keklist/domain/repositories/files/app_file_repository.dart';
@@ -71,7 +72,7 @@ final class _MindAudioRecorderSheetState extends State<MindAudioRecorderSheet> {
             Padding(
               padding: const EdgeInsets.fromLTRB(24, 8, 24, 0),
               child: Text(
-                _isRecording ? 'Recording…' : 'Record audio',
+                _isRecording ? context.l10n.audioRecordTitleRecording : context.l10n.audioRecordTitle,
                 style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
@@ -92,7 +93,7 @@ final class _MindAudioRecorderSheetState extends State<MindAudioRecorderSheet> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
-                        'Tap Stop to save to your device.',
+                        context.l10n.audioRecordHint,
                         style: theme.textTheme.bodyMedium,
                         textAlign: TextAlign.center,
                       ),
@@ -105,14 +106,14 @@ final class _MindAudioRecorderSheetState extends State<MindAudioRecorderSheet> {
                   FilledButton.icon(
                     onPressed: _isProcessing ? null : _toggleRecording,
                     icon: Icon(_isRecording ? Icons.stop : Icons.mic),
-                    label: Text(_isRecording ? 'Stop' : 'Start'),
+                    label: Text(_isRecording ? context.l10n.audioRecordStop : context.l10n.audioRecordStart),
                   ),
 
                   // Cancel button
                   const SizedBox(height: 8),
                   TextButton(
                     onPressed: _isProcessing || _isRecording ? null : () => Navigator.of(context).maybePop(),
-                    child: const Text('Cancel'),
+                    child: Text(context.l10n.audioRecordCancel),
                   ),
                 ],
               ),
@@ -136,7 +137,7 @@ final class _MindAudioRecorderSheetState extends State<MindAudioRecorderSheet> {
     if (!hasPermission) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Microphone permission is required to record audio.')),
+        SnackBar(content: Text(context.l10n.audioRecordPermissionError)),
       );
       return;
     }
@@ -168,7 +169,7 @@ final class _MindAudioRecorderSheetState extends State<MindAudioRecorderSheet> {
       });
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Unable to start recording. Please try again.')),
+        SnackBar(content: Text(context.l10n.audioRecordStartError)),
       );
     }
   }
@@ -193,7 +194,7 @@ final class _MindAudioRecorderSheetState extends State<MindAudioRecorderSheet> {
           _isProcessing = false;
         });
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Recording failed to complete. Please try again.')),
+          SnackBar(content: Text(context.l10n.audioRecordStopError)),
         );
         return;
       }
@@ -207,7 +208,7 @@ final class _MindAudioRecorderSheetState extends State<MindAudioRecorderSheet> {
       });
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Unable to stop the recording. Please try again.')),
+        SnackBar(content: Text(context.l10n.audioRecordStopError)),
       );
     }
   }

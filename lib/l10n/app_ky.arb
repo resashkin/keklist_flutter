@@ -404,9 +404,9 @@
     "sourcesMindsSubtitle": "Сиздин ойлоруңуз жана учурларыңыз",
     "sourcesPhotoVideo": "Сүрөт жана видео",
     "sourcesPhotoVideoSubtitle": "Бул күн үчүн түзмөктүн сүрөттөрү жана видеолору",
-    "sourcesMediaFolder": "Медиа папка",
+    "sourcesMediaFolder": "Медиа файлдар",
     "sourcesMediaFolderSubtitle": "Тандалган папкадан сүрөттөр жана видеолор",
-    "mediaFolderSettings": "Медиа папка",
+    "mediaFolderSettings": "Медиа файлдар",
     "mediaFolderNoPath": "Папка тандалган жок",
     "mediaFolderPickFolder": "Папканы тандоо",
     "licenses": "Лицензиялар",
@@ -429,5 +429,14 @@
     "weatherUvIndex": "УК-индекс",
     "weatherHumidity": "Нымдуулук",
     "weatherWindSpeed": "Шамалдын ылдамдыгы",
-    "weatherPrecipitation": "Жаан-чачын"
+    "weatherPrecipitation": "Жаан-чачын",
+    "audioRecordTitle": "Аудио жаздыруу",
+    "audioRecordTitleRecording": "Жазылууда…",
+    "audioRecordHint": "Сактоо үчүн «Токтотуу» баскычын басыңыз.",
+    "audioRecordStart": "Баштоо",
+    "audioRecordStop": "Токтотуу",
+    "audioRecordCancel": "Жокко чыгаруу",
+    "audioRecordPermissionError": "Аудио жаздыруу үчүн микрофон уруксаты керек.",
+    "audioRecordStartError": "Жаздырууну баштоо мүмкүн болмоду. Кайталап аракет кылыңыз.",
+    "audioRecordStopError": "Жаздырууну токтотуу мүмкүн болмоду. Кайталап аракет кылыңыз."
 }

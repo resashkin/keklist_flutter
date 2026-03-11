@@ -445,14 +445,14 @@ class AppLocalizationsUz extends AppLocalizations {
       'Ushbu kun uchun qurilma foto va videolari';
 
   @override
-  String get sourcesMediaFolder => 'Media papka';
+  String get sourcesMediaFolder => 'Media fayllar';
 
   @override
   String get sourcesMediaFolderSubtitle =>
       'Tanlangan papkadan foto va videolar';
 
   @override
-  String get mediaFolderSettings => 'Media papka';
+  String get mediaFolderSettings => 'Media fayllar';
 
   @override
   String get mediaFolderNoPath => 'Papka tanlanmagan';
@@ -527,4 +527,34 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get weatherPrecipitation => 'Yog\'ingarchilik';
+
+  @override
+  String get audioRecordTitle => 'Audio yozish';
+
+  @override
+  String get audioRecordTitleRecording => 'Yozilmoqda…';
+
+  @override
+  String get audioRecordHint => 'Saqlash uchun «To\'xtatish»ni bosing.';
+
+  @override
+  String get audioRecordStart => 'Boshlash';
+
+  @override
+  String get audioRecordStop => 'To\'xtatish';
+
+  @override
+  String get audioRecordCancel => 'Bekor qilish';
+
+  @override
+  String get audioRecordPermissionError =>
+      'Audio yozish uchun mikrofon ruxsati talab qilinadi.';
+
+  @override
+  String get audioRecordStartError =>
+      'Yozishni boshlash imkoni bo\'lmadi. Qayta urinib ko\'ring.';
+
+  @override
+  String get audioRecordStopError =>
+      'Yozishni to\'xtatish imkoni bo\'lmadi. Qayta urinib ko\'ring.';
 }

@@ -565,17 +565,17 @@
     "@sourcesPhotoVideoSubtitle": {
         "description": "Photo and video source item subtitle"
     },
-    "sourcesMediaFolder": "Media Folder",
+    "sourcesMediaFolder": "Media Files",
     "@sourcesMediaFolder": {
-        "description": "Media folder source item title"
+        "description": "Media files source item title"
     },
     "sourcesMediaFolderSubtitle": "Photos & videos from a custom folder",
     "@sourcesMediaFolderSubtitle": {
         "description": "Media folder source item subtitle"
     },
-    "mediaFolderSettings": "Media Folder",
+    "mediaFolderSettings": "Media Files",
     "@mediaFolderSettings": {
-        "description": "Media folder settings bottom sheet title"
+        "description": "Media files settings bottom sheet title"
     },
     "mediaFolderNoPath": "No folder selected",
     "@mediaFolderNoPath": {
@@ -668,5 +668,41 @@
     "weatherPrecipitation": "Precipitation",
     "@weatherPrecipitation": {
         "description": "Precipitation parameter label"
+    },
+    "audioRecordTitle": "Record audio",
+    "@audioRecordTitle": {
+        "description": "Title of the audio recorder bottom sheet"
+    },
+    "audioRecordTitleRecording": "Recording…",
+    "@audioRecordTitleRecording": {
+        "description": "Title shown while audio is being recorded"
+    },
+    "audioRecordHint": "Tap Stop to save to your device.",
+    "@audioRecordHint": {
+        "description": "Hint shown while recording is in progress"
+    },
+    "audioRecordStart": "Start",
+    "@audioRecordStart": {
+        "description": "Button to start recording"
+    },
+    "audioRecordStop": "Stop",
+    "@audioRecordStop": {
+        "description": "Button to stop recording"
+    },
+    "audioRecordCancel": "Cancel",
+    "@audioRecordCancel": {
+        "description": "Button to cancel and dismiss the recorder"
+    },
+    "audioRecordPermissionError": "Microphone permission is required to record audio.",
+    "@audioRecordPermissionError": {
+        "description": "Error when microphone permission is missing"
+    },
+    "audioRecordStartError": "Unable to start recording. Please try again.",
+    "@audioRecordStartError": {
+        "description": "Error when recording fails to start"
+    },
+    "audioRecordStopError": "Unable to stop the recording. Please try again.",
+    "@audioRecordStopError": {
+        "description": "Error when recording fails to stop"
     }
 }

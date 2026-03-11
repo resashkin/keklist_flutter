@@ -444,13 +444,13 @@ class AppLocalizationsKk extends AppLocalizations {
       'Осы күнгі құрылғының фотолары мен бейнелері';
 
   @override
-  String get sourcesMediaFolder => 'Медиа бума';
+  String get sourcesMediaFolder => 'Медиа файлдар';
 
   @override
   String get sourcesMediaFolderSubtitle => 'Таңдалған бумадан фото мен бейне';
 
   @override
-  String get mediaFolderSettings => 'Медиа бума';
+  String get mediaFolderSettings => 'Медиа файлдар';
 
   @override
   String get mediaFolderNoPath => 'Бума таңдалмаған';
@@ -525,4 +525,34 @@ class AppLocalizationsKk extends AppLocalizations {
 
   @override
   String get weatherPrecipitation => 'Жауын-шашын';
+
+  @override
+  String get audioRecordTitle => 'Аудио жазу';
+
+  @override
+  String get audioRecordTitleRecording => 'Жазылуда…';
+
+  @override
+  String get audioRecordHint => 'Сақтау үшін «Тоқтату» батырмасын басыңыз.';
+
+  @override
+  String get audioRecordStart => 'Бастау';
+
+  @override
+  String get audioRecordStop => 'Тоқтату';
+
+  @override
+  String get audioRecordCancel => 'Болдырмау';
+
+  @override
+  String get audioRecordPermissionError =>
+      'Аудио жазу үшін микрофон рұқсаты қажет.';
+
+  @override
+  String get audioRecordStartError =>
+      'Жазуды бастау мүмкін болмады. Қайталап көріңіз.';
+
+  @override
+  String get audioRecordStopError =>
+      'Жазуды тоқтату мүмкін болмады. Қайталап көріңіз.';
 }

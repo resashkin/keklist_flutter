@@ -430,13 +430,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get sourcesPhotoVideoSubtitle => '本日设备的照片和视频';
 
   @override
-  String get sourcesMediaFolder => '媒体文件夹';
+  String get sourcesMediaFolder => '媒体文件';
 
   @override
   String get sourcesMediaFolderSubtitle => '来自自定义文件夹的照片和视频';
 
   @override
-  String get mediaFolderSettings => '媒体文件夹';
+  String get mediaFolderSettings => '媒体文件';
 
   @override
   String get mediaFolderNoPath => '未选择文件夹';
@@ -507,4 +507,31 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get weatherPrecipitation => '降水量';
+
+  @override
+  String get audioRecordTitle => '录制音频';
+
+  @override
+  String get audioRecordTitleRecording => '录制中…';
+
+  @override
+  String get audioRecordHint => '点击停止以保存到设备。';
+
+  @override
+  String get audioRecordStart => '开始';
+
+  @override
+  String get audioRecordStop => '停止';
+
+  @override
+  String get audioRecordCancel => '取消';
+
+  @override
+  String get audioRecordPermissionError => '需要麦克风权限才能录制音频。';
+
+  @override
+  String get audioRecordStartError => '无法开始录制。请重试。';
+
+  @override
+  String get audioRecordStopError => '无法停止录制。请重试。';
 }

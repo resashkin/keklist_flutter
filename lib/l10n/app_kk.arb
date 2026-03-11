@@ -404,9 +404,9 @@
     "sourcesMindsSubtitle": "Сіздің ойларыңыз бен сәттеріңіз",
     "sourcesPhotoVideo": "Фото және бейне",
     "sourcesPhotoVideoSubtitle": "Осы күнгі құрылғының фотолары мен бейнелері",
-    "sourcesMediaFolder": "Медиа бума",
+    "sourcesMediaFolder": "Медиа файлдар",
     "sourcesMediaFolderSubtitle": "Таңдалған бумадан фото мен бейне",
-    "mediaFolderSettings": "Медиа бума",
+    "mediaFolderSettings": "Медиа файлдар",
     "mediaFolderNoPath": "Бума таңдалмаған",
     "mediaFolderPickFolder": "Буманы таңдау",
     "licenses": "Лицензиялар",
@@ -429,5 +429,14 @@
     "weatherUvIndex": "УК-индекс",
     "weatherHumidity": "Ылғалдылық",
     "weatherWindSpeed": "Жел жылдамдығы",
-    "weatherPrecipitation": "Жауын-шашын"
+    "weatherPrecipitation": "Жауын-шашын",
+    "audioRecordTitle": "Аудио жазу",
+    "audioRecordTitleRecording": "Жазылуда…",
+    "audioRecordHint": "Сақтау үшін «Тоқтату» батырмасын басыңыз.",
+    "audioRecordStart": "Бастау",
+    "audioRecordStop": "Тоқтату",
+    "audioRecordCancel": "Болдырмау",
+    "audioRecordPermissionError": "Аудио жазу үшін микрофон рұқсаты қажет.",
+    "audioRecordStartError": "Жазуды бастау мүмкін болмады. Қайталап көріңіз.",
+    "audioRecordStopError": "Жазуды тоқтату мүмкін болмады. Қайталап көріңіз."
 }

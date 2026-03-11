@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:keklist/native/android/media_folder_channel.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 
 final class MediaFolderSettingsBottomSheet extends StatelessWidget {
   final String? initialFolderPath;
@@ -53,7 +54,7 @@ final class MediaFolderSettingsBottomSheet extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Media Folder', style: Theme.of(context).textTheme.titleLarge),
+              Text(context.l10n.mediaFolderSettings, style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 16.0),
               Text(
                 'Current folder:',

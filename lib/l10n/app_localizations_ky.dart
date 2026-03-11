@@ -444,14 +444,14 @@ class AppLocalizationsKy extends AppLocalizations {
       'Бул күн үчүн түзмөктүн сүрөттөрү жана видеолору';
 
   @override
-  String get sourcesMediaFolder => 'Медиа папка';
+  String get sourcesMediaFolder => 'Медиа файлдар';
 
   @override
   String get sourcesMediaFolderSubtitle =>
       'Тандалган папкадан сүрөттөр жана видеолор';
 
   @override
-  String get mediaFolderSettings => 'Медиа папка';
+  String get mediaFolderSettings => 'Медиа файлдар';
 
   @override
   String get mediaFolderNoPath => 'Папка тандалган жок';
@@ -526,4 +526,34 @@ class AppLocalizationsKy extends AppLocalizations {
 
   @override
   String get weatherPrecipitation => 'Жаан-чачын';
+
+  @override
+  String get audioRecordTitle => 'Аудио жаздыруу';
+
+  @override
+  String get audioRecordTitleRecording => 'Жазылууда…';
+
+  @override
+  String get audioRecordHint => 'Сактоо үчүн «Токтотуу» баскычын басыңыз.';
+
+  @override
+  String get audioRecordStart => 'Баштоо';
+
+  @override
+  String get audioRecordStop => 'Токтотуу';
+
+  @override
+  String get audioRecordCancel => 'Жокко чыгаруу';
+
+  @override
+  String get audioRecordPermissionError =>
+      'Аудио жаздыруу үчүн микрофон уруксаты керек.';
+
+  @override
+  String get audioRecordStartError =>
+      'Жаздырууну баштоо мүмкүн болмоду. Кайталап аракет кылыңыз.';
+
+  @override
+  String get audioRecordStopError =>
+      'Жаздырууну токтотуу мүмкүн болмоду. Кайталап аракет кылыңыз.';
 }

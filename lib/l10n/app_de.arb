@@ -138,9 +138,9 @@
     "sourcesMindsSubtitle": "Deine Gedanken und Momente",
     "sourcesPhotoVideo": "Foto & Video",
     "sourcesPhotoVideoSubtitle": "Gerätefotos und -videos für diesen Tag",
-    "sourcesMediaFolder": "Medienordner",
+    "sourcesMediaFolder": "Mediendateien",
     "sourcesMediaFolderSubtitle": "Fotos und Videos aus einem benutzerdefinierten Ordner",
-    "mediaFolderSettings": "Medienordner",
+    "mediaFolderSettings": "Mediendateien",
     "mediaFolderNoPath": "Kein Ordner ausgewählt",
     "mediaFolderPickFolder": "Ordner auswählen",
     "licenses": "Lizenzen",
@@ -163,5 +163,14 @@
     "weatherUvIndex": "UV-Index",
     "weatherHumidity": "Luftfeuchtigkeit",
     "weatherWindSpeed": "Windgeschwindigkeit",
-    "weatherPrecipitation": "Niederschlag"
+    "weatherPrecipitation": "Niederschlag",
+    "audioRecordTitle": "Audio aufnehmen",
+    "audioRecordTitleRecording": "Aufnahme läuft…",
+    "audioRecordHint": "Tippe auf Stopp, um die Aufnahme zu speichern.",
+    "audioRecordStart": "Starten",
+    "audioRecordStop": "Stopp",
+    "audioRecordCancel": "Abbrechen",
+    "audioRecordPermissionError": "Mikrofonberechtigung ist erforderlich, um Audio aufzunehmen.",
+    "audioRecordStartError": "Aufnahme konnte nicht gestartet werden. Bitte versuche es erneut.",
+    "audioRecordStopError": "Aufnahme konnte nicht gestoppt werden. Bitte versuche es erneut."
 }

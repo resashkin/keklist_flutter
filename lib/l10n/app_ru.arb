@@ -138,9 +138,9 @@
     "sourcesMindsSubtitle": "Ваши мысли и моменты",
     "sourcesPhotoVideo": "Фото и видео",
     "sourcesPhotoVideoSubtitle": "Фотографии и видео устройства за этот день",
-    "sourcesMediaFolder": "Медиапапка",
+    "sourcesMediaFolder": "Медиафайлы",
     "sourcesMediaFolderSubtitle": "Фото и видео из выбранной папки",
-    "mediaFolderSettings": "Медиапапка",
+    "mediaFolderSettings": "Медиафайлы",
     "mediaFolderNoPath": "Папка не выбрана",
     "mediaFolderPickFolder": "Выбрать папку",
     "licenses": "Лицензии",
@@ -163,5 +163,14 @@
     "weatherUvIndex": "УФ-индекс",
     "weatherHumidity": "Влажность",
     "weatherWindSpeed": "Скорость ветра",
-    "weatherPrecipitation": "Осадки"
+    "weatherPrecipitation": "Осадки",
+    "audioRecordTitle": "Запись аудио",
+    "audioRecordTitleRecording": "Запись…",
+    "audioRecordHint": "Нажмите «Стоп», чтобы сохранить запись.",
+    "audioRecordStart": "Начать",
+    "audioRecordStop": "Стоп",
+    "audioRecordCancel": "Отмена",
+    "audioRecordPermissionError": "Для записи аудио необходимо разрешение на использование микрофона.",
+    "audioRecordStartError": "Не удалось начать запись. Попробуйте ещё раз.",
+    "audioRecordStopError": "Не удалось остановить запись. Попробуйте ещё раз."
 }
