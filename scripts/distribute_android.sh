@@ -57,6 +57,21 @@ if [ -n "$TESTER_EMAILS" ]; then
 fi
 echo ""
 
+# ---------------------------------------------------------------------------
+# TEMPORARY WORKAROUND: purchases_ui_flutter MapHelper K2 compiler bug
+# @file:JvmSynthetic on an internal object breaks Kotlin 2.x K2 compiler —
+# the class becomes invisible within the same module. Remove the annotation
+# before each build. Safe to remove: `internal` already prevents Java access.
+# Track fix: https://github.com/RevenueCat/purchases-flutter/issues
+# ---------------------------------------------------------------------------
+MAPHELPER_PATH="$HOME/.pub-cache/hosted/pub.dev/purchases_ui_flutter-9.13.1/android/src/main/kotlin/com/revenuecat/purchases_ui_flutter/MapHelper.kt"
+if [ -f "$MAPHELPER_PATH" ]; then
+    sed -i '' '/@file:JvmSynthetic/d' "$MAPHELPER_PATH"
+    sed -i '' '/@JvmSynthetic/d' "$MAPHELPER_PATH"
+    echo -e "${YELLOW}[workaround] Patched purchases_ui_flutter MapHelper.kt${NC}"
+fi
+# ---------------------------------------------------------------------------
+
 # Navigate to android directory
 cd "$ANDROID_DIR"
 
