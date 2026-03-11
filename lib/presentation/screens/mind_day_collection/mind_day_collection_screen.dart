@@ -270,7 +270,7 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
                     ),
                     falseChild: MindCollectionEmptyStateWidget.noMindsForDay(context: context),
                   ),
-                  if ((_isPhotoVideoSourceEnabled && !Platform.isAndroid) || _isMediaFolderSourceEnabled)
+                  if ((_isPhotoVideoSourceEnabled && !Platform.isAndroid) || (_isMediaFolderSourceEnabled && Platform.isAndroid))
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 12.0),
                       child: DottedDivider(),
@@ -285,7 +285,7 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
                         return const SizedBox.shrink();
                       },
                     ),
-                  if (_isMediaFolderSourceEnabled && _mediaFolderPath != null)
+                  if (_isMediaFolderSourceEnabled && _mediaFolderPath != null && Platform.isAndroid)
                     BlocBuilder<DayFolderMediaPreviewCubit, DayFolderMediaPreviewState>(
                       bloc: _folderMediaPreviewCubit,
                       builder: (context, state) {
@@ -425,7 +425,7 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
         onPhotoVideoToggled: (enabled) {
           sendEventToBloc<SettingsBloc>(SettingsTogglePhotoVideoSource(isEnabled: enabled));
         },
-        onPhotoVideoSettings: () => _showPhotoVideoSettings(),
+        onPhotoVideoSettings: null,
         isWeatherEnabled: _isWeatherSourceEnabled,
         onWeatherToggled: _onWeatherToggled,
         onWeatherSettings: () => _showWeatherSettings(),

@@ -72,15 +72,16 @@ final class SourcesBottomSheet extends StatelessWidget {
               },
               onSettings: onPhotoVideoSettings,
             ),
-          _SourceItem(
-            icon: Icons.folder_open,
-            title: context.l10n.sourcesMediaFolder,
-            subtitle: context.l10n.sourcesMediaFolderSubtitle,
-            checked: isMediaFolderEnabled,
-            enabled: true,
-            onTap: () => onMediaFolderToggled(!isMediaFolderEnabled),
-            onSettings: onMediaFolderSettings,
-          ),
+          if (Platform.isAndroid)
+            _SourceItem(
+              icon: Icons.folder_open,
+              title: context.l10n.sourcesMediaFolder,
+              subtitle: context.l10n.sourcesMediaFolderSubtitle,
+              checked: isMediaFolderEnabled,
+              enabled: true,
+              onTap: () => onMediaFolderToggled(!isMediaFolderEnabled),
+              onSettings: onMediaFolderSettings,
+            ),
           // TODO: re-enable weather source when ready
           // _SourceItem(
           //   icon: Icons.cloud,
