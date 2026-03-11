@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
+import 'package:keklist/presentation/core/widgets/dotted_divider.dart';
 import 'package:collection/collection.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 import 'package:gap/gap.dart';
@@ -43,7 +44,6 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:scrollview_observer/scrollview_observer.dart';
 import 'package:keklist/domain/period.dart';
-import 'package:keklist/presentation/screens/mind_collection/local_widgets/weather_preview_card.dart';
 part 'local_widgets/search_app_bar/search_app_bar.dart';
 part 'local_widgets/app_bar/mind_collection_app_bar.dart';
 part 'local_widgets/body/mind_collection_body.dart';
@@ -215,9 +215,6 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
         isMonthView: _isMonthView,
         monthGridScrollController: _monthGridScrollController,
         monthGridObserverController: _monthGridObserverController,
-        isWeatherSourceEnabled: _settingsDataState?.settings.isWeatherSourceEnabled ?? false,
-        weatherLatitude: _settingsDataState?.settings.weatherLatitude,
-        weatherLongitude: _settingsDataState?.settings.weatherLongitude,
       ),
       resizeToAvoidBottomInset: false,
     );

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
+import 'package:keklist/presentation/core/widgets/dotted_divider.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart' hide DateUtils;
 import 'package:flutter/services.dart';
@@ -272,7 +273,7 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
                   if ((_isPhotoVideoSourceEnabled && !Platform.isAndroid) || _isMediaFolderSourceEnabled)
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 12.0),
-                      child: _DottedDivider(),
+                      child: DottedDivider(),
                     ),
                   if (_isPhotoVideoSourceEnabled && !Platform.isAndroid)
                     BlocBuilder<DayMediaPreviewCubit, DayMediaPreviewState>(
@@ -630,36 +631,6 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
   }
 }
 
-final class _DottedDivider extends StatelessWidget {
-  const _DottedDivider();
-
-  @override
-  Widget build(BuildContext context) => CustomPaint(
-        painter: _DottedLinePainter(color: Theme.of(context).dividerColor),
-        child: const SizedBox(height: 1, width: double.infinity),
-      );
-}
-
-final class _DottedLinePainter extends CustomPainter {
-  final Color color;
-  const _DottedLinePainter({required this.color});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..strokeWidth = 1;
-    const double dashWidth = 4.0, dashSpace = 4.0;
-    var x = 0.0;
-    while (x < size.width) {
-      canvas.drawLine(Offset(x, 0), Offset(x + dashWidth, 0), paint);
-      x += dashWidth + dashSpace;
-    }
-  }
-
-  @override
-  bool shouldRepaint(_DottedLinePainter old) => old.color != color;
-}
 
 final class _MindInteractiveZeroCase extends StatelessWidget {
   final String title;

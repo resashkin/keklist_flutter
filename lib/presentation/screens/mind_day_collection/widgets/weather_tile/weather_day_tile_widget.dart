@@ -19,11 +19,19 @@ final class WeatherDayTileWidget extends StatelessWidget {
         );
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
+        padding: const EdgeInsets.all(8.0),
         child: Container(
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surfaceContainerHighest,
+            color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(12.0),
+            boxShadow: [
+              BoxShadow(
+                color: Theme.of(context).shadowColor.withOpacity(0.2),
+                spreadRadius: 2,
+                blurRadius: 10.0,
+                offset: const Offset(1.0, 1.0),
+              ),
+            ],
           ),
           padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
           child: Column(

@@ -11,9 +11,6 @@ final class _MindCollectionBody extends StatelessWidget {
   final Function getNowDayIndex;
   final bool shouldShowTitles;
   final bool isMonthView;
-  final bool isWeatherSourceEnabled;
-  final double? weatherLatitude;
-  final double? weatherLongitude;
 
   // Grid properties.
   final ScrollController monthGridScrollController;
@@ -32,9 +29,6 @@ final class _MindCollectionBody extends StatelessWidget {
     required this.isMonthView,
     required this.monthGridScrollController,
     required this.monthGridObserverController,
-    this.isWeatherSourceEnabled = false,
-    this.weatherLatitude,
-    this.weatherLongitude,
   });
 
   // static DateFormat _yearTitleFormatter(BuildContext context) =>
@@ -103,6 +97,8 @@ final class _MindCollectionBody extends StatelessWidget {
                             trueChild: Column(
                               children: [
                                 const SizedBox(height: 12.0),
+                                const DottedDivider(),
+                                const SizedBox(height: 12.0),
                                 Text(
                                   '${context.l10n.week} #${_getWeekNumber(currentDayDateIndex)}',
                                   style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
@@ -141,12 +137,6 @@ final class _MindCollectionBody extends StatelessWidget {
                       ),
                     ),
                   ),
-                  if (isWeatherSourceEnabled && weatherLatitude != null && weatherLongitude != null)
-                    WeatherPreviewCard(
-                      dayIndex: dayIndex,
-                      latitude: weatherLatitude!,
-                      longitude: weatherLongitude!,
-                    ),
                 ],
               );
             },
