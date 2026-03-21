@@ -70,11 +70,19 @@ Future<void> main() async {
 
   // Init purchases.
   final String revenueCatApiKey = () {
-    if (kDebugMode) {
-      return dotenv.env['REVENUE_CAT_TEST_API_KEY']!;
-    } else {
-      return dotenv.env['REVENUE_CAT_PROD_API_KEY']!;
-    }
+    return dotenv.env['REVENUE_CAT_PROD_API_ANDROID_KEY']!;
+    // if (kDebugMode) {
+    //   return dotenv.env['REVENUE_CAT_TEST_API_KEY']!;
+    // } else {
+    //   switch (defaultTargetPlatform) {
+    //     case TargetPlatform.iOS:
+    //       return dotenv.env['REVENUE_CAT_PROD_API_IOS_KEY']!;
+    //     case TargetPlatform.android:
+    //       return dotenv.env['REVENUE_CAT_PROD_API_ANDROID_KEY']!;
+    //     default:
+    //       return dotenv.env['REVENUE_CAT_TEST_API_KEY']!;
+    //   }
+    // }
   }();
   await Purchases.configure(PurchasesConfiguration(revenueCatApiKey));
 
