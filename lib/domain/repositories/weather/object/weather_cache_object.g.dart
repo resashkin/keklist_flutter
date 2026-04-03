@@ -8,7 +8,7 @@ part of 'weather_cache_object.dart';
 
 class WeatherCacheObjectAdapter extends TypeAdapter<WeatherCacheObject> {
   @override
-  final int typeId = 2;
+  final typeId = 2;
 
   @override
   WeatherCacheObject read(BinaryReader reader) {
@@ -17,12 +17,12 @@ class WeatherCacheObjectAdapter extends TypeAdapter<WeatherCacheObject> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return WeatherCacheObject()
-      ..dayIndex = fields[0] as int
-      ..temperature = fields[1] as double
-      ..uvIndex = fields[2] as double
-      ..humidity = fields[3] as double
-      ..windSpeed = fields[4] as double
-      ..precipitation = fields[5] as double
+      ..dayIndex = (fields[0] as num).toInt()
+      ..temperature = (fields[1] as num).toDouble()
+      ..uvIndex = (fields[2] as num).toDouble()
+      ..humidity = (fields[3] as num).toDouble()
+      ..windSpeed = (fields[4] as num).toDouble()
+      ..precipitation = (fields[5] as num).toDouble()
       ..fetchedAt = fields[6] as DateTime
       ..hourlyTemperatures = (fields[7] as List).cast<double>()
       ..hourlyUvIndex = (fields[8] as List).cast<double>()

@@ -8,7 +8,7 @@ part of 'mind_object.dart';
 
 class MindObjectAdapter extends TypeAdapter<MindObject> {
   @override
-  final int typeId = 1;
+  final typeId = 1;
 
   @override
   MindObject read(BinaryReader reader) {
@@ -20,9 +20,9 @@ class MindObjectAdapter extends TypeAdapter<MindObject> {
       ..id = fields[0] as String
       ..emoji = fields[1] as String
       ..note = fields[2] as String
-      ..dayIndex = fields[3] as int
+      ..dayIndex = (fields[3] as num).toInt()
       ..creationDate = fields[4] as DateTime
-      ..sortIndex = fields[5] as int
+      ..sortIndex = (fields[5] as num).toInt()
       ..rootId = fields[7] as String?;
   }
 

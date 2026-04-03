@@ -7,12 +7,10 @@ part of 'user_content.dart';
 // **************************************************************************
 
 UserContent _$UserContentFromJson(Map<String, dynamic> json) => UserContent(
-      minds: (json['minds'] as List<dynamic>)
-          .map((e) => Mind.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
+  minds: (json['minds'] as List<dynamic>)
+      .map((e) => Mind.fromJson(e as Map<String, dynamic>))
+      .toList(),
+);
 
 Map<String, dynamic> _$UserContentToJson(UserContent instance) =>
-    <String, dynamic>{
-      'minds': instance.minds,
-    };
+    <String, dynamic>{'minds': instance.minds};

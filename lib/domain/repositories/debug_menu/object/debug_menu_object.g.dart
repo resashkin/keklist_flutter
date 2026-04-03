@@ -8,7 +8,7 @@ part of 'debug_menu_object.dart';
 
 class DebugMenuObjectAdapter extends TypeAdapter<DebugMenuObject> {
   @override
-  final int typeId = 4;
+  final typeId = 4;
 
   @override
   DebugMenuObject read(BinaryReader reader) {

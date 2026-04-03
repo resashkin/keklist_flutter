@@ -34,8 +34,8 @@ dependencies:
   flutter_simple_dependency_injection: ^2.0.0
   flutter_svg: ^2.0.5
   form_field_validator: ^1.1.0
-  hive: ^2.2.3
-  hive_flutter: ^1.1.0
+  hive_ce: ^2.19.3
+  hive_ce_flutter: ^2.3.4
   intl: ^0.20.2
   file_picker: ^10.3.10
   modal_bottom_sheet: ^3.0.0-pre
@@ -92,7 +92,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   mocktail: ^1.0.0
-  hive_generator: ^2.0.0
+  hive_ce_generator: ^1.11.1
   build_runner: ^2.3.3 #dart run build_runner build --delete-conflicting-outputs
   intl_utils: ^2.8.2
 
