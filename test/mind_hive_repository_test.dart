@@ -11,7 +11,7 @@ void main() {
   setUp(() {
     WidgetsFlutterBinding.ensureInitialized();
     Hive.init('.');
-    Hive.registerAdapter<MindObject>(MindObjectAdapter());
+    Hive.registerAdapter<MindObject>(MindObjectAdapter(), override: true);
   });
   test('stream values and saved values the same', () async {
     // Given

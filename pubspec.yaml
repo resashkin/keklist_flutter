@@ -14,7 +14,7 @@ dependencies:
   blur: ^4.0.0
   calendar_date_picker2: ^2.0.1
   cross_file: ^0.3.3+4
-  csv: ^7.1.0
+  csv: ^8.0.0
   cupertino_icons: ^1.0.5
   emojis: ^0.9.9
   encrypt: ^5.0.3
@@ -50,7 +50,7 @@ dependencies:
   scrollable_positioned_list: ^0.3.5
   settings_ui: ^2.0.2
   share_plus: ^12.0.0
-  syncfusion_flutter_charts: ^32.2.7
+  syncfusion_flutter_charts: ^33.1.46
   url_launcher: ^6.1.9
   uuid: ^4.2.1
   video_player: ^2.10.1
@@ -73,15 +73,15 @@ dependencies:
   auto_size_text: ^3.0.0
   scrollview_observer: ^1.26.0
   streaming_shared_preferences: ^2.0.0
-  json_serializable: ^6.8.0
-  json_annotation: ^4.9.0
+  json_serializable: ^6.13.1
+  json_annotation: ^4.11.0
   swipeable_page_route: ^0.4.8
   image_picker: ^1.2.0
   logarte: ^1.4.0
   purchases_flutter: ^9.13.1
   purchases_ui_flutter: ^9.13.1
   http: ^1.2.2
-  geolocator: ^13.0.0
+  geolocator: ^14.0.2
   record: ^6.1.2
   just_waveform: ^0.0.7
   flutter_gen: ^5.9.0
