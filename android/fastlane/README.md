@@ -31,6 +31,14 @@ Build AAB and upload to Play Store internal testing track
 
 Build AAB only (for testing)
 
+### android patch_revenuecat_k2
+
+```sh
+[bundle exec] fastlane android patch_revenuecat_k2
+```
+
+Patch purchases_ui_flutter MapHelper.kt to fix Kotlin K2 compiler visibility bug
+
 ### android distribute_firebase
 
 ```sh
