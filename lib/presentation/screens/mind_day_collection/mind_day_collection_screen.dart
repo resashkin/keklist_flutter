@@ -270,7 +270,7 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
                     ),
                     falseChild: MindCollectionEmptyStateWidget.noMindsForDay(context: context),
                   ),
-                  if ((_isPhotoVideoSourceEnabled && !Platform.isAndroid) || (_isMediaFolderSourceEnabled && Platform.isAndroid))
+                  if ((_isPhotoVideoSourceEnabled && !Platform.isAndroid) || (_isMediaFolderSourceEnabled && _mediaFolderPath != null && Platform.isAndroid))
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 12.0),
                       child: DottedDivider(),
