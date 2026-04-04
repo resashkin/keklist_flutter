@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
 import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
 import 'package:keklist/presentation/blocs/lazy_onboarding_bloc/lazy_onboarding_bloc.dart';
+import 'package:keklist/presentation/blocs/membership_bloc/membership_bloc.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
@@ -46,12 +48,19 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
                   title: Text(_getDebugMenuItemTitle(debugMenuItem.type)),
                   description: Text(_getDebugMenuItemDescription(debugMenuItem.type)),
                   onToggle: (bool value) {
-                    sendEventToBloc<DebugMenuBloc>(
-                      DebugMenuUpdate(
-                        flagType: debugMenuItem.type,
-                        value: value,
-                      ),
-                    );
+                    if (debugMenuItem.type == DebugMenuType.simulatePro && value == true) {
+                      _onEnableSimulatePro();
+                    } else {
+                      sendEventToBloc<DebugMenuBloc>(
+                        DebugMenuUpdate(
+                          flagType: debugMenuItem.type,
+                          value: value,
+                        ),
+                      );
+                      if (debugMenuItem.type == DebugMenuType.simulatePro) {
+                        sendEventToBloc<MembershipBloc>(const MembershipRefreshEvent());
+                      }
+                    }
                   },
                   initialValue: debugMenuItem.value,
                 );
@@ -72,6 +81,47 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
     );
   }
 
+  Future<void> _onEnableSimulatePro() async {
+    final TextEditingController controller = TextEditingController();
+    final bool? confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Developer Password'),
+        content: TextField(
+          controller: controller,
+          obscureText: true,
+          autofocus: true,
+          decoration: const InputDecoration(hintText: 'Enter password'),
+          onSubmitted: (_) => Navigator.of(context).pop(true),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Confirm'),
+          ),
+        ],
+      ),
+    );
+
+    final String? devPassword = dotenv.env['DEVELOPER_PRO_PASSWORD'];
+    if (confirmed == true && controller.text == devPassword) {
+      sendEventToBloc<DebugMenuBloc>(
+        const DebugMenuUpdate(flagType: DebugMenuType.simulatePro, value: true),
+      );
+      sendEventToBloc<MembershipBloc>(const MembershipRefreshEvent());
+    } else if (confirmed == true) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Incorrect password'), duration: Duration(seconds: 2)),
+        );
+      }
+    }
+  }
+
   void _resetOnboarding(BuildContext context) {
     sendEventToBloc<LazyOnboardingBloc>(LazyOnboardingReset());
 
@@ -86,6 +136,7 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
   String _getDebugMenuItemTitle(DebugMenuType type) => switch (type) {
         DebugMenuType.translation => 'Translate Content',
         DebugMenuType.sensitiveContent => 'Sensitive Content',
+        DebugMenuType.simulatePro => 'Simulate Pro Subscription',
       };
 
   String _getDebugMenuItemDescription(DebugMenuType type) => switch (type) {
@@ -93,5 +144,7 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
           'Showing/Hiding Translate action, that just opens Alert with translation on English.',
         DebugMenuType.sensitiveContent =>
           'Showing/Hiding Eye button that allows to hide content for users when you showing phone to others.',
+        DebugMenuType.simulatePro =>
+          'Forces isPro=true in MembershipBloc, bypassing RevenueCat. Password required to enable.',
       };
 }

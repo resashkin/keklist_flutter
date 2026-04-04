@@ -149,7 +149,11 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
         ),
       ),
       BlocProvider(create: (context) => AudioPlayerBloc()),
-      BlocProvider(create: (context) => MembershipBloc()..add(const MembershipGetEvent())),
+      BlocProvider(
+        create: (context) => MembershipBloc(
+          debugMenuRepository: mainInjector.get<DebugMenuRepository>(),
+        )..add(const MembershipGetEvent()),
+      ),
       BlocProvider(
         create: (context) => LazyOnboardingBloc(
           mindRepository: mainInjector.get<MindRepository>(),

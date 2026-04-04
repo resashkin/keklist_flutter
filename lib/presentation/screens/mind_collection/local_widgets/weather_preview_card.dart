@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:keklist/domain/repositories/weather/weather_repository.dart';
 import 'package:keklist/domain/services/entities/weather_data.dart';
+import 'package:keklist/domain/services/weather/weather_api_service.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/cubits/weather/weather_cubit.dart';
 import 'package:keklist/presentation/screens/weather_detail/weather_detail_screen.dart';
@@ -30,7 +31,10 @@ final class _WeatherPreviewCardState extends State<WeatherPreviewCard> {
   @override
   void initState() {
     super.initState();
-    _cubit = WeatherCubit(repository: context.read<WeatherRepository>());
+    _cubit = WeatherCubit(
+      repository: context.read<WeatherRepository>(),
+      apiService: WeatherApiService(),
+    );
     _cubit.loadForDay(
       dayIndex: widget.dayIndex,
       latitude: widget.latitude,

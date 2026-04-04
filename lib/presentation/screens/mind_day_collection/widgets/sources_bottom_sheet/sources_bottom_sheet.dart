@@ -90,7 +90,7 @@ final class SourcesBottomSheet extends StatelessWidget {
             enabled: true,
             showProBadge: true,
             onTap: () => onWeatherToggled(!isWeatherEnabled),
-            onSettings: onWeatherSettings,
+            onSettings: isWeatherEnabled ? onWeatherSettings : null,
           ),
           SafeArea(child: const SizedBox(height: 8.0)),
         ],

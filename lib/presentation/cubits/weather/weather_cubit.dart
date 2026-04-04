@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:keklist/domain/repositories/weather/weather_repository.dart';
 import 'package:keklist/domain/services/entities/weather_data.dart';
+import 'package:keklist/domain/services/weather/weather_api_service.dart';
 
 sealed class WeatherState {}
 
@@ -17,9 +18,13 @@ class WeatherDisabled extends WeatherState {}
 
 final class WeatherCubit extends Cubit<WeatherState> {
   final WeatherRepository _repository;
+  final WeatherApiService _apiService;
 
-  WeatherCubit({required WeatherRepository repository})
-      : _repository = repository,
+  WeatherCubit({
+    required WeatherRepository repository,
+    required WeatherApiService apiService,
+  })  : _repository = repository,
+        _apiService = apiService,
         super(WeatherDisabled());
 
   Future<void> loadForDay({
@@ -35,7 +40,11 @@ final class WeatherCubit extends Cubit<WeatherState> {
         longitude: longitude,
       );
       if (data != null) {
-        emit(WeatherLoaded(data));
+        final String? name = await _apiService.fetchLocationName(
+          latitude: latitude,
+          longitude: longitude,
+        );
+        emit(WeatherLoaded(data.copyWith(locationName: name)));
       } else {
         emit(WeatherError());
       }

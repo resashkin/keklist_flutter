@@ -46,6 +46,7 @@ import 'package:keklist/presentation/screens/mind_day_collection/widgets/day_med
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/media_folder_settings_bottom_sheet/media_folder_settings_bottom_sheet.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/photo_video_settings_bottom_sheet/photo_video_settings_bottom_sheet.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/sources_bottom_sheet/sources_bottom_sheet.dart';
+import 'package:keklist/domain/services/weather/weather_api_service.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/weather_settings_bottom_sheet/weather_settings_bottom_sheet.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/weather_tile/weather_day_tile_widget.dart';
 import 'package:keklist/presentation/screens/date_gallery/folder_gallery_screen.dart';
@@ -97,7 +98,10 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
   void initState() {
     super.initState();
 
-    _weatherCubit = WeatherCubit(repository: context.read<WeatherRepository>());
+    _weatherCubit = WeatherCubit(
+      repository: context.read<WeatherRepository>(),
+      apiService: WeatherApiService(),
+    );
 
     subscribeToBloc<MindBloc>(
       onNewState: (state) async {
@@ -492,6 +496,7 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
       builder: (_) => WeatherSettingsBottomSheet(
         initialLatitude: _weatherLatitude,
         initialLongitude: _weatherLongitude,
+        weatherApiService: WeatherApiService(),
         onSave: (lat, lon) {
           sendEventToBloc<SettingsBloc>(SettingsUpdateWeatherLocation(latitude: lat, longitude: lon));
         },

@@ -23,6 +23,16 @@ final class WeatherDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            if (data.locationName != null) ...[
+              Text(
+                data.locationName!,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 12.0),
+            ],
             _TemperatureChart(hourlyTemperatures: data.hourlyTemperatures),
             const SizedBox(height: 24.0),
             Text(

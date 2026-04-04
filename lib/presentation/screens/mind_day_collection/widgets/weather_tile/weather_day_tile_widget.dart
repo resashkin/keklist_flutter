@@ -47,6 +47,15 @@ final class WeatherDayTileWidget extends StatelessWidget {
                   const Icon(Icons.arrow_forward_ios, size: 16.0),
                 ],
               ),
+              if (data.locationName != null) ...[
+                const Gap(2.0),
+                Text(
+                  data.locationName!,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ],
               const Gap(8.0),
               Row(
                 children: [

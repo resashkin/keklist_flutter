@@ -22,12 +22,7 @@ final class WeatherApiService {
     final String dateStr = _formatDate(dayDate);
 
     if (daysAgo > 5) {
-      return _fetchFromOpenMeteoArchive(
-        dayIndex: dayIndex,
-        latitude: latitude,
-        longitude: longitude,
-        dateStr: dateStr,
-      );
+      return _fetchFromOpenMeteoArchive(dayIndex: dayIndex, latitude: latitude, longitude: longitude, dateStr: dateStr);
     } else {
       final result = await _fetchFromOpenMeteoForecast(
         dayIndex: dayIndex,
@@ -37,11 +32,7 @@ final class WeatherApiService {
       );
       if (result != null) return result;
       // Fallback to MET Norway
-      return _fetchFromMetNorway(
-        dayIndex: dayIndex,
-        latitude: latitude,
-        longitude: longitude,
-      );
+      return _fetchFromMetNorway(dayIndex: dayIndex, latitude: latitude, longitude: longitude);
     }
   }
 
@@ -99,13 +90,8 @@ final class WeatherApiService {
     required double longitude,
   }) async {
     try {
-      final uri = Uri.parse(
-        'https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=$latitude&lon=$longitude',
-      );
-      final response = await http.get(
-        uri,
-        headers: {'User-Agent': _userAgent},
-      ).timeout(const Duration(seconds: 10));
+      final uri = Uri.parse('https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=$latitude&lon=$longitude');
+      final response = await http.get(uri, headers: {'User-Agent': _userAgent}).timeout(const Duration(seconds: 10));
       if (response.statusCode != 200) return null;
       final json = jsonDecode(response.body) as Map<String, dynamic>;
       return _parseMetNorwayResponse(json, dayIndex);
@@ -192,6 +178,30 @@ final class WeatherApiService {
   List<double> _pad24(List<double> list) {
     if (list.length >= 24) return list.take(24).toList();
     return [...list, ...List.filled(24 - list.length, 0.0)];
+  }
+
+  Future<String?> fetchLocationName({
+    required double latitude,
+    required double longitude,
+  }) async {
+    try {
+      final uri = Uri.parse(
+        'https://nominatim.openstreetmap.org/reverse'
+        '?lat=$latitude&lon=$longitude&format=json',
+      );
+      final response = await http
+          .get(uri, headers: {'User-Agent': _userAgent})
+          .timeout(const Duration(seconds: 10));
+      if (response.statusCode != 200) return null;
+      final json = jsonDecode(response.body) as Map<String, dynamic>;
+      final address = json['address'] as Map<String, dynamic>?;
+      final city = address?['city'] ?? address?['town'] ?? address?['village'];
+      final country = address?['country'];
+      if (city != null && country != null) return '$city, $country';
+      return country as String?;
+    } catch (_) {
+      return null;
+    }
   }
 
   String _formatDate(DateTime date) =>

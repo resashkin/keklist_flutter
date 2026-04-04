@@ -6,6 +6,7 @@ final class WeatherData {
   final double windSpeed;
   final double precipitation;
   final DateTime fetchedAt;
+  final String? locationName;
 
   // 24-element hourly lists for charts
   final List<double> hourlyTemperatures;
@@ -27,5 +28,22 @@ final class WeatherData {
     required this.hourlyHumidity,
     required this.hourlyWindSpeed,
     required this.hourlyPrecipitation,
+    this.locationName,
   });
+
+  WeatherData copyWith({String? locationName}) => WeatherData(
+        dayIndex: dayIndex,
+        temperature: temperature,
+        uvIndex: uvIndex,
+        humidity: humidity,
+        windSpeed: windSpeed,
+        precipitation: precipitation,
+        fetchedAt: fetchedAt,
+        hourlyTemperatures: hourlyTemperatures,
+        hourlyUvIndex: hourlyUvIndex,
+        hourlyHumidity: hourlyHumidity,
+        hourlyWindSpeed: hourlyWindSpeed,
+        hourlyPrecipitation: hourlyPrecipitation,
+        locationName: locationName,
+      );
 }

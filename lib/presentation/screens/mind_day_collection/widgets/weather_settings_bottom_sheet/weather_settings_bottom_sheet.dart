@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:keklist/domain/services/weather/weather_api_service.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 
 final class WeatherSettingsBottomSheet extends StatefulWidget {
   final double? initialLatitude;
   final double? initialLongitude;
   final void Function(double lat, double lon) onSave;
+  final WeatherApiService weatherApiService;
 
   const WeatherSettingsBottomSheet({
     super.key,
     this.initialLatitude,
     this.initialLongitude,
     required this.onSave,
+    required this.weatherApiService,
   });
 
   @override
@@ -23,6 +26,7 @@ final class _WeatherSettingsBottomSheetState extends State<WeatherSettingsBottom
   late final TextEditingController _lonController;
   bool _isDetecting = false;
   String? _locationError;
+  String? _locationName;
 
   @override
   void initState() {
@@ -33,13 +37,21 @@ final class _WeatherSettingsBottomSheetState extends State<WeatherSettingsBottom
     _lonController = TextEditingController(
       text: widget.initialLongitude?.toString() ?? '',
     );
+    _latController.addListener(_clearLocationName);
+    _lonController.addListener(_clearLocationName);
   }
 
   @override
   void dispose() {
+    _latController.removeListener(_clearLocationName);
+    _lonController.removeListener(_clearLocationName);
     _latController.dispose();
     _lonController.dispose();
     super.dispose();
+  }
+
+  void _clearLocationName() {
+    if (_locationName != null) setState(() => _locationName = null);
   }
 
   @override
@@ -83,6 +95,17 @@ final class _WeatherSettingsBottomSheetState extends State<WeatherSettingsBottom
                 _locationError!,
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.error,
+                  fontSize: 12,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+            if (_locationName != null) ...[
+              const SizedBox(height: 8.0),
+              Text(
+                _locationName!,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
                   fontSize: 12,
                 ),
                 textAlign: TextAlign.center,
@@ -136,6 +159,7 @@ final class _WeatherSettingsBottomSheetState extends State<WeatherSettingsBottom
     setState(() {
       _isDetecting = true;
       _locationError = null;
+      _locationName = null;
     });
 
     try {
@@ -177,9 +201,17 @@ final class _WeatherSettingsBottomSheetState extends State<WeatherSettingsBottom
       );
 
       if (!mounted) return;
+      _latController.text = position.latitude.toStringAsFixed(4);
+      _lonController.text = position.longitude.toStringAsFixed(4);
+
+      final String? name = await widget.weatherApiService.fetchLocationName(
+        latitude: position.latitude,
+        longitude: position.longitude,
+      );
+
+      if (!mounted) return;
       setState(() {
-        _latController.text = position.latitude.toStringAsFixed(4);
-        _lonController.text = position.longitude.toStringAsFixed(4);
+        _locationName = name;
         _isDetecting = false;
       });
     } catch (_) {
