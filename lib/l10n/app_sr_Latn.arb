@@ -416,7 +416,6 @@
     "weatherLatitude": "Geografska širina",
     "weatherLongitude": "Geografska dužina",
     "weatherSaveLocation": "Sačuvaj lokaciju",
-    "weatherMoodImpact": "Uticaj na raspoloženje",
     "weatherNoLocation": "Postavite lokaciju u podešavanjima vremenske prognoze",
     "weatherUseMyLocation": "Koristi moju lokaciju",
     "weatherDetectingLocation": "Otkrivanje lokacije...",

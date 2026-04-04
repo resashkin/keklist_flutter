@@ -479,9 +479,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get weatherSaveLocation => 'Сохранить местоположение';
 
   @override
-  String get weatherMoodImpact => 'Влияние на настроение';
-
-  @override
   String get weatherNoLocation => 'Укажите местоположение в настройках погоды';
 
   @override

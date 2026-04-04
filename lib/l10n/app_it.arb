@@ -416,7 +416,6 @@
     "weatherLatitude": "Latitudine",
     "weatherLongitude": "Longitudine",
     "weatherSaveLocation": "Salva posizione",
-    "weatherMoodImpact": "Impatto sull'umore",
     "weatherNoLocation": "Imposta la posizione nelle impostazioni meteo",
     "weatherUseMyLocation": "Usa la mia posizione",
     "weatherDetectingLocation": "Rilevamento posizione...",

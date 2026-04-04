@@ -481,9 +481,6 @@ class AppLocalizationsSr extends AppLocalizations {
   String get weatherSaveLocation => 'Сачувај локацију';
 
   @override
-  String get weatherMoodImpact => 'Утицај на расположење';
-
-  @override
   String get weatherNoLocation =>
       'Поставите локацију у подешавањима временске прогнозе';
 
@@ -1031,9 +1028,6 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
 
   @override
   String get weatherSaveLocation => 'Sačuvaj lokaciju';
-
-  @override
-  String get weatherMoodImpact => 'Uticaj na raspoloženje';
 
   @override
   String get weatherNoLocation =>

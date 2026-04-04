@@ -35,11 +35,6 @@ final class WeatherDetailScreen extends StatelessWidget {
             ],
             _TemperatureChart(hourlyTemperatures: data.hourlyTemperatures),
             const SizedBox(height: 24.0),
-            Text(
-              context.l10n.weatherMoodImpact,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 12.0),
             _ParameterTile(
               icon: Icons.thermostat,
               label: context.l10n.weatherTemperature,

@@ -150,7 +150,6 @@
     "weatherLatitude": "緯度",
     "weatherLongitude": "経度",
     "weatherSaveLocation": "場所を保存",
-    "weatherMoodImpact": "気分への影響",
     "weatherNoLocation": "天気設定で場所を設定してください",
     "weatherUseMyLocation": "現在地を使用",
     "weatherDetectingLocation": "位置を検出中...",

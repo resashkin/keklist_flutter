@@ -1023,12 +1023,6 @@ abstract class AppLocalizations {
   /// **'Save location'**
   String get weatherSaveLocation;
 
-  /// Mood impact section header in weather detail
-  ///
-  /// In en, this message translates to:
-  /// **'Mood Impact'**
-  String get weatherMoodImpact;
-
   /// Message shown when weather location is not configured
   ///
   /// In en, this message translates to:

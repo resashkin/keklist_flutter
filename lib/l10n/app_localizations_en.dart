@@ -480,9 +480,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get weatherSaveLocation => 'Save location';
 
   @override
-  String get weatherMoodImpact => 'Mood Impact';
-
-  @override
   String get weatherNoLocation =>
       'Set location in weather settings to see weather';
 

@@ -150,7 +150,6 @@
     "weatherLatitude": "纬度",
     "weatherLongitude": "经度",
     "weatherSaveLocation": "保存位置",
-    "weatherMoodImpact": "对情绪的影响",
     "weatherNoLocation": "请在天气设置中设置位置",
     "weatherUseMyLocation": "使用我的位置",
     "weatherDetectingLocation": "正在检测位置...",

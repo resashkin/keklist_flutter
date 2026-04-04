@@ -484,9 +484,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get weatherSaveLocation => 'Guardar ubicación';
 
   @override
-  String get weatherMoodImpact => 'Impacto en el estado de ánimo';
-
-  @override
   String get weatherNoLocation =>
       'Establece la ubicación en la configuración del clima';
 

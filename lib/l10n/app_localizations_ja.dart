@@ -469,9 +469,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get weatherSaveLocation => '場所を保存';
 
   @override
-  String get weatherMoodImpact => '気分への影響';
-
-  @override
   String get weatherNoLocation => '天気設定で場所を設定してください';
 
   @override

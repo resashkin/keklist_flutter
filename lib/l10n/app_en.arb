@@ -613,10 +613,6 @@
     "@weatherSaveLocation": {
         "description": "Save location button"
     },
-    "weatherMoodImpact": "Mood Impact",
-    "@weatherMoodImpact": {
-        "description": "Mood impact section header in weather detail"
-    },
     "weatherNoLocation": "Set location in weather settings to see weather",
     "@weatherNoLocation": {
         "description": "Message shown when weather location is not configured"

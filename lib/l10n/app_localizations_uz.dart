@@ -483,9 +483,6 @@ class AppLocalizationsUz extends AppLocalizations {
   String get weatherSaveLocation => 'Joylashuvni saqlash';
 
   @override
-  String get weatherMoodImpact => 'Kayfiyatga ta\'siri';
-
-  @override
   String get weatherNoLocation =>
       'Ob-havoni ko\'rish uchun joylashuvni sozlang';
 

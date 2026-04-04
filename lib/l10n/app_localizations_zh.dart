@@ -466,9 +466,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get weatherSaveLocation => '保存位置';
 
   @override
-  String get weatherMoodImpact => '对情绪的影响';
-
-  @override
   String get weatherNoLocation => '请在天气设置中设置位置';
 
   @override

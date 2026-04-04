@@ -150,7 +150,6 @@
     "weatherLatitude": "Breitengrad",
     "weatherLongitude": "Längengrad",
     "weatherSaveLocation": "Standort speichern",
-    "weatherMoodImpact": "Einfluss auf die Stimmung",
     "weatherNoLocation": "Standort in den Wettereinstellungen festlegen",
     "weatherUseMyLocation": "Meinen Standort verwenden",
     "weatherDetectingLocation": "Standort wird erkannt...",

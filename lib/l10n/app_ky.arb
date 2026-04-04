@@ -416,7 +416,6 @@
     "weatherLatitude": "Кеңдик",
     "weatherLongitude": "Узундук",
     "weatherSaveLocation": "Жерди сактоо",
-    "weatherMoodImpact": "Маанайга таасири",
     "weatherNoLocation": "Аба ырайын көрүү үчүн жерди коюңуз",
     "weatherUseMyLocation": "Менин жеримди колдонуу",
     "weatherDetectingLocation": "Жер аныкталууда...",

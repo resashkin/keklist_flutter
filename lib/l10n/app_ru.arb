@@ -150,7 +150,6 @@
     "weatherLatitude": "Широта",
     "weatherLongitude": "Долгота",
     "weatherSaveLocation": "Сохранить местоположение",
-    "weatherMoodImpact": "Влияние на настроение",
     "weatherNoLocation": "Укажите местоположение в настройках погоды",
     "weatherUseMyLocation": "Использовать моё местоположение",
     "weatherDetectingLocation": "Определение местоположения...",

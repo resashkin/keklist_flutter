@@ -82,7 +82,7 @@ final class _InsightsScreenState extends KekWidgetState<InsightsScreen> {
                     StaggeredGridTile.fit(
                       crossAxisCellCount: crossAxisCellCount,
                       child: InsightsRandomMindWidget(
-                        allMinds: _minds,
+                        allMinds: _minds.where((m) => m.rootId == null).toList(),
                         onTapToMind: (mind) => _showDayCollectionScreen(groupDayIndex: mind.dayIndex),
                       ),
                     ),

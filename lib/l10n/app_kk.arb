@@ -416,7 +416,6 @@
     "weatherLatitude": "Ендік",
     "weatherLongitude": "Бойлық",
     "weatherSaveLocation": "Орынды сақтау",
-    "weatherMoodImpact": "Көңіл-күйге әсері",
     "weatherNoLocation": "Ауа райын көру үшін орынды орнатыңыз",
     "weatherUseMyLocation": "Менің орнымды пайдалану",
     "weatherDetectingLocation": "Орын анықталуда...",

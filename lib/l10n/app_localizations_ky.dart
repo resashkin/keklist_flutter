@@ -482,9 +482,6 @@ class AppLocalizationsKy extends AppLocalizations {
   String get weatherSaveLocation => 'Жерди сактоо';
 
   @override
-  String get weatherMoodImpact => 'Маанайга таасири';
-
-  @override
   String get weatherNoLocation => 'Аба ырайын көрүү үчүн жерди коюңуз';
 
   @override

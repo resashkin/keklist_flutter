@@ -416,7 +416,6 @@
     "weatherLatitude": "Kenglik",
     "weatherLongitude": "Uzunlik",
     "weatherSaveLocation": "Joylashuvni saqlash",
-    "weatherMoodImpact": "Kayfiyatga ta'siri",
     "weatherNoLocation": "Ob-havoni ko'rish uchun joylashuvni sozlang",
     "weatherUseMyLocation": "Mening joylashuvimdan foydalanish",
     "weatherDetectingLocation": "Joylashuv aniqlanmoqda...",

@@ -481,9 +481,6 @@ class AppLocalizationsKk extends AppLocalizations {
   String get weatherSaveLocation => 'Орынды сақтау';
 
   @override
-  String get weatherMoodImpact => 'Көңіл-күйге әсері';
-
-  @override
   String get weatherNoLocation => 'Ауа райын көру үшін орынды орнатыңыз';
 
   @override
