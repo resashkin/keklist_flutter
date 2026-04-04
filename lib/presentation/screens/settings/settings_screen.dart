@@ -12,6 +12,7 @@ import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/domain/services/entities/mind_note_content.dart';
 import 'package:keklist/domain/services/export_import/models/import_result.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
+import 'package:keklist/presentation/blocs/membership_bloc/membership_bloc.dart';
 import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
@@ -312,6 +313,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
 
   Future<void> _openPaywall() async {
     await RevenueCatUI.presentPaywall();
+    sendEventToBloc<MembershipBloc>(const MembershipRefreshEvent());
   }
 
   void _switchDarkMode(bool value) {

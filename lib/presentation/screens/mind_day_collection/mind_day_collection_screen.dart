@@ -50,7 +50,7 @@ import 'package:keklist/presentation/screens/mind_day_collection/widgets/weather
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/weather_tile/weather_day_tile_widget.dart';
 import 'package:keklist/presentation/screens/date_gallery/folder_gallery_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:keklist/presentation/blocs/membership_bloc/membership_bloc.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
 final class MindDayCollectionScreen extends StatefulWidget {
@@ -85,6 +85,7 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
   final DayFolderMediaPreviewCubit _folderMediaPreviewCubit = DayFolderMediaPreviewCubit();
   WeatherCubit? _weatherCubit;
   Mind? _editableMind;
+  bool _pendingWeatherEnable = false;
 
   DebugMenuDataState? _debugMenuState;
 
@@ -164,6 +165,15 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
     subscribeToBloc<MindCreatorBloc>(
       onNewState: (state) {
         setState(() => suggestions = state.suggestions.take(5));
+      },
+    )?.disposed(by: this);
+
+    subscribeToBloc<MembershipBloc>(
+      onNewState: (state) {
+        if (state is MembershipDataState && state.isPro && _pendingWeatherEnable) {
+          _pendingWeatherEnable = false;
+          sendEventToBloc<SettingsBloc>(const SettingsToggleWeatherSource(isEnabled: true));
+        }
       },
     )?.disposed(by: this);
 
@@ -301,8 +311,7 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
                         return const SizedBox.shrink();
                       },
                     ),
-                  // TODO: re-enable weather source when ready
-                  if (false && _isWeatherSourceEnabled &&
+                  if (_isWeatherSourceEnabled &&
                       _weatherLatitude != null &&
                       _weatherLongitude != null &&
                       _weatherCubit != null)
@@ -466,21 +475,15 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
       sendEventToBloc<SettingsBloc>(const SettingsToggleWeatherSource(isEnabled: false));
       return;
     }
-    sendEventToBloc<SettingsBloc>(const SettingsToggleWeatherSource(isEnabled: true));
-    // try {
-    //   final CustomerInfo info = await Purchases.getCustomerInfo();
-    //   if (info.entitlements.active.isNotEmpty) {
-    //     sendEventToBloc<SettingsBloc>(const SettingsToggleWeatherSource(isEnabled: true));
-    //   } else {
-    //     await RevenueCatUI.presentPaywall();
-    //     final CustomerInfo updated = await Purchases.getCustomerInfo();
-    //     if (updated.entitlements.active.isNotEmpty) {
-    //       sendEventToBloc<SettingsBloc>(const SettingsToggleWeatherSource(isEnabled: true));
-    //     }
-    //   }
-    // } catch (_) {
-    //   await RevenueCatUI.presentPaywall();
-    // }
+    final membershipState = context.read<MembershipBloc>().state;
+    final bool isPro = membershipState is MembershipDataState && membershipState.isPro;
+    if (isPro) {
+      sendEventToBloc<SettingsBloc>(const SettingsToggleWeatherSource(isEnabled: true));
+    } else {
+      _pendingWeatherEnable = true;
+      await RevenueCatUI.presentPaywall();
+      sendEventToBloc<MembershipBloc>(const MembershipRefreshEvent());
+    }
   }
 
   void _showWeatherSettings() {
