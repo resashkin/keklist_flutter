@@ -14,12 +14,7 @@ final class WeatherPreviewCard extends StatefulWidget {
   final double latitude;
   final double longitude;
 
-  const WeatherPreviewCard({
-    super.key,
-    required this.dayIndex,
-    required this.latitude,
-    required this.longitude,
-  });
+  const WeatherPreviewCard({super.key, required this.dayIndex, required this.latitude, required this.longitude});
 
   @override
   State<WeatherPreviewCard> createState() => _WeatherPreviewCardState();
@@ -31,15 +26,8 @@ final class _WeatherPreviewCardState extends State<WeatherPreviewCard> {
   @override
   void initState() {
     super.initState();
-    _cubit = WeatherCubit(
-      repository: context.read<WeatherRepository>(),
-      apiService: WeatherApiService(),
-    );
-    _cubit.loadForDay(
-      dayIndex: widget.dayIndex,
-      latitude: widget.latitude,
-      longitude: widget.longitude,
-    );
+    _cubit = WeatherCubit(repository: context.read<WeatherRepository>(), apiService: WeatherApiService());
+    _cubit.loadForDay(dayIndex: widget.dayIndex, latitude: widget.latitude, longitude: widget.longitude);
   }
 
   @override
@@ -54,18 +42,13 @@ final class _WeatherPreviewCardState extends State<WeatherPreviewCard> {
       bloc: _cubit,
       builder: (context, state) {
         if (state is! WeatherLoaded) return const SizedBox.shrink();
-        return _WeatherCardContent(
-          data: state.data,
-          onTap: () => _openDetail(context, state.data),
-        );
+        return _WeatherCardContent(data: state.data, onTap: () => _openDetail(context, state.data));
       },
     );
   }
 
   void _openDetail(BuildContext context, WeatherData data) {
-    Navigator.of(context).push(
-      SwipeablePageRoute(builder: (_) => WeatherDetailScreen(data: data)),
-    );
+    Navigator.of(context).push(SwipeablePageRoute(builder: (_) => WeatherDetailScreen(data: data)));
   }
 }
 
@@ -92,10 +75,7 @@ final class _WeatherCardContent extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Text(
-                    context.l10n.sourcesWeather,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
+                  Text(context.l10n.sourcesWeather, style: Theme.of(context).textTheme.titleMedium),
                   const Spacer(),
                   const Icon(Icons.arrow_forward_ios, size: 16.0),
                 ],
@@ -103,11 +83,7 @@ final class _WeatherCardContent extends StatelessWidget {
               const Gap(8.0),
               Row(
                 children: [
-                  Icon(
-                    _weatherIcon(data),
-                    size: 24.0,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+                  Icon(_weatherIcon(data), size: 24.0, color: Theme.of(context).colorScheme.primary),
                   const Gap(8.0),
                   Text(
                     '${data.temperature.round()}°C',
@@ -148,10 +124,7 @@ final class _ParamChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 4.0),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(8.0),
-      ),
+      decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface, borderRadius: BorderRadius.circular(8.0)),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
