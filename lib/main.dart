@@ -84,6 +84,7 @@ Future<void> main() async {
       }
     }
   }();
+  print(revenueCatApiKey);
   await Purchases.configure(PurchasesConfiguration(revenueCatApiKey));
 
   final Widget application = _getApplication(mainInjector);
@@ -142,9 +143,9 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
       ),
       BlocProvider(create: (context) => AudioPlayerBloc()),
       BlocProvider(
-        create: (context) => MembershipBloc(
-          debugMenuRepository: mainInjector.get<DebugMenuRepository>(),
-        )..add(const MembershipGetEvent()),
+        create: (context) =>
+            MembershipBloc(debugMenuRepository: mainInjector.get<DebugMenuRepository>())
+              ..add(const MembershipGetEvent()),
       ),
       BlocProvider(
         create: (context) => LazyOnboardingBloc(
