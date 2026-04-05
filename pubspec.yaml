@@ -3,7 +3,7 @@ description: write moments to see your life
 
 publish_to: "none"
 
-version: 4.6.0+121
+version: 4.6.0+122
 
 environment:
   sdk: ">=3.10.0"
