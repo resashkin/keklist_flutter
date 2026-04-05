@@ -437,5 +437,6 @@
     "audioRecordCancel": "Annulla",
     "audioRecordPermissionError": "Il permesso per il microfono è necessario per registrare audio.",
     "audioRecordStartError": "Impossibile avviare la registrazione. Riprova.",
-    "audioRecordStopError": "Impossibile fermare la registrazione. Riprova."
+    "audioRecordStopError": "Impossibile fermare la registrazione. Riprova.",
+    "proUserFooter": "Sei un utente PRO. Il prossimo pagamento di {price} sarà il {date}."
 }

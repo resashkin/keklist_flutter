@@ -46,6 +46,9 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   String? translateLanguageCode;
   int _appBarTapCount = 0;
   bool _isDebugMenuVisible = false;
+  bool _isPro = false;
+  DateTime? _proNextRenewalDate;
+  String? _proPriceString;
 
   @override
   void initState() {
@@ -100,6 +103,18 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
         }
       },
     )?.disposed(by: this);
+    subscribeToBloc<MembershipBloc>(
+      onNewState: (state) {
+        if (state is MembershipDataState) {
+          setState(() {
+            _isPro = state.isPro;
+            _proNextRenewalDate = state.nextRenewalDate;
+            _proPriceString = state.priceString;
+          });
+        }
+      },
+    )?.disposed(by: this);
+    sendEventToBloc<MembershipBloc>(const MembershipGetEvent());
     sendEventToBloc<SettingsBloc>(SettingsGet());
   }
 
@@ -150,11 +165,12 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
               //     ),
               //   ),
               // ),
-              SettingsTile.navigation(
-                title: Text('keklist PRO'),
-                leading: const Icon(Icons.handshake, color: Colors.yellowAccent),
-                onPressed: (BuildContext context) => _openPaywall(),
-              ),
+              if (!_isPro)
+                SettingsTile.navigation(
+                  title: Text('keklist PRO'),
+                  leading: const Icon(Icons.handshake, color: Colors.yellowAccent),
+                  onPressed: (BuildContext context) => _openPaywall(),
+                ),
               SettingsTile.navigation(
                 title: Text(context.l10n.releaseNotes),
                 leading: const Icon(Icons.new_releases, color: Color.fromARGB(255, 191, 188, 191)),
@@ -175,6 +191,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
                 leading: const Icon(Icons.feedback, color: Colors.blueGrey),
                 onPressed: (BuildContext context) async => await _openEmailFeedbackForm(),
               ),
+              if (_isPro) _buildProFooterTile(context),
             ],
           ),
           SettingsSection(
@@ -258,6 +275,20 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  AbstractSettingsTile _buildProFooterTile(BuildContext context) {
+    final Locale locale = Localizations.localeOf(context);
+    final String dateStr = _proNextRenewalDate != null
+        ? DateFormatters.dayMonthAndYearFormat(locale).format(_proNextRenewalDate!)
+        : '—';
+    final String priceStr = _proPriceString ?? '—';
+
+    return SettingsTile(
+      title: const SizedBox.shrink(),
+      enabled: false,
+      description: Text(context.l10n.proUserFooter(priceStr, dateStr)),
     );
   }
 

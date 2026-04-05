@@ -531,4 +531,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get audioRecordStopError => '无法停止录制。请重试。';
+
+  @override
+  String proUserFooter(String price, String date) {
+    return '您是PRO用户。下一次 $price 的付款将于 $date 进行。';
+  }
 }

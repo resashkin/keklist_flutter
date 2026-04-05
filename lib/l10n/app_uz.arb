@@ -437,5 +437,6 @@
     "audioRecordCancel": "Bekor qilish",
     "audioRecordPermissionError": "Audio yozish uchun mikrofon ruxsati talab qilinadi.",
     "audioRecordStartError": "Yozishni boshlash imkoni bo'lmadi. Qayta urinib ko'ring.",
-    "audioRecordStopError": "Yozishni to'xtatish imkoni bo'lmadi. Qayta urinib ko'ring."
+    "audioRecordStopError": "Yozishni to'xtatish imkoni bo'lmadi. Qayta urinib ko'ring.",
+    "proUserFooter": "Siz PRO foydalanuvchisiz. Keyingi {price} to'lov {date} da bo'ladi."
 }

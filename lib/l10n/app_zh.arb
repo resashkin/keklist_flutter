@@ -171,5 +171,6 @@
     "audioRecordCancel": "取消",
     "audioRecordPermissionError": "需要麦克风权限才能录制音频。",
     "audioRecordStartError": "无法开始录制。请重试。",
-    "audioRecordStopError": "无法停止录制。请重试。"
+    "audioRecordStopError": "无法停止录制。请重试。",
+    "proUserFooter": "您是PRO用户。下一次 {price} 的付款将于 {date} 进行。"
 }

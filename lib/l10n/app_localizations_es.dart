@@ -556,4 +556,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get audioRecordStopError =>
       'No se pudo detener la grabación. Inténtalo de nuevo.';
+
+  @override
+  String proUserFooter(String price, String date) {
+    return 'Eres usuario PRO. El próximo pago de $price será el $date.';
+  }
 }

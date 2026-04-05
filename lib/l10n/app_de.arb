@@ -171,5 +171,6 @@
     "audioRecordCancel": "Abbrechen",
     "audioRecordPermissionError": "Mikrofonberechtigung ist erforderlich, um Audio aufzunehmen.",
     "audioRecordStartError": "Aufnahme konnte nicht gestartet werden. Bitte versuche es erneut.",
-    "audioRecordStopError": "Aufnahme konnte nicht gestoppt werden. Bitte versuche es erneut."
+    "audioRecordStopError": "Aufnahme konnte nicht gestoppt werden. Bitte versuche es erneut.",
+    "proUserFooter": "Du bist PRO-Nutzer. Die nächste Zahlung von {price} erfolgt am {date}."
 }

@@ -1154,6 +1154,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unable to stop the recording. Please try again.'**
   String get audioRecordStopError;
+
+  /// Footer in APPLICATION settings section when user has active PRO subscription
+  ///
+  /// In en, this message translates to:
+  /// **'You are a PRO user. Next payment {price} will be at {date}.'**
+  String proUserFooter(String price, String date);
 }
 
 class _AppLocalizationsDelegate

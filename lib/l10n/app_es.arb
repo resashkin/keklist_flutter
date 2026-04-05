@@ -437,5 +437,6 @@
     "audioRecordCancel": "Cancelar",
     "audioRecordPermissionError": "Se necesita permiso de micrófono para grabar audio.",
     "audioRecordStartError": "No se pudo iniciar la grabación. Inténtalo de nuevo.",
-    "audioRecordStopError": "No se pudo detener la grabación. Inténtalo de nuevo."
+    "audioRecordStopError": "No se pudo detener la grabación. Inténtalo de nuevo.",
+    "proUserFooter": "Eres usuario PRO. El próximo pago de {price} será el {date}."
 }

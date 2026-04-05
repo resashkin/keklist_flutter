@@ -700,5 +700,13 @@
     "audioRecordStopError": "Unable to stop the recording. Please try again.",
     "@audioRecordStopError": {
         "description": "Error when recording fails to stop"
+    },
+    "proUserFooter": "You are a PRO user. Next payment {price} will be at {date}.",
+    "@proUserFooter": {
+        "description": "Footer in APPLICATION settings section when user has active PRO subscription",
+        "placeholders": {
+            "price": { "type": "String" },
+            "date": { "type": "String" }
+        }
     }
 }

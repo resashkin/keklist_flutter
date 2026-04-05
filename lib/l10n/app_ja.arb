@@ -171,5 +171,6 @@
     "audioRecordCancel": "キャンセル",
     "audioRecordPermissionError": "音声を録音するにはマイクの権限が必要です。",
     "audioRecordStartError": "録音を開始できませんでした。もう一度お試しください。",
-    "audioRecordStopError": "録音を停止できませんでした。もう一度お試しください。"
+    "audioRecordStopError": "録音を停止できませんでした。もう一度お試しください。",
+    "proUserFooter": "あなたはPROユーザーです。次の支払い {price} は {date} に予定されています。"
 }

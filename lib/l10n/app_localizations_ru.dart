@@ -550,4 +550,9 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get audioRecordStopError =>
       'Не удалось остановить запись. Попробуйте ещё раз.';
+
+  @override
+  String proUserFooter(String price, String date) {
+    return 'Вы PRO пользователь. Следующий платёж $price будет $date.';
+  }
 }

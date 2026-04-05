@@ -33,13 +33,38 @@ final class MembershipBloc extends Bloc<MembershipEvent, MembershipState> {
         false;
 
     if (isSimulating) {
-      emit(MembershipDataState(isPro: true));
+      emit(MembershipDataState(
+        isPro: true,
+        nextRenewalDate: DateTime.now().add(const Duration(days: 30)),
+        priceString: '\$2.99',
+      ));
       return;
     }
 
     try {
       final CustomerInfo info = await Purchases.getCustomerInfo();
-      emit(MembershipDataState(isPro: info.entitlements.active.isNotEmpty));
+      final bool isPro = info.entitlements.active.isNotEmpty;
+
+      if (!isPro) {
+        emit(MembershipDataState(isPro: false));
+        return;
+      }
+
+      final EntitlementInfo? entitlement = info.entitlements.active.values.firstOrNull;
+      final DateTime? renewalDate = entitlement?.expirationDate != null
+          ? DateTime.tryParse(entitlement!.expirationDate!)
+          : null;
+      final String? productId = entitlement?.productIdentifier;
+
+      String? priceString;
+      if (productId != null) {
+        try {
+          final List<StoreProduct> products = await Purchases.getProducts([productId]);
+          priceString = products.firstOrNull?.priceString;
+        } catch (_) {}
+      }
+
+      emit(MembershipDataState(isPro: true, nextRenewalDate: renewalDate, priceString: priceString));
     } catch (_) {
       emit(MembershipDataState(isPro: false));
     }

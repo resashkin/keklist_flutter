@@ -552,6 +552,11 @@ class AppLocalizationsSr extends AppLocalizations {
   @override
   String get audioRecordStopError =>
       'Није могуће зауставити снимање. Покушајте поново.';
+
+  @override
+  String proUserFooter(String price, String date) {
+    return 'Ви сте PRO корисник. Следећа уплата $price биће $date.';
+  }
 }
 
 /// The translations for Serbian, using the Latin script (`sr_Latn`).
@@ -1101,4 +1106,9 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
   @override
   String get audioRecordStopError =>
       'Nije moguće zaustaviti snimanje. Pokušajte ponovo.';
+
+  @override
+  String proUserFooter(String price, String date) {
+    return 'Vi ste PRO korisnik. Sledeća uplata $price biće $date.';
+  }
 }

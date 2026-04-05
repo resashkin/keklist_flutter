@@ -554,4 +554,9 @@ class AppLocalizationsUz extends AppLocalizations {
   @override
   String get audioRecordStopError =>
       'Yozishni to\'xtatish imkoni bo\'lmadi. Qayta urinib ko\'ring.';
+
+  @override
+  String proUserFooter(String price, String date) {
+    return 'Siz PRO foydalanuvchisiz. Keyingi $price to\'lov $date da bo\'ladi.';
+  }
 }

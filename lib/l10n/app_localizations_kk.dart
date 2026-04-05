@@ -552,4 +552,9 @@ class AppLocalizationsKk extends AppLocalizations {
   @override
   String get audioRecordStopError =>
       'Жазуды тоқтату мүмкін болмады. Қайталап көріңіз.';
+
+  @override
+  String proUserFooter(String price, String date) {
+    return 'Сіз PRO қолданушысысыз. Келесі $price төлем $date күні болады.';
+  }
 }

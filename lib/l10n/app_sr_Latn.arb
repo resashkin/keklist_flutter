@@ -437,5 +437,6 @@
     "audioRecordCancel": "Otkaži",
     "audioRecordPermissionError": "Potrebna je dozvola za mikrofon za snimanje zvuka.",
     "audioRecordStartError": "Nije moguće pokrenuti snimanje. Pokušajte ponovo.",
-    "audioRecordStopError": "Nije moguće zaustaviti snimanje. Pokušajte ponovo."
+    "audioRecordStopError": "Nije moguće zaustaviti snimanje. Pokušajte ponovo.",
+    "proUserFooter": "Vi ste PRO korisnik. Sledeća uplata {price} biće {date}."
 }

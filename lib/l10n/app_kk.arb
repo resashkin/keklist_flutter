@@ -437,5 +437,6 @@
     "audioRecordCancel": "Болдырмау",
     "audioRecordPermissionError": "Аудио жазу үшін микрофон рұқсаты қажет.",
     "audioRecordStartError": "Жазуды бастау мүмкін болмады. Қайталап көріңіз.",
-    "audioRecordStopError": "Жазуды тоқтату мүмкін болмады. Қайталап көріңіз."
+    "audioRecordStopError": "Жазуды тоқтату мүмкін болмады. Қайталап көріңіз.",
+    "proUserFooter": "Сіз PRO қолданушысысыз. Келесі {price} төлем {date} күні болады."
 }
