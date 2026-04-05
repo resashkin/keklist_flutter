@@ -12,6 +12,7 @@ import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/domain/services/entities/mind_note_content.dart';
 import 'package:keklist/domain/services/export_import/models/import_result.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
+import 'package:keklist/presentation/blocs/membership_bloc/membership_bloc.dart';
 import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
@@ -45,6 +46,9 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   String? translateLanguageCode;
   int _appBarTapCount = 0;
   bool _isDebugMenuVisible = false;
+  bool _isPro = false;
+  DateTime? _proNextRenewalDate;
+  String? _proPriceString;
 
   @override
   void initState() {
@@ -99,6 +103,18 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
         }
       },
     )?.disposed(by: this);
+    subscribeToBloc<MembershipBloc>(
+      onNewState: (state) {
+        if (state is MembershipDataState) {
+          setState(() {
+            _isPro = state.isPro;
+            _proNextRenewalDate = state.nextRenewalDate;
+            _proPriceString = state.priceString;
+          });
+        }
+      },
+    )?.disposed(by: this);
+    sendEventToBloc<MembershipBloc>(const MembershipGetEvent());
     sendEventToBloc<SettingsBloc>(SettingsGet());
   }
 
@@ -109,10 +125,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: GestureDetector(
-          onTap: _handleAppBarTap,
-          child: Text(context.l10n.settings),
-        ),
+        title: GestureDetector(onTap: _handleAppBarTap, child: Text(context.l10n.settings)),
       ),
       body: SettingsList(
         sections: [
@@ -152,7 +165,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
               //     ),
               //   ),
               // ),
-              if (DeviceUtils.safeGetPlatform() != SupportedPlatform.android)
+              if (!_isPro)
                 SettingsTile.navigation(
                   title: Text('keklist PRO'),
                   leading: const Icon(Icons.handshake, color: Colors.yellowAccent),
@@ -178,6 +191,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
                 leading: const Icon(Icons.feedback, color: Colors.blueGrey),
                 onPressed: (BuildContext context) async => await _openEmailFeedbackForm(),
               ),
+              if (_isPro) _buildProFooterTile(context),
             ],
           ),
           SettingsSection(
@@ -264,6 +278,20 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     );
   }
 
+  AbstractSettingsTile _buildProFooterTile(BuildContext context) {
+    final Locale locale = Localizations.localeOf(context);
+    final String dateStr = _proNextRenewalDate != null
+        ? DateFormatters.dayMonthAndYearFormat(locale).format(_proNextRenewalDate!)
+        : '—';
+    final String priceStr = _proPriceString ?? '—';
+
+    return SettingsTile(
+      title: const SizedBox.shrink(),
+      enabled: false,
+      description: Text(context.l10n.proUserFooter(priceStr, dateStr)),
+    );
+  }
+
   void _showLanguagePicker() {
     Navigator.of(context).push(SwipeablePageRoute(builder: (context) => const LanguagePickerScreen()));
   }
@@ -316,6 +344,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
 
   Future<void> _openPaywall() async {
     await RevenueCatUI.presentPaywall();
+    sendEventToBloc<MembershipBloc>(const MembershipRefreshEvent());
   }
 
   void _switchDarkMode(bool value) {
@@ -342,7 +371,9 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   }
 
   void _showDebugMenu() {
-    Navigator.of(context).push<void>(SwipeablePageRoute<void>(builder: (BuildContext context) => const DebugMenuScreen()));
+    Navigator.of(
+      context,
+    ).push<void>(SwipeablePageRoute<void>(builder: (BuildContext context) => const DebugMenuScreen()));
   }
 
   void _handleAppBarTap() {
@@ -355,12 +386,9 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     if (_appBarTapCount >= 10) {
       sendEventToBloc<SettingsBloc>(const SettingsEnableDebugMenu());
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Debug menu enabled'),
-          duration: Duration(seconds: 2),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Debug menu enabled'), duration: Duration(seconds: 2)));
 
       setState(() {
         _appBarTapCount = 0;
@@ -432,17 +460,11 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
         builder: (context) => ActionsScreen(
           actions: [
             (
-              ActionModel.custom(
-                title: context.l10n.saveToFiles,
-                icon: const Icon(Icons.save),
-              ),
+              ActionModel.custom(title: context.l10n.saveToFiles, icon: const Icon(Icons.save)),
               () => selectedAction = SettingsExportAction.saveToFiles,
             ),
             (
-              ActionModel.custom(
-                title: context.l10n.share,
-                icon: const Icon(Icons.share),
-              ),
+              ActionModel.custom(title: context.l10n.share, icon: const Icon(Icons.share)),
               () => selectedAction = SettingsExportAction.share,
             ),
           ],
@@ -455,11 +477,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
 
     // Export as ZIP with optional password
     sendEventToBloc<SettingsBloc>(
-      SettingsExport(
-        type: SettingsExportType.zip,
-        password: password.isEmpty ? null : password,
-        action: action,
-      ),
+      SettingsExport(type: SettingsExportType.zip, password: password.isEmpty ? null : password, action: action),
     );
   }
 
@@ -467,10 +485,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
 
   Future<void> _handleImport() async {
     // Show file picker for CSV and ZIP files
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['csv', 'zip'],
-    );
+    final result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['csv', 'zip']);
 
     if (result == null || result.files.isEmpty) return;
 
@@ -506,12 +521,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     }
 
     // Trigger import
-    sendEventToBloc<SettingsBloc>(
-      SettingsImport(
-        file: file,
-        password: password,
-      ),
-    );
+    sendEventToBloc<SettingsBloc>(SettingsImport(file: file, password: password));
   }
 
   Future<void> _handleInvalidPasswordError() async {
@@ -532,12 +542,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
       );
 
       if (password != null) {
-        sendEventToBloc<SettingsBloc>(
-          SettingsImport(
-            file: _lastImportFile!,
-            password: password,
-          ),
-        );
+        sendEventToBloc<SettingsBloc>(SettingsImport(file: _lastImportFile!, password: password));
       }
     }
   }
@@ -548,12 +553,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
       builder: (context) => AlertDialog(
         title: Text(title),
         content: Text(message),
-        actions: [
-          TextButton(
-            child: Text(context.l10n.ok),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-        ],
+        actions: [TextButton(child: Text(context.l10n.ok), onPressed: () => Navigator.of(context).pop())],
       ),
     );
   }
@@ -564,12 +564,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
       builder: (context) => AlertDialog(
         title: Text(title),
         content: Text(message),
-        actions: [
-          TextButton(
-            child: Text(context.l10n.ok),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-        ],
+        actions: [TextButton(child: Text(context.l10n.ok), onPressed: () => Navigator.of(context).pop())],
       ),
     );
   }

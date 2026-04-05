@@ -36,6 +36,10 @@ final class _InsightsRandomMindWidgetState extends State<InsightsRandomMindWidge
       return Container();
     }
 
+    if (nextInt >= listLenght) {
+      nextInt = _random.nextInt(listLenght);
+    }
+
     final Mind randomMind = widget.allMinds[nextInt];
 
     return GestureDetector(

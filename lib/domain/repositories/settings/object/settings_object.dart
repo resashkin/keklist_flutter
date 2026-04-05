@@ -1,4 +1,4 @@
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
 import 'package:keklist/domain/services/language_manager.dart';
 
@@ -38,6 +38,24 @@ final class SettingsObject extends HiveObject {
   @HiveField(11, defaultValue: false)
   late bool isPhotoVideoSourceEnabled;
 
+  @HiveField(12, defaultValue: false)
+  late bool isWeatherSourceEnabled;
+
+  @HiveField(13, defaultValue: null)
+  late double? weatherLatitude;
+
+  @HiveField(14, defaultValue: null)
+  late double? weatherLongitude;
+
+  @HiveField(15, defaultValue: false)
+  late bool isMediaFolderSourceEnabled;
+
+  @HiveField(16, defaultValue: null)
+  late String? mediaFolderPath;
+
+  @HiveField(17, defaultValue: false)
+  late bool isMediaFolderRecursive;
+
   SettingsObject();
 
   KeklistSettings toSettings() => KeklistSettings(
@@ -51,5 +69,11 @@ final class SettingsObject extends HiveObject {
         hasSeenLazyOnboarding: hasSeenLazyOnboarding,
         isDebugMenuVisible: isDebugMenuVisible,
         isPhotoVideoSourceEnabled: isPhotoVideoSourceEnabled,
+        isWeatherSourceEnabled: isWeatherSourceEnabled,
+        weatherLatitude: weatherLatitude,
+        weatherLongitude: weatherLongitude,
+        isMediaFolderSourceEnabled: isMediaFolderSourceEnabled,
+        mediaFolderPath: mediaFolderPath,
+        isMediaFolderRecursive: isMediaFolderRecursive,
       );
 }

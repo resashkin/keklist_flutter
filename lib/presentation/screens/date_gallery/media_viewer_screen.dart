@@ -7,8 +7,9 @@ import 'package:video_player/video_player.dart';
 
 final class MediaViewerScreen extends StatefulWidget {
   final AssetEntity asset;
+  final VoidCallback? onSettings;
 
-  const MediaViewerScreen({super.key, required this.asset});
+  const MediaViewerScreen({super.key, required this.asset, this.onSettings});
 
   @override
   State<MediaViewerScreen> createState() => _MediaViewerScreenState();
@@ -104,6 +105,15 @@ final class _MediaViewerScreenState extends State<MediaViewerScreen> {
           ),
         ),
         actions: [
+          if (widget.onSettings != null)
+            AnimatedOpacity(
+              opacity: _isDragging ? 0.0 : 1.0,
+              duration: const Duration(milliseconds: 150),
+              child: IconButton(
+                icon: const Icon(Icons.settings_outlined, color: Colors.white),
+                onPressed: widget.onSettings,
+              ),
+            ),
           if (_file != null)
             AnimatedOpacity(
               opacity: _isDragging ? 0.0 : 1.0,

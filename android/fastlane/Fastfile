@@ -10,6 +10,9 @@
 #   bundle exec fastlane distribute_firebase            # Distribute to default testers group
 #   bundle exec fastlane distribute_firebase_with_notes notes:"Release notes" groups:"testers,beta"
 #
+# Workarounds:
+#   bundle exec fastlane patch_revenuecat_k2            # Patch purchases_ui_flutter K2 compiler bug
+#
 # Or use the helper script from project root:
 #   ./scripts/distribute_android.sh "Release notes" "group1,group2"
 
@@ -37,6 +40,11 @@ platform :android do
   desc "Build AAB only (for testing)"
   lane :build_aab_flutter do
     sh("cd .. && flutter build appbundle --release")
+  end
+
+  desc "Patch purchases_ui_flutter MapHelper.kt to fix Kotlin K2 compiler visibility bug"
+  lane :patch_revenuecat_k2 do
+    sh("bash ../../scripts/patch_revenuecat_k2.sh")
   end
 
   desc "Build APK and distribute to Firebase App Distribution"

@@ -445,8 +445,119 @@ class AppLocalizationsIt extends AppLocalizations {
       'Foto e video del dispositivo per questo giorno';
 
   @override
-  String get otherSources => 'Altre sorgenti';
+  String get sourcesMediaFolder => 'File multimediali';
+
+  @override
+  String get sourcesMediaFolderSubtitle =>
+      'Foto e video da una cartella personalizzata';
+
+  @override
+  String get mediaFolderSettings => 'File multimediali';
+
+  @override
+  String get mediaFolderNoPath => 'Nessuna cartella selezionata';
+
+  @override
+  String get mediaFolderPickFolder => 'Seleziona cartella';
 
   @override
   String get licenses => 'Licenze';
+
+  @override
+  String get sourcesWeather => 'Meteo';
+
+  @override
+  String get sourcesWeatherSubtitle =>
+      'Condizioni meteorologiche locali per questo giorno';
+
+  @override
+  String get weatherSettings => 'Impostazioni meteo';
+
+  @override
+  String get weatherLatitude => 'Latitudine';
+
+  @override
+  String get weatherLongitude => 'Longitudine';
+
+  @override
+  String get weatherSaveLocation => 'Salva posizione';
+
+  @override
+  String get weatherNoLocation =>
+      'Imposta la posizione nelle impostazioni meteo';
+
+  @override
+  String get weatherUseMyLocation => 'Usa la mia posizione';
+
+  @override
+  String get weatherDetectingLocation => 'Rilevamento posizione...';
+
+  @override
+  String get weatherOrEnterManually => 'o inserisci manualmente';
+
+  @override
+  String get weatherLocationError =>
+      'Impossibile rilevare la posizione. Inserisci manualmente.';
+
+  @override
+  String get weatherLocationServicesDisabled =>
+      'I servizi di localizzazione sono disabilitati. Attivali nelle impostazioni.';
+
+  @override
+  String get weatherLocationPermissionDenied =>
+      'Autorizzazione di localizzazione negata.';
+
+  @override
+  String get weatherLocationPermissionPermanentlyDenied =>
+      'Autorizzazione di localizzazione negata in modo permanente. Apertura impostazioni app.';
+
+  @override
+  String get weatherTemperature => 'Temperatura';
+
+  @override
+  String get weatherUvIndex => 'Indice UV';
+
+  @override
+  String get weatherHumidity => 'Umidità';
+
+  @override
+  String get weatherWindSpeed => 'Velocità del vento';
+
+  @override
+  String get weatherPrecipitation => 'Precipitazioni';
+
+  @override
+  String get audioRecordTitle => 'Registra audio';
+
+  @override
+  String get audioRecordTitleRecording => 'Registrazione…';
+
+  @override
+  String get audioRecordHint => 'Tocca Stop per salvare sul tuo dispositivo.';
+
+  @override
+  String get audioRecordStart => 'Avvia';
+
+  @override
+  String get audioRecordStop => 'Ferma';
+
+  @override
+  String get audioRecordCancel => 'Annulla';
+
+  @override
+  String get audioRecordPermissionError =>
+      'Il permesso per il microfono è necessario per registrare audio.';
+
+  @override
+  String get audioRecordStartError =>
+      'Impossibile avviare la registrazione. Riprova.';
+
+  @override
+  String get audioRecordStopError =>
+      'Impossibile fermare la registrazione. Riprova.';
+
+  @override
+  String proUserFooter(String price, String date) {
+    return 'Sei un utente PRO. Il prossimo pagamento di $price sarà il $date.';
+  }
 }

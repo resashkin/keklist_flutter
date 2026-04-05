@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
 import 'package:keklist/domain/repositories/debug_menu/object/debug_menu_object.dart';
 import 'package:rxdart/rxdart.dart';
@@ -41,6 +41,7 @@ final class DebugMenuHiveRepository implements DebugMenuRepository {
   bool _getDefaultValueForFlag(DebugMenuType flagType) => switch (flagType) {
         DebugMenuType.translation => false,
         DebugMenuType.sensitiveContent => false,
+        DebugMenuType.simulatePro => false,
       };
 
   List<DebugMenuData> _getCurrentDebugMenuItems() =>

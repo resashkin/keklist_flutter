@@ -15,6 +15,8 @@ abstract class SettingsRepository {
   FutureOr<void> updatePreviousAppVersion(String? previousAppVersion);
   FutureOr<void> updateLanguage(SupportedLanguage language);
   FutureOr<void> updateIsPhotoVideoSourceEnabled(bool value);
+  FutureOr<void> updateWeatherSettings({bool? isEnabled, double? latitude, double? longitude});
+  FutureOr<void> updateMediaFolderSource({bool? isEnabled, String? folderPath, bool? isRecursive});
 }
 
 final class KeklistSettings {
@@ -28,6 +30,12 @@ final class KeklistSettings {
   final bool hasSeenLazyOnboarding;
   final bool isDebugMenuVisible;
   final bool isPhotoVideoSourceEnabled;
+  final bool isWeatherSourceEnabled;
+  final double? weatherLatitude;
+  final double? weatherLongitude;
+  final bool isMediaFolderSourceEnabled;
+  final String? mediaFolderPath;
+  final bool isMediaFolderRecursive;
 
   KeklistSettings({
     required this.isMindContentVisible,
@@ -40,6 +48,12 @@ final class KeklistSettings {
     required this.hasSeenLazyOnboarding,
     required this.isDebugMenuVisible,
     required this.isPhotoVideoSourceEnabled,
+    this.isWeatherSourceEnabled = false,
+    this.weatherLatitude,
+    this.weatherLongitude,
+    this.isMediaFolderSourceEnabled = false,
+    this.mediaFolderPath,
+    this.isMediaFolderRecursive = false,
   });
 
   SettingsObject toObject() => SettingsObject()
@@ -52,7 +66,13 @@ final class KeklistSettings {
     ..dataSchemaVersion = dataSchemaVersion
     ..hasSeenLazyOnboarding = hasSeenLazyOnboarding
     ..isDebugMenuVisible = isDebugMenuVisible
-    ..isPhotoVideoSourceEnabled = isPhotoVideoSourceEnabled;
+    ..isPhotoVideoSourceEnabled = isPhotoVideoSourceEnabled
+    ..isWeatherSourceEnabled = isWeatherSourceEnabled
+    ..weatherLatitude = weatherLatitude
+    ..weatherLongitude = weatherLongitude
+    ..isMediaFolderSourceEnabled = isMediaFolderSourceEnabled
+    ..mediaFolderPath = mediaFolderPath
+    ..isMediaFolderRecursive = isMediaFolderRecursive;
 
   factory KeklistSettings.initial() => KeklistSettings(
         isMindContentVisible: true,
@@ -65,6 +85,12 @@ final class KeklistSettings {
         hasSeenLazyOnboarding: false,
         isDebugMenuVisible: false,
         isPhotoVideoSourceEnabled: false,
+        isWeatherSourceEnabled: false,
+        weatherLatitude: null,
+        weatherLongitude: null,
+        isMediaFolderSourceEnabled: false,
+        mediaFolderPath: null,
+        isMediaFolderRecursive: false,
       );
 
   /// Detect device locale and return supported language or fallback to English

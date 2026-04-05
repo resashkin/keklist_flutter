@@ -443,8 +443,117 @@ class AppLocalizationsEn extends AppLocalizations {
       'Device photos and videos for this day';
 
   @override
-  String get otherSources => 'Other sources';
+  String get sourcesMediaFolder => 'Media Files';
+
+  @override
+  String get sourcesMediaFolderSubtitle =>
+      'Photos & videos from a custom folder';
+
+  @override
+  String get mediaFolderSettings => 'Media Files';
+
+  @override
+  String get mediaFolderNoPath => 'No folder selected';
+
+  @override
+  String get mediaFolderPickFolder => 'Pick Folder';
 
   @override
   String get licenses => 'Licenses';
+
+  @override
+  String get sourcesWeather => 'Weather';
+
+  @override
+  String get sourcesWeatherSubtitle => 'Local weather conditions for this day';
+
+  @override
+  String get weatherSettings => 'Weather Settings';
+
+  @override
+  String get weatherLatitude => 'Latitude';
+
+  @override
+  String get weatherLongitude => 'Longitude';
+
+  @override
+  String get weatherSaveLocation => 'Save location';
+
+  @override
+  String get weatherNoLocation =>
+      'Set location in weather settings to see weather';
+
+  @override
+  String get weatherUseMyLocation => 'Use my location';
+
+  @override
+  String get weatherDetectingLocation => 'Detecting location...';
+
+  @override
+  String get weatherOrEnterManually => 'or enter manually';
+
+  @override
+  String get weatherLocationError =>
+      'Could not detect location. Please enter manually.';
+
+  @override
+  String get weatherLocationServicesDisabled =>
+      'Location services are disabled. Please enable them in Settings.';
+
+  @override
+  String get weatherLocationPermissionDenied => 'Location permission denied.';
+
+  @override
+  String get weatherLocationPermissionPermanentlyDenied =>
+      'Location permission is permanently denied. Opening app settings.';
+
+  @override
+  String get weatherTemperature => 'Temperature';
+
+  @override
+  String get weatherUvIndex => 'UV Index';
+
+  @override
+  String get weatherHumidity => 'Humidity';
+
+  @override
+  String get weatherWindSpeed => 'Wind Speed';
+
+  @override
+  String get weatherPrecipitation => 'Precipitation';
+
+  @override
+  String get audioRecordTitle => 'Record audio';
+
+  @override
+  String get audioRecordTitleRecording => 'Recording…';
+
+  @override
+  String get audioRecordHint => 'Tap Stop to save to your device.';
+
+  @override
+  String get audioRecordStart => 'Start';
+
+  @override
+  String get audioRecordStop => 'Stop';
+
+  @override
+  String get audioRecordCancel => 'Cancel';
+
+  @override
+  String get audioRecordPermissionError =>
+      'Microphone permission is required to record audio.';
+
+  @override
+  String get audioRecordStartError =>
+      'Unable to start recording. Please try again.';
+
+  @override
+  String get audioRecordStopError =>
+      'Unable to stop the recording. Please try again.';
+
+  @override
+  String proUserFooter(String price, String date) {
+    return 'You are a PRO user. Next payment $price will be at $date.';
+  }
 }

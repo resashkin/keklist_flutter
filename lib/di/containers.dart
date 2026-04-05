@@ -1,5 +1,5 @@
 import 'package:flutter_simple_dependency_injection/injector.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 import 'package:keklist/domain/constants.dart';
 import 'package:keklist/domain/hive_constants.dart';
 import 'package:keklist/domain/repositories/tabs/tabs_settings_repository.dart';
@@ -14,7 +14,11 @@ import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dar
 import 'package:keklist/domain/repositories/debug_menu/debug_menu_hive_repository.dart';
 import 'package:keklist/domain/repositories/debug_menu/object/debug_menu_object.dart';
 import 'package:keklist/domain/repositories/files/app_file_repository.dart';
+import 'package:keklist/domain/repositories/weather/object/weather_cache_object.dart';
+import 'package:keklist/domain/repositories/weather/weather_hive_repository.dart';
+import 'package:keklist/domain/repositories/weather/weather_repository.dart';
 import 'package:keklist/domain/services/export_import/export_import_service.dart';
+import 'package:keklist/domain/services/weather/weather_api_service.dart';
 import 'package:keklist/presentation/core/helpers/platform_utils.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'package:keklist/presentation/cubits/mind_searcher/mind_searcher_cubit.dart';
@@ -60,6 +64,13 @@ final class MainContainer {
     );
     injector.map<TabsSettingsRepository>(
       (injector) => TabsSettingsSharedPreferencesRepository(preferences: _streamingSharedPreferences),
+    );
+    injector.map<WeatherRepository>(
+      (injector) => WeatherHiveRepository(
+        box: Hive.box<WeatherCacheObject>(HiveConstants.weatherCacheBoxName),
+        apiService: WeatherApiService(),
+      ),
+      isSingleton: true,
     );
     return injector;
   }

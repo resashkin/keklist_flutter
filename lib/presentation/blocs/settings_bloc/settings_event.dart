@@ -76,3 +76,21 @@ final class SettingsTogglePhotoVideoSource extends SettingsEvent {
   final bool isEnabled;
   const SettingsTogglePhotoVideoSource({required this.isEnabled});
 }
+
+final class SettingsToggleWeatherSource extends SettingsEvent {
+  final bool isEnabled;
+  const SettingsToggleWeatherSource({required this.isEnabled});
+}
+
+final class SettingsUpdateWeatherLocation extends SettingsEvent {
+  final double latitude;
+  final double longitude;
+  const SettingsUpdateWeatherLocation({required this.latitude, required this.longitude});
+}
+
+final class SettingsUpdateMediaFolderSource extends SettingsEvent {
+  final bool? isEnabled;
+  final String? folderPath;
+  final bool? isRecursive;
+  const SettingsUpdateMediaFolderSource({this.isEnabled, this.folderPath, this.isRecursive});
+}

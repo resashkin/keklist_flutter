@@ -8,7 +8,7 @@ part of 'settings_object.dart';
 
 class SettingsObjectAdapter extends TypeAdapter<SettingsObject> {
   @override
-  final int typeId = 0;
+  final typeId = 0;
 
   @override
   SettingsObject read(BinaryReader reader) {
@@ -23,17 +23,28 @@ class SettingsObjectAdapter extends TypeAdapter<SettingsObject> {
       ..shouldShowTitles = fields[5] == null ? true : fields[5] as bool
       ..userName = fields[6] as String?
       ..language = fields[7] == null ? 'en' : fields[7] as String
-      ..dataSchemaVersion = fields[8] == null ? 0 : fields[8] as int
+      ..dataSchemaVersion = fields[8] == null ? 0 : (fields[8] as num).toInt()
       ..hasSeenLazyOnboarding = fields[9] == null ? false : fields[9] as bool
       ..isDebugMenuVisible = fields[10] == null ? false : fields[10] as bool
-      ..isPhotoVideoSourceEnabled =
-          fields[11] == null ? false : fields[11] as bool;
+      ..isPhotoVideoSourceEnabled = fields[11] == null
+          ? false
+          : fields[11] as bool
+      ..isWeatherSourceEnabled = fields[12] == null ? false : fields[12] as bool
+      ..weatherLatitude = (fields[13] as num?)?.toDouble()
+      ..weatherLongitude = (fields[14] as num?)?.toDouble()
+      ..isMediaFolderSourceEnabled = fields[15] == null
+          ? false
+          : fields[15] as bool
+      ..mediaFolderPath = fields[16] as String?
+      ..isMediaFolderRecursive = fields[17] == null
+          ? false
+          : fields[17] as bool;
   }
 
   @override
   void write(BinaryWriter writer, SettingsObject obj) {
     writer
-      ..writeByte(10)
+      ..writeByte(16)
       ..writeByte(0)
       ..write(obj.isMindContentVisible)
       ..writeByte(1)
@@ -53,7 +64,19 @@ class SettingsObjectAdapter extends TypeAdapter<SettingsObject> {
       ..writeByte(10)
       ..write(obj.isDebugMenuVisible)
       ..writeByte(11)
-      ..write(obj.isPhotoVideoSourceEnabled);
+      ..write(obj.isPhotoVideoSourceEnabled)
+      ..writeByte(12)
+      ..write(obj.isWeatherSourceEnabled)
+      ..writeByte(13)
+      ..write(obj.weatherLatitude)
+      ..writeByte(14)
+      ..write(obj.weatherLongitude)
+      ..writeByte(15)
+      ..write(obj.isMediaFolderSourceEnabled)
+      ..writeByte(16)
+      ..write(obj.mediaFolderPath)
+      ..writeByte(17)
+      ..write(obj.isMediaFolderRecursive);
   }
 
   @override

@@ -7,11 +7,11 @@ part of 'tabs_settings.dart';
 // **************************************************************************
 
 TabsSettings _$TabsSettingsFromJson(Map<String, dynamic> json) => TabsSettings(
-      selectedTabModels: (json['selectedTabModels'] as List<dynamic>)
-          .map((e) => TabModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      defaultSelectedTabIndex: (json['defaultSelectedTabIndex'] as num).toInt(),
-    );
+  selectedTabModels: (json['selectedTabModels'] as List<dynamic>)
+      .map((e) => TabModel.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  defaultSelectedTabIndex: (json['defaultSelectedTabIndex'] as num).toInt(),
+);
 
 Map<String, dynamic> _$TabsSettingsToJson(TabsSettings instance) =>
     <String, dynamic>{
@@ -19,13 +19,12 @@ Map<String, dynamic> _$TabsSettingsToJson(TabsSettings instance) =>
       'defaultSelectedTabIndex': instance.defaultSelectedTabIndex,
     };
 
-TabModel _$TabModelFromJson(Map<String, dynamic> json) => TabModel(
-      type: $enumDecode(_$TabTypeEnumMap, json['type']),
-    );
+TabModel _$TabModelFromJson(Map<String, dynamic> json) =>
+    TabModel(type: $enumDecode(_$TabTypeEnumMap, json['type']));
 
 Map<String, dynamic> _$TabModelToJson(TabModel instance) => <String, dynamic>{
-      'type': _$TabTypeEnumMap[instance.type]!,
-    };
+  'type': _$TabTypeEnumMap[instance.type]!,
+};
 
 const _$TabTypeEnumMap = {
   TabType.calendar: 'calendar',

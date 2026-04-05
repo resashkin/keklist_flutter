@@ -6,7 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 import 'package:keklist/domain/repositories/tabs/tabs_settings_repository.dart';
 import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
 import 'package:keklist/domain/repositories/files/app_file_repository.dart';
@@ -15,6 +15,8 @@ import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 import 'package:keklist/domain/repositories/mind/mind_hive_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_hive_repository.dart';
+import 'package:keklist/domain/repositories/weather/object/weather_cache_object.dart';
+import 'package:keklist/domain/repositories/weather/weather_repository.dart';
 import 'package:keklist/domain/migrations/migration_runner.dart';
 import 'package:keklist/domain/services/export_import/export_import_service.dart';
 import 'package:keklist/keklist_app.dart';
@@ -27,6 +29,7 @@ import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bl
 import 'package:keklist/presentation/blocs/user_profile_bloc/user_profile_bloc.dart';
 import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
 import 'package:keklist/presentation/blocs/lazy_onboarding_bloc/lazy_onboarding_bloc.dart';
+import 'package:keklist/presentation/blocs/membership_bloc/membership_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
@@ -71,17 +74,18 @@ Future<void> main() async {
     if (kDebugMode) {
       return dotenv.env['REVENUE_CAT_TEST_API_KEY']!;
     } else {
-      return dotenv.env['REVENUE_CAT_PROD_API_KEY']!;
+      switch (defaultTargetPlatform) {
+        case TargetPlatform.iOS:
+          return dotenv.env['REVENUE_CAT_PROD_API_IOS_KEY']!;
+        case TargetPlatform.android:
+          return dotenv.env['REVENUE_CAT_PROD_API_ANDROID_KEY']!;
+        default:
+          return dotenv.env['REVENUE_CAT_TEST_API_KEY']!;
+      }
     }
   }();
+  print(revenueCatApiKey);
   await Purchases.configure(PurchasesConfiguration(revenueCatApiKey));
-
-  // try {
-  //   CustomerInfo customerInfo = await Purchases.getCustomerInfo();
-  //   // access latest customerInfo
-  // } on PlatformException {
-  //   // Error fetching customer info
-  // }
 
   final Widget application = _getApplication(mainInjector);
   runApp(application);
@@ -105,6 +109,7 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
   providers: [
     RepositoryProvider(create: (context) => mainInjector.get<MindRepository>()),
     RepositoryProvider(create: (context) => mainInjector.get<AppFileRepository>()),
+    RepositoryProvider(create: (context) => mainInjector.get<WeatherRepository>()),
   ],
   child: MultiBlocProvider(
     providers: [
@@ -120,7 +125,6 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
       BlocProvider(
         create: (context) => SettingsBloc(
           repository: mainInjector.get<SettingsRepository>(),
-          mindRepository: mainInjector.get<MindRepository>(),
           exportImportService: mainInjector.get<ExportImportService>(),
         ),
       ),
@@ -138,6 +142,11 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
         ),
       ),
       BlocProvider(create: (context) => AudioPlayerBloc()),
+      BlocProvider(
+        create: (context) =>
+            MembershipBloc(debugMenuRepository: mainInjector.get<DebugMenuRepository>())
+              ..add(const MembershipGetEvent()),
+      ),
       BlocProvider(
         create: (context) => LazyOnboardingBloc(
           mindRepository: mainInjector.get<MindRepository>(),
@@ -173,6 +182,7 @@ Future<void> _initHive() async {
   Hive.registerAdapter<SettingsObject>(SettingsObjectAdapter());
   Hive.registerAdapter<MindObject>(MindObjectAdapter());
   Hive.registerAdapter<DebugMenuObject>(DebugMenuObjectAdapter());
+  Hive.registerAdapter<WeatherCacheObject>(WeatherCacheObjectAdapter());
   await Hive.initFlutter();
   final Box<SettingsObject> settingsBox = await Hive.openBox<SettingsObject>(HiveConstants.settingsBoxName);
   if (settingsBox.get(HiveConstants.globalSettingsIndex) == null) {
@@ -181,6 +191,7 @@ Future<void> _initHive() async {
   }
   final Box<MindObject> mindBox = await Hive.openBox<MindObject>(HiveConstants.mindBoxName);
   await Hive.openBox<DebugMenuObject>(HiveConstants.debugMenuBoxName);
+  await Hive.openBox<WeatherCacheObject>(HiveConstants.weatherCacheBoxName);
 
   // Run data migrations after boxes are opened
   await _runMigrations(settingsBox, mindBox);
@@ -201,44 +212,34 @@ final class _LoggerBlocObserver extends BlocObserver {
   void onEvent(Bloc bloc, Object? event) {
     super.onEvent(bloc, event);
 
-    if (kDebugMode) {
-      print('onEvent: $event');
-    }
+    print('onEvent: $event');
   }
 
   @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
     super.onError(bloc, error, stackTrace);
 
-    if (kDebugMode) {
-      print(error);
-    }
+    print(error);
   }
 
   @override
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
 
-    if (kDebugMode) {
-      print('onChange: ${bloc.state}');
-    }
+    print('onChange: ${bloc.state}');
   }
 
   @override
   void onClose(BlocBase bloc) {
     super.onClose(bloc);
 
-    if (kDebugMode) {
-      print('onClose: ${bloc.runtimeType}');
-    }
+    print('onClose: ${bloc.runtimeType}');
   }
 
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
 
-    if (kDebugMode) {
-      print('onTransition: $bloc.state');
-    }
+    print('onTransition: $bloc.state');
   }
 }

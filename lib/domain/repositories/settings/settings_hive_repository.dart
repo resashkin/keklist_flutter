@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 import 'package:keklist/domain/hive_constants.dart';
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
@@ -85,5 +85,25 @@ final class SettingsHiveRepository implements SettingsRepository {
     final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.globalSettingsIndex);
     settingsObject?.isPhotoVideoSourceEnabled = value;
     await settingsObject?.save();
+  }
+
+  @override
+  FutureOr<void> updateWeatherSettings({bool? isEnabled, double? latitude, double? longitude}) async {
+    final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.globalSettingsIndex);
+    if (settingsObject == null) return;
+    if (isEnabled != null) settingsObject.isWeatherSourceEnabled = isEnabled;
+    if (latitude != null) settingsObject.weatherLatitude = latitude;
+    if (longitude != null) settingsObject.weatherLongitude = longitude;
+    await settingsObject.save();
+  }
+
+  @override
+  FutureOr<void> updateMediaFolderSource({bool? isEnabled, String? folderPath, bool? isRecursive}) async {
+    final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.globalSettingsIndex);
+    if (settingsObject == null) return;
+    if (isEnabled != null) settingsObject.isMediaFolderSourceEnabled = isEnabled;
+    if (folderPath != null) settingsObject.mediaFolderPath = folderPath;
+    if (isRecursive != null) settingsObject.isMediaFolderRecursive = isRecursive;
+    await settingsObject.save();
   }
 }

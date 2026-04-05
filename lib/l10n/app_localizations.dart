@@ -951,17 +951,215 @@ abstract class AppLocalizations {
   /// **'Device photos and videos for this day'**
   String get sourcesPhotoVideoSubtitle;
 
-  /// Other sources section title
+  /// Media files source item title
   ///
   /// In en, this message translates to:
-  /// **'Other sources'**
-  String get otherSources;
+  /// **'Media Files'**
+  String get sourcesMediaFolder;
+
+  /// Media folder source item subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Photos & videos from a custom folder'**
+  String get sourcesMediaFolderSubtitle;
+
+  /// Media files settings bottom sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Media Files'**
+  String get mediaFolderSettings;
+
+  /// Message when no media folder is selected
+  ///
+  /// In en, this message translates to:
+  /// **'No folder selected'**
+  String get mediaFolderNoPath;
+
+  /// Button to pick a media folder
+  ///
+  /// In en, this message translates to:
+  /// **'Pick Folder'**
+  String get mediaFolderPickFolder;
 
   /// Licenses menu item
   ///
   /// In en, this message translates to:
   /// **'Licenses'**
   String get licenses;
+
+  /// Weather source item title
+  ///
+  /// In en, this message translates to:
+  /// **'Weather'**
+  String get sourcesWeather;
+
+  /// Weather source item subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Local weather conditions for this day'**
+  String get sourcesWeatherSubtitle;
+
+  /// Weather settings bottom sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Weather Settings'**
+  String get weatherSettings;
+
+  /// Latitude input label
+  ///
+  /// In en, this message translates to:
+  /// **'Latitude'**
+  String get weatherLatitude;
+
+  /// Longitude input label
+  ///
+  /// In en, this message translates to:
+  /// **'Longitude'**
+  String get weatherLongitude;
+
+  /// Save location button
+  ///
+  /// In en, this message translates to:
+  /// **'Save location'**
+  String get weatherSaveLocation;
+
+  /// Message shown when weather location is not configured
+  ///
+  /// In en, this message translates to:
+  /// **'Set location in weather settings to see weather'**
+  String get weatherNoLocation;
+
+  /// Button to detect GPS location automatically
+  ///
+  /// In en, this message translates to:
+  /// **'Use my location'**
+  String get weatherUseMyLocation;
+
+  /// Button label while GPS is being read
+  ///
+  /// In en, this message translates to:
+  /// **'Detecting location...'**
+  String get weatherDetectingLocation;
+
+  /// Divider label between GPS button and manual input
+  ///
+  /// In en, this message translates to:
+  /// **'or enter manually'**
+  String get weatherOrEnterManually;
+
+  /// Generic GPS error
+  ///
+  /// In en, this message translates to:
+  /// **'Could not detect location. Please enter manually.'**
+  String get weatherLocationError;
+
+  /// Error when device location services are off
+  ///
+  /// In en, this message translates to:
+  /// **'Location services are disabled. Please enable them in Settings.'**
+  String get weatherLocationServicesDisabled;
+
+  /// Error when location permission is denied
+  ///
+  /// In en, this message translates to:
+  /// **'Location permission denied.'**
+  String get weatherLocationPermissionDenied;
+
+  /// Error when location permission is permanently denied
+  ///
+  /// In en, this message translates to:
+  /// **'Location permission is permanently denied. Opening app settings.'**
+  String get weatherLocationPermissionPermanentlyDenied;
+
+  /// Temperature parameter label
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature'**
+  String get weatherTemperature;
+
+  /// UV Index parameter label
+  ///
+  /// In en, this message translates to:
+  /// **'UV Index'**
+  String get weatherUvIndex;
+
+  /// Humidity parameter label
+  ///
+  /// In en, this message translates to:
+  /// **'Humidity'**
+  String get weatherHumidity;
+
+  /// Wind Speed parameter label
+  ///
+  /// In en, this message translates to:
+  /// **'Wind Speed'**
+  String get weatherWindSpeed;
+
+  /// Precipitation parameter label
+  ///
+  /// In en, this message translates to:
+  /// **'Precipitation'**
+  String get weatherPrecipitation;
+
+  /// Title of the audio recorder bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Record audio'**
+  String get audioRecordTitle;
+
+  /// Title shown while audio is being recorded
+  ///
+  /// In en, this message translates to:
+  /// **'Recording…'**
+  String get audioRecordTitleRecording;
+
+  /// Hint shown while recording is in progress
+  ///
+  /// In en, this message translates to:
+  /// **'Tap Stop to save to your device.'**
+  String get audioRecordHint;
+
+  /// Button to start recording
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get audioRecordStart;
+
+  /// Button to stop recording
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get audioRecordStop;
+
+  /// Button to cancel and dismiss the recorder
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get audioRecordCancel;
+
+  /// Error when microphone permission is missing
+  ///
+  /// In en, this message translates to:
+  /// **'Microphone permission is required to record audio.'**
+  String get audioRecordPermissionError;
+
+  /// Error when recording fails to start
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to start recording. Please try again.'**
+  String get audioRecordStartError;
+
+  /// Error when recording fails to stop
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to stop the recording. Please try again.'**
+  String get audioRecordStopError;
+
+  /// Footer in APPLICATION settings section when user has active PRO subscription
+  ///
+  /// In en, this message translates to:
+  /// **'You are a PRO user. Next payment {price} will be at {date}.'**
+  String proUserFooter(String price, String date);
 }
 
 class _AppLocalizationsDelegate

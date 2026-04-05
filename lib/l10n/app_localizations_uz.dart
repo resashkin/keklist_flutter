@@ -445,8 +445,118 @@ class AppLocalizationsUz extends AppLocalizations {
       'Ushbu kun uchun qurilma foto va videolari';
 
   @override
-  String get otherSources => 'Boshqa manbalar';
+  String get sourcesMediaFolder => 'Media fayllar';
+
+  @override
+  String get sourcesMediaFolderSubtitle =>
+      'Tanlangan papkadan foto va videolar';
+
+  @override
+  String get mediaFolderSettings => 'Media fayllar';
+
+  @override
+  String get mediaFolderNoPath => 'Papka tanlanmagan';
+
+  @override
+  String get mediaFolderPickFolder => 'Papkani tanlash';
 
   @override
   String get licenses => 'Litsenziyalar';
+
+  @override
+  String get sourcesWeather => 'Ob-havo';
+
+  @override
+  String get sourcesWeatherSubtitle =>
+      'Ushbu kun uchun mahalliy ob-havo sharoitlari';
+
+  @override
+  String get weatherSettings => 'Ob-havo sozlamalari';
+
+  @override
+  String get weatherLatitude => 'Kenglik';
+
+  @override
+  String get weatherLongitude => 'Uzunlik';
+
+  @override
+  String get weatherSaveLocation => 'Joylashuvni saqlash';
+
+  @override
+  String get weatherNoLocation =>
+      'Ob-havoni ko\'rish uchun joylashuvni sozlang';
+
+  @override
+  String get weatherUseMyLocation => 'Mening joylashuvimdan foydalanish';
+
+  @override
+  String get weatherDetectingLocation => 'Joylashuv aniqlanmoqda...';
+
+  @override
+  String get weatherOrEnterManually => 'yoki qo\'lda kiriting';
+
+  @override
+  String get weatherLocationError =>
+      'Joylashuvni aniqlab bo\'lmadi. Iltimos, qo\'lda kiriting.';
+
+  @override
+  String get weatherLocationServicesDisabled =>
+      'Joylashuv xizmatlari o\'chirilgan. Sozlamalarda yoqing.';
+
+  @override
+  String get weatherLocationPermissionDenied => 'Joylashuv ruxsati rad etildi.';
+
+  @override
+  String get weatherLocationPermissionPermanentlyDenied =>
+      'Joylashuv ruxsati doimiy ravishda rad etildi. Ilova sozlamalari ochilmoqda.';
+
+  @override
+  String get weatherTemperature => 'Harorat';
+
+  @override
+  String get weatherUvIndex => 'UV indeks';
+
+  @override
+  String get weatherHumidity => 'Namlik';
+
+  @override
+  String get weatherWindSpeed => 'Shamol tezligi';
+
+  @override
+  String get weatherPrecipitation => 'Yog\'ingarchilik';
+
+  @override
+  String get audioRecordTitle => 'Audio yozish';
+
+  @override
+  String get audioRecordTitleRecording => 'Yozilmoqda…';
+
+  @override
+  String get audioRecordHint => 'Saqlash uchun «To\'xtatish»ni bosing.';
+
+  @override
+  String get audioRecordStart => 'Boshlash';
+
+  @override
+  String get audioRecordStop => 'To\'xtatish';
+
+  @override
+  String get audioRecordCancel => 'Bekor qilish';
+
+  @override
+  String get audioRecordPermissionError =>
+      'Audio yozish uchun mikrofon ruxsati talab qilinadi.';
+
+  @override
+  String get audioRecordStartError =>
+      'Yozishni boshlash imkoni bo\'lmadi. Qayta urinib ko\'ring.';
+
+  @override
+  String get audioRecordStopError =>
+      'Yozishni to\'xtatish imkoni bo\'lmadi. Qayta urinib ko\'ring.';
+
+  @override
+  String proUserFooter(String price, String date) {
+    return 'Siz PRO foydalanuvchisiz. Keyingi $price to\'lov $date da bo\'ladi.';
+  }
 }

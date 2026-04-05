@@ -447,8 +447,120 @@ class AppLocalizationsDe extends AppLocalizations {
       'Gerätefotos und -videos für diesen Tag';
 
   @override
-  String get otherSources => 'Andere Quellen';
+  String get sourcesMediaFolder => 'Mediendateien';
+
+  @override
+  String get sourcesMediaFolderSubtitle =>
+      'Fotos und Videos aus einem benutzerdefinierten Ordner';
+
+  @override
+  String get mediaFolderSettings => 'Mediendateien';
+
+  @override
+  String get mediaFolderNoPath => 'Kein Ordner ausgewählt';
+
+  @override
+  String get mediaFolderPickFolder => 'Ordner auswählen';
 
   @override
   String get licenses => 'Lizenzen';
+
+  @override
+  String get sourcesWeather => 'Wetter';
+
+  @override
+  String get sourcesWeatherSubtitle =>
+      'Lokale Wetterbedingungen für diesen Tag';
+
+  @override
+  String get weatherSettings => 'Wettereinstellungen';
+
+  @override
+  String get weatherLatitude => 'Breitengrad';
+
+  @override
+  String get weatherLongitude => 'Längengrad';
+
+  @override
+  String get weatherSaveLocation => 'Standort speichern';
+
+  @override
+  String get weatherNoLocation =>
+      'Standort in den Wettereinstellungen festlegen';
+
+  @override
+  String get weatherUseMyLocation => 'Meinen Standort verwenden';
+
+  @override
+  String get weatherDetectingLocation => 'Standort wird erkannt...';
+
+  @override
+  String get weatherOrEnterManually => 'oder manuell eingeben';
+
+  @override
+  String get weatherLocationError =>
+      'Standort konnte nicht erkannt werden. Bitte manuell eingeben.';
+
+  @override
+  String get weatherLocationServicesDisabled =>
+      'Standortdienste sind deaktiviert. Bitte in den Einstellungen aktivieren.';
+
+  @override
+  String get weatherLocationPermissionDenied =>
+      'Standortberechtigung verweigert.';
+
+  @override
+  String get weatherLocationPermissionPermanentlyDenied =>
+      'Standortberechtigung dauerhaft verweigert. App-Einstellungen werden geöffnet.';
+
+  @override
+  String get weatherTemperature => 'Temperatur';
+
+  @override
+  String get weatherUvIndex => 'UV-Index';
+
+  @override
+  String get weatherHumidity => 'Luftfeuchtigkeit';
+
+  @override
+  String get weatherWindSpeed => 'Windgeschwindigkeit';
+
+  @override
+  String get weatherPrecipitation => 'Niederschlag';
+
+  @override
+  String get audioRecordTitle => 'Audio aufnehmen';
+
+  @override
+  String get audioRecordTitleRecording => 'Aufnahme läuft…';
+
+  @override
+  String get audioRecordHint =>
+      'Tippe auf Stopp, um die Aufnahme zu speichern.';
+
+  @override
+  String get audioRecordStart => 'Starten';
+
+  @override
+  String get audioRecordStop => 'Stopp';
+
+  @override
+  String get audioRecordCancel => 'Abbrechen';
+
+  @override
+  String get audioRecordPermissionError =>
+      'Mikrofonberechtigung ist erforderlich, um Audio aufzunehmen.';
+
+  @override
+  String get audioRecordStartError =>
+      'Aufnahme konnte nicht gestartet werden. Bitte versuche es erneut.';
+
+  @override
+  String get audioRecordStopError =>
+      'Aufnahme konnte nicht gestoppt werden. Bitte versuche es erneut.';
+
+  @override
+  String proUserFooter(String price, String date) {
+    return 'Du bist PRO-Nutzer. Die nächste Zahlung von $price erfolgt am $date.';
+  }
 }

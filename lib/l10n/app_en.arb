@@ -565,12 +565,148 @@
     "@sourcesPhotoVideoSubtitle": {
         "description": "Photo and video source item subtitle"
     },
-    "otherSources": "Other sources",
-    "@otherSources": {
-        "description": "Other sources section title"
+    "sourcesMediaFolder": "Media Files",
+    "@sourcesMediaFolder": {
+        "description": "Media files source item title"
+    },
+    "sourcesMediaFolderSubtitle": "Photos & videos from a custom folder",
+    "@sourcesMediaFolderSubtitle": {
+        "description": "Media folder source item subtitle"
+    },
+    "mediaFolderSettings": "Media Files",
+    "@mediaFolderSettings": {
+        "description": "Media files settings bottom sheet title"
+    },
+    "mediaFolderNoPath": "No folder selected",
+    "@mediaFolderNoPath": {
+        "description": "Message when no media folder is selected"
+    },
+    "mediaFolderPickFolder": "Pick Folder",
+    "@mediaFolderPickFolder": {
+        "description": "Button to pick a media folder"
     },
     "licenses": "Licenses",
     "@licenses": {
         "description": "Licenses menu item"
+    },
+    "sourcesWeather": "Weather",
+    "@sourcesWeather": {
+        "description": "Weather source item title"
+    },
+    "sourcesWeatherSubtitle": "Local weather conditions for this day",
+    "@sourcesWeatherSubtitle": {
+        "description": "Weather source item subtitle"
+    },
+    "weatherSettings": "Weather Settings",
+    "@weatherSettings": {
+        "description": "Weather settings bottom sheet title"
+    },
+    "weatherLatitude": "Latitude",
+    "@weatherLatitude": {
+        "description": "Latitude input label"
+    },
+    "weatherLongitude": "Longitude",
+    "@weatherLongitude": {
+        "description": "Longitude input label"
+    },
+    "weatherSaveLocation": "Save location",
+    "@weatherSaveLocation": {
+        "description": "Save location button"
+    },
+    "weatherNoLocation": "Set location in weather settings to see weather",
+    "@weatherNoLocation": {
+        "description": "Message shown when weather location is not configured"
+    },
+    "weatherUseMyLocation": "Use my location",
+    "@weatherUseMyLocation": {
+        "description": "Button to detect GPS location automatically"
+    },
+    "weatherDetectingLocation": "Detecting location...",
+    "@weatherDetectingLocation": {
+        "description": "Button label while GPS is being read"
+    },
+    "weatherOrEnterManually": "or enter manually",
+    "@weatherOrEnterManually": {
+        "description": "Divider label between GPS button and manual input"
+    },
+    "weatherLocationError": "Could not detect location. Please enter manually.",
+    "@weatherLocationError": {
+        "description": "Generic GPS error"
+    },
+    "weatherLocationServicesDisabled": "Location services are disabled. Please enable them in Settings.",
+    "@weatherLocationServicesDisabled": {
+        "description": "Error when device location services are off"
+    },
+    "weatherLocationPermissionDenied": "Location permission denied.",
+    "@weatherLocationPermissionDenied": {
+        "description": "Error when location permission is denied"
+    },
+    "weatherLocationPermissionPermanentlyDenied": "Location permission is permanently denied. Opening app settings.",
+    "@weatherLocationPermissionPermanentlyDenied": {
+        "description": "Error when location permission is permanently denied"
+    },
+    "weatherTemperature": "Temperature",
+    "@weatherTemperature": {
+        "description": "Temperature parameter label"
+    },
+    "weatherUvIndex": "UV Index",
+    "@weatherUvIndex": {
+        "description": "UV Index parameter label"
+    },
+    "weatherHumidity": "Humidity",
+    "@weatherHumidity": {
+        "description": "Humidity parameter label"
+    },
+    "weatherWindSpeed": "Wind Speed",
+    "@weatherWindSpeed": {
+        "description": "Wind Speed parameter label"
+    },
+    "weatherPrecipitation": "Precipitation",
+    "@weatherPrecipitation": {
+        "description": "Precipitation parameter label"
+    },
+    "audioRecordTitle": "Record audio",
+    "@audioRecordTitle": {
+        "description": "Title of the audio recorder bottom sheet"
+    },
+    "audioRecordTitleRecording": "Recording…",
+    "@audioRecordTitleRecording": {
+        "description": "Title shown while audio is being recorded"
+    },
+    "audioRecordHint": "Tap Stop to save to your device.",
+    "@audioRecordHint": {
+        "description": "Hint shown while recording is in progress"
+    },
+    "audioRecordStart": "Start",
+    "@audioRecordStart": {
+        "description": "Button to start recording"
+    },
+    "audioRecordStop": "Stop",
+    "@audioRecordStop": {
+        "description": "Button to stop recording"
+    },
+    "audioRecordCancel": "Cancel",
+    "@audioRecordCancel": {
+        "description": "Button to cancel and dismiss the recorder"
+    },
+    "audioRecordPermissionError": "Microphone permission is required to record audio.",
+    "@audioRecordPermissionError": {
+        "description": "Error when microphone permission is missing"
+    },
+    "audioRecordStartError": "Unable to start recording. Please try again.",
+    "@audioRecordStartError": {
+        "description": "Error when recording fails to start"
+    },
+    "audioRecordStopError": "Unable to stop the recording. Please try again.",
+    "@audioRecordStopError": {
+        "description": "Error when recording fails to stop"
+    },
+    "proUserFooter": "You are a PRO user. Next payment {price} will be at {date}.",
+    "@proUserFooter": {
+        "description": "Footer in APPLICATION settings section when user has active PRO subscription",
+        "placeholders": {
+            "price": { "type": "String" },
+            "date": { "type": "String" }
+        }
     }
 }

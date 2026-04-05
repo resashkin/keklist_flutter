@@ -97,6 +97,8 @@ final class _MindCollectionBody extends StatelessWidget {
                             trueChild: Column(
                               children: [
                                 const SizedBox(height: 12.0),
+                                const DottedDivider(),
+                                const SizedBox(height: 12.0),
                                 Text(
                                   '${context.l10n.week} #${_getWeekNumber(currentDayDateIndex)}',
                                   style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),

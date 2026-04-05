@@ -444,8 +444,117 @@ class AppLocalizationsKk extends AppLocalizations {
       'Осы күнгі құрылғының фотолары мен бейнелері';
 
   @override
-  String get otherSources => 'Басқа дереккөздер';
+  String get sourcesMediaFolder => 'Медиа файлдар';
+
+  @override
+  String get sourcesMediaFolderSubtitle => 'Таңдалған бумадан фото мен бейне';
+
+  @override
+  String get mediaFolderSettings => 'Медиа файлдар';
+
+  @override
+  String get mediaFolderNoPath => 'Бума таңдалмаған';
+
+  @override
+  String get mediaFolderPickFolder => 'Буманы таңдау';
 
   @override
   String get licenses => 'Лицензиялар';
+
+  @override
+  String get sourcesWeather => 'Ауа райы';
+
+  @override
+  String get sourcesWeatherSubtitle =>
+      'Бұл күнгі жергілікті ауа райы жағдайлары';
+
+  @override
+  String get weatherSettings => 'Ауа райы параметрлері';
+
+  @override
+  String get weatherLatitude => 'Ендік';
+
+  @override
+  String get weatherLongitude => 'Бойлық';
+
+  @override
+  String get weatherSaveLocation => 'Орынды сақтау';
+
+  @override
+  String get weatherNoLocation => 'Ауа райын көру үшін орынды орнатыңыз';
+
+  @override
+  String get weatherUseMyLocation => 'Менің орнымды пайдалану';
+
+  @override
+  String get weatherDetectingLocation => 'Орын анықталуда...';
+
+  @override
+  String get weatherOrEnterManually => 'немесе қолмен енгізу';
+
+  @override
+  String get weatherLocationError =>
+      'Орынды анықтау мүмкін болмады. Қолмен енгізіңіз.';
+
+  @override
+  String get weatherLocationServicesDisabled =>
+      'Геолокация қызметтері өшірілген. Параметрлерде қосыңыз.';
+
+  @override
+  String get weatherLocationPermissionDenied =>
+      'Геолокацияға рұқсат берілмеді.';
+
+  @override
+  String get weatherLocationPermissionPermanentlyDenied =>
+      'Геолокацияға рұқсат тұрақты түрде берілмеді. Қолданба параметрлері ашылуда.';
+
+  @override
+  String get weatherTemperature => 'Температура';
+
+  @override
+  String get weatherUvIndex => 'УК-индекс';
+
+  @override
+  String get weatherHumidity => 'Ылғалдылық';
+
+  @override
+  String get weatherWindSpeed => 'Жел жылдамдығы';
+
+  @override
+  String get weatherPrecipitation => 'Жауын-шашын';
+
+  @override
+  String get audioRecordTitle => 'Аудио жазу';
+
+  @override
+  String get audioRecordTitleRecording => 'Жазылуда…';
+
+  @override
+  String get audioRecordHint => 'Сақтау үшін «Тоқтату» батырмасын басыңыз.';
+
+  @override
+  String get audioRecordStart => 'Бастау';
+
+  @override
+  String get audioRecordStop => 'Тоқтату';
+
+  @override
+  String get audioRecordCancel => 'Болдырмау';
+
+  @override
+  String get audioRecordPermissionError =>
+      'Аудио жазу үшін микрофон рұқсаты қажет.';
+
+  @override
+  String get audioRecordStartError =>
+      'Жазуды бастау мүмкін болмады. Қайталап көріңіз.';
+
+  @override
+  String get audioRecordStopError =>
+      'Жазуды тоқтату мүмкін болмады. Қайталап көріңіз.';
+
+  @override
+  String proUserFooter(String price, String date) {
+    return 'Сіз PRO қолданушысысыз. Келесі $price төлем $date күні болады.';
+  }
 }

@@ -444,10 +444,119 @@ class AppLocalizationsSr extends AppLocalizations {
       'Фотографије и видео снимци уређаја за овај дан';
 
   @override
-  String get otherSources => 'Други извори';
+  String get sourcesMediaFolder => 'Медијске датотеке';
+
+  @override
+  String get sourcesMediaFolderSubtitle =>
+      'Фотографије и видео из прилагођене фасцикле';
+
+  @override
+  String get mediaFolderSettings => 'Медијске датотеке';
+
+  @override
+  String get mediaFolderNoPath => 'Нема изабране фасцикле';
+
+  @override
+  String get mediaFolderPickFolder => 'Изабери фасциклу';
 
   @override
   String get licenses => 'Лиценце';
+
+  @override
+  String get sourcesWeather => 'Временска прогноза';
+
+  @override
+  String get sourcesWeatherSubtitle => 'Локалне временске прилике за овај дан';
+
+  @override
+  String get weatherSettings => 'Подешавања временске прогнозе';
+
+  @override
+  String get weatherLatitude => 'Географска ширина';
+
+  @override
+  String get weatherLongitude => 'Географска дужина';
+
+  @override
+  String get weatherSaveLocation => 'Сачувај локацију';
+
+  @override
+  String get weatherNoLocation =>
+      'Поставите локацију у подешавањима временске прогнозе';
+
+  @override
+  String get weatherUseMyLocation => 'Користи моју локацију';
+
+  @override
+  String get weatherDetectingLocation => 'Откривање локације...';
+
+  @override
+  String get weatherOrEnterManually => 'или унесите ручно';
+
+  @override
+  String get weatherLocationError =>
+      'Локација није могла бити откривена. Унесите ручно.';
+
+  @override
+  String get weatherLocationServicesDisabled =>
+      'Услуге локације су онемогућене. Омогућите их у подешавањима.';
+
+  @override
+  String get weatherLocationPermissionDenied => 'Дозвола за локацију одбијена.';
+
+  @override
+  String get weatherLocationPermissionPermanentlyDenied =>
+      'Дозвола за локацију је трајно одбијена. Отварање подешавања апликације.';
+
+  @override
+  String get weatherTemperature => 'Температура';
+
+  @override
+  String get weatherUvIndex => 'УВ индекс';
+
+  @override
+  String get weatherHumidity => 'Влажност';
+
+  @override
+  String get weatherWindSpeed => 'Брзина ветра';
+
+  @override
+  String get weatherPrecipitation => 'Падавине';
+
+  @override
+  String get audioRecordTitle => 'Сними аудио';
+
+  @override
+  String get audioRecordTitleRecording => 'Снима се…';
+
+  @override
+  String get audioRecordHint => 'Тапните Стоп да сачувате на уређај.';
+
+  @override
+  String get audioRecordStart => 'Почни';
+
+  @override
+  String get audioRecordStop => 'Стоп';
+
+  @override
+  String get audioRecordCancel => 'Откажи';
+
+  @override
+  String get audioRecordPermissionError =>
+      'Потребна је дозвола за микрофон за снимање звука.';
+
+  @override
+  String get audioRecordStartError =>
+      'Није могуће покренути снимање. Покушајте поново.';
+
+  @override
+  String get audioRecordStopError =>
+      'Није могуће зауставити снимање. Покушајте поново.';
+
+  @override
+  String proUserFooter(String price, String date) {
+    return 'Ви сте PRO корисник. Следећа уплата $price биће $date.';
+  }
 }
 
 /// The translations for Serbian, using the Latin script (`sr_Latn`).
@@ -889,8 +998,117 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
       'Fotografije i video snimci uređaja za ovaj dan';
 
   @override
-  String get otherSources => 'Drugi izvori';
+  String get sourcesMediaFolder => 'Medijske datoteke';
+
+  @override
+  String get sourcesMediaFolderSubtitle =>
+      'Fotografije i video iz prilagođene fascikle';
+
+  @override
+  String get mediaFolderSettings => 'Medijske datoteke';
+
+  @override
+  String get mediaFolderNoPath => 'Nema izabrane fascikle';
+
+  @override
+  String get mediaFolderPickFolder => 'Izaberi fasciklu';
 
   @override
   String get licenses => 'Licence';
+
+  @override
+  String get sourcesWeather => 'Vremenska prognoza';
+
+  @override
+  String get sourcesWeatherSubtitle => 'Lokalne vremenske prilike za ovaj dan';
+
+  @override
+  String get weatherSettings => 'Podešavanja vremenske prognoze';
+
+  @override
+  String get weatherLatitude => 'Geografska širina';
+
+  @override
+  String get weatherLongitude => 'Geografska dužina';
+
+  @override
+  String get weatherSaveLocation => 'Sačuvaj lokaciju';
+
+  @override
+  String get weatherNoLocation =>
+      'Postavite lokaciju u podešavanjima vremenske prognoze';
+
+  @override
+  String get weatherUseMyLocation => 'Koristi moju lokaciju';
+
+  @override
+  String get weatherDetectingLocation => 'Otkrivanje lokacije...';
+
+  @override
+  String get weatherOrEnterManually => 'ili unesite ručno';
+
+  @override
+  String get weatherLocationError =>
+      'Lokacija nije mogla biti otkrivena. Unesite ručno.';
+
+  @override
+  String get weatherLocationServicesDisabled =>
+      'Usluge lokacije su onemogućene. Omogućite ih u podešavanjima.';
+
+  @override
+  String get weatherLocationPermissionDenied => 'Dozvola za lokaciju odbijena.';
+
+  @override
+  String get weatherLocationPermissionPermanentlyDenied =>
+      'Dozvola za lokaciju je trajno odbijena. Otvaranje podešavanja aplikacije.';
+
+  @override
+  String get weatherTemperature => 'Temperatura';
+
+  @override
+  String get weatherUvIndex => 'UV indeks';
+
+  @override
+  String get weatherHumidity => 'Vlažnost';
+
+  @override
+  String get weatherWindSpeed => 'Brzina vetra';
+
+  @override
+  String get weatherPrecipitation => 'Padavine';
+
+  @override
+  String get audioRecordTitle => 'Snimi audio';
+
+  @override
+  String get audioRecordTitleRecording => 'Snima se…';
+
+  @override
+  String get audioRecordHint => 'Tapnite Stop da sačuvate na uređaj.';
+
+  @override
+  String get audioRecordStart => 'Počni';
+
+  @override
+  String get audioRecordStop => 'Stop';
+
+  @override
+  String get audioRecordCancel => 'Otkaži';
+
+  @override
+  String get audioRecordPermissionError =>
+      'Potrebna je dozvola za mikrofon za snimanje zvuka.';
+
+  @override
+  String get audioRecordStartError =>
+      'Nije moguće pokrenuti snimanje. Pokušajte ponovo.';
+
+  @override
+  String get audioRecordStopError =>
+      'Nije moguće zaustaviti snimanje. Pokušajte ponovo.';
+
+  @override
+  String proUserFooter(String price, String date) {
+    return 'Vi ste PRO korisnik. Sledeća uplata $price biće $date.';
+  }
 }

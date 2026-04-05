@@ -57,6 +57,9 @@ if [ -n "$TESTER_EMAILS" ]; then
 fi
 echo ""
 
+# Apply RevenueCat K2 compiler patch before building
+"$SCRIPT_DIR/patch_revenuecat_k2.sh"
+
 # Navigate to android directory
 cd "$ANDROID_DIR"
 

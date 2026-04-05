@@ -430,8 +430,110 @@ class AppLocalizationsZh extends AppLocalizations {
   String get sourcesPhotoVideoSubtitle => '本日设备的照片和视频';
 
   @override
-  String get otherSources => '其他来源';
+  String get sourcesMediaFolder => '媒体文件';
+
+  @override
+  String get sourcesMediaFolderSubtitle => '来自自定义文件夹的照片和视频';
+
+  @override
+  String get mediaFolderSettings => '媒体文件';
+
+  @override
+  String get mediaFolderNoPath => '未选择文件夹';
+
+  @override
+  String get mediaFolderPickFolder => '选择文件夹';
 
   @override
   String get licenses => '许可证';
+
+  @override
+  String get sourcesWeather => '天气';
+
+  @override
+  String get sourcesWeatherSubtitle => '本日当地天气状况';
+
+  @override
+  String get weatherSettings => '天气设置';
+
+  @override
+  String get weatherLatitude => '纬度';
+
+  @override
+  String get weatherLongitude => '经度';
+
+  @override
+  String get weatherSaveLocation => '保存位置';
+
+  @override
+  String get weatherNoLocation => '请在天气设置中设置位置';
+
+  @override
+  String get weatherUseMyLocation => '使用我的位置';
+
+  @override
+  String get weatherDetectingLocation => '正在检测位置...';
+
+  @override
+  String get weatherOrEnterManually => '或手动输入';
+
+  @override
+  String get weatherLocationError => '无法检测位置，请手动输入。';
+
+  @override
+  String get weatherLocationServicesDisabled => '位置服务已关闭，请在设置中开启。';
+
+  @override
+  String get weatherLocationPermissionDenied => '位置权限被拒绝。';
+
+  @override
+  String get weatherLocationPermissionPermanentlyDenied =>
+      '位置权限被永久拒绝，正在打开应用设置。';
+
+  @override
+  String get weatherTemperature => '温度';
+
+  @override
+  String get weatherUvIndex => '紫外线指数';
+
+  @override
+  String get weatherHumidity => '湿度';
+
+  @override
+  String get weatherWindSpeed => '风速';
+
+  @override
+  String get weatherPrecipitation => '降水量';
+
+  @override
+  String get audioRecordTitle => '录制音频';
+
+  @override
+  String get audioRecordTitleRecording => '录制中…';
+
+  @override
+  String get audioRecordHint => '点击停止以保存到设备。';
+
+  @override
+  String get audioRecordStart => '开始';
+
+  @override
+  String get audioRecordStop => '停止';
+
+  @override
+  String get audioRecordCancel => '取消';
+
+  @override
+  String get audioRecordPermissionError => '需要麦克风权限才能录制音频。';
+
+  @override
+  String get audioRecordStartError => '无法开始录制。请重试。';
+
+  @override
+  String get audioRecordStopError => '无法停止录制。请重试。';
+
+  @override
+  String proUserFooter(String price, String date) {
+    return '您是PRO用户。下一次 $price 的付款将于 $date 进行。';
+  }
 }
