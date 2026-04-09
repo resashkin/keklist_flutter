@@ -84,7 +84,6 @@ Future<void> main() async {
       }
     }
   }();
-  print(revenueCatApiKey);
   await Purchases.configure(PurchasesConfiguration(revenueCatApiKey));
 
   final Widget application = _getApplication(mainInjector);
