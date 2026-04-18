@@ -1,4 +1,9 @@
+import 'dart:math';
+
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
 import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
@@ -65,8 +70,25 @@ final class MembershipBloc extends Bloc<MembershipEvent, MembershipState> {
       }
 
       emit(MembershipDataState(isPro: true, nextRenewalDate: renewalDate, priceString: priceString));
-    } catch (_) {
+    } catch (e, stack) {
+      debugPrint('[RevenueCat] error: $e');
+      _sendToTelegram('🔴 RevenueCat error\n\n$e\n\n$stack');
       emit(MembershipDataState(isPro: false));
     }
+  }
+
+  Future<void> _sendToTelegram(String message) async {
+    final token = dotenv.env['TELEGRAM_BOT_TOKEN'];
+    final chatId = dotenv.env['TELEGRAM_CHAT_ID'];
+    if (token == null || chatId == null) return;
+    try {
+      await http.post(
+        Uri.parse('https://api.telegram.org/bot$token/sendMessage'),
+        body: {
+          'chat_id': chatId,
+          'text': message.substring(0, min(4096, message.length)),
+        },
+      );
+    } catch (_) {}
   }
 }
