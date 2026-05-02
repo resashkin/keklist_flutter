@@ -156,44 +156,55 @@ Future<void> _migrateToEncryptedIfNeeded(HiveAesCipher cipher) async {
   await Hive.initFlutter();
 
   // --- Settings box ---
+  // Convert through domain model to get fresh HiveObject instances (not linked to old box).
   final rawSettings = await Hive.openBox<SettingsObject>(HiveConstants.settingsBoxName);
-  final settingsEntries = Map.fromEntries(
-    rawSettings.keys.map((k) => MapEntry(k, rawSettings.get(k))),
+  final settingsDomain = Map.fromEntries(
+    rawSettings.keys.map((k) {
+      final obj = rawSettings.get(k);
+      return MapEntry(k, obj != null ? obj.toSettings().toObject() : null);
+    }),
   );
   await rawSettings.close();
   await Hive.deleteBoxFromDisk(HiveConstants.settingsBoxName);
   final encSettings = await Hive.openBox<SettingsObject>(
     HiveConstants.settingsBoxName, encryptionCipher: cipher);
-  for (final e in settingsEntries.entries) {
-    if (e.value != null) await encSettings.put(e.key, e.value as SettingsObject);
+  for (final e in settingsDomain.entries) {
+    if (e.value != null) await encSettings.put(e.key, e.value!);
   }
   await encSettings.close();
 
   // --- Mind box ---
   final rawMinds = await Hive.openBox<MindObject>(HiveConstants.mindBoxName);
-  final mindEntries = Map.fromEntries(
-    rawMinds.keys.map((k) => MapEntry(k, rawMinds.get(k))),
+  final mindsDomain = Map.fromEntries(
+    rawMinds.keys.map((k) {
+      final obj = rawMinds.get(k);
+      return MapEntry(k, obj != null ? obj.toMind().toObject() : null);
+    }),
   );
   await rawMinds.close();
   await Hive.deleteBoxFromDisk(HiveConstants.mindBoxName);
   final encMinds = await Hive.openBox<MindObject>(
     HiveConstants.mindBoxName, encryptionCipher: cipher);
-  for (final e in mindEntries.entries) {
-    if (e.value != null) await encMinds.put(e.key, e.value as MindObject);
+  for (final e in mindsDomain.entries) {
+    if (e.value != null) await encMinds.put(e.key, e.value!);
   }
   await encMinds.close();
 
   // --- Debug menu box ---
   final rawDebug = await Hive.openBox<DebugMenuObject>(HiveConstants.debugMenuBoxName);
-  final debugEntries = Map.fromEntries(
-    rawDebug.keys.map((k) => MapEntry(k, rawDebug.get(k))),
+  final debugDomain = Map.fromEntries(
+    rawDebug.keys.map((k) {
+      final obj = rawDebug.get(k);
+      final data = obj?.toDebugMenuData();
+      return MapEntry(k, data != null ? DebugMenuObject.fromDebugMenuData(data) : null);
+    }),
   );
   await rawDebug.close();
   await Hive.deleteBoxFromDisk(HiveConstants.debugMenuBoxName);
   final encDebug = await Hive.openBox<DebugMenuObject>(
     HiveConstants.debugMenuBoxName, encryptionCipher: cipher);
-  for (final e in debugEntries.entries) {
-    if (e.value != null) await encDebug.put(e.key, e.value as DebugMenuObject);
+  for (final e in debugDomain.entries) {
+    if (e.value != null) await encDebug.put(e.key, e.value!);
   }
   await encDebug.close();
 
