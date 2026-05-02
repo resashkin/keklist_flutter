@@ -1,6 +1,20 @@
 # Uncomment this line to define a global platform for your project
 platform :ios, '17.0'
 
+# Workaround: purchases_ui_flutter 10.x podspec incorrectly declares iOS 11.0 minimum
+# but its dependency PurchasesHybridCommonUI 18.x requires iOS 16.0+.
+# Patch the symlinked podspec before CocoaPods resolves dependencies.
+def patch_revenuecat_ui_podspec
+  podspec = File.join(File.dirname(__FILE__), '.symlinks', 'plugins',
+                      'purchases_ui_flutter', 'ios', 'purchases_ui_flutter.podspec')
+  return unless File.exist?(podspec)
+  original = File.read(podspec)
+  patched  = original.gsub("s.platform = :ios, '11.0'", "s.platform = :ios, '16.0'")
+  File.write(podspec, patched) if patched != original
+end
+
+patch_revenuecat_ui_podspec
+
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 

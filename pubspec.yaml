@@ -70,8 +70,8 @@ dependencies:
   json_annotation: ^4.11.0
   swipeable_page_route: ^0.4.8
   logarte: ^1.4.0
-  purchases_flutter: ^9.13.1
-  purchases_ui_flutter: ^9.13.1
+  purchases_flutter: ^10.0.1
+  purchases_ui_flutter: ^10.0.1
   http: ^1.2.2
   geolocator: ^14.0.2
   record: ^6.1.2
