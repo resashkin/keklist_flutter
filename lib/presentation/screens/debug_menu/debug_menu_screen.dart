@@ -137,6 +137,7 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
         DebugMenuType.translation => 'Translate Content',
         DebugMenuType.sensitiveContent => 'Sensitive Content',
         DebugMenuType.simulatePro => 'Simulate Pro Subscription',
+        DebugMenuType.useProductionRevenueCat => 'Use Production RevenueCat',
       };
 
   String _getDebugMenuItemDescription(DebugMenuType type) => switch (type) {
@@ -146,5 +147,7 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
           'Showing/Hiding Eye button that allows to hide content for users when you showing phone to others.',
         DebugMenuType.simulatePro =>
           'Forces isPro=true in MembershipBloc, bypassing RevenueCat. Password required to enable.',
+        DebugMenuType.useProductionRevenueCat =>
+          'Use production RevenueCat API keys instead of test keys. Restart required to take effect.',
       };
 }

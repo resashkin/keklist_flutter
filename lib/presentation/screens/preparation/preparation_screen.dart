@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:keklist/domain/constants.dart';
 
 final class PreparationScreen extends StatelessWidget {
   final ValueNotifier<String> stepNotifier;
@@ -10,16 +11,12 @@ final class PreparationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: Themes.dark,
       home: Scaffold(
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                'keklist',
-                style: TextStyle(fontSize: 36, fontWeight: FontWeight.w600, letterSpacing: 1.5),
-              ).animate().fadeIn(duration: 600.ms),
-              const SizedBox(height: 32),
               ValueListenableBuilder<String>(
                 valueListenable: stepNotifier,
                 builder: (context, step, _) => Text(

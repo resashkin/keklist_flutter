@@ -26,7 +26,7 @@ import 'package:keklist/presentation/screens/language_picker/language_picker_scr
 import 'package:keklist/presentation/screens/settings/widgets/password_input_bottom_sheet.dart';
 import 'package:keklist/presentation/screens/tabs_settings/tabs_settings_screen.dart';
 import 'package:keklist/presentation/screens/web_page/web_page_screen.dart';
-import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
+import 'package:keklist/presentation/screens/paywall/paywall_bottom_sheet.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -343,8 +343,8 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   }
 
   Future<void> _openPaywall() async {
-    await RevenueCatUI.presentPaywall();
-    sendEventToBloc<MembershipBloc>(const MembershipRefreshEvent());
+    final purchased = await PaywallBottomSheet.show(context);
+    if (purchased) sendEventToBloc<MembershipBloc>(const MembershipRefreshEvent());
   }
 
   void _switchDarkMode(bool value) {

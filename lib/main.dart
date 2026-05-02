@@ -90,27 +90,20 @@ final class _AppRootState extends State<_AppRoot> {
 
     _stepNotifier.value = 'Finishing up...';
     final streamingPrefs = await StreamingSharedPreferences.instance;
-    final injector = MainContainer(
-      streamingSharedPreferences: streamingPrefs,
-    ).initialize(Injector());
+    final injector = MainContainer(streamingSharedPreferences: streamingPrefs).initialize(Injector());
 
     _connectToWatchCommunicationManager(injector);
     _enableDebugBLOCLogs();
 
-    final String revenueCatApiKey = () {
-      if (kDebugMode) {
-        return dotenv.env['REVENUE_CAT_TEST_API_KEY']!;
-      } else {
-        switch (defaultTargetPlatform) {
-          case TargetPlatform.iOS:
-            return dotenv.env['REVENUE_CAT_PROD_API_IOS_KEY']!;
-          case TargetPlatform.android:
-            return dotenv.env['REVENUE_CAT_PROD_API_ANDROID_KEY']!;
-          default:
-            return dotenv.env['REVENUE_CAT_TEST_API_KEY']!;
-        }
-      }
-    }();
+    final debugBox = Hive.box<DebugMenuObject>(HiveConstants.debugMenuBoxName);
+    final useProductionRC = debugBox.get(DebugMenuType.useProductionRevenueCat.name)?.value ?? false;
+    final String revenueCatApiKey = (!kDebugMode || useProductionRC)
+        ? switch (defaultTargetPlatform) {
+            TargetPlatform.iOS => dotenv.env['REVENUE_CAT_PROD_API_IOS_KEY']!,
+            TargetPlatform.android => dotenv.env['REVENUE_CAT_PROD_API_ANDROID_KEY']!,
+            _ => dotenv.env['REVENUE_CAT_TEST_API_KEY']!,
+          }
+        : dotenv.env['REVENUE_CAT_TEST_API_KEY']!;
     await Purchases.configure(PurchasesConfiguration(revenueCatApiKey));
 
     final app = _getApplication(injector);
@@ -165,8 +158,7 @@ Future<void> _migrateToEncryptedIfNeeded(HiveAesCipher cipher) async {
   );
   await rawSettings.close();
   await Hive.deleteBoxFromDisk(HiveConstants.settingsBoxName);
-  final encSettings = await Hive.openBox<SettingsObject>(
-    HiveConstants.settingsBoxName, encryptionCipher: cipher);
+  final encSettings = await Hive.openBox<SettingsObject>(HiveConstants.settingsBoxName, encryptionCipher: cipher);
   for (final e in settingsDomain.entries) {
     if (e.value != null) await encSettings.put(e.key, e.value!);
   }
@@ -182,8 +174,7 @@ Future<void> _migrateToEncryptedIfNeeded(HiveAesCipher cipher) async {
   );
   await rawMinds.close();
   await Hive.deleteBoxFromDisk(HiveConstants.mindBoxName);
-  final encMinds = await Hive.openBox<MindObject>(
-    HiveConstants.mindBoxName, encryptionCipher: cipher);
+  final encMinds = await Hive.openBox<MindObject>(HiveConstants.mindBoxName, encryptionCipher: cipher);
   for (final e in mindsDomain.entries) {
     if (e.value != null) await encMinds.put(e.key, e.value!);
   }
@@ -200,8 +191,7 @@ Future<void> _migrateToEncryptedIfNeeded(HiveAesCipher cipher) async {
   );
   await rawDebug.close();
   await Hive.deleteBoxFromDisk(HiveConstants.debugMenuBoxName);
-  final encDebug = await Hive.openBox<DebugMenuObject>(
-    HiveConstants.debugMenuBoxName, encryptionCipher: cipher);
+  final encDebug = await Hive.openBox<DebugMenuObject>(HiveConstants.debugMenuBoxName, encryptionCipher: cipher);
   for (final e in debugDomain.entries) {
     if (e.value != null) await encDebug.put(e.key, e.value!);
   }
@@ -236,17 +226,16 @@ Future<void> _initHive(HiveAesCipher cipher) async {
   await Hive.initFlutter();
 
   final Box<SettingsObject> settingsBox = await Hive.openBox<SettingsObject>(
-    HiveConstants.settingsBoxName, encryptionCipher: cipher);
+    HiveConstants.settingsBoxName,
+    encryptionCipher: cipher,
+  );
   if (settingsBox.get(HiveConstants.globalSettingsIndex) == null) {
     settingsBox.put(HiveConstants.globalSettingsIndex, KeklistSettings.initial().toObject());
   }
 
-  final Box<MindObject> mindBox = await Hive.openBox<MindObject>(
-    HiveConstants.mindBoxName, encryptionCipher: cipher);
-  await Hive.openBox<DebugMenuObject>(
-    HiveConstants.debugMenuBoxName, encryptionCipher: cipher);
-  await Hive.openBox<WeatherCacheObject>(
-    HiveConstants.weatherCacheBoxName, encryptionCipher: cipher);
+  final Box<MindObject> mindBox = await Hive.openBox<MindObject>(HiveConstants.mindBoxName, encryptionCipher: cipher);
+  await Hive.openBox<DebugMenuObject>(HiveConstants.debugMenuBoxName, encryptionCipher: cipher);
+  await Hive.openBox<WeatherCacheObject>(HiveConstants.weatherCacheBoxName, encryptionCipher: cipher);
 
   await _runMigrations(settingsBox, mindBox);
 }
@@ -255,11 +244,7 @@ Future<void> _runMigrations(Box<SettingsObject> settingsBox, Box<MindObject> min
   final settingsRepo = SettingsHiveRepository(box: settingsBox);
   final mindRepo = MindHiveRepository(box: mindBox);
   final fileRepo = const AppFileRepository();
-  final runner = MigrationRunner(
-    settingsRepository: settingsRepo,
-    mindRepository: mindRepo,
-    fileRepository: fileRepo,
-  );
+  final runner = MigrationRunner(settingsRepository: settingsRepo, mindRepository: mindRepo, fileRepository: fileRepo);
   await runner.runPendingMigrations();
 }
 
