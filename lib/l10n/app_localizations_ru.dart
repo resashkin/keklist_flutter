@@ -552,6 +552,12 @@ class AppLocalizationsRu extends AppLocalizations {
       'Не удалось остановить запись. Попробуйте ещё раз.';
 
   @override
+  String get emojiPickerFrequent => 'Frequent';
+
+  @override
+  String get emojiPickerAll => 'All';
+
+  @override
   String proUserFooter(String price, String date) {
     return 'Вы PRO пользователь. Следующий платёж $price будет $date.';
   }

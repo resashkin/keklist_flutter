@@ -554,6 +554,12 @@ class AppLocalizationsKk extends AppLocalizations {
       'Жазуды тоқтату мүмкін болмады. Қайталап көріңіз.';
 
   @override
+  String get emojiPickerFrequent => 'Frequent';
+
+  @override
+  String get emojiPickerAll => 'All';
+
+  @override
   String proUserFooter(String price, String date) {
     return 'Сіз PRO қолданушысысыз. Келесі $price төлем $date күні болады.';
   }

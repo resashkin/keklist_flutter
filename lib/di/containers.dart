@@ -21,6 +21,7 @@ import 'package:keklist/domain/services/export_import/export_import_service.dart
 import 'package:keklist/domain/services/weather/weather_api_service.dart';
 import 'package:keklist/presentation/core/helpers/platform_utils.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
+import 'package:keklist/presentation/cubits/emoji_frequency/emoji_frequency_cubit.dart';
 import 'package:keklist/presentation/cubits/mind_searcher/mind_searcher_cubit.dart';
 import 'package:keklist/presentation/native/ios/watch/watch_communication_manager.dart';
 
@@ -33,6 +34,9 @@ final class MainContainer {
   Injector initialize(Injector injector) {
     injector.map<MindSearcherCubit>(
       (injector) => MindSearcherCubit(repository: injector.get<MindRepository>()),
+    );
+    injector.map<EmojiFrequencyCubit>(
+      (injector) => EmojiFrequencyCubit(repository: injector.get<MindRepository>()),
     );
     if (DeviceUtils.safeGetPlatform() == SupportedPlatform.iOS) {
       injector.map<WatchCommunicationManager>(

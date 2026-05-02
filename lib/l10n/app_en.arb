@@ -701,6 +701,14 @@
     "@audioRecordStopError": {
         "description": "Error when recording fails to stop"
     },
+    "emojiPickerFrequent": "Frequent",
+    "@emojiPickerFrequent": {
+        "description": "Section header for frequently used emojis in the emoji picker"
+    },
+    "emojiPickerAll": "All",
+    "@emojiPickerAll": {
+        "description": "Section header for all emojis in the emoji picker"
+    },
     "proUserFooter": "You are a PRO user. Next payment {price} will be at {date}.",
     "@proUserFooter": {
         "description": "Footer in APPLICATION settings section when user has active PRO subscription",

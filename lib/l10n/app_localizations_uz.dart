@@ -556,6 +556,12 @@ class AppLocalizationsUz extends AppLocalizations {
       'Yozishni to\'xtatish imkoni bo\'lmadi. Qayta urinib ko\'ring.';
 
   @override
+  String get emojiPickerFrequent => 'Frequent';
+
+  @override
+  String get emojiPickerAll => 'All';
+
+  @override
   String proUserFooter(String price, String date) {
     return 'Siz PRO foydalanuvchisiz. Keyingi $price to\'lov $date da bo\'ladi.';
   }

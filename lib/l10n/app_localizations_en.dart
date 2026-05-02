@@ -553,6 +553,12 @@ class AppLocalizationsEn extends AppLocalizations {
       'Unable to stop the recording. Please try again.';
 
   @override
+  String get emojiPickerFrequent => 'Frequent';
+
+  @override
+  String get emojiPickerAll => 'All';
+
+  @override
   String proUserFooter(String price, String date) {
     return 'You are a PRO user. Next payment $price will be at $date.';
   }

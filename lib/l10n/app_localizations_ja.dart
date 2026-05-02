@@ -536,6 +536,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get audioRecordStopError => '録音を停止できませんでした。もう一度お試しください。';
 
   @override
+  String get emojiPickerFrequent => 'Frequent';
+
+  @override
+  String get emojiPickerAll => 'All';
+
+  @override
   String proUserFooter(String price, String date) {
     return 'あなたはPROユーザーです。次の支払い $price は $date に予定されています。';
   }

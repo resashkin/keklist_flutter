@@ -558,6 +558,12 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se pudo detener la grabación. Inténtalo de nuevo.';
 
   @override
+  String get emojiPickerFrequent => 'Frequent';
+
+  @override
+  String get emojiPickerAll => 'All';
+
+  @override
   String proUserFooter(String price, String date) {
     return 'Eres usuario PRO. El próximo pago de $price será el $date.';
   }

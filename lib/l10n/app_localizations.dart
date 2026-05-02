@@ -1155,6 +1155,18 @@ abstract class AppLocalizations {
   /// **'Unable to stop the recording. Please try again.'**
   String get audioRecordStopError;
 
+  /// Section header for frequently used emojis in the emoji picker
+  ///
+  /// In en, this message translates to:
+  /// **'Frequent'**
+  String get emojiPickerFrequent;
+
+  /// Section header for all emojis in the emoji picker
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get emojiPickerAll;
+
   /// Footer in APPLICATION settings section when user has active PRO subscription
   ///
   /// In en, this message translates to:

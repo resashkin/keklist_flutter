@@ -1,7 +1,10 @@
 // ignore_for_file: avoid_print
 
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:crypto/crypto.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
@@ -30,14 +33,17 @@ import 'package:keklist/presentation/blocs/user_profile_bloc/user_profile_bloc.d
 import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
 import 'package:keklist/presentation/blocs/lazy_onboarding_bloc/lazy_onboarding_bloc.dart';
 import 'package:keklist/presentation/blocs/membership_bloc/membership_bloc.dart';
+import 'package:keklist/presentation/screens/preparation/preparation_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
+import 'package:keklist/presentation/cubits/emoji_frequency/emoji_frequency_cubit.dart';
 import 'package:keklist/presentation/cubits/mind_searcher/mind_searcher_cubit.dart';
 import 'package:keklist/di/containers.dart';
 
@@ -47,62 +53,209 @@ import 'presentation/native/ios/watch/watch_communication_manager.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   _initNativeWidgets();
   _setupBlockingLoadingWidget();
+  runApp(const _AppRoot());
+}
 
-  await dotenv.load(fileName: 'dotenv');
+// ---------------------------------------------------------------------------
+// Root widget — shows PreparationScreen while initializing, then the main app
+// ---------------------------------------------------------------------------
 
-  usePathUrlStrategy();
-  await _initHive();
+final class _AppRoot extends StatefulWidget {
+  const _AppRoot();
 
-  final StreamingSharedPreferences streamingSharedPreferences = await StreamingSharedPreferences.instance;
+  @override
+  State<_AppRoot> createState() => _AppRootState();
+}
 
-  // Инициализация DI-контейнера.
-  final Injector injector = Injector();
-  final Injector mainInjector = MainContainer(
-    streamingSharedPreferences: streamingSharedPreferences,
-  ).initialize(injector);
+final class _AppRootState extends State<_AppRoot> {
+  final _stepNotifier = ValueNotifier<String>('');
+  Widget? _app;
 
-  _connectToWatchCommunicationManager(mainInjector);
-  _enableDebugBLOCLogs();
+  @override
+  void initState() {
+    super.initState();
+    _initialize();
+  }
 
-  //TelegramWebInitializer.init();
+  Future<void> _initialize() async {
+    _stepNotifier.value = 'Loading...';
+    await dotenv.load(fileName: 'dotenv');
+    usePathUrlStrategy();
 
-  // Init purchases.
-  final String revenueCatApiKey = () {
-    if (kDebugMode) {
-      return dotenv.env['REVENUE_CAT_TEST_API_KEY']!;
-    } else {
-      switch (defaultTargetPlatform) {
-        case TargetPlatform.iOS:
-          return dotenv.env['REVENUE_CAT_PROD_API_IOS_KEY']!;
-        case TargetPlatform.android:
-          return dotenv.env['REVENUE_CAT_PROD_API_ANDROID_KEY']!;
-        default:
-          return dotenv.env['REVENUE_CAT_TEST_API_KEY']!;
+    _stepNotifier.value = 'Opening database...';
+    final cipher = _buildHiveCipher();
+    await _migrateToEncryptedIfNeeded(cipher);
+    await _initHive(cipher);
+
+    _stepNotifier.value = 'Finishing up...';
+    final streamingPrefs = await StreamingSharedPreferences.instance;
+    final injector = MainContainer(
+      streamingSharedPreferences: streamingPrefs,
+    ).initialize(Injector());
+
+    _connectToWatchCommunicationManager(injector);
+    _enableDebugBLOCLogs();
+
+    final String revenueCatApiKey = () {
+      if (kDebugMode) {
+        return dotenv.env['REVENUE_CAT_TEST_API_KEY']!;
+      } else {
+        switch (defaultTargetPlatform) {
+          case TargetPlatform.iOS:
+            return dotenv.env['REVENUE_CAT_PROD_API_IOS_KEY']!;
+          case TargetPlatform.android:
+            return dotenv.env['REVENUE_CAT_PROD_API_ANDROID_KEY']!;
+          default:
+            return dotenv.env['REVENUE_CAT_TEST_API_KEY']!;
+        }
       }
-    }
-  }();
-  await Purchases.configure(PurchasesConfiguration(revenueCatApiKey));
+    }();
+    await Purchases.configure(PurchasesConfiguration(revenueCatApiKey));
 
-  final Widget application = _getApplication(mainInjector);
-  runApp(application);
-}
+    final app = _getApplication(injector);
+    setState(() => _app = app);
+  }
 
-void _enableDebugBLOCLogs() {
-  if (!kReleaseMode) {
-    Bloc.observer = _LoggerBlocObserver();
+  @override
+  void dispose() {
+    _stepNotifier.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 400),
+      child: _app ?? PreparationScreen(key: const ValueKey('prep'), stepNotifier: _stepNotifier),
+    );
   }
 }
 
-void _connectToWatchCommunicationManager(Injector mainInjector) {
-  if (kIsWeb) {
-    // no-op
-  } else if (Platform.isIOS) {
-    mainInjector.get<WatchCommunicationManager>().connect();
-  }
+// ---------------------------------------------------------------------------
+// Hive encryption
+// ---------------------------------------------------------------------------
+
+HiveAesCipher _buildHiveCipher() {
+  final keyString = dotenv.env['HIVE_ENCRYPTION_KEY'] ?? '';
+  final keyBytes = sha256.convert(utf8.encode(keyString)).bytes;
+  return HiveAesCipher(Uint8List.fromList(keyBytes));
 }
+
+// One-time migration: re-encrypts existing unencrypted boxes.
+// After the first successful run the SharedPreferences flag prevents re-runs.
+Future<void> _migrateToEncryptedIfNeeded(HiveAesCipher cipher) async {
+  final prefs = await SharedPreferences.getInstance();
+  if (prefs.getBool('hive_aes_encrypted_v1') == true) return;
+
+  Hive.registerAdapter<SettingsObject>(SettingsObjectAdapter());
+  Hive.registerAdapter<MindObject>(MindObjectAdapter());
+  Hive.registerAdapter<DebugMenuObject>(DebugMenuObjectAdapter());
+  Hive.registerAdapter<WeatherCacheObject>(WeatherCacheObjectAdapter());
+  await Hive.initFlutter();
+
+  // --- Settings box ---
+  final rawSettings = await Hive.openBox<SettingsObject>(HiveConstants.settingsBoxName);
+  final settingsEntries = Map.fromEntries(
+    rawSettings.keys.map((k) => MapEntry(k, rawSettings.get(k))),
+  );
+  await rawSettings.close();
+  await Hive.deleteBoxFromDisk(HiveConstants.settingsBoxName);
+  final encSettings = await Hive.openBox<SettingsObject>(
+    HiveConstants.settingsBoxName, encryptionCipher: cipher);
+  for (final e in settingsEntries.entries) {
+    if (e.value != null) await encSettings.put(e.key, e.value as SettingsObject);
+  }
+  await encSettings.close();
+
+  // --- Mind box ---
+  final rawMinds = await Hive.openBox<MindObject>(HiveConstants.mindBoxName);
+  final mindEntries = Map.fromEntries(
+    rawMinds.keys.map((k) => MapEntry(k, rawMinds.get(k))),
+  );
+  await rawMinds.close();
+  await Hive.deleteBoxFromDisk(HiveConstants.mindBoxName);
+  final encMinds = await Hive.openBox<MindObject>(
+    HiveConstants.mindBoxName, encryptionCipher: cipher);
+  for (final e in mindEntries.entries) {
+    if (e.value != null) await encMinds.put(e.key, e.value as MindObject);
+  }
+  await encMinds.close();
+
+  // --- Debug menu box ---
+  final rawDebug = await Hive.openBox<DebugMenuObject>(HiveConstants.debugMenuBoxName);
+  final debugEntries = Map.fromEntries(
+    rawDebug.keys.map((k) => MapEntry(k, rawDebug.get(k))),
+  );
+  await rawDebug.close();
+  await Hive.deleteBoxFromDisk(HiveConstants.debugMenuBoxName);
+  final encDebug = await Hive.openBox<DebugMenuObject>(
+    HiveConstants.debugMenuBoxName, encryptionCipher: cipher);
+  for (final e in debugEntries.entries) {
+    if (e.value != null) await encDebug.put(e.key, e.value as DebugMenuObject);
+  }
+  await encDebug.close();
+
+  // Weather cache is disposable — just delete and let it refetch.
+  await Hive.deleteBoxFromDisk(HiveConstants.weatherCacheBoxName);
+
+  await Hive.close();
+  await prefs.setBool('hive_aes_encrypted_v1', true);
+}
+
+// ---------------------------------------------------------------------------
+// Hive initialization (after encryption migration)
+// ---------------------------------------------------------------------------
+
+Future<void> _initHive(HiveAesCipher cipher) async {
+  // Adapters may already be registered after migration; guard against duplicates.
+  if (!Hive.isAdapterRegistered(SettingsObjectAdapter().typeId)) {
+    Hive.registerAdapter<SettingsObject>(SettingsObjectAdapter());
+  }
+  if (!Hive.isAdapterRegistered(MindObjectAdapter().typeId)) {
+    Hive.registerAdapter<MindObject>(MindObjectAdapter());
+  }
+  if (!Hive.isAdapterRegistered(DebugMenuObjectAdapter().typeId)) {
+    Hive.registerAdapter<DebugMenuObject>(DebugMenuObjectAdapter());
+  }
+  if (!Hive.isAdapterRegistered(WeatherCacheObjectAdapter().typeId)) {
+    Hive.registerAdapter<WeatherCacheObject>(WeatherCacheObjectAdapter());
+  }
+
+  await Hive.initFlutter();
+
+  final Box<SettingsObject> settingsBox = await Hive.openBox<SettingsObject>(
+    HiveConstants.settingsBoxName, encryptionCipher: cipher);
+  if (settingsBox.get(HiveConstants.globalSettingsIndex) == null) {
+    settingsBox.put(HiveConstants.globalSettingsIndex, KeklistSettings.initial().toObject());
+  }
+
+  final Box<MindObject> mindBox = await Hive.openBox<MindObject>(
+    HiveConstants.mindBoxName, encryptionCipher: cipher);
+  await Hive.openBox<DebugMenuObject>(
+    HiveConstants.debugMenuBoxName, encryptionCipher: cipher);
+  await Hive.openBox<WeatherCacheObject>(
+    HiveConstants.weatherCacheBoxName, encryptionCipher: cipher);
+
+  await _runMigrations(settingsBox, mindBox);
+}
+
+Future<void> _runMigrations(Box<SettingsObject> settingsBox, Box<MindObject> mindBox) async {
+  final settingsRepo = SettingsHiveRepository(box: settingsBox);
+  final mindRepo = MindHiveRepository(box: mindBox);
+  final fileRepo = const AppFileRepository();
+  final runner = MigrationRunner(
+    settingsRepository: settingsRepo,
+    mindRepository: mindRepo,
+    fileRepository: fileRepo,
+  );
+  await runner.runPendingMigrations();
+}
+
+// ---------------------------------------------------------------------------
+// App widget tree
+// ---------------------------------------------------------------------------
 
 Widget _getApplication(Injector mainInjector) => MultiProvider(
   providers: [
@@ -120,6 +273,7 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
         ),
       ),
       BlocProvider(create: (context) => mainInjector.get<MindSearcherCubit>()),
+      BlocProvider(create: (context) => mainInjector.get<EmojiFrequencyCubit>()),
       BlocProvider(create: (context) => MindCreatorBloc(mindRepository: mainInjector.get<MindRepository>())),
       BlocProvider(
         create: (context) => SettingsBloc(
@@ -157,6 +311,10 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
   ),
 );
 
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+
 void _initNativeWidgets() {
   // HomeWidget.setAppGroupId(PlatformConstants.iosGroupId);
 }
@@ -177,68 +335,48 @@ void _setupBlockingLoadingWidget() {
     ..dismissOnTap = false;
 }
 
-Future<void> _initHive() async {
-  Hive.registerAdapter<SettingsObject>(SettingsObjectAdapter());
-  Hive.registerAdapter<MindObject>(MindObjectAdapter());
-  Hive.registerAdapter<DebugMenuObject>(DebugMenuObjectAdapter());
-  Hive.registerAdapter<WeatherCacheObject>(WeatherCacheObjectAdapter());
-  await Hive.initFlutter();
-  final Box<SettingsObject> settingsBox = await Hive.openBox<SettingsObject>(HiveConstants.settingsBoxName);
-  if (settingsBox.get(HiveConstants.globalSettingsIndex) == null) {
-    // First launch - detect device locale and create initial settings
-    settingsBox.put(HiveConstants.globalSettingsIndex, KeklistSettings.initial().toObject());
+void _enableDebugBLOCLogs() {
+  if (!kReleaseMode) {
+    Bloc.observer = _LoggerBlocObserver();
   }
-  final Box<MindObject> mindBox = await Hive.openBox<MindObject>(HiveConstants.mindBoxName);
-  await Hive.openBox<DebugMenuObject>(HiveConstants.debugMenuBoxName);
-  await Hive.openBox<WeatherCacheObject>(HiveConstants.weatherCacheBoxName);
-
-  // Run data migrations after boxes are opened
-  await _runMigrations(settingsBox, mindBox);
 }
 
-Future<void> _runMigrations(Box<SettingsObject> settingsBox, Box<MindObject> mindBox) async {
-  final settingsRepo = SettingsHiveRepository(box: settingsBox);
-  final mindRepo = MindHiveRepository(box: mindBox);
-  final fileRepo = const AppFileRepository();
-
-  final runner = MigrationRunner(settingsRepository: settingsRepo, mindRepository: mindRepo, fileRepository: fileRepo);
-
-  await runner.runPendingMigrations();
+void _connectToWatchCommunicationManager(Injector mainInjector) {
+  if (kIsWeb) {
+    // no-op
+  } else if (Platform.isIOS) {
+    mainInjector.get<WatchCommunicationManager>().connect();
+  }
 }
 
 final class _LoggerBlocObserver extends BlocObserver {
   @override
   void onEvent(Bloc bloc, Object? event) {
     super.onEvent(bloc, event);
-
     print('onEvent: $event');
   }
 
   @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
     super.onError(bloc, error, stackTrace);
-
     print(error);
   }
 
   @override
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
-
     print('onChange: ${bloc.state}');
-  }
-
-  @override
-  void onClose(BlocBase bloc) {
-    super.onClose(bloc);
-
-    print('onClose: ${bloc.runtimeType}');
   }
 
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
-
     print('onTransition: $bloc.state');
+  }
+
+  @override
+  void onClose(BlocBase bloc) {
+    super.onClose(bloc);
+    print('onClose: ${bloc.runtimeType}');
   }
 }

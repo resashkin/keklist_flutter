@@ -560,6 +560,12 @@ class AppLocalizationsDe extends AppLocalizations {
       'Aufnahme konnte nicht gestoppt werden. Bitte versuche es erneut.';
 
   @override
+  String get emojiPickerFrequent => 'Frequent';
+
+  @override
+  String get emojiPickerAll => 'All';
+
+  @override
   String proUserFooter(String price, String date) {
     return 'Du bist PRO-Nutzer. Die nächste Zahlung von $price erfolgt am $date.';
   }

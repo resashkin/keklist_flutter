@@ -554,6 +554,12 @@ class AppLocalizationsSr extends AppLocalizations {
       'Није могуће зауставити снимање. Покушајте поново.';
 
   @override
+  String get emojiPickerFrequent => 'Frequent';
+
+  @override
+  String get emojiPickerAll => 'All';
+
+  @override
   String proUserFooter(String price, String date) {
     return 'Ви сте PRO корисник. Следећа уплата $price биће $date.';
   }
@@ -1106,6 +1112,12 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
   @override
   String get audioRecordStopError =>
       'Nije moguće zaustaviti snimanje. Pokušajte ponovo.';
+
+  @override
+  String get emojiPickerFrequent => 'Frequent';
+
+  @override
+  String get emojiPickerAll => 'All';
 
   @override
   String proUserFooter(String price, String date) {

@@ -557,6 +557,12 @@ class AppLocalizationsIt extends AppLocalizations {
       'Impossibile fermare la registrazione. Riprova.';
 
   @override
+  String get emojiPickerFrequent => 'Frequent';
+
+  @override
+  String get emojiPickerAll => 'All';
+
+  @override
   String proUserFooter(String price, String date) {
     return 'Sei un utente PRO. Il prossimo pagamento di $price sarà il $date.';
   }
