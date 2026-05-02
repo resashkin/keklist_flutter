@@ -42,7 +42,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
-import 'package:keklist/presentation/cubits/emoji_frequency/emoji_frequency_cubit.dart';
+import 'package:keklist/presentation/cubits/used_emoji/used_emoji_cubit.dart';
 import 'package:keklist/presentation/cubits/mind_searcher/mind_searcher_cubit.dart';
 import 'package:keklist/di/containers.dart';
 
@@ -268,7 +268,7 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
         ),
       ),
       BlocProvider(create: (context) => mainInjector.get<MindSearcherCubit>()),
-      BlocProvider(create: (context) => mainInjector.get<EmojiFrequencyCubit>()),
+      BlocProvider(create: (context) => mainInjector.get<UsedEmojiCubit>()),
       BlocProvider(create: (context) => MindCreatorBloc(mindRepository: mainInjector.get<MindRepository>())),
       BlocProvider(
         create: (context) => SettingsBloc(

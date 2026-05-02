@@ -554,7 +554,7 @@ class AppLocalizationsSr extends AppLocalizations {
       'Није могуће зауставити снимање. Покушајте поново.';
 
   @override
-  String get emojiPickerFrequent => 'Frequent';
+  String get emojiPickerUsedInMinds => 'Used in minds';
 
   @override
   String get emojiPickerAll => 'All';
@@ -1114,7 +1114,7 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
       'Nije moguće zaustaviti snimanje. Pokušajte ponovo.';
 
   @override
-  String get emojiPickerFrequent => 'Frequent';
+  String get emojiPickerUsedInMinds => 'Used in minds';
 
   @override
   String get emojiPickerAll => 'All';

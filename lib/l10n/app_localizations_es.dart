@@ -558,7 +558,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se pudo detener la grabación. Inténtalo de nuevo.';
 
   @override
-  String get emojiPickerFrequent => 'Frequent';
+  String get emojiPickerUsedInMinds => 'Used in minds';
 
   @override
   String get emojiPickerAll => 'All';

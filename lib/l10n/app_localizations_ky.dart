@@ -555,7 +555,7 @@ class AppLocalizationsKy extends AppLocalizations {
       'Жаздырууну токтотуу мүмкүн болмоду. Кайталап аракет кылыңыз.';
 
   @override
-  String get emojiPickerFrequent => 'Frequent';
+  String get emojiPickerUsedInMinds => 'Used in minds';
 
   @override
   String get emojiPickerAll => 'All';

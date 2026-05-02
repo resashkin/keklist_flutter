@@ -536,7 +536,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get audioRecordStopError => '録音を停止できませんでした。もう一度お試しください。';
 
   @override
-  String get emojiPickerFrequent => 'Frequent';
+  String get emojiPickerUsedInMinds => 'Used in minds';
 
   @override
   String get emojiPickerAll => 'All';

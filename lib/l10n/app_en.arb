@@ -701,9 +701,9 @@
     "@audioRecordStopError": {
         "description": "Error when recording fails to stop"
     },
-    "emojiPickerFrequent": "Frequent",
-    "@emojiPickerFrequent": {
-        "description": "Section header for frequently used emojis in the emoji picker"
+    "emojiPickerUsedInMinds": "Used in minds",
+    "@emojiPickerUsedInMinds": {
+        "description": "Section header for emojis used in minds in the emoji picker"
     },
     "emojiPickerAll": "All",
     "@emojiPickerAll": {

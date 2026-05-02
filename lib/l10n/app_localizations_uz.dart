@@ -556,7 +556,7 @@ class AppLocalizationsUz extends AppLocalizations {
       'Yozishni to\'xtatish imkoni bo\'lmadi. Qayta urinib ko\'ring.';
 
   @override
-  String get emojiPickerFrequent => 'Frequent';
+  String get emojiPickerUsedInMinds => 'Used in minds';
 
   @override
   String get emojiPickerAll => 'All';

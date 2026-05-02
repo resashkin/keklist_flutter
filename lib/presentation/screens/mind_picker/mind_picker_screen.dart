@@ -4,7 +4,7 @@ import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/core/widgets/mind_widget.dart';
-import 'package:keklist/presentation/cubits/emoji_frequency/emoji_frequency_cubit.dart';
+import 'package:keklist/presentation/cubits/used_emoji/used_emoji_cubit.dart';
 import 'package:emojis/emoji.dart';
 import 'package:flutter/material.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
@@ -22,15 +22,13 @@ final class MindPickerScreen extends StatefulWidget {
 final class MindPickerScreenState extends KekWidgetState<MindPickerScreen> {
   final List<Emoji> _emojies = Emoji.all();
   String _searchText = '';
-  Iterable<Emoji> _filteredMinds = [];
+  List<Emoji> _filteredMinds = [];
   Iterable<String> _suggestions = [];
 
-  List<String> get _displayedEmojiCharacters {
+  List<String> get _allEmojiCharacters {
     final List<String> suggestions = widget.suggestions.toList();
-    return _suggestions.toList() + suggestions + _displayedEmojies.map((emoji) => emoji.char).toList();
+    return _suggestions.toList() + suggestions + _emojies.map((emoji) => emoji.char).toList();
   }
-
-  Iterable<Emoji> get _displayedEmojies => _searchText.isEmpty ? _emojies : _filteredMinds;
 
   final TextEditingController _textEditingController = TextEditingController();
 
@@ -72,48 +70,104 @@ final class MindPickerScreenState extends KekWidgetState<MindPickerScreen> {
           ),
         ),
         Flexible(
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final widgetsInRowCount = (constraints.maxWidth / 80).ceil();
-              return CustomScrollView(
-                slivers: [
-                  if (_searchText.isEmpty) ...[
-                    SliverToBoxAdapter(child: _sectionHeader(context.l10n.emojiPickerFrequent)),
-                    BlocBuilder<EmojiFrequencyCubit, EmojiFrequencyState>(
-                      builder: (context, state) => SliverGrid(
+          child: BlocBuilder<UsedEmojiCubit, UsedEmojiState>(
+            builder: (context, frequencyState) {
+              return LayoutBuilder(
+                builder: (context, constraints) {
+                  final widgetsInRowCount = (constraints.maxWidth / 80).ceil();
+
+                  if (_searchText.isNotEmpty) {
+                    // Split search results into frequent matches and the rest
+                    final usedMatchItems = frequencyState.usedEmojis
+                        .where((item) => _filteredMinds.any((e) => e.char == item.emoji))
+                        .toList();
+                    final usedChars = usedMatchItems.map((i) => i.emoji).toSet();
+                    final otherMatchChars = _filteredMinds
+                        .where((e) => !usedChars.contains(e.char))
+                        .map((e) => e.char)
+                        .toList();
+
+                    return CustomScrollView(
+                      slivers: [
+                        if (usedMatchItems.isNotEmpty) ...[
+                          SliverToBoxAdapter(child: _sectionHeader(context.l10n.emojiPickerUsedInMinds)),
+                          SliverGrid(
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: widgetsInRowCount,
+                              childAspectRatio: 0.85,
+                            ),
+                            delegate: SliverChildBuilderDelegate(
+                              (context, index) {
+                                final item = usedMatchItems[index];
+                                return _FrequentEmojiCell(
+                                  item: item,
+                                  onTap: () => _pickEmoji(item.emoji),
+                                );
+                              },
+                              childCount: usedMatchItems.length,
+                            ),
+                          ),
+                        ],
+                        if (otherMatchChars.isNotEmpty) ...[
+                          if (usedMatchItems.isNotEmpty)
+                            SliverToBoxAdapter(child: const Divider(height: 1)),
+                          SliverToBoxAdapter(child: _sectionHeader(context.l10n.emojiPickerAll)),
+                          SliverPadding(
+                            padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+                            sliver: SliverGrid(
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: widgetsInRowCount),
+                              delegate: SliverChildBuilderDelegate(
+                                (context, index) {
+                                  final emoji = otherMatchChars[index];
+                                  return MindWidget(item: emoji, onTap: () => _pickEmoji(emoji), isHighlighted: true);
+                                },
+                                childCount: otherMatchChars.length,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ],
+                    );
+                  }
+
+                  // Normal mode: Frequent + All
+                  return CustomScrollView(
+                    slivers: [
+                      SliverToBoxAdapter(child: _sectionHeader(context.l10n.emojiPickerUsedInMinds)),
+                      SliverGrid(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: widgetsInRowCount,
                           childAspectRatio: 0.85,
                         ),
                         delegate: SliverChildBuilderDelegate(
                           (context, index) {
-                            final item = state.frequentEmojis[index];
+                            final item = frequencyState.usedEmojis[index];
                             return _FrequentEmojiCell(
                               item: item,
                               onTap: () => _pickEmoji(item.emoji),
                             );
                           },
-                          childCount: state.frequentEmojis.length,
+                          childCount: frequencyState.usedEmojis.length,
                         ),
                       ),
-                    ),
-                    SliverToBoxAdapter(child: const Divider(height: 1)),
-                    SliverToBoxAdapter(child: _sectionHeader(context.l10n.emojiPickerAll)),
-                  ],
-                  SliverPadding(
-                    padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
-                    sliver: SliverGrid(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: widgetsInRowCount),
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          final emoji = _displayedEmojiCharacters[index];
-                          return MindWidget(item: emoji, onTap: () => _pickEmoji(emoji), isHighlighted: true);
-                        },
-                        childCount: _displayedEmojiCharacters.length,
+                      SliverToBoxAdapter(child: const Divider(height: 1)),
+                      SliverToBoxAdapter(child: _sectionHeader(context.l10n.emojiPickerAll)),
+                      SliverPadding(
+                        padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+                        sliver: SliverGrid(
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: widgetsInRowCount),
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              final emoji = _allEmojiCharacters[index];
+                              return MindWidget(item: emoji, onTap: () => _pickEmoji(emoji), isHighlighted: true);
+                            },
+                            childCount: _allEmojiCharacters.length,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ],
+                    ],
+                  );
+                },
               );
             },
           ),
@@ -137,7 +191,7 @@ final class MindPickerScreenState extends KekWidgetState<MindPickerScreen> {
 }
 
 class _FrequentEmojiCell extends StatelessWidget {
-  final EmojiFrequencyItem item;
+  final UsedEmojiItem item;
   final VoidCallback onTap;
 
   const _FrequentEmojiCell({required this.item, required this.onTap});

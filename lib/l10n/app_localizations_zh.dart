@@ -533,7 +533,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get audioRecordStopError => '无法停止录制。请重试。';
 
   @override
-  String get emojiPickerFrequent => 'Frequent';
+  String get emojiPickerUsedInMinds => 'Used in minds';
 
   @override
   String get emojiPickerAll => 'All';

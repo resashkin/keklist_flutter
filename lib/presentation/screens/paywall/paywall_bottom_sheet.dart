@@ -136,7 +136,13 @@ final class _PaywallBottomSheetState extends State<PaywallBottomSheet> {
   }
 
   void _showError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+    showDialog<void>(
+      context: context,
+      builder: (_) => AlertDialog(
+        content: Text(message),
+        actions: [TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('OK'))],
+      ),
+    );
   }
 
   @override
@@ -194,10 +200,12 @@ final class _PaywallBottomSheetState extends State<PaywallBottomSheet> {
                               child: _PlanCard(
                                 plan: plan,
                                 isSelected: isSelected,
-                                onTap: plan.available ? () {
-                  Haptics.vibrate(HapticsType.light);
-                  setState(() => _selected = plan);
-                } : null,
+                                onTap: plan.available
+                                    ? () {
+                                        Haptics.vibrate(HapticsType.light);
+                                        setState(() => _selected = plan);
+                                      }
+                                    : null,
                               ),
                             ),
                           );

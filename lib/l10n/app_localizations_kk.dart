@@ -554,7 +554,7 @@ class AppLocalizationsKk extends AppLocalizations {
       'Жазуды тоқтату мүмкін болмады. Қайталап көріңіз.';
 
   @override
-  String get emojiPickerFrequent => 'Frequent';
+  String get emojiPickerUsedInMinds => 'Used in minds';
 
   @override
   String get emojiPickerAll => 'All';

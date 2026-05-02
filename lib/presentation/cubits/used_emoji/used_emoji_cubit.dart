@@ -4,15 +4,15 @@ import 'package:bloc/bloc.dart';
 import 'package:keklist/domain/constants.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 
-part 'emoji_frequency_state.dart';
+part 'used_emoji_state.dart';
 
-final class EmojiFrequencyCubit extends Cubit<EmojiFrequencyState> {
+final class UsedEmojiCubit extends Cubit<UsedEmojiState> {
   final MindRepository _repository;
   StreamSubscription<void>? _subscription;
 
-  EmojiFrequencyCubit({required MindRepository repository})
+  UsedEmojiCubit({required MindRepository repository})
       : _repository = repository,
-        super(EmojiFrequencyState(frequentEmojis: [])) {
+        super(UsedEmojiState(usedEmojis: [])) {
     _compute();
     _subscription = _repository.stream.skip(1).listen((_) => _compute());
   }
@@ -20,9 +20,9 @@ final class EmojiFrequencyCubit extends Cubit<EmojiFrequencyState> {
   void _compute() {
     final minds = _repository.values;
     if (minds.isEmpty) {
-      emit(EmojiFrequencyState(
-        frequentEmojis: KeklistConstants.defaultEmojiesToPick
-            .map((e) => EmojiFrequencyItem(emoji: e, count: 0))
+      emit(UsedEmojiState(
+        usedEmojis: KeklistConstants.defaultEmojiesToPick
+            .map((e) => UsedEmojiItem(emoji: e, count: 0))
             .toList(),
       ));
       return;
@@ -34,9 +34,9 @@ final class EmojiFrequencyCubit extends Cubit<EmojiFrequencyState> {
     }
 
     final sorted = counts.entries.toList()..sort((a, b) => b.value.compareTo(a.value));
-    final top10 = sorted.take(10).map((e) => EmojiFrequencyItem(emoji: e.key, count: e.value)).toList();
+    final all = sorted.map((e) => UsedEmojiItem(emoji: e.key, count: e.value)).toList();
 
-    emit(EmojiFrequencyState(frequentEmojis: top10));
+    emit(UsedEmojiState(usedEmojis: all));
   }
 
   @override

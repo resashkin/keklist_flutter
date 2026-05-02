@@ -557,7 +557,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Impossibile fermare la registrazione. Riprova.';
 
   @override
-  String get emojiPickerFrequent => 'Frequent';
+  String get emojiPickerUsedInMinds => 'Used in minds';
 
   @override
   String get emojiPickerAll => 'All';

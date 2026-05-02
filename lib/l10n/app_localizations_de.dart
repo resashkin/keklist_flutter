@@ -560,7 +560,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Aufnahme konnte nicht gestoppt werden. Bitte versuche es erneut.';
 
   @override
-  String get emojiPickerFrequent => 'Frequent';
+  String get emojiPickerUsedInMinds => 'Used in minds';
 
   @override
   String get emojiPickerAll => 'All';
