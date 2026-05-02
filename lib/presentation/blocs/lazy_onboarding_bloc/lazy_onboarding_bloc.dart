@@ -39,9 +39,16 @@ final class LazyOnboardingBloc extends Bloc<LazyOnboardingEvent, LazyOnboardingS
 
     // Get all minds
     final minds = await _mindRepository.obtainMinds();
-    final totalMinds = minds.length;
+
+    // Guard against stale hasSeenLazyOnboarding=false after encryption migration:
+    // if onboarding minds already exist the user already ran onboarding.
+    if (minds.any((m) => OnboardingConstants.isOnboardingMindId(m.id))) {
+      emit(LazyOnboardingNeeded(shouldShow: false));
+      return;
+    }
 
     // Check conditions: totalMinds < 10 OR no minds in last 30 days
+    final totalMinds = minds.length;
     final last30DaysMinds = MindUtils.findLast30DaysMinds(allMinds: minds.toList());
     final shouldShow = totalMinds < 10 || last30DaysMinds.isEmpty;
 

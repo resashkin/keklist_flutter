@@ -81,7 +81,10 @@ final class MindPickerScreenState extends KekWidgetState<MindPickerScreen> {
                     SliverToBoxAdapter(child: _sectionHeader(context.l10n.emojiPickerFrequent)),
                     BlocBuilder<EmojiFrequencyCubit, EmojiFrequencyState>(
                       builder: (context, state) => SliverGrid(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: widgetsInRowCount),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: widgetsInRowCount,
+                          childAspectRatio: 0.85,
+                        ),
                         delegate: SliverChildBuilderDelegate(
                           (context, index) {
                             final item = state.frequentEmojis[index];
@@ -151,6 +154,7 @@ class _FrequentEmojiCell extends StatelessWidget {
             Text(
               '${item.count}',
               style: const TextStyle(fontSize: 11, color: Colors.grey),
+              overflow: TextOverflow.ellipsis,
             ),
         ],
       ),

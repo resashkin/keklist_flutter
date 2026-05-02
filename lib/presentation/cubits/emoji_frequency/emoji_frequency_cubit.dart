@@ -14,10 +14,7 @@ final class EmojiFrequencyCubit extends Cubit<EmojiFrequencyState> {
       : _repository = repository,
         super(EmojiFrequencyState(frequentEmojis: [])) {
     _compute();
-    _subscription = _repository.stream
-        .map((_) => null)
-        .distinct()
-        .listen((_) => _compute());
+    _subscription = _repository.stream.skip(1).listen((_) => _compute());
   }
 
   void _compute() {
