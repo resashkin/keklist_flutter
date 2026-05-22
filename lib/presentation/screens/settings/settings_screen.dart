@@ -485,7 +485,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
 
   Future<void> _handleImport() async {
     // Show file picker for CSV and ZIP files
-    final result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['csv', 'zip']);
+    final result = await FilePicker.pickFiles(type: FileType.custom, allowedExtensions: ['csv', 'zip']);
 
     if (result == null || result.files.isEmpty) return;
 
@@ -511,6 +511,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
 
     String? password;
     if (needsPassword) {
+      if (!mounted) return;
       password = await PasswordInputBottomSheet.show(
         context: context,
         title: context.l10n.importPassword,
@@ -525,6 +526,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   }
 
   Future<void> _handleInvalidPasswordError() async {
+    if (!mounted) return;
     final result = await showOkCancelAlertDialog(
       context: context,
       title: context.l10n.incorrectPassword,
@@ -534,7 +536,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     );
 
     if (result == OkCancelResult.ok && _lastImportFile != null) {
-      // Retry with new password
+      if (!mounted) return;
       final password = await PasswordInputBottomSheet.show(
         context: context,
         title: context.l10n.importPassword,

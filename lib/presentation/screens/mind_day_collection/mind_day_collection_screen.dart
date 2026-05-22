@@ -364,6 +364,7 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
         final bool canAuthenticateWithBiometrics = await auth.canCheckBiometrics;
         final bool canAuthenticate = canAuthenticateWithBiometrics || await auth.isDeviceSupported();
         if (canAuthenticate) {
+          if (!mounted) return;
           final bool didAuthenticate = await auth.authenticate(
             localizedReason: context.l10n.pleaseAuthenticateToShowContent,
           );

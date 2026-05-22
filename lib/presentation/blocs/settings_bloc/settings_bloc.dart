@@ -77,7 +77,7 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
             final tempFile = File(success.file.path);
             final bytes = await tempFile.readAsBytes();
 
-            final outputPath = await FilePicker.platform.saveFile(
+            final outputPath = await FilePicker.saveFile(
               dialogTitle: 'Save export file',
               fileName: suggestedName,
               type: FileType.custom,

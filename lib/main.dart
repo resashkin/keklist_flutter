@@ -153,7 +153,7 @@ Future<void> _migrateToEncryptedIfNeeded(HiveAesCipher cipher) async {
   final settingsDomain = Map.fromEntries(
     rawSettings.keys.map((k) {
       final obj = rawSettings.get(k);
-      return MapEntry(k, obj != null ? obj.toSettings().toObject() : null);
+      return MapEntry(k, obj?.toSettings().toObject());
     }),
   );
   await rawSettings.close();
@@ -169,7 +169,7 @@ Future<void> _migrateToEncryptedIfNeeded(HiveAesCipher cipher) async {
   final mindsDomain = Map.fromEntries(
     rawMinds.keys.map((k) {
       final obj = rawMinds.get(k);
-      return MapEntry(k, obj != null ? obj.toMind().toObject() : null);
+      return MapEntry(k, obj?.toMind().toObject());
     }),
   );
   await rawMinds.close();

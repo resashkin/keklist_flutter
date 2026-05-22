@@ -11,7 +11,7 @@ environment:
 dependencies:
   adaptive_dialog: ^2.0.0
   bloc: ^9.0.0
-  calendar_date_picker2: ^2.0.1
+  calendar_date_picker2: ^3.0.0
   csv: ^8.0.0
   cupertino_icons: ^1.0.5
   emojis: ^0.9.9
@@ -33,7 +33,7 @@ dependencies:
   hive_ce: ^2.19.3
   hive_ce_flutter: ^2.3.4
   intl: ^0.20.2
-  file_picker: ^10.3.10
+  file_picker: ^11.0.2
   modal_bottom_sheet: ^3.0.0-pre
   package_info_plus: ^9.0.0
   path_provider: ^2.0.12
@@ -44,7 +44,7 @@ dependencies:
   just_audio: ^0.10.5
   rxdart: ^0.28.0
   scrollable_positioned_list: ^0.3.5
-  settings_ui: ^2.0.2
+  settings_ui: ^3.0.1
   share_plus: ^12.0.0
   syncfusion_flutter_charts: ^33.1.46
   url_launcher: ^6.1.9
