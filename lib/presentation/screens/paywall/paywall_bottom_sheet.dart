@@ -153,46 +153,44 @@ final class _PaywallBottomSheetState extends State<PaywallBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Themes.dark;
-    return Theme(
-      data: theme,
-      child: Container(
-        decoration: BoxDecoration(
-          color: theme.colorScheme.surface,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-        ),
-        child: SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Drag handle
-              Container(
-                margin: const EdgeInsets.only(top: 12, bottom: 8),
-                width: 32,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.4),
-                  borderRadius: BorderRadius.circular(2),
-                ),
+    final theme = Theme.of(context);
+    return Container(
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surface,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      child: SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Drag handle
+            Container(
+              margin: const EdgeInsets.only(top: 12, bottom: 8),
+              width: 32,
+              height: 4,
+              decoration: BoxDecoration(
+                color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.4),
+                borderRadius: BorderRadius.circular(2),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const AutoSizeText('🤝', style: TextStyle(fontSize: 48), maxLines: 1),
-                    const Gap(12),
-                    const AutoSizeText(
-                      'keklist PRO',
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                      maxLines: 1,
-                    ),
-                    const Gap(8),
-                    AutoSizeText(
-                      'Unlock all features',
-                      style: TextStyle(fontSize: 15, color: Colors.grey.shade400),
-                      maxLines: 1,
-                    ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const AutoSizeText('🤝', style: TextStyle(fontSize: 48), maxLines: 1),
+                  const Gap(12),
+                  const AutoSizeText(
+                    'keklist PRO',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    maxLines: 1,
+                  ),
+                  const Gap(8),
+                  AutoSizeText(
+                    'Unlock all features',
+                    style: TextStyle(fontSize: 15, color: theme.colorScheme.onSurfaceVariant),
+                    maxLines: 1,
+                  ),
                     const Gap(8),
                     const Gap(12),
                     const _FeatureList(),
@@ -249,7 +247,7 @@ final class _PaywallBottomSheetState extends State<PaywallBottomSheet> {
                         onTap: _purchasing ? null : _restore,
                         child: AutoSizeText(
                           'Restore purchases',
-                          style: TextStyle(fontSize: 13, color: Colors.grey.shade500),
+                          style: TextStyle(fontSize: 13, color: theme.colorScheme.onSurfaceVariant),
                           maxLines: 1,
                         ),
                       ),
@@ -260,7 +258,7 @@ final class _PaywallBottomSheetState extends State<PaywallBottomSheet> {
                           _LegalLink(label: 'Privacy Policy', url: KeklistConstants.privacyURL),
                           AutoSizeText(
                             '  ·  ',
-                            style: TextStyle(fontSize: 12, color: Colors.grey.shade700),
+                            style: TextStyle(fontSize: 12, color: theme.colorScheme.outlineVariant),
                             maxLines: 1,
                           ),
                           _LegalLink(label: 'Terms of Use', url: KeklistConstants.termsOfUseURL),
@@ -273,7 +271,6 @@ final class _PaywallBottomSheetState extends State<PaywallBottomSheet> {
             ],
           ),
         ),
-      ),
     );
   }
 }
@@ -302,7 +299,7 @@ class _FeatureList extends StatelessWidget {
                 const SizedBox(width: 10),
                 AutoSizeText(
                   f.$2,
-                  style: TextStyle(fontSize: 14, color: Colors.grey.shade300),
+                  style: TextStyle(fontSize: 14, color: Theme.of(context).colorScheme.onSurfaceVariant),
                   maxLines: 1,
                 ),
               ],
@@ -326,7 +323,8 @@ class _PlanCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final borderColor = isSelected ? Colors.white : Colors.grey.shade800;
+    final cs = Theme.of(context).colorScheme;
+    final borderColor = isSelected ? cs.onSurface : cs.outlineVariant;
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
@@ -347,7 +345,7 @@ class _PlanCard extends StatelessWidget {
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 0.8,
-                  color: isSelected ? Colors.white : Colors.grey.shade400,
+                  color: isSelected ? cs.onSurface : cs.onSurfaceVariant,
                 ),
                 maxLines: 1,
               ),
@@ -358,7 +356,7 @@ class _PlanCard extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: isSelected ? Colors.white : Colors.grey.shade500,
+                  color: isSelected ? cs.onSurface : cs.onSurfaceVariant,
                 ),
                 maxLines: 1,
               ),
@@ -382,7 +380,7 @@ class _LegalLink extends StatelessWidget {
       onTap: () => launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication),
       child: AutoSizeText(
         label,
-        style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+        style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.outline),
         maxLines: 1,
       ),
     );

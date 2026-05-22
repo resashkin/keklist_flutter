@@ -80,10 +80,10 @@
     "@selectLanguage": {
         "description": "Naslov dijaloga za izbor jezika"
     },
-    "darkMode": "Tamni režim",
-    "@darkMode": {
-        "description": "Podešavanje tamnog režima"
-    },
+    "theme": "Tema",
+    "themeLight": "Svetla",
+    "themeDark": "Tamna",
+    "themeSystem": "Sistem",
     "showDayDividers": "Prikaži razdelnike dana",
     "@showDayDividers": {
         "description": "Podešavanje prikazivanja razdelnika dana"

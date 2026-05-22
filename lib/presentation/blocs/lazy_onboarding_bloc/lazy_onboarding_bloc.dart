@@ -121,7 +121,7 @@ final class LazyOnboardingBloc extends Bloc<LazyOnboardingEvent, LazyOnboardingS
     final updatedSettings = KeklistSettings(
       isMindContentVisible: currentSettings.isMindContentVisible,
       previousAppVersion: currentSettings.previousAppVersion,
-      isDarkMode: currentSettings.isDarkMode,
+      themePreference: currentSettings.themePreference,
       shouldShowTitles: currentSettings.shouldShowTitles,
       userName: currentSettings.userName,
       language: currentSettings.language,
@@ -151,7 +151,7 @@ final class LazyOnboardingBloc extends Bloc<LazyOnboardingEvent, LazyOnboardingS
     final updatedSettings = KeklistSettings(
       isMindContentVisible: currentSettings.isMindContentVisible,
       previousAppVersion: currentSettings.previousAppVersion,
-      isDarkMode: currentSettings.isDarkMode,
+      themePreference: currentSettings.themePreference,
       shouldShowTitles: currentSettings.shouldShowTitles,
       userName: currentSettings.userName,
       language: currentSettings.language,

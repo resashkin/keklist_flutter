@@ -4,6 +4,7 @@ import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:keklist/domain/repositories/settings/keklist_theme_mode.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
 import 'package:keklist/domain/services/export_import/export_import_service.dart';
 import 'package:keklist/domain/services/export_import/models/export_result.dart';
@@ -30,7 +31,7 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     on<SettingsWhatsNewShown>(_disableShowingWhatsNewUntillNewVersion);
     on<SettingsGet>(_getSettings);
     on<SettingGetWhatsNew>(_sendWhatsNewIfNeeded);
-    on<SettingsChangeIsDarkMode>(_changeSettingsDarkMode);
+    on<SettingsChangeThemePreference>(_changeThemePreference);
     on<SettingsUpdateShouldShowTitlesMode>(_updateShouldShowTitlesMode);
     on<SettingsChangeLanguage>(_changeLanguage);
     on<SettingsEnableDebugMenu>(_enableDebugMenu);
@@ -171,8 +172,8 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     await _repository.updateMindContentVisibility(event.isVisible);
   }
 
-  FutureOr<void> _changeSettingsDarkMode(SettingsChangeIsDarkMode event, Emitter<SettingsState> emit) async {
-    await _repository.updateDarkMode(event.isDarkMode);
+  FutureOr<void> _changeThemePreference(SettingsChangeThemePreference event, Emitter<SettingsState> emit) async {
+    await _repository.updateThemePreference(event.themePreference);
   }
 
   FutureOr<void> _sendWhatsNewIfNeeded(SettingGetWhatsNew event, Emitter<SettingsState> emit) async {
@@ -202,7 +203,7 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     final updatedSettings = KeklistSettings(
       isMindContentVisible: currentSettings.isMindContentVisible,
       previousAppVersion: currentSettings.previousAppVersion,
-      isDarkMode: currentSettings.isDarkMode,
+      themePreference: currentSettings.themePreference,
       shouldShowTitles: currentSettings.shouldShowTitles,
       userName: currentSettings.userName,
       language: currentSettings.language,

@@ -82,10 +82,10 @@
     "@selectLanguage": {
         "description": "Tilni tanlash dialogi sarlavhasi"
     },
-    "darkMode": "Qorong'u rejim",
-    "@darkMode": {
-        "description": "Qorong'u rejim sozlamasi"
-    },
+    "theme": "Mavzu",
+    "themeLight": "Kunduzgi",
+    "themeDark": "Tungi",
+    "themeSystem": "Sistema",
     "showDayDividers": "Kun ajratuvchilarini ko'rsatish",
     "@showDayDividers": {
         "description": "Kun ajratuvchilarini ko'rsatish sozlamasi"

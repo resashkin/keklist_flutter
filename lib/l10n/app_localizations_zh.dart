@@ -78,7 +78,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get selectLanguage => '选择语言';
 
   @override
-  String get darkMode => '深色模式';
+  String get theme => '主题';
+
+  @override
+  String get themeLight => '浅色';
+
+  @override
+  String get themeDark => '深色';
+
+  @override
+  String get themeSystem => '跟随系统';
 
   @override
   String get showDayDividers => '显示日期分隔符';

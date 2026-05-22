@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
+import 'package:keklist/domain/repositories/settings/keklist_theme_mode.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
 import 'package:keklist/domain/services/constants/onboarding_constants.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
@@ -33,7 +34,7 @@ void main() {
       KeklistSettings(
         isMindContentVisible: true,
         previousAppVersion: null,
-        isDarkMode: true,
+        themePreference: KeklistThemeMode.dark,
         shouldShowTitles: true,
         userName: null,
         language: SupportedLanguage.english,
@@ -56,7 +57,7 @@ void main() {
         KeklistSettings(
           isMindContentVisible: true,
           previousAppVersion: null,
-          isDarkMode: true,
+          themePreference: KeklistThemeMode.dark,
           shouldShowTitles: true,
           userName: null,
           language: SupportedLanguage.english,
@@ -84,7 +85,7 @@ void main() {
         KeklistSettings(
           isMindContentVisible: true,
           previousAppVersion: null,
-          isDarkMode: true,
+          themePreference: KeklistThemeMode.dark,
           shouldShowTitles: true,
           userName: null,
           language: SupportedLanguage.english,
@@ -121,7 +122,7 @@ void main() {
         KeklistSettings(
           isMindContentVisible: true,
           previousAppVersion: null,
-          isDarkMode: true,
+          themePreference: KeklistThemeMode.dark,
           shouldShowTitles: true,
           userName: null,
           language: SupportedLanguage.english,
@@ -165,7 +166,7 @@ void main() {
         KeklistSettings(
           isMindContentVisible: true,
           previousAppVersion: null,
-          isDarkMode: true,
+          themePreference: KeklistThemeMode.dark,
           shouldShowTitles: true,
           userName: null,
           language: SupportedLanguage.english,
@@ -294,7 +295,7 @@ void main() {
       final currentSettings = KeklistSettings(
         isMindContentVisible: true,
         previousAppVersion: null,
-        isDarkMode: true,
+        themePreference: KeklistThemeMode.dark,
         shouldShowTitles: true,
         userName: null,
         language: SupportedLanguage.english,

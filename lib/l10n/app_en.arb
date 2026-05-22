@@ -91,9 +91,21 @@
     "@selectLanguage": {
         "description": "Language selection dialog title"
     },
-    "darkMode": "Dark mode",
-    "@darkMode": {
-        "description": "Dark mode setting"
+    "theme": "Theme",
+    "@theme": {
+        "description": "Theme appearance setting label"
+    },
+    "themeLight": "Light",
+    "@themeLight": {
+        "description": "Light theme option"
+    },
+    "themeDark": "Dark",
+    "@themeDark": {
+        "description": "Dark theme option"
+    },
+    "themeSystem": "System",
+    "@themeSystem": {
+        "description": "Follow system theme option"
     },
     "showDayDividers": "Show day dividers",
     "@showDayDividers": {

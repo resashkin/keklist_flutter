@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:keklist/domain/repositories/settings/keklist_theme_mode.dart';
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
 import 'package:keklist/domain/services/language_manager.dart';
 
@@ -9,7 +10,7 @@ abstract class SettingsRepository {
   Stream<KeklistSettings> get stream;
   FutureOr<void> updateUserName(String string);
   FutureOr<void> updateSettings(KeklistSettings settings);
-  FutureOr<void> updateDarkMode(bool isDarkMode);
+  FutureOr<void> updateThemePreference(KeklistThemeMode themeMode);
   FutureOr<void> updateMindContentVisibility(bool isVisible);
   FutureOr<void> updateShouldShowTitles(bool shouldShowTitles);
   FutureOr<void> updatePreviousAppVersion(String? previousAppVersion);
@@ -22,7 +23,7 @@ abstract class SettingsRepository {
 final class KeklistSettings {
   final bool isMindContentVisible;
   final String? previousAppVersion;
-  final bool isDarkMode;
+  final KeklistThemeMode themePreference;
   final bool shouldShowTitles;
   final String? userName;
   final SupportedLanguage language;
@@ -40,7 +41,7 @@ final class KeklistSettings {
   KeklistSettings({
     required this.isMindContentVisible,
     required this.previousAppVersion,
-    required this.isDarkMode,
+    required this.themePreference,
     required this.shouldShowTitles,
     required this.userName,
     required this.language,
@@ -59,7 +60,8 @@ final class KeklistSettings {
   SettingsObject toObject() => SettingsObject()
     ..isMindContentVisible = isMindContentVisible
     ..previousAppVersion = previousAppVersion
-    ..isDarkMode = isDarkMode
+    ..isDarkMode = themePreference == KeklistThemeMode.dark
+    ..themePreferenceIndex = themePreference.index
     ..shouldShowTitles = shouldShowTitles
     ..userName = userName
     ..language = language.code
@@ -77,7 +79,7 @@ final class KeklistSettings {
   factory KeklistSettings.initial() => KeklistSettings(
         isMindContentVisible: true,
         previousAppVersion: null,
-        isDarkMode: true,
+        themePreference: KeklistThemeMode.system,
         shouldShowTitles: true,
         userName: null,
         language: _detectDeviceLocale(),

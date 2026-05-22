@@ -78,7 +78,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get selectLanguage => 'Seleccionar Idioma';
 
   @override
-  String get darkMode => 'Modo oscuro';
+  String get theme => 'Tema';
+
+  @override
+  String get themeLight => 'Claro';
+
+  @override
+  String get themeDark => 'Oscuro';
+
+  @override
+  String get themeSystem => 'Sistema';
 
   @override
   String get showDayDividers => 'Mostrar divisores de día';

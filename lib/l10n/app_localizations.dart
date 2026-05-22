@@ -255,11 +255,29 @@ abstract class AppLocalizations {
   /// **'Select Language'**
   String get selectLanguage;
 
-  /// Dark mode setting
+  /// Theme appearance setting label
   ///
   /// In en, this message translates to:
-  /// **'Dark mode'**
-  String get darkMode;
+  /// **'Theme'**
+  String get theme;
+
+  /// Light theme option
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get themeLight;
+
+  /// Dark theme option
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get themeDark;
+
+  /// Follow system theme option
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get themeSystem;
 
   /// Show day dividers setting
   ///

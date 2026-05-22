@@ -82,10 +82,10 @@
     "@selectLanguage": {
         "description": "Тілді таңдау диалогының атауы"
     },
-    "darkMode": "Қараңғы режим",
-    "@darkMode": {
-        "description": "Қараңғы режим баптауы"
-    },
+    "theme": "Тақырып",
+    "themeLight": "Ашық",
+    "themeDark": "Қараңғы",
+    "themeSystem": "Жүйе",
     "showDayDividers": "Күн бөлгіштерін көрсету",
     "@showDayDividers": {
         "description": "Күн бөлгіштерін көрсету баптауы"

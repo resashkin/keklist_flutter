@@ -78,7 +78,16 @@ class AppLocalizationsJa extends AppLocalizations {
   String get selectLanguage => '言語を選択';
 
   @override
-  String get darkMode => 'ダークモード';
+  String get theme => 'テーマ';
+
+  @override
+  String get themeLight => 'ライト';
+
+  @override
+  String get themeDark => 'ダーク';
+
+  @override
+  String get themeSystem => 'システム';
 
   @override
   String get showDayDividers => '日の区切りを表示';

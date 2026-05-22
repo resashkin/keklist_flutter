@@ -78,7 +78,16 @@ class AppLocalizationsUz extends AppLocalizations {
   String get selectLanguage => 'Tilni tanlash';
 
   @override
-  String get darkMode => 'Qorong\'u rejim';
+  String get theme => 'Mavzu';
+
+  @override
+  String get themeLight => 'Kunduzgi';
+
+  @override
+  String get themeDark => 'Tungi';
+
+  @override
+  String get themeSystem => 'Sistema';
 
   @override
   String get showDayDividers => 'Kun ajratuvchilarini ko\'rsatish';

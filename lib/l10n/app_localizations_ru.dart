@@ -78,7 +78,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get selectLanguage => 'Выберите язык';
 
   @override
-  String get darkMode => 'Тёмный режим';
+  String get theme => 'Тема';
+
+  @override
+  String get themeLight => 'Светлая';
+
+  @override
+  String get themeDark => 'Тёмная';
+
+  @override
+  String get themeSystem => 'Система';
 
   @override
   String get showDayDividers => 'Показывать разделители дней';

@@ -78,7 +78,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get selectLanguage => 'Sprache auswählen';
 
   @override
-  String get darkMode => 'Dunkler Modus';
+  String get theme => 'Erscheinungsbild';
+
+  @override
+  String get themeLight => 'Hell';
+
+  @override
+  String get themeDark => 'Dunkel';
+
+  @override
+  String get themeSystem => 'System';
 
   @override
   String get showDayDividers => 'Tages-Trennlinien anzeigen';

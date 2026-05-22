@@ -46,10 +46,10 @@ final class SettingsUploadMindsFromCacheToServer extends SettingsEvent {}
 
 final class SettingGetWhatsNew extends SettingsEvent {}
 
-final class SettingsChangeIsDarkMode extends SettingsEvent {
-  final bool isDarkMode;
+final class SettingsChangeThemePreference extends SettingsEvent {
+  final KeklistThemeMode themePreference;
 
-  const SettingsChangeIsDarkMode({required this.isDarkMode});
+  const SettingsChangeThemePreference({required this.themePreference});
 }
 
 final class SettingsGetMindCandidatesToUpload extends SettingsEvent {}

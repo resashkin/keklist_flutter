@@ -78,7 +78,16 @@ class AppLocalizationsKy extends AppLocalizations {
   String get selectLanguage => 'Тилди тандоо';
 
   @override
-  String get darkMode => 'Караңгы режим';
+  String get theme => 'Тема';
+
+  @override
+  String get themeLight => 'Жарык';
+
+  @override
+  String get themeDark => 'Кара';
+
+  @override
+  String get themeSystem => 'Система';
 
   @override
   String get showDayDividers => 'Күн бөлгүчүлөрдү көрсөтүү';

@@ -82,10 +82,10 @@
     "@selectLanguage": {
         "description": "Título de diálogo de selección de idioma"
     },
-    "darkMode": "Modo oscuro",
-    "@darkMode": {
-        "description": "Configuración de modo oscuro"
-    },
+    "theme": "Tema",
+    "themeLight": "Claro",
+    "themeDark": "Oscuro",
+    "themeSystem": "Sistema",
     "showDayDividers": "Mostrar divisores de día",
     "@showDayDividers": {
         "description": "Configuración mostrar divisores de día"
