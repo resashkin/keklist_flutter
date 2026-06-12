@@ -1,5 +1,6 @@
 import 'package:keklist/domain/migrations/migration.dart';
 import 'package:keklist/domain/migrations/migrations/migration_v1_audio_duration.dart';
+import 'package:keklist/domain/migrations/migrations/migration_v2_theme_preference.dart';
 
 /// Central registry of all data migrations
 /// Migrations are executed in order by version number
@@ -9,9 +10,7 @@ class MigrationRegistry {
   static List<Migration> getAllMigrations() {
     final migrations = <Migration>[
       MigrationV1AudioDuration(),
-      // Future migrations will be added here:
-      // MigrationV2Transcription(),
-      // MigrationV3AudioCodec(),
+      MigrationV2ThemePreference(),
     ];
 
     // Sort by version to ensure consistent execution order

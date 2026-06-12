@@ -22,7 +22,10 @@
     "convertToStandalone": "In eigenständig konvertieren",
     "language": "Sprache",
     "selectLanguage": "Sprache auswählen",
-    "darkMode": "Dunkler Modus",
+    "theme": "Erscheinungsbild",
+    "themeLight": "Hell",
+    "themeDark": "Dunkel",
+    "themeSystem": "System",
     "showDayDividers": "Tages-Trennlinien anzeigen",
     "tabsSettings": "Tab-Einstellungen",
     "whatsNew": "Was ist neu?",
@@ -172,5 +175,7 @@
     "audioRecordPermissionError": "Mikrofonberechtigung ist erforderlich, um Audio aufzunehmen.",
     "audioRecordStartError": "Aufnahme konnte nicht gestartet werden. Bitte versuche es erneut.",
     "audioRecordStopError": "Aufnahme konnte nicht gestoppt werden. Bitte versuche es erneut.",
+    "emojiPickerUsedInMinds": "Used in minds",
+    "emojiPickerAll": "All",
     "proUserFooter": "Du bist PRO-Nutzer. Die nächste Zahlung von {price} erfolgt am {date}."
 }

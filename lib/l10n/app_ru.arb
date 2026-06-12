@@ -22,7 +22,10 @@
     "convertToStandalone": "Преобразовать в отдельную",
     "language": "Язык",
     "selectLanguage": "Выберите язык",
-    "darkMode": "Тёмный режим",
+    "theme": "Тема",
+    "themeLight": "Светлая",
+    "themeDark": "Тёмная",
+    "themeSystem": "Система",
     "showDayDividers": "Показывать разделители дней",
     "tabsSettings": "Настройки вкладок",
     "whatsNew": "Что нового?",
@@ -172,5 +175,7 @@
     "audioRecordPermissionError": "Для записи аудио необходимо разрешение на использование микрофона.",
     "audioRecordStartError": "Не удалось начать запись. Попробуйте ещё раз.",
     "audioRecordStopError": "Не удалось остановить запись. Попробуйте ещё раз.",
+    "emojiPickerUsedInMinds": "Used in minds",
+    "emojiPickerAll": "All",
     "proUserFooter": "Вы PRO пользователь. Следующий платёж {price} будет {date}."
 }

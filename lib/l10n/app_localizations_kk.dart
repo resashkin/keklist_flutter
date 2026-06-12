@@ -78,7 +78,16 @@ class AppLocalizationsKk extends AppLocalizations {
   String get selectLanguage => 'Тілді таңдау';
 
   @override
-  String get darkMode => 'Қараңғы режим';
+  String get theme => 'Тақырып';
+
+  @override
+  String get themeLight => 'Ашық';
+
+  @override
+  String get themeDark => 'Қараңғы';
+
+  @override
+  String get themeSystem => 'Жүйе';
 
   @override
   String get showDayDividers => 'Күн бөлгіштерін көрсету';
@@ -552,6 +561,12 @@ class AppLocalizationsKk extends AppLocalizations {
   @override
   String get audioRecordStopError =>
       'Жазуды тоқтату мүмкін болмады. Қайталап көріңіз.';
+
+  @override
+  String get emojiPickerUsedInMinds => 'Used in minds';
+
+  @override
+  String get emojiPickerAll => 'All';
 
   @override
   String proUserFooter(String price, String date) {

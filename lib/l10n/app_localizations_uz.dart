@@ -78,7 +78,16 @@ class AppLocalizationsUz extends AppLocalizations {
   String get selectLanguage => 'Tilni tanlash';
 
   @override
-  String get darkMode => 'Qorong\'u rejim';
+  String get theme => 'Mavzu';
+
+  @override
+  String get themeLight => 'Kunduzgi';
+
+  @override
+  String get themeDark => 'Tungi';
+
+  @override
+  String get themeSystem => 'Sistema';
 
   @override
   String get showDayDividers => 'Kun ajratuvchilarini ko\'rsatish';
@@ -554,6 +563,12 @@ class AppLocalizationsUz extends AppLocalizations {
   @override
   String get audioRecordStopError =>
       'Yozishni to\'xtatish imkoni bo\'lmadi. Qayta urinib ko\'ring.';
+
+  @override
+  String get emojiPickerUsedInMinds => 'Used in minds';
+
+  @override
+  String get emojiPickerAll => 'All';
 
   @override
   String proUserFooter(String price, String date) {

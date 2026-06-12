@@ -62,7 +62,7 @@ class MigrationRunner {
               KeklistSettings(
                 isMindContentVisible: updatedSettings.isMindContentVisible,
                 previousAppVersion: updatedSettings.previousAppVersion,
-                isDarkMode: updatedSettings.isDarkMode,
+                themePreference: updatedSettings.themePreference,
                 shouldShowTitles: updatedSettings.shouldShowTitles,
                 userName: updatedSettings.userName,
                 language: updatedSettings.language,
@@ -70,6 +70,12 @@ class MigrationRunner {
                 hasSeenLazyOnboarding: updatedSettings.hasSeenLazyOnboarding,
                 isDebugMenuVisible: updatedSettings.isDebugMenuVisible,
                 isPhotoVideoSourceEnabled: updatedSettings.isPhotoVideoSourceEnabled,
+                isWeatherSourceEnabled: updatedSettings.isWeatherSourceEnabled,
+                weatherLatitude: updatedSettings.weatherLatitude,
+                weatherLongitude: updatedSettings.weatherLongitude,
+                isMediaFolderSourceEnabled: updatedSettings.isMediaFolderSourceEnabled,
+                mediaFolderPath: updatedSettings.mediaFolderPath,
+                isMediaFolderRecursive: updatedSettings.isMediaFolderRecursive,
               ),
             );
 

@@ -82,10 +82,10 @@
     "@selectLanguage": {
         "description": "Тілді таңдау диалогының атауы"
     },
-    "darkMode": "Қараңғы режим",
-    "@darkMode": {
-        "description": "Қараңғы режим баптауы"
-    },
+    "theme": "Тақырып",
+    "themeLight": "Ашық",
+    "themeDark": "Қараңғы",
+    "themeSystem": "Жүйе",
     "showDayDividers": "Күн бөлгіштерін көрсету",
     "@showDayDividers": {
         "description": "Күн бөлгіштерін көрсету баптауы"
@@ -438,5 +438,7 @@
     "audioRecordPermissionError": "Аудио жазу үшін микрофон рұқсаты қажет.",
     "audioRecordStartError": "Жазуды бастау мүмкін болмады. Қайталап көріңіз.",
     "audioRecordStopError": "Жазуды тоқтату мүмкін болмады. Қайталап көріңіз.",
+    "emojiPickerUsedInMinds": "Used in minds",
+    "emojiPickerAll": "All",
     "proUserFooter": "Сіз PRO қолданушысысыз. Келесі {price} төлем {date} күні болады."
 }

@@ -78,7 +78,16 @@ class AppLocalizationsSr extends AppLocalizations {
   String get selectLanguage => 'Изаберите језик';
 
   @override
-  String get darkMode => 'Тамни режим';
+  String get theme => 'Тема';
+
+  @override
+  String get themeLight => 'Светла';
+
+  @override
+  String get themeDark => 'Тамна';
+
+  @override
+  String get themeSystem => 'Систем';
 
   @override
   String get showDayDividers => 'Прикажи разделиоце дана';
@@ -554,6 +563,12 @@ class AppLocalizationsSr extends AppLocalizations {
       'Није могуће зауставити снимање. Покушајте поново.';
 
   @override
+  String get emojiPickerUsedInMinds => 'Used in minds';
+
+  @override
+  String get emojiPickerAll => 'All';
+
+  @override
   String proUserFooter(String price, String date) {
     return 'Ви сте PRO корисник. Следећа уплата $price биће $date.';
   }
@@ -633,7 +648,16 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
   String get selectLanguage => 'Izaberi jezik';
 
   @override
-  String get darkMode => 'Tamni režim';
+  String get theme => 'Tema';
+
+  @override
+  String get themeLight => 'Svetla';
+
+  @override
+  String get themeDark => 'Tamna';
+
+  @override
+  String get themeSystem => 'Sistem';
 
   @override
   String get showDayDividers => 'Prikaži razdelnike dana';
@@ -1106,6 +1130,12 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
   @override
   String get audioRecordStopError =>
       'Nije moguće zaustaviti snimanje. Pokušajte ponovo.';
+
+  @override
+  String get emojiPickerUsedInMinds => 'Used in minds';
+
+  @override
+  String get emojiPickerAll => 'All';
 
   @override
   String proUserFooter(String price, String date) {

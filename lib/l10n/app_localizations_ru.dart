@@ -78,7 +78,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get selectLanguage => 'Выберите язык';
 
   @override
-  String get darkMode => 'Тёмный режим';
+  String get theme => 'Тема';
+
+  @override
+  String get themeLight => 'Светлая';
+
+  @override
+  String get themeDark => 'Тёмная';
+
+  @override
+  String get themeSystem => 'Система';
 
   @override
   String get showDayDividers => 'Показывать разделители дней';
@@ -550,6 +559,12 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get audioRecordStopError =>
       'Не удалось остановить запись. Попробуйте ещё раз.';
+
+  @override
+  String get emojiPickerUsedInMinds => 'Used in minds';
+
+  @override
+  String get emojiPickerAll => 'All';
 
   @override
   String proUserFooter(String price, String date) {

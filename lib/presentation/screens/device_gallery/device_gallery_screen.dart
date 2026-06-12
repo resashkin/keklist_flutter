@@ -71,16 +71,14 @@ final class _DeviceGalleryScreenState extends State<DeviceGalleryScreen> {
 
     // Filter assets by the exact date (in case the filterOption didn't work perfectly)
     final List<AssetEntity> filteredAssets = allAssets.where((asset) {
-      final DateTime? createDate = asset.createDateTime;
-      if (createDate == null) return false;
+      final DateTime createDate = asset.createDateTime;
       return createDate.isAfter(startOfDay) && createDate.isBefore(endOfDay);
     }).toList();
 
     // Sort by creation time (newest first)
     filteredAssets.sort((a, b) {
-      final DateTime? aDate = a.createDateTime;
-      final DateTime? bDate = b.createDateTime;
-      if (aDate == null || bDate == null) return 0;
+      final DateTime aDate = a.createDateTime;
+      final DateTime bDate = b.createDateTime;
       return bDate.compareTo(aDate);
     });
 
@@ -198,7 +196,7 @@ final class _DeviceGalleryScreenState extends State<DeviceGalleryScreen> {
               right: 4,
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                decoration: BoxDecoration(color: Colors.black.withOpacity(0.7), borderRadius: BorderRadius.circular(4)),
+                decoration: BoxDecoration(color: Colors.black.withValues(alpha: 0.7), borderRadius: BorderRadius.circular(4)),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [

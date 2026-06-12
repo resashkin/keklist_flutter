@@ -165,10 +165,10 @@ packages:
     dependency: "direct main"
     description:
       name: calendar_date_picker2
-      sha256: "9c9b5586fb512bf1181d7f3a6273bffa9e65a4e16689902e112771e7d71d063b"
+      sha256: d6ea697c7fc0eebc64c62ad2ac6232a8c38795010bd8466b687bfebcbbdd872e
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.1"
+    version: "3.0.0"
   characters:
     dependency: transitive
     description:
@@ -242,7 +242,7 @@ packages:
     source: hosted
     version: "0.3.5+2"
   crypto:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: crypto
       sha256: c8ea0233063ba03258fbcf2ca4d6dadfefe14f02fab57702265467a19f27fadf
@@ -297,22 +297,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.12"
-  dio:
-    dependency: transitive
-    description:
-      name: dio
-      sha256: aff32c08f92787a557dd5c0145ac91536481831a01b4648136373cddb0e64f8c
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.9.2"
-  dio_web_adapter:
-    dependency: transitive
-    description:
-      name: dio_web_adapter
-      sha256: "2f9e64323a7c3c7ef69567d5c800424a11f8337b8b228bad02524c9fb3c1f340"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.2"
   dynamic_color:
     dependency: transitive
     description:
@@ -381,10 +365,10 @@ packages:
     dependency: "direct main"
     description:
       name: file_picker
-      sha256: "57d9a1dd5063f85fa3107fb42d1faffda52fdc948cefd5fe5ea85267a5fc7343"
+      sha256: f13a03000d942e476bc1ff0a736d2e9de711d2f89a95cd4c1d88f861c3348387
       url: "https://pub.dev"
     source: hosted
-    version: "10.3.10"
+    version: "11.0.2"
   file_selector:
     dependency: "direct main"
     description:
@@ -965,14 +949,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
-  logarte:
-    dependency: "direct main"
-    description:
-      name: logarte
-      sha256: c9b6dd8b766be9fc77ecbca2898db1e8560fc626e8c25d6fbd67e49d858373b3
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.4.0"
   logging:
     dependency: transitive
     description:
@@ -1017,10 +993,10 @@ packages:
     dependency: transitive
     description:
       name: meta
-      sha256: "23f08335362185a5ea2ad3a4e597f1375e78bce8a040df5c600c8d3552ef2394"
+      sha256: "1741988757a65eb6b36abe716829688cf01910bbf91c34354ff7ec1c3de2b349"
       url: "https://pub.dev"
     source: hosted
-    version: "1.17.0"
+    version: "1.18.0"
   mime:
     dependency: transitive
     description:
@@ -1257,18 +1233,10 @@ packages:
     dependency: "direct main"
     description:
       name: purchases_flutter
-      sha256: c344ddc799151536fa091592d0597616435559684d3efe45f70ecae2b3e205be
+      sha256: "40723bd949d58a005e3e3eeb0739d3ad664ad478e3e29697692e0d657f103c6e"
       url: "https://pub.dev"
     source: hosted
-    version: "9.16.0"
-  purchases_ui_flutter:
-    dependency: "direct main"
-    description:
-      name: purchases_ui_flutter
-      sha256: "0b596e2b8536616bd526fef6ec8e12baa676db8c59ebe7ee29187328cbda8654"
-      url: "https://pub.dev"
-    source: hosted
-    version: "9.16.0"
+    version: "10.0.1"
   record:
     dependency: "direct main"
     description:
@@ -1361,10 +1329,10 @@ packages:
     dependency: "direct main"
     description:
       name: settings_ui
-      sha256: d9838037cb554b24b4218b2d07666fbada3478882edefae375ee892b6c820ef3
+      sha256: "7437c9c867f331ff6c90e951f2333441eab5cf5e654c3a7f3e4aad0c01db51ef"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.2"
+    version: "3.0.1"
   share_plus:
     dependency: "direct main"
     description:
@@ -1382,7 +1350,7 @@ packages:
     source: hosted
     version: "6.1.0"
   shared_preferences:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: shared_preferences
       sha256: c3025c5534b01739267eb7d76959bbc25a6d10f6988e1c2a3036940133dd10bf
@@ -1554,14 +1522,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.4.0"
-  telegram_web_app:
-    dependency: "direct main"
-    description:
-      name: telegram_web_app
-      sha256: "5c33aaa07d776552ce55b49b401d0e835115fbeb136877c6d19b3b1491000535"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.3"
   term_glyph:
     dependency: transitive
     description:
@@ -1574,10 +1534,10 @@ packages:
     dependency: transitive
     description:
       name: test_api
-      sha256: "8161c84903fd860b26bfdefb7963b3f0b68fee7adea0f59ef805ecca346f0c7a"
+      sha256: "949a932224383300f01be9221c39180316445ecb8e7547f70a41a35bf421fb9e"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.10"
+    version: "0.7.11"
   time:
     dependency: transitive
     description:

@@ -223,8 +223,8 @@ final class _FolderGalleryScreenState extends State<FolderGalleryScreen> {
       PageRouteBuilder(
         opaque: false,
         fullscreenDialog: true,
-        pageBuilder: (_, __, ___) => FolderMediaViewerScreen(item: item),
-        transitionsBuilder: (_, animation, __, child) => FadeTransition(
+        pageBuilder: (_, _, _) => FolderMediaViewerScreen(item: item),
+        transitionsBuilder: (_, animation, _, child) => FadeTransition(
           opacity: CurvedAnimation(parent: animation, curve: Curves.easeIn),
           child: child,
         ),

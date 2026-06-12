@@ -19,7 +19,7 @@ class RoundedContainer extends StatelessWidget {
         border: border,
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).shadowColor.withOpacity(0.2),
+            color: Theme.of(context).shadowColor.withValues(alpha: 0.2),
             spreadRadius: 2,
             blurRadius: 10.0,
             offset: const Offset(1.0, 1.0),

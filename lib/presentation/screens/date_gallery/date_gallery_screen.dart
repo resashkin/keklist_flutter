@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keklist/domain/constants.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
@@ -172,8 +171,8 @@ final class _DateGalleryScreenState extends KekWidgetState<DateGalleryScreen> {
       PageRouteBuilder(
         opaque: false,
         fullscreenDialog: true,
-        pageBuilder: (_, __, ___) => MediaViewerScreen(asset: asset),
-        transitionsBuilder: (_, animation, __, child) => FadeTransition(
+        pageBuilder: (_, _, _) => MediaViewerScreen(asset: asset),
+        transitionsBuilder: (_, animation, _, child) => FadeTransition(
           opacity: CurvedAnimation(parent: animation, curve: Curves.easeIn),
           child: child,
         ),

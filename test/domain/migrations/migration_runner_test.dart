@@ -3,6 +3,7 @@ import 'package:keklist/domain/migrations/migration.dart';
 import 'package:keklist/domain/migrations/migration_runner.dart';
 import 'package:keklist/domain/repositories/files/app_file_repository.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
+import 'package:keklist/domain/repositories/settings/keklist_theme_mode.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
 import 'package:keklist/domain/services/language_manager.dart';
 import 'package:mocktail/mocktail.dart';
@@ -33,7 +34,7 @@ void main() {
       KeklistSettings(
         isMindContentVisible: true,
         previousAppVersion: null,
-        isDarkMode: true,
+        themePreference: KeklistThemeMode.dark,
         shouldShowTitles: true,
         userName: null,
         language: SupportedLanguage.english,
@@ -43,27 +44,27 @@ void main() {
         isPhotoVideoSourceEnabled: false,
       ),
     );
+    registerFallbackValue(KeklistThemeMode.system);
   });
 
   group('MigrationRunner', () {
     test('runs no migrations when schema version is up to date', () async {
-      // Current version is already 1, no migrations needed
+      // Current version matches the latest migration (v2), no migrations needed
       when(() => mockSettingsRepo.value).thenReturn(
         KeklistSettings(
           isMindContentVisible: true,
           previousAppVersion: null,
-          isDarkMode: true,
+          themePreference: KeklistThemeMode.dark,
           shouldShowTitles: true,
           userName: null,
           language: SupportedLanguage.english,
-          dataSchemaVersion: 1,
+          dataSchemaVersion: 2,
           hasSeenLazyOnboarding: false,
           isDebugMenuVisible: false,
           isPhotoVideoSourceEnabled: false,
         ),
       );
 
-      // Note: This test assumes MigrationRegistry only has migration v1
       final result = await runner.runPendingMigrations();
 
       expect(result, true);
@@ -75,7 +76,7 @@ void main() {
         KeklistSettings(
           isMindContentVisible: true,
           previousAppVersion: null,
-          isDarkMode: true,
+          themePreference: KeklistThemeMode.dark,
           shouldShowTitles: true,
           userName: null,
           language: SupportedLanguage.english,
@@ -95,7 +96,7 @@ void main() {
         KeklistSettings(
           isMindContentVisible: true,
           previousAppVersion: null,
-          isDarkMode: true,
+          themePreference: KeklistThemeMode.dark,
           shouldShowTitles: true,
           userName: null,
           language: SupportedLanguage.english,
@@ -108,6 +109,7 @@ void main() {
 
       when(() => mockMindRepo.values).thenReturn([]);
       when(() => mockSettingsRepo.updateSettings(any())).thenAnswer((_) async {});
+      when(() => mockSettingsRepo.updateThemePreference(any())).thenAnswer((_) async {});
 
       final result = await runner.runPendingMigrations();
 

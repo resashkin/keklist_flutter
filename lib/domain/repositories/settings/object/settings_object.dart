@@ -1,4 +1,5 @@
 import 'package:hive_ce_flutter/hive_ce_flutter.dart';
+import 'package:keklist/domain/repositories/settings/keklist_theme_mode.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
 import 'package:keklist/domain/services/language_manager.dart';
 
@@ -56,13 +57,19 @@ final class SettingsObject extends HiveObject {
   @HiveField(17, defaultValue: false)
   late bool isMediaFolderRecursive;
 
+  // -1 = not yet migrated (fall back to isDarkMode); >= 0 = KeklistThemeMode.index
+  @HiveField(18, defaultValue: -1)
+  late int themePreferenceIndex;
+
   SettingsObject();
 
   KeklistSettings toSettings() => KeklistSettings(
         isMindContentVisible: isMindContentVisible,
         previousAppVersion: previousAppVersion,
         shouldShowTitles: shouldShowTitles,
-        isDarkMode: isDarkMode,
+        themePreference: themePreferenceIndex < 0
+            ? (isDarkMode ? KeklistThemeMode.dark : KeklistThemeMode.light)
+            : KeklistThemeMode.fromIndex(themePreferenceIndex),
         userName: userName,
         language: SupportedLanguage.fromCode(language),
         dataSchemaVersion: dataSchemaVersion,

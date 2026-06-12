@@ -52,7 +52,7 @@ import 'package:keklist/presentation/screens/mind_day_collection/widgets/weather
 import 'package:keklist/presentation/screens/date_gallery/folder_gallery_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keklist/presentation/blocs/membership_bloc/membership_bloc.dart';
-import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
+import 'package:keklist/presentation/screens/paywall/paywall_bottom_sheet.dart';
 
 final class MindDayCollectionScreen extends StatefulWidget {
   final int initialDayIndex;
@@ -364,6 +364,7 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
         final bool canAuthenticateWithBiometrics = await auth.canCheckBiometrics;
         final bool canAuthenticate = canAuthenticateWithBiometrics || await auth.isDeviceSupported();
         if (canAuthenticate) {
+          if (!mounted) return;
           final bool didAuthenticate = await auth.authenticate(
             localizedReason: context.l10n.pleaseAuthenticateToShowContent,
           );
@@ -485,8 +486,8 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
       sendEventToBloc<SettingsBloc>(const SettingsToggleWeatherSource(isEnabled: true));
     } else {
       _pendingWeatherEnable = true;
-      await RevenueCatUI.presentPaywall();
-      sendEventToBloc<MembershipBloc>(const MembershipRefreshEvent());
+      final purchased = await PaywallBottomSheet.show(context);
+      if (purchased) sendEventToBloc<MembershipBloc>(const MembershipRefreshEvent());
     }
   }
 

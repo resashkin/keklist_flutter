@@ -22,7 +22,10 @@
     "convertToStandalone": "转换为独立",
     "language": "语言",
     "selectLanguage": "选择语言",
-    "darkMode": "深色模式",
+    "theme": "主题",
+    "themeLight": "浅色",
+    "themeDark": "深色",
+    "themeSystem": "跟随系统",
     "showDayDividers": "显示日期分隔符",
     "tabsSettings": "标签页设置",
     "whatsNew": "新功能",
@@ -172,5 +175,7 @@
     "audioRecordPermissionError": "需要麦克风权限才能录制音频。",
     "audioRecordStartError": "无法开始录制。请重试。",
     "audioRecordStopError": "无法停止录制。请重试。",
+    "emojiPickerUsedInMinds": "Used in minds",
+    "emojiPickerAll": "All",
     "proUserFooter": "您是PRO用户。下一次 {price} 的付款将于 {date} 进行。"
 }

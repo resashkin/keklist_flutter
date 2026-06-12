@@ -78,7 +78,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get selectLanguage => 'Seleccionar Idioma';
 
   @override
-  String get darkMode => 'Modo oscuro';
+  String get theme => 'Tema';
+
+  @override
+  String get themeLight => 'Claro';
+
+  @override
+  String get themeDark => 'Oscuro';
+
+  @override
+  String get themeSystem => 'Sistema';
 
   @override
   String get showDayDividers => 'Mostrar divisores de día';
@@ -556,6 +565,12 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get audioRecordStopError =>
       'No se pudo detener la grabación. Inténtalo de nuevo.';
+
+  @override
+  String get emojiPickerUsedInMinds => 'Used in minds';
+
+  @override
+  String get emojiPickerAll => 'All';
 
   @override
   String proUserFooter(String price, String date) {

@@ -83,6 +83,8 @@
 	<false/>
 	<key>NSFaceIDUsageDescription</key>
 	<string>For showing/hiding sensetive data for other users by current user</string>
+	<key>NSCameraUsageDescription</key>
+	<string>keklist may use the camera via the file picker to attach photos or videos to entries</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>keklist needs access to photo library to import your backups from files</string>
 	<key>NSMicrophoneUsageDescription</key>

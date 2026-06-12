@@ -80,30 +80,24 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
       ),
       body: ReorderableListView.builder(
         itemCount: listItems.length,
-        onReorder: (oldIndex, newIndex) {
+        onReorderItem: (oldIndex, newIndex) {
           // Only allow reordering of selected tabs
           final selectedStart = 1;
           final selectedEnd = selectedStart + _selectedTabModels.length;
           if (oldIndex < selectedStart ||
               oldIndex >= selectedEnd ||
               newIndex < selectedStart ||
-              newIndex > selectedEnd) {
+              newIndex >= selectedEnd) {
             return;
           }
           setState(() {
             final item = _selectedTabModels.removeAt(oldIndex - selectedStart);
-            _selectedTabModels.insert(
-                newIndex - selectedStart > oldIndex - selectedStart
-                    ? newIndex - selectedStart - 1
-                    : newIndex - selectedStart,
-                item);
+            _selectedTabModels.insert(newIndex - selectedStart, item);
           });
           sendEventToBloc<TabsContainerBloc>(
             TabsContainerReorderTabs(
               oldIndex: oldIndex - selectedStart,
-              newIndex: newIndex - selectedStart > oldIndex - selectedStart
-                  ? newIndex - selectedStart - 1
-                  : newIndex - selectedStart,
+              newIndex: newIndex - selectedStart,
             ),
           );
         },

@@ -25,13 +25,13 @@ import 'package:keklist/presentation/screens/debug_menu/debug_menu_screen.dart';
 import 'package:keklist/presentation/screens/language_picker/language_picker_screen.dart';
 import 'package:keklist/presentation/screens/settings/widgets/password_input_bottom_sheet.dart';
 import 'package:keklist/presentation/screens/tabs_settings/tabs_settings_screen.dart';
+import 'package:keklist/domain/repositories/settings/keklist_theme_mode.dart';
 import 'package:keklist/presentation/screens/web_page/web_page_screen.dart';
-import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
+import 'package:keklist/presentation/screens/paywall/paywall_bottom_sheet.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // TODO: move methods from MindBloc to SettingsBloc
-// TODO: darkmode: add system mode
 
 final class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -42,7 +42,7 @@ final class SettingsScreen extends StatefulWidget {
 
 final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   //bool _isSensitiveContentShowed = false;
-  bool _isDarkMode = false;
+  KeklistThemeMode _themePreference = KeklistThemeMode.system;
   String? translateLanguageCode;
   int _appBarTapCount = 0;
   bool _isDebugMenuVisible = false;
@@ -59,7 +59,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
         switch (state) {
           case SettingsDataState state:
             setState(() {
-              _isDarkMode = state.settings.isDarkMode;
+              _themePreference = state.settings.themePreference;
               _isDebugMenuVisible = state.settings.isDebugMenuVisible;
             });
             break;
@@ -202,11 +202,10 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
                 title: Text(context.l10n.language),
                 onPressed: (_) => _showLanguagePicker(),
               ),
-              SettingsTile.switchTile(
-                initialValue: _isDarkMode,
-                leading: const Icon(Icons.dark_mode, color: Colors.grey),
-                title: Text(context.l10n.darkMode),
-                onToggle: (bool value) => _switchDarkMode(value),
+              SettingsTile.navigation(
+                leading: const Icon(Icons.brightness_medium, color: Colors.grey),
+                title: Text(context.l10n.theme),
+                onPressed: (_) => _showThemePicker(),
               ),
               // SettingsTile.switchTile(
               //   initialValue: _showTitles,
@@ -343,12 +342,30 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   }
 
   Future<void> _openPaywall() async {
-    await RevenueCatUI.presentPaywall();
-    sendEventToBloc<MembershipBloc>(const MembershipRefreshEvent());
+    final purchased = await PaywallBottomSheet.show(context);
+    if (purchased) sendEventToBloc<MembershipBloc>(const MembershipRefreshEvent());
   }
 
-  void _switchDarkMode(bool value) {
-    sendEventToBloc<SettingsBloc>(SettingsChangeIsDarkMode(isDarkMode: value));
+  String _themeName(BuildContext context) => switch (_themePreference) {
+    KeklistThemeMode.light => context.l10n.themeLight,
+    KeklistThemeMode.dark => context.l10n.themeDark,
+    KeklistThemeMode.system => context.l10n.themeSystem,
+  };
+
+  Future<void> _showThemePicker() async {
+    final result = await showConfirmationDialog<KeklistThemeMode>(
+      context: context,
+      title: context.l10n.theme,
+      initialSelectedActionKey: _themePreference,
+      actions: [
+        AlertDialogAction(key: KeklistThemeMode.light, label: context.l10n.themeLight),
+        AlertDialogAction(key: KeklistThemeMode.dark, label: context.l10n.themeDark),
+        AlertDialogAction(key: KeklistThemeMode.system, label: context.l10n.themeSystem),
+      ],
+    );
+    if (result != null) {
+      sendEventToBloc<SettingsBloc>(SettingsChangeThemePreference(themePreference: result));
+    }
   }
 
   // void _switchShowTitles(bool value) {
@@ -485,7 +502,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
 
   Future<void> _handleImport() async {
     // Show file picker for CSV and ZIP files
-    final result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['csv', 'zip']);
+    final result = await FilePicker.pickFiles(type: FileType.custom, allowedExtensions: ['csv', 'zip']);
 
     if (result == null || result.files.isEmpty) return;
 
@@ -511,6 +528,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
 
     String? password;
     if (needsPassword) {
+      if (!mounted) return;
       password = await PasswordInputBottomSheet.show(
         context: context,
         title: context.l10n.importPassword,
@@ -525,6 +543,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   }
 
   Future<void> _handleInvalidPasswordError() async {
+    if (!mounted) return;
     final result = await showOkCancelAlertDialog(
       context: context,
       title: context.l10n.incorrectPassword,
@@ -534,7 +553,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     );
 
     if (result == OkCancelResult.ok && _lastImportFile != null) {
-      // Retry with new password
+      if (!mounted) return;
       final password = await PasswordInputBottomSheet.show(
         context: context,
         title: context.l10n.importPassword,

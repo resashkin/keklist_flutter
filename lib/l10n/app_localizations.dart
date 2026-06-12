@@ -255,11 +255,29 @@ abstract class AppLocalizations {
   /// **'Select Language'**
   String get selectLanguage;
 
-  /// Dark mode setting
+  /// Theme appearance setting label
   ///
   /// In en, this message translates to:
-  /// **'Dark mode'**
-  String get darkMode;
+  /// **'Theme'**
+  String get theme;
+
+  /// Light theme option
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get themeLight;
+
+  /// Dark theme option
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get themeDark;
+
+  /// Follow system theme option
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get themeSystem;
 
   /// Show day dividers setting
   ///
@@ -1154,6 +1172,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unable to stop the recording. Please try again.'**
   String get audioRecordStopError;
+
+  /// Section header for emojis used in minds in the emoji picker
+  ///
+  /// In en, this message translates to:
+  /// **'Used in minds'**
+  String get emojiPickerUsedInMinds;
+
+  /// Section header for all emojis in the emoji picker
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get emojiPickerAll;
 
   /// Footer in APPLICATION settings section when user has active PRO subscription
   ///

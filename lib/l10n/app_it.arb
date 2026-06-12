@@ -82,10 +82,10 @@
     "@selectLanguage": {
         "description": "Titolo dialogo selezione lingua"
     },
-    "darkMode": "Modalità scura",
-    "@darkMode": {
-        "description": "Impostazione modalità scura"
-    },
+    "theme": "Tema",
+    "themeLight": "Chiaro",
+    "themeDark": "Scuro",
+    "themeSystem": "Sistema",
     "showDayDividers": "Mostra divisori giorno",
     "@showDayDividers": {
         "description": "Impostazione mostra divisori giorno"
@@ -438,5 +438,7 @@
     "audioRecordPermissionError": "Il permesso per il microfono è necessario per registrare audio.",
     "audioRecordStartError": "Impossibile avviare la registrazione. Riprova.",
     "audioRecordStopError": "Impossibile fermare la registrazione. Riprova.",
+    "emojiPickerUsedInMinds": "Used in minds",
+    "emojiPickerAll": "All",
     "proUserFooter": "Sei un utente PRO. Il prossimo pagamento di {price} sarà il {date}."
 }

@@ -78,7 +78,16 @@ class AppLocalizationsJa extends AppLocalizations {
   String get selectLanguage => '言語を選択';
 
   @override
-  String get darkMode => 'ダークモード';
+  String get theme => 'テーマ';
+
+  @override
+  String get themeLight => 'ライト';
+
+  @override
+  String get themeDark => 'ダーク';
+
+  @override
+  String get themeSystem => 'システム';
 
   @override
   String get showDayDividers => '日の区切りを表示';
@@ -534,6 +543,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get audioRecordStopError => '録音を停止できませんでした。もう一度お試しください。';
+
+  @override
+  String get emojiPickerUsedInMinds => 'Used in minds';
+
+  @override
+  String get emojiPickerAll => 'All';
 
   @override
   String proUserFooter(String price, String date) {

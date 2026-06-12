@@ -82,10 +82,10 @@
     "@selectLanguage": {
         "description": "Тилди тандоо диалогунун аталышы"
     },
-    "darkMode": "Караңгы режим",
-    "@darkMode": {
-        "description": "Караңгы режим жөндөөсү"
-    },
+    "theme": "Тема",
+    "themeLight": "Жарык",
+    "themeDark": "Кара",
+    "themeSystem": "Система",
     "showDayDividers": "Күн бөлгүчүлөрдү көрсөтүү",
     "@showDayDividers": {
         "description": "Күн бөлгүчүлөрдү көрсөтүү жөндөөсү"
@@ -438,5 +438,7 @@
     "audioRecordPermissionError": "Аудио жаздыруу үчүн микрофон уруксаты керек.",
     "audioRecordStartError": "Жаздырууну баштоо мүмкүн болмоду. Кайталап аракет кылыңыз.",
     "audioRecordStopError": "Жаздырууну токтотуу мүмкүн болмоду. Кайталап аракет кылыңыз.",
+    "emojiPickerUsedInMinds": "Used in minds",
+    "emojiPickerAll": "All",
     "proUserFooter": "Сиз PRO колдонуучусуз. Кийинки {price} төлөм {date} болот."
 }

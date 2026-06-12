@@ -91,9 +91,21 @@
     "@selectLanguage": {
         "description": "Language selection dialog title"
     },
-    "darkMode": "Dark mode",
-    "@darkMode": {
-        "description": "Dark mode setting"
+    "theme": "Theme",
+    "@theme": {
+        "description": "Theme appearance setting label"
+    },
+    "themeLight": "Light",
+    "@themeLight": {
+        "description": "Light theme option"
+    },
+    "themeDark": "Dark",
+    "@themeDark": {
+        "description": "Dark theme option"
+    },
+    "themeSystem": "System",
+    "@themeSystem": {
+        "description": "Follow system theme option"
     },
     "showDayDividers": "Show day dividers",
     "@showDayDividers": {
@@ -700,6 +712,14 @@
     "audioRecordStopError": "Unable to stop the recording. Please try again.",
     "@audioRecordStopError": {
         "description": "Error when recording fails to stop"
+    },
+    "emojiPickerUsedInMinds": "Used in minds",
+    "@emojiPickerUsedInMinds": {
+        "description": "Section header for emojis used in minds in the emoji picker"
+    },
+    "emojiPickerAll": "All",
+    "@emojiPickerAll": {
+        "description": "Section header for all emojis in the emoji picker"
     },
     "proUserFooter": "You are a PRO user. Next payment {price} will be at {date}.",
     "@proUserFooter": {
