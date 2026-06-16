@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart' hide DateUtils;
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
 import 'package:keklist/domain/repositories/tabs/models/tabs_settings.dart';
+import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bloc.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_event.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_state.dart';
@@ -27,6 +30,7 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
   final List<BottomNavigationBarItem> _items = [];
   final List<Widget> _bodyWidgets = [];
   List<TabType> _tabTypes = [];
+  bool _useLiquidGlass = false;
   final GlobalKey<MindDayCollectionScreenState> _todayKey = GlobalKey();
 
   @override
@@ -56,6 +60,24 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
       }
     })?.disposed(by: this);
     sendEventToBloc<TabsContainerBloc>(TabsContainerGetCurrentState());
+
+    _useLiquidGlass = _readUseLiquidGlass(context.read<DebugMenuBloc>().state);
+    subscribeToBloc<DebugMenuBloc>(onNewState: (state) {
+      final bool next = _readUseLiquidGlass(state);
+      if (next != _useLiquidGlass) {
+        setState(() => _useLiquidGlass = next);
+      }
+    })?.disposed(by: this);
+  }
+
+  bool _readUseLiquidGlass(DebugMenuState state) {
+    if (state is! DebugMenuDataState) return _useLiquidGlass;
+    return state.debugMenuItems
+        .firstWhere(
+          (item) => item.type == DebugMenuType.useLiquidGlass,
+          orElse: () => DebugMenuData(type: DebugMenuType.useLiquidGlass, value: true),
+        )
+        .value;
   }
 
   @override
@@ -67,18 +89,23 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: BoolWidget(
-          condition: _bodyWidgets.isNotEmpty,
-          trueChild: IndexedStack(
-            index: _selectedTabIndex,
-            children: _bodyWidgets,
+        extendBody: _useLiquidGlass,
+        body: _wrapBodyForLiquidGlass(
+          BoolWidget(
+            condition: _bodyWidgets.isNotEmpty,
+            trueChild: IndexedStack(
+              index: _selectedTabIndex,
+              children: _bodyWidgets,
+            ),
+            falseChild: MindCollectionScreen(),
           ),
-          falseChild: MindCollectionScreen(),
         ),
         bottomNavigationBar: BoolWidget(
           condition: _items.length >= 2,
           trueChild: AdaptiveBottomNavigationBar(
             items: List.of(_items.length >= 2 ? _items : _getFakeItems()),
+            tabTypes: _tabTypes,
+            useLiquidGlass: _useLiquidGlass,
             selectedIndex: _selectedTabIndex,
             onTap: (tabIndex) {
               if (tabIndex == _selectedTabIndex &&
@@ -120,5 +147,25 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
       case TabType.debugMenu:
         return DebugMenuScreen();
     }
+  }
+
+  // With `extendBody: true`, Scaffold inflates descendant `padding.bottom` to
+  // the tab bar height but leaves `viewPadding.bottom` alone. Inner Scaffolds
+  // anchor their `centerFloat` FAB to `viewPadding.bottom`, so without this
+  // mirroring the FAB lands behind the floating tab bar.
+  Widget _wrapBodyForLiquidGlass(Widget child) {
+    if (!_useLiquidGlass) return child;
+    return Builder(
+      builder: (context) {
+        final MediaQueryData mq = MediaQuery.of(context);
+        if (mq.padding.bottom <= mq.viewPadding.bottom) return child;
+        return MediaQuery(
+          data: mq.copyWith(
+            viewPadding: mq.viewPadding.copyWith(bottom: mq.padding.bottom),
+          ),
+          child: child,
+        );
+      },
+    );
   }
 }

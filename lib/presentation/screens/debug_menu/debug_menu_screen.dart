@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
@@ -34,16 +37,24 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
     sendEventToBloc<DebugMenuBloc>(DebugMenuGet());
   }
 
+  bool _isVisibleOnThisPlatform(DebugMenuType type) {
+    if (type == DebugMenuType.useLiquidGlass) {
+      return !kIsWeb && Platform.isIOS;
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final visibleItems = _debugMenuItems.where((item) => _isVisibleOnThisPlatform(item.type)).toList();
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.debugMenu)),
       body: SettingsList(
         sections: [
-          if (_debugMenuItems.isNotEmpty)
+          if (visibleItems.isNotEmpty)
             SettingsSection(
               title: const Text('Feature Flags'),
-              tiles: _debugMenuItems.map((debugMenuItem) {
+              tiles: visibleItems.map((debugMenuItem) {
                 return SettingsTile.switchTile(
                   title: Text(_getDebugMenuItemTitle(debugMenuItem.type)),
                   description: Text(_getDebugMenuItemDescription(debugMenuItem.type)),
@@ -138,6 +149,7 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
         DebugMenuType.sensitiveContent => 'Sensitive Content',
         DebugMenuType.simulatePro => 'Simulate Pro Subscription',
         DebugMenuType.useProductionRevenueCat => 'Use Production RevenueCat',
+        DebugMenuType.useLiquidGlass => 'Liquid Glass Tab Bar (iOS)',
       };
 
   String _getDebugMenuItemDescription(DebugMenuType type) => switch (type) {
@@ -149,5 +161,7 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
           'Forces isPro=true in MembershipBloc, bypassing RevenueCat. Password required to enable.',
         DebugMenuType.useProductionRevenueCat =>
           'Use production RevenueCat API keys instead of test keys. Restart required to take effect.',
+        DebugMenuType.useLiquidGlass =>
+          'Use the native UITabBar via native_liquid_glass on iOS. Liquid Glass effect requires iOS 26+; older iOS falls back to the system tab bar style.',
       };
 }
