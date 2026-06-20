@@ -440,5 +440,6 @@
     "audioRecordStopError": "Жаздырууну токтотуу мүмкүн болмоду. Кайталап аракет кылыңыз.",
     "emojiPickerUsedInMinds": "Used in minds",
     "emojiPickerAll": "All",
-    "proUserFooter": "Сиз PRO колдонуучусуз. Кийинки {price} төлөм {date} болот."
+    "proUserFooter": "Сиз PRO колдонуучусуз. Кийинки {price} төлөм {date} болот.",
+    "noMindsTodayTapToAdd": "Бүгүн жазуу жок — кошуу үчүн басыңыз"
 }

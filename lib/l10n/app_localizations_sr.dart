@@ -572,6 +572,9 @@ class AppLocalizationsSr extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'Ви сте PRO корисник. Следећа уплата $price биће $date.';
   }
+
+  @override
+  String get noMindsTodayTapToAdd => 'Данас нема мисли — додирните за додавање';
 }
 
 /// The translations for Serbian, using the Latin script (`sr_Latn`).
@@ -1141,4 +1144,8 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
   String proUserFooter(String price, String date) {
     return 'Vi ste PRO korisnik. Sledeća uplata $price biće $date.';
   }
+
+  @override
+  String get noMindsTodayTapToAdd =>
+      'Danas nema misli — dodirnite za dodavanje';
 }

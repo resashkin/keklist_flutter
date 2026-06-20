@@ -1190,6 +1190,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You are a PRO user. Next payment {price} will be at {date}.'**
   String proUserFooter(String price, String date);
+
+  /// Empty state shown inside the Minds card on the day screen when there are no minds for the day; tapping the card opens the create flow
+  ///
+  /// In en, this message translates to:
+  /// **'No minds today — Tap to add'**
+  String get noMindsTodayTapToAdd;
 }
 
 class _AppLocalizationsDelegate

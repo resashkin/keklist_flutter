@@ -177,5 +177,6 @@
     "audioRecordStopError": "Aufnahme konnte nicht gestoppt werden. Bitte versuche es erneut.",
     "emojiPickerUsedInMinds": "Used in minds",
     "emojiPickerAll": "All",
-    "proUserFooter": "Du bist PRO-Nutzer. Die nächste Zahlung von {price} erfolgt am {date}."
+    "proUserFooter": "Du bist PRO-Nutzer. Die nächste Zahlung von {price} erfolgt am {date}.",
+    "noMindsTodayTapToAdd": "Heute keine Gedanken — zum Hinzufügen tippen"
 }

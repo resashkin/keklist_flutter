@@ -440,5 +440,6 @@
     "audioRecordStopError": "Impossibile fermare la registrazione. Riprova.",
     "emojiPickerUsedInMinds": "Used in minds",
     "emojiPickerAll": "All",
-    "proUserFooter": "Sei un utente PRO. Il prossimo pagamento di {price} sarà il {date}."
+    "proUserFooter": "Sei un utente PRO. Il prossimo pagamento di {price} sarà il {date}.",
+    "noMindsTodayTapToAdd": "Oggi nessun pensiero — tocca per aggiungere"
 }

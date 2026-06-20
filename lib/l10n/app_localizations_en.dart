@@ -571,4 +571,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'You are a PRO user. Next payment $price will be at $date.';
   }
+
+  @override
+  String get noMindsTodayTapToAdd => 'No minds today — Tap to add';
 }

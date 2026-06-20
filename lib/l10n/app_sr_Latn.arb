@@ -440,5 +440,6 @@
     "audioRecordStopError": "Nije moguće zaustaviti snimanje. Pokušajte ponovo.",
     "emojiPickerUsedInMinds": "Used in minds",
     "emojiPickerAll": "All",
-    "proUserFooter": "Vi ste PRO korisnik. Sledeća uplata {price} biće {date}."
+    "proUserFooter": "Vi ste PRO korisnik. Sledeća uplata {price} biće {date}.",
+    "noMindsTodayTapToAdd": "Danas nema misli — dodirnite za dodavanje"
 }

@@ -554,4 +554,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'あなたはPROユーザーです。次の支払い $price は $date に予定されています。';
   }
+
+  @override
+  String get noMindsTodayTapToAdd => '今日の記録はまだありません — タップして追加';
 }

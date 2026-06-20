@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:keklist/domain/services/entities/weather_data.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
+import 'package:keklist/presentation/core/widgets/rounded_container.dart';
 import 'package:keklist/presentation/screens/weather_detail/weather_detail_screen.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 
@@ -12,29 +13,20 @@ final class WeatherDayTileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(
-          SwipeablePageRoute(builder: (_) => WeatherDetailScreen(data: data)),
-        );
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
-            borderRadius: BorderRadius.circular(12.0),
-            boxShadow: [
-              BoxShadow(
-                color: Theme.of(context).shadowColor.withValues(alpha: 0.2),
-                spreadRadius: 2,
-                blurRadius: 10.0,
-                offset: const Offset(1.0, 1.0),
-              ),
-            ],
-          ),
-          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-          child: Column(
+    return RoundedContainer(
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(10),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: () {
+            Navigator.of(context).push(
+              SwipeablePageRoute(builder: (_) => WeatherDetailScreen(data: data)),
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+            child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
@@ -83,6 +75,7 @@ final class WeatherDayTileWidget extends StatelessWidget {
           ),
         ),
       ),
+    ),
     );
   }
 }

@@ -574,4 +574,8 @@ class AppLocalizationsUz extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'Siz PRO foydalanuvchisiz. Keyingi $price to\'lov $date da bo\'ladi.';
   }
+
+  @override
+  String get noMindsTodayTapToAdd =>
+      'Bugun yozuv yo\'q — qo\'shish uchun bosing';
 }

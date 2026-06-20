@@ -728,5 +728,9 @@
             "price": { "type": "String" },
             "date": { "type": "String" }
         }
+    },
+    "noMindsTodayTapToAdd": "No minds today — Tap to add",
+    "@noMindsTodayTapToAdd": {
+        "description": "Empty state shown inside the Minds card on the day screen when there are no minds for the day; tapping the card opens the create flow"
     }
 }

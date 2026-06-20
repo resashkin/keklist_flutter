@@ -575,4 +575,8 @@ class AppLocalizationsIt extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'Sei un utente PRO. Il prossimo pagamento di $price sarà il $date.';
   }
+
+  @override
+  String get noMindsTodayTapToAdd =>
+      'Oggi nessun pensiero — tocca per aggiungere';
 }

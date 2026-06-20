@@ -440,5 +440,6 @@
     "audioRecordStopError": "Yozishni to'xtatish imkoni bo'lmadi. Qayta urinib ko'ring.",
     "emojiPickerUsedInMinds": "Used in minds",
     "emojiPickerAll": "All",
-    "proUserFooter": "Siz PRO foydalanuvchisiz. Keyingi {price} to'lov {date} da bo'ladi."
+    "proUserFooter": "Siz PRO foydalanuvchisiz. Keyingi {price} to'lov {date} da bo'ladi.",
+    "noMindsTodayTapToAdd": "Bugun yozuv yo'q — qo'shish uchun bosing"
 }

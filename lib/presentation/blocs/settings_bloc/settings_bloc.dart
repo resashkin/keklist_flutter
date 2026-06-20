@@ -68,7 +68,6 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
 
       switch (result) {
         case ExportSuccess success:
-          // Handle based on export action
           if (event.action == SettingsExportAction.saveToFiles) {
             // Save to file system using file picker
             final timestamp = DateTime.now().toIso8601String().replaceAll(':', '-').split('.').first;

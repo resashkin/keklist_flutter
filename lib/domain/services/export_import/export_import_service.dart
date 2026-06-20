@@ -16,7 +16,7 @@ import 'package:pointycastle/export.dart' as pc;
 
 /// Service responsible for exporting and importing minds with audio files
 /// Supports CSV, ZIP, and encrypted ZIP formats with AES-256 encryption
-class ExportImportService {
+final class ExportImportService {
   final MindRepository _mindRepository;
   final AppFileRepository _fileRepository;
 

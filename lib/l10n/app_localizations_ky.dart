@@ -573,4 +573,7 @@ class AppLocalizationsKy extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'Сиз PRO колдонуучусуз. Кийинки $price төлөм $date болот.';
   }
+
+  @override
+  String get noMindsTodayTapToAdd => 'Бүгүн жазуу жок — кошуу үчүн басыңыз';
 }
