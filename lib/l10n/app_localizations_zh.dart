@@ -551,7 +551,4 @@ class AppLocalizationsZh extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return '您是PRO用户。下一次 $price 的付款将于 $date 进行。';
   }
-
-  @override
-  String get noMindsTodayTapToAdd => '今天还没有想法 — 点击添加';
 }

@@ -570,8 +570,4 @@ class AppLocalizationsRu extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'Вы PRO пользователь. Следующий платёж $price будет $date.';
   }
-
-  @override
-  String get noMindsTodayTapToAdd =>
-      'Сегодня нет мыслей — нажмите, чтобы добавить';
 }

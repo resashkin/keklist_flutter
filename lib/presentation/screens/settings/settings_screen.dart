@@ -79,7 +79,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
               EasyLoading.dismiss();
             }
             break;
-          case SettingsExportSuccess state:
+          case SettingsExportSuccess _:
             // Success - no alert needed, metadata was shown in password sheet
             break;
           case SettingsExportError state:
@@ -145,7 +145,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
             ],
           ),
           SettingsSection(
-            title: Text('APPLICATION'),
+            title: Text('APPLICATION'), // TODO: localize
             tiles: [
               // SettingsTile.navigation(title: Text('Our new features'), enabled: false, trailing: SizedBox.shrink()),
               // CustomSettingsTile(
@@ -177,7 +177,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
                 onPressed: (BuildContext context) => _showWhatsNew(),
               ),
               SettingsTile.navigation(
-                title: Text('Dev Blog [Telegram] [RU]'),
+                title: Text('Dev Blog [Telegram] [RU]'), // TODO: move to feedback settings (new screen)
                 leading: const Icon(Icons.newspaper, color: Colors.blue),
                 onPressed: (BuildContext context) => _openAppNews(),
               ),

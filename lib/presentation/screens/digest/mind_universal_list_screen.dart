@@ -17,6 +17,9 @@ final class MindUniversalListScreen extends StatefulWidget {
   final bool Function(Mind) filterFunction;
   final Iterable<Mind> allMinds;
   final Function? onSelectMind;
+  final VoidCallback? onCreate;
+  final IconData? createButtonIcon;
+  final String? createButtonLabel;
 
   const MindUniversalListScreen({
     super.key,
@@ -25,6 +28,9 @@ final class MindUniversalListScreen extends StatefulWidget {
     this.title = "Minds",
     this.emptyStateMessage = "No minds",
     this.onSelectMind,
+    this.onCreate,
+    this.createButtonIcon,
+    this.createButtonLabel,
   });
 
   @override
@@ -35,18 +41,14 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
   final List<Mind> _allMinds = [];
   final List<Mind> _filteredMinds = [];
 
+  bool get _isSingleDay => _filteredMinds.map((m) => m.dayIndex).toSet().length <= 1;
+
   @override
   void initState() {
     super.initState();
 
     _allMinds.addAll(widget.allMinds);
-    _filteredMinds.addAll(
-      widget.allMinds
-          .where(widget.filterFunction)
-          .where((element) => element.rootId == null)
-          .sortedByProperty((mind) => mind.dayIndex)
-          .toList(growable: false),
-    );
+    _recomputeFiltered();
 
     subscribeToBloc<MindBloc>(
       onNewState: (state) async {
@@ -55,16 +57,40 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
             _allMinds
               ..clear()
               ..addAll(state.values);
+            _recomputeFiltered();
           });
         }
       },
     )?.disposed(by: this);
   }
 
+  void _recomputeFiltered() {
+    _filteredMinds
+      ..clear()
+      ..addAll(
+        _allMinds
+            .where(widget.filterFunction)
+            .where((element) => element.rootId == null)
+            .sortedByProperty((mind) => mind.dayIndex),
+      );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: widget.onCreate == null
+          ? null
+          : FloatingActionButton.extended(
+              onPressed: widget.onCreate,
+              icon: Icon(widget.createButtonIcon ?? Icons.add),
+              label: Text(
+                widget.createButtonLabel ?? '',
+                style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
+              ),
+              enableFeedback: true,
+            ),
       body: BoolWidget(
         condition: _filteredMinds.isNotEmpty,
         falseChild: Center(
@@ -73,8 +99,8 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
         trueChild: Scrollbar(
           child: ListView.builder(
             itemBuilder: (context, index) {
-              final bool shouldShowTitle =
-                  index == 0 || _filteredMinds[index].dayIndex != _filteredMinds[index - 1].dayIndex;
+              final bool shouldShowTitle = !_isSingleDay &&
+                  (index == 0 || _filteredMinds[index].dayIndex != _filteredMinds[index - 1].dayIndex);
               final String title = DateFormatters.formatFullDate(
                 DateUtils.getDateFromDayIndex(_filteredMinds[index].dayIndex),
                 Localizations.localeOf(context),

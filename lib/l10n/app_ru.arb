@@ -177,6 +177,5 @@
     "audioRecordStopError": "Не удалось остановить запись. Попробуйте ещё раз.",
     "emojiPickerUsedInMinds": "Used in minds",
     "emojiPickerAll": "All",
-    "proUserFooter": "Вы PRO пользователь. Следующий платёж {price} будет {date}.",
-    "noMindsTodayTapToAdd": "Сегодня нет мыслей — нажмите, чтобы добавить"
+    "proUserFooter": "Вы PRO пользователь. Следующий платёж {price} будет {date}."
 }

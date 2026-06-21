@@ -14,7 +14,6 @@ import 'package:keklist/presentation/blocs/mind_creator_bloc/mind_creator_bloc.d
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/core/widgets/mind_widget.dart';
 import 'package:keklist/presentation/core/widgets/overscroll_listener.dart';
-import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/screens/mind_creator/mind_creator_screen.dart';
 import 'package:keklist/presentation/screens/date_gallery/date_gallery_screen.dart';
@@ -261,7 +260,7 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
           builder: (context, constraints) => SingleChildScrollView(
             physics: FlutterConstants.mobileOverscrollPhysics,
             controller: _scrollController,
-            padding: const EdgeInsets.only(bottom: 150), // FAB offset.
+            padding: const EdgeInsets.only(bottom: 24),
             child: ConstrainedBox(
               constraints: BoxConstraints(minHeight: constraints.maxHeight),
               child: Column(
@@ -271,6 +270,7 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
                     padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0),
                     child: DayMindsCard(
                       minds: _dayMinds,
+                      isToday: dayIndex == DateUtils.getTodayIndex(),
                       onTap: () => _showMindsList(),
                       onTapEmpty: () => _showMindCreator(),
                     ),
@@ -330,16 +330,6 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
               ),
             ),
           ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: SensitiveWidget(
-        mode: SensitiveMode.blurredAndNonTappable,
-        child: FloatingActionButton.extended(
-          icon: const Icon(Icons.add),
-          onPressed: () => _showMindCreator(),
-          label: Text(context.l10n.create, style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500)),
-          enableFeedback: true,
         ),
       ),
     );
@@ -442,6 +432,9 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
           title: title,
           emptyStateMessage: context.l10n.noMindsForThisDay,
           onSelectMind: (mind) => _showMindInfo(mind),
+          onCreate: () => _showMindCreator(),
+          createButtonIcon: Icons.add,
+          createButtonLabel: context.l10n.create,
         ),
       ),
     );

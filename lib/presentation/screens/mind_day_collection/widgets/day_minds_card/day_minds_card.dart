@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/core/widgets/rounded_container.dart';
+import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_collection_empty_day_widget.dart';
+import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_row_widget.dart';
 
 final class DayMindsCard extends StatelessWidget {
   final List<Mind> minds;
+  final bool isToday;
   final VoidCallback onTap;
   final VoidCallback onTapEmpty;
 
   const DayMindsCard({
     super.key,
     required this.minds,
+    required this.isToday,
     required this.onTap,
     required this.onTapEmpty,
   });
@@ -20,56 +24,32 @@ final class DayMindsCard extends StatelessWidget {
     final bool isEmpty = minds.isEmpty;
     final ThemeData theme = Theme.of(context);
 
-    return RoundedContainer(
-      child: Material(
-        color: Colors.transparent,
-        borderRadius: BorderRadius.circular(10),
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          onTap: isEmpty ? onTapEmpty : onTap,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  children: [
-                    Text(context.l10n.minds, style: theme.textTheme.titleMedium),
-                    const Spacer(),
-                    const Icon(Icons.arrow_forward_ios, size: 16.0),
-                  ],
+    return GestureDetector(
+      onTap: isEmpty ? onTapEmpty : onTap,
+      child: RoundedContainer(
+        border: isToday ? Border.all(color: theme.colorScheme.primary.withValues(alpha: 0.4), width: 2.0) : null,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+                  Text(context.l10n.minds, style: theme.textTheme.titleMedium),
+                  const Spacer(),
+                  const Icon(Icons.arrow_forward_ios, size: 16.0),
+                ],
+              ),
+              //const SizedBox(height: 8.0),
+              if (isEmpty)
+                MindCollectionEmptyStateWidget.noMindsForDay(context: context)
+              else
+                Align(
+                  alignment: Alignment.center,
+                  child: MindRowWidget(minds: minds),
                 ),
-                const SizedBox(height: 8),
-                if (isEmpty)
-                  Row(
-                    children: [
-                      Icon(Icons.add_circle_outline, size: 22, color: theme.colorScheme.primary),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Text(
-                          context.l10n.noMindsTodayTapToAdd,
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: theme.textTheme.bodyMedium?.color?.withValues(alpha: 0.7),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                else
-                  Wrap(
-                    spacing: 6,
-                    runSpacing: 6,
-                    children: [
-                      for (final mind in minds)
-                        Text(
-                          mind.emoji,
-                          style: const TextStyle(fontSize: 32),
-                        ),
-                    ],
-                  ),
-              ],
-            ),
+            ],
           ),
         ),
       ),

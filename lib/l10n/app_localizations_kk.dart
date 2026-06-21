@@ -572,7 +572,4 @@ class AppLocalizationsKk extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'Сіз PRO қолданушысысыз. Келесі $price төлем $date күні болады.';
   }
-
-  @override
-  String get noMindsTodayTapToAdd => 'Бүгін жазба жоқ — қосу үшін басыңыз';
 }

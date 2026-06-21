@@ -177,6 +177,5 @@
     "audioRecordStopError": "録音を停止できませんでした。もう一度お試しください。",
     "emojiPickerUsedInMinds": "Used in minds",
     "emojiPickerAll": "All",
-    "proUserFooter": "あなたはPROユーザーです。次の支払い {price} は {date} に予定されています。",
-    "noMindsTodayTapToAdd": "今日の記録はまだありません — タップして追加"
+    "proUserFooter": "あなたはPROユーザーです。次の支払い {price} は {date} に予定されています。"
 }
