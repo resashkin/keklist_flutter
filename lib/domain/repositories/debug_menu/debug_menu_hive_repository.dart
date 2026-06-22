@@ -44,6 +44,7 @@ final class DebugMenuHiveRepository implements DebugMenuRepository {
         DebugMenuType.simulatePro => false,
         DebugMenuType.useProductionRevenueCat => false,
         DebugMenuType.useLiquidGlass => true,
+        DebugMenuType.enableBlocLogs => false,
       };
 
   List<DebugMenuData> _getCurrentDebugMenuItems() =>

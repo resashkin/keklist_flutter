@@ -7,4 +7,5 @@ final class HiveConstants {
   static const String mindQueueTransactionsBoxName = 'mind_queue_transactions_box';
   static const String debugMenuBoxName = 'debug_menu_box';
   static const String weatherCacheBoxName = 'weather_cache_box';
+  static const String blocLogSettingsBoxName = 'bloc_log_settings_box';
 }

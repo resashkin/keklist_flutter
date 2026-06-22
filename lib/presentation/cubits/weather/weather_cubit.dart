@@ -1,20 +1,35 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:keklist/domain/repositories/weather/weather_repository.dart';
 import 'package:keklist/domain/services/entities/weather_data.dart';
 import 'package:keklist/domain/services/weather/weather_api_service.dart';
 
-sealed class WeatherState {}
+sealed class WeatherState extends Equatable {
+  const WeatherState();
 
-class WeatherLoading extends WeatherState {}
+  @override
+  List<Object?> get props => const [];
+}
+
+class WeatherLoading extends WeatherState {
+  const WeatherLoading();
+}
 
 class WeatherLoaded extends WeatherState {
   final WeatherData data;
-  WeatherLoaded(this.data);
+  const WeatherLoaded(this.data);
+
+  @override
+  List<Object?> get props => [data];
 }
 
-class WeatherError extends WeatherState {}
+class WeatherError extends WeatherState {
+  const WeatherError();
+}
 
-class WeatherDisabled extends WeatherState {}
+class WeatherDisabled extends WeatherState {
+  const WeatherDisabled();
+}
 
 final class WeatherCubit extends Cubit<WeatherState> {
   final WeatherRepository _repository;

@@ -11,6 +11,7 @@ import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
+import 'package:keklist/presentation/screens/bloc_log_settings/bloc_log_settings_screen.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 final class DebugMenuScreen extends StatefulWidget {
@@ -81,6 +82,15 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
             title: const Text('Development Tools'),
             tiles: [
               SettingsTile.navigation(
+                title: const Text('BLoC Log Settings'),
+                description: const Text('Configure verbosity and per-BLoC silencing for console logs'),
+                onPressed: (context) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const BlocLogSettingsScreen()),
+                  );
+                },
+              ),
+              SettingsTile.navigation(
                 title: const Text('Reset Lazy Onboarding'),
                 description: const Text('Delete onboarding minds and reset the flag to show onboarding again'),
                 onPressed: (context) => _resetOnboarding(context),
@@ -150,6 +160,7 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
         DebugMenuType.simulatePro => 'Simulate Pro Subscription',
         DebugMenuType.useProductionRevenueCat => 'Use Production RevenueCat',
         DebugMenuType.useLiquidGlass => 'Liquid Glass Tab Bar (iOS)',
+        DebugMenuType.enableBlocLogs => 'Enable BLoC Logs',
       };
 
   String _getDebugMenuItemDescription(DebugMenuType type) => switch (type) {
@@ -163,5 +174,7 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
           'Use production RevenueCat API keys instead of test keys. Restart required to take effect.',
         DebugMenuType.useLiquidGlass =>
           'Use the native UITabBar via native_liquid_glass on iOS. Liquid Glass effect requires iOS 26+; older iOS falls back to the system tab bar style.',
+        DebugMenuType.enableBlocLogs =>
+          'Master switch for BLoC console logs (events, transitions, errors, lifecycle). Configure verbosity and per-BLoC silencing in BLoC Log Settings.',
       };
 }

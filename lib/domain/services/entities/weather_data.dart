@@ -1,4 +1,6 @@
-final class WeatherData {
+import 'package:equatable/equatable.dart';
+
+final class WeatherData with EquatableMixin {
   final int dayIndex;
   final double temperature;
   final double uvIndex;
@@ -30,6 +32,23 @@ final class WeatherData {
     required this.hourlyPrecipitation,
     this.locationName,
   });
+
+  @override
+  List<Object?> get props => [
+        dayIndex,
+        temperature,
+        uvIndex,
+        humidity,
+        windSpeed,
+        precipitation,
+        fetchedAt,
+        locationName,
+        hourlyTemperatures,
+        hourlyUvIndex,
+        hourlyHumidity,
+        hourlyWindSpeed,
+        hourlyPrecipitation,
+      ];
 
   WeatherData copyWith({String? locationName}) => WeatherData(
         dayIndex: dayIndex,

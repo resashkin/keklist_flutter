@@ -1,13 +1,25 @@
 part of 'date_gallery_bloc.dart';
 
-sealed class DateGalleryState {}
+sealed class DateGalleryState extends Equatable {
+  const DateGalleryState();
 
-final class DateGalleryLoadingState extends DateGalleryState {}
+  @override
+  List<Object?> get props => const [];
+}
 
-final class DateGalleryPermissionDeniedState extends DateGalleryState {}
+final class DateGalleryLoadingState extends DateGalleryState {
+  const DateGalleryLoadingState();
+}
+
+final class DateGalleryPermissionDeniedState extends DateGalleryState {
+  const DateGalleryPermissionDeniedState();
+}
 
 final class DateGalleryDataState extends DateGalleryState {
   final List<AssetEntity> assets;
 
-  DateGalleryDataState({required this.assets});
+  const DateGalleryDataState({required this.assets});
+
+  @override
+  List<Object?> get props => [assets];
 }

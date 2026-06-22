@@ -10,6 +10,8 @@ import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
 import 'package:keklist/domain/repositories/settings/settings_hive_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
+import 'package:keklist/domain/repositories/bloc_log_settings/bloc_log_settings_hive_repository.dart';
+import 'package:keklist/domain/repositories/bloc_log_settings/bloc_log_settings_repository.dart';
 import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
 import 'package:keklist/domain/repositories/debug_menu/debug_menu_hive_repository.dart';
 import 'package:keklist/domain/repositories/debug_menu/object/debug_menu_object.dart';
@@ -54,6 +56,11 @@ final class MainContainer {
     );
     injector.map<DebugMenuRepository>(
       (injector) => DebugMenuHiveRepository(box: Hive.box<DebugMenuObject>(HiveConstants.debugMenuBoxName)),
+      isSingleton: true,
+    );
+    injector.map<BlocLogSettingsRepository>(
+      (injector) => BlocLogSettingsHiveRepository(box: Hive.box(HiveConstants.blocLogSettingsBoxName)),
+      isSingleton: true,
     );
     injector.map<AppFileRepository>(
       (_) => const AppFileRepository(),

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:equatable/equatable.dart';
 import 'package:keklist/domain/repositories/settings/keklist_theme_mode.dart';
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
 import 'package:keklist/domain/services/language_manager.dart';
@@ -20,7 +21,7 @@ abstract class SettingsRepository {
   FutureOr<void> updateMediaFolderSource({bool? isEnabled, String? folderPath, bool? isRecursive});
 }
 
-final class KeklistSettings {
+final class KeklistSettings with EquatableMixin {
   final bool isMindContentVisible;
   final String? previousAppVersion;
   final KeklistThemeMode themePreference;
@@ -37,6 +38,26 @@ final class KeklistSettings {
   final bool isMediaFolderSourceEnabled;
   final String? mediaFolderPath;
   final bool isMediaFolderRecursive;
+
+  @override
+  List<Object?> get props => [
+        isMindContentVisible,
+        previousAppVersion,
+        themePreference,
+        shouldShowTitles,
+        userName,
+        language,
+        dataSchemaVersion,
+        hasSeenLazyOnboarding,
+        isDebugMenuVisible,
+        isPhotoVideoSourceEnabled,
+        isWeatherSourceEnabled,
+        weatherLatitude,
+        weatherLongitude,
+        isMediaFolderSourceEnabled,
+        mediaFolderPath,
+        isMediaFolderRecursive,
+      ];
 
   KeklistSettings({
     required this.isMindContentVisible,
