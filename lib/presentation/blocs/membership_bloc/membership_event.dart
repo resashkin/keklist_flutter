@@ -1,10 +1,7 @@
 part of 'membership_bloc.dart';
 
-sealed class MembershipEvent extends Equatable {
+sealed class MembershipEvent {
   const MembershipEvent();
-
-  @override
-  List<Object?> get props => const [];
 }
 
 final class MembershipGetEvent extends MembershipEvent {

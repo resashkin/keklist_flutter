@@ -1,32 +1,19 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:keklist/presentation/core/helpers/date_utils.dart' as kek_date;
 import 'package:photo_manager/photo_manager.dart';
 
-sealed class DayMediaPreviewState extends Equatable {
-  const DayMediaPreviewState();
+sealed class DayMediaPreviewState {}
 
-  @override
-  List<Object?> get props => const [];
-}
-
-class DayMediaPreviewLoading extends DayMediaPreviewState {
-  const DayMediaPreviewLoading();
-}
+class DayMediaPreviewLoading extends DayMediaPreviewState {}
 
 class DayMediaPreviewData extends DayMediaPreviewState {
   final List<AssetEntity> assets;
   final int total;
 
-  const DayMediaPreviewData({required this.assets, required this.total});
-
-  @override
-  List<Object?> get props => [assets, total];
+  DayMediaPreviewData({required this.assets, required this.total});
 }
 
-class DayMediaPreviewPermissionDenied extends DayMediaPreviewState {
-  const DayMediaPreviewPermissionDenied();
-}
+class DayMediaPreviewPermissionDenied extends DayMediaPreviewState {}
 
 final class DayMediaPreviewCubit extends Cubit<DayMediaPreviewState> {
   DayMediaPreviewCubit() : super(DayMediaPreviewLoading());

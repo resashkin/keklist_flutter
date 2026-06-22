@@ -1,34 +1,21 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:keklist/native/android/media_folder_channel.dart';
 import 'package:keklist/presentation/core/helpers/date_utils.dart' as kek_date;
 import 'package:keklist/presentation/screens/date_gallery/folder_media_item.dart';
 
-sealed class DayFolderMediaPreviewState extends Equatable {
-  const DayFolderMediaPreviewState();
+sealed class DayFolderMediaPreviewState {}
 
-  @override
-  List<Object?> get props => const [];
-}
+class DayFolderMediaPreviewLoading extends DayFolderMediaPreviewState {}
 
-class DayFolderMediaPreviewLoading extends DayFolderMediaPreviewState {
-  const DayFolderMediaPreviewLoading();
-}
-
-class DayFolderMediaPreviewEmpty extends DayFolderMediaPreviewState {
-  const DayFolderMediaPreviewEmpty();
-}
+class DayFolderMediaPreviewEmpty extends DayFolderMediaPreviewState {}
 
 class DayFolderMediaPreviewData extends DayFolderMediaPreviewState {
   final List<FolderMediaItem> files;
   final int totalCount;
 
-  const DayFolderMediaPreviewData({required this.files, required this.totalCount});
-
-  @override
-  List<Object?> get props => [files, totalCount];
+  DayFolderMediaPreviewData({required this.files, required this.totalCount});
 }
 
 final class DayFolderMediaPreviewCubit extends Cubit<DayFolderMediaPreviewState> {

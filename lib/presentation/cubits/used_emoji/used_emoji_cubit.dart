@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:keklist/domain/constants.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 

@@ -1,47 +1,31 @@
 part of 'settings_bloc.dart';
 
-sealed class SettingsState extends Equatable {
-  const SettingsState();
-
-  @override
-  List<Object?> get props => const [];
-}
+sealed class SettingsState {}
 
 final class SettingsDataState extends SettingsState {
   final KeklistSettings settings;
 
-  const SettingsDataState({
+  SettingsDataState({
     required this.settings,
   });
-
-  @override
-  List<Object?> get props => [settings];
 }
 
-final class SettingsShowWhatsNew extends SettingsState {
-  const SettingsShowWhatsNew();
-}
+final class SettingsShowWhatsNew extends SettingsState {}
 
 final class SettingsShowMessage extends SettingsState {
   final String title;
   final String message;
 
-  const SettingsShowMessage({
+  SettingsShowMessage({
     required this.title,
     required this.message,
   });
-
-  @override
-  List<Object?> get props => [title, message];
 }
 
 final class SettingsLoadingState extends SettingsState {
   final bool isLoading;
 
-  const SettingsLoadingState(this.isLoading);
-
-  @override
-  List<Object?> get props => [isLoading];
+  SettingsLoadingState(this.isLoading);
 }
 
 final class SettingsExportSuccess extends SettingsState {
@@ -49,47 +33,35 @@ final class SettingsExportSuccess extends SettingsState {
   final int audioFilesCount;
   final bool isEncrypted;
 
-  const SettingsExportSuccess({
+  SettingsExportSuccess({
     required this.mindsCount,
     required this.audioFilesCount,
     required this.isEncrypted,
   });
-
-  @override
-  List<Object?> get props => [mindsCount, audioFilesCount, isEncrypted];
 }
 
 final class SettingsExportError extends SettingsState {
   final String message;
 
-  const SettingsExportError({required this.message});
-
-  @override
-  List<Object?> get props => [message];
+  SettingsExportError({required this.message});
 }
 
 final class SettingsImportSuccess extends SettingsState {
   final int mindsCount;
   final int audioFilesCount;
 
-  const SettingsImportSuccess({
+  SettingsImportSuccess({
     required this.mindsCount,
     required this.audioFilesCount,
   });
-
-  @override
-  List<Object?> get props => [mindsCount, audioFilesCount];
 }
 
 final class SettingsImportError extends SettingsState {
   final ImportError error;
   final String message;
 
-  const SettingsImportError({
+  SettingsImportError({
     required this.error,
     required this.message,
   });
-
-  @override
-  List<Object?> get props => [error, message];
 }

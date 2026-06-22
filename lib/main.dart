@@ -6,7 +6,6 @@ import 'dart:io';
 
 import 'package:collection/collection.dart';
 import 'package:crypto/crypto.dart';
-import 'package:equatable/equatable.dart';
 import 'package:keklist/domain/repositories/bloc_log_settings/bloc_log_settings.dart';
 import 'package:keklist/domain/repositories/bloc_log_settings/bloc_log_settings_repository.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -25,7 +24,6 @@ import 'package:keklist/domain/repositories/settings/settings_hive_repository.da
 import 'package:keklist/domain/repositories/weather/object/weather_cache_object.dart';
 import 'package:keklist/domain/repositories/weather/weather_repository.dart';
 import 'package:keklist/domain/migrations/migration_runner.dart';
-import 'package:keklist/domain/services/export_import/export_import_service.dart';
 import 'package:keklist/keklist_app.dart';
 import 'package:keklist/domain/hive_constants.dart';
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
@@ -61,7 +59,6 @@ import 'presentation/native/ios/watch/watch_communication_manager.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  EquatableConfig.stringify = !kReleaseMode;
   _initNativeWidgets();
   _setupBlockingLoadingWidget();
   runApp(const _AppRoot());
@@ -281,12 +278,7 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
       BlocProvider(create: (context) => mainInjector.get<MindSearcherCubit>()),
       BlocProvider(create: (context) => mainInjector.get<UsedEmojiCubit>()),
       BlocProvider(create: (context) => MindCreatorBloc(mindRepository: mainInjector.get<MindRepository>())),
-      BlocProvider(
-        create: (context) => SettingsBloc(
-          repository: mainInjector.get<SettingsRepository>(),
-          exportImportService: mainInjector.get<ExportImportService>(),
-        ),
-      ),
+      BlocProvider<SettingsBloc>.value(value: mainInjector.get<SettingsBloc>()),
       BlocProvider(
         create: (context) => UserProfileBloc(
           mindRepository: mainInjector.get<MindRepository>(),

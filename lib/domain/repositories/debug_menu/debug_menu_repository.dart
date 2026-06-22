@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:equatable/equatable.dart';
-
 abstract class DebugMenuRepository {
   List<DebugMenuData> get value;
   Stream<List<DebugMenuData>> get stream;
@@ -13,7 +11,7 @@ abstract class DebugMenuRepository {
   FutureOr<void> enableDeveloperMode();
 }
 
-final class DebugMenuData with EquatableMixin {
+final class DebugMenuData {
   final DebugMenuType type;
   final bool value;
 
@@ -21,9 +19,6 @@ final class DebugMenuData with EquatableMixin {
     required this.type,
     required this.value,
   });
-
-  @override
-  List<Object?> get props => [type, value];
 }
 
 enum DebugMenuType {

@@ -21,6 +21,7 @@ import 'package:keklist/domain/repositories/weather/weather_hive_repository.dart
 import 'package:keklist/domain/repositories/weather/weather_repository.dart';
 import 'package:keklist/domain/services/export_import/export_import_service.dart';
 import 'package:keklist/domain/services/weather/weather_api_service.dart';
+import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
 import 'package:keklist/presentation/core/helpers/platform_utils.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'package:keklist/presentation/cubits/used_emoji/used_emoji_cubit.dart';
@@ -80,6 +81,16 @@ final class MainContainer {
       (injector) => WeatherHiveRepository(
         box: Hive.box<WeatherCacheObject>(HiveConstants.weatherCacheBoxName),
         apiService: WeatherApiService(),
+      ),
+      isSingleton: true,
+    );
+    // BLoCs that need async-gap-safe dispatch (file pickers, native callbacks)
+    // are registered here as singletons so sendEventTo can fall back to DI
+    // when the originating widget's State has unmounted.
+    injector.map<SettingsBloc>(
+      (i) => SettingsBloc(
+        repository: i.get<SettingsRepository>(),
+        exportImportService: i.get<ExportImportService>(),
       ),
       isSingleton: true,
     );
