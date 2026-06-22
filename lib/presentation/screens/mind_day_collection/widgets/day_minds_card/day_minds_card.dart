@@ -41,7 +41,6 @@ final class DayMindsCard extends StatelessWidget {
                   const Icon(Icons.arrow_forward_ios, size: 16.0),
                 ],
               ),
-              //const SizedBox(height: 8.0),
               if (isEmpty)
                 MindCollectionEmptyStateWidget.noMindsForDay(context: context)
               else

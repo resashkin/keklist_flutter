@@ -346,12 +346,6 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     if (purchased) sendEventToBloc<MembershipBloc>(const MembershipRefreshEvent());
   }
 
-  String _themeName(BuildContext context) => switch (_themePreference) {
-    KeklistThemeMode.light => context.l10n.themeLight,
-    KeklistThemeMode.dark => context.l10n.themeDark,
-    KeklistThemeMode.system => context.l10n.themeSystem,
-  };
-
   Future<void> _showThemePicker() async {
     final result = await showConfirmationDialog<KeklistThemeMode>(
       context: context,
