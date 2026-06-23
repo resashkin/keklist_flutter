@@ -42,7 +42,7 @@ final class TabsContainerBloc extends Bloc<TabsContainerEvent, TabsContainerStat
 
   List<TabModel> get _availableTabModels {
     return KeklistConstants.availableTabModels
-        .where((tab) => tab.type != TabType.debugMenu || _debugMenuRepository.isDeveloperModeEnabled)
+        .where((tab) => tab.type != TabType.debugMenu)
         .toList();
   }
 

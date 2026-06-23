@@ -30,6 +30,7 @@ final class MindMonthCollectionWidget extends StatelessWidget {
       controller: gridObserverController,
       child: GridView.builder(
         controller: scrollController,
+        padding: EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 7),
         itemCount: 99999999999,
         itemBuilder: (BuildContext context, int dayIndex) {

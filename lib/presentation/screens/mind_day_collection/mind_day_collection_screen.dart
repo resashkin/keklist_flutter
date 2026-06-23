@@ -260,7 +260,7 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
           builder: (context, constraints) => SingleChildScrollView(
             physics: FlutterConstants.mobileOverscrollPhysics,
             controller: _scrollController,
-            padding: const EdgeInsets.only(bottom: 24),
+            padding: EdgeInsets.only(bottom: 24 + MediaQuery.paddingOf(context).bottom),
             child: ConstrainedBox(
               constraints: BoxConstraints(minHeight: constraints.maxHeight),
               child: Column(

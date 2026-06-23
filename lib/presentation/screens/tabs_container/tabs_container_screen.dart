@@ -16,7 +16,6 @@ import 'package:keklist/presentation/screens/mind_collection/mind_collection_scr
 import 'package:keklist/presentation/screens/mind_day_collection/mind_day_collection_screen.dart';
 import 'package:keklist/presentation/screens/settings/settings_screen.dart';
 import 'package:keklist/presentation/screens/user_profile/user_profile_screen.dart';
-import 'package:keklist/presentation/screens/debug_menu/debug_menu_screen.dart';
 
 final class TabsContainerScreen extends StatefulWidget {
   const TabsContainerScreen({super.key});
@@ -37,37 +36,38 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
   void initState() {
     super.initState();
 
-    subscribeToBloc<TabsContainerBloc>(onNewState: (state) async {
-      if (state is TabsContainerState) {
-        setState(() {
-          _selectedTabIndex = state.selectedTabIndex;
-          final Iterable<BottomNavigationBarItem> items = state.selectedTabs.map(
-            (item) => BottomNavigationBarItem(
-              icon: item.type.materialIcon,
-              label: item.type.localizedLabel(context),
-            ),
-          );
-          _items
-            ..clear()
-            ..addAll(items);
+    subscribeToBloc<TabsContainerBloc>(
+      onNewState: (state) async {
+        if (state is TabsContainerState) {
+          setState(() {
+            _selectedTabIndex = state.selectedTabIndex;
+            final Iterable<BottomNavigationBarItem> items = state.selectedTabs.map(
+              (item) => BottomNavigationBarItem(icon: item.type.materialIcon, label: item.type.localizedLabel(context)),
+            );
+            _items
+              ..clear()
+              ..addAll(items);
 
-          _tabTypes = state.selectedTabs.map((item) => item.type).toList();
-          final Iterable<Widget> bodyWidgets = _tabTypes.map(_bodyWidgetByType);
-          _bodyWidgets
-            ..clear()
-            ..addAll(bodyWidgets);
-        });
-      }
-    })?.disposed(by: this);
+            _tabTypes = state.selectedTabs.map((item) => item.type).toList();
+            final Iterable<Widget> bodyWidgets = _tabTypes.map(_bodyWidgetByType);
+            _bodyWidgets
+              ..clear()
+              ..addAll(bodyWidgets);
+          });
+        }
+      },
+    )?.disposed(by: this);
     sendEventToBloc<TabsContainerBloc>(TabsContainerGetCurrentState());
 
     _useLiquidGlass = _readUseLiquidGlass(context.read<DebugMenuBloc>().state);
-    subscribeToBloc<DebugMenuBloc>(onNewState: (state) {
-      final bool next = _readUseLiquidGlass(state);
-      if (next != _useLiquidGlass) {
-        setState(() => _useLiquidGlass = next);
-      }
-    })?.disposed(by: this);
+    subscribeToBloc<DebugMenuBloc>(
+      onNewState: (state) {
+        final bool next = _readUseLiquidGlass(state);
+        if (next != _useLiquidGlass) {
+          setState(() => _useLiquidGlass = next);
+        }
+      },
+    )?.disposed(by: this);
   }
 
   bool _readUseLiquidGlass(DebugMenuState state) {
@@ -89,48 +89,31 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        extendBody: _useLiquidGlass,
-        body: _wrapBodyForLiquidGlass(
-          BoolWidget(
-            condition: _bodyWidgets.isNotEmpty,
-            trueChild: IndexedStack(
-              index: _selectedTabIndex,
-              children: _bodyWidgets,
-            ),
-            falseChild: MindCollectionScreen(),
-          ),
-        ),
-        bottomNavigationBar: BoolWidget(
-          condition: _items.length >= 2,
-          trueChild: AdaptiveBottomNavigationBar(
-            items: List.of(_items.length >= 2 ? _items : _getFakeItems()),
-            tabTypes: _tabTypes,
-            useLiquidGlass: _useLiquidGlass,
-            selectedIndex: _selectedTabIndex,
-            onTap: (tabIndex) {
-              if (tabIndex == _selectedTabIndex &&
-                  tabIndex < _tabTypes.length &&
-                  _tabTypes[tabIndex] == TabType.today) {
-                _todayKey.currentState?.goToToday();
-              } else {
-                sendEventToBloc<TabsContainerBloc>(TabsContainerChangeSelectedTab(selectedIndex: tabIndex));
-              }
-            },
-          ),
-          falseChild: SizedBox.shrink(),
-        ),
-      );
+    extendBody: _useLiquidGlass,
+    body: IndexedStack(index: _selectedTabIndex, children: _bodyWidgets),
+    bottomNavigationBar: BoolWidget(
+      condition: _items.length >= 2,
+      trueChild: AdaptiveBottomNavigationBar(
+        items: List.of(_items.length >= 2 ? _items : _getFakeItems()),
+        tabTypes: _tabTypes,
+        useLiquidGlass: _useLiquidGlass,
+        selectedIndex: _selectedTabIndex,
+        onTap: (tabIndex) {
+          if (tabIndex == _selectedTabIndex && tabIndex < _tabTypes.length && _tabTypes[tabIndex] == TabType.today) {
+            _todayKey.currentState?.goToToday();
+          } else {
+            sendEventToBloc<TabsContainerBloc>(TabsContainerChangeSelectedTab(selectedIndex: tabIndex));
+          }
+        },
+      ),
+      falseChild: SizedBox.shrink(),
+    ),
+  );
 
   List<BottomNavigationBarItem> _getFakeItems() => [
-        BottomNavigationBarItem(
-          icon: TabType.calendar.materialIcon,
-          label: TabType.calendar.localizedLabel(context),
-        ),
-        BottomNavigationBarItem(
-          icon: TabType.settings.materialIcon,
-          label: TabType.settings.localizedLabel(context),
-        )
-      ];
+    BottomNavigationBarItem(icon: TabType.calendar.materialIcon, label: TabType.calendar.localizedLabel(context)),
+    BottomNavigationBarItem(icon: TabType.settings.materialIcon, label: TabType.settings.localizedLabel(context)),
+  ];
 
   Widget _bodyWidgetByType(TabType type) {
     switch (type) {
@@ -145,27 +128,7 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
       case TabType.today:
         return MindDayCollectionScreen(key: _todayKey, initialDayIndex: DateUtils.getTodayIndex());
       case TabType.debugMenu:
-        return DebugMenuScreen();
+        return const SizedBox.shrink();
     }
-  }
-
-  // With `extendBody: true`, Scaffold inflates descendant `padding.bottom` to
-  // the tab bar height but leaves `viewPadding.bottom` alone. Inner Scaffolds
-  // anchor their `centerFloat` FAB to `viewPadding.bottom`, so without this
-  // mirroring the FAB lands behind the floating tab bar.
-  Widget _wrapBodyForLiquidGlass(Widget child) {
-    if (!_useLiquidGlass) return child;
-    return Builder(
-      builder: (context) {
-        final MediaQueryData mq = MediaQuery.of(context);
-        if (mq.padding.bottom <= mq.viewPadding.bottom) return child;
-        return MediaQuery(
-          data: mq.copyWith(
-            viewPadding: mq.viewPadding.copyWith(bottom: mq.padding.bottom),
-          ),
-          child: child,
-        );
-      },
-    );
   }
 }

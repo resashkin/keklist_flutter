@@ -52,7 +52,9 @@ final class _UserProfileScreenState extends KekWidgetState<UserProfileScreen> {
         ],
       ),
       body: SingleChildScrollView(
+        padding: EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom),
         child: SafeArea(
+          bottom: false,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

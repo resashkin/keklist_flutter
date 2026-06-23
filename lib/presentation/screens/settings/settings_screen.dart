@@ -120,14 +120,12 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final lightSettingsListBackground = Color.fromRGBO(242, 242, 247, 1);
-    // final darkSettingsListBackground = CupertinoColors.black;
-
     return Scaffold(
       appBar: AppBar(
         title: GestureDetector(onTap: _handleAppBarTap, child: Text(context.l10n.settings)),
       ),
       body: SettingsList(
+        contentPadding: EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom),
         sections: [
           SettingsSection(
             title: Text(context.l10n.userData.toUpperCase()),

@@ -50,6 +50,7 @@ final class _InsightsScreenState extends KekWidgetState<InsightsScreen> {
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.insights)),
       body: SafeArea(
+        bottom: false,
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             final int crossAxisCount = constraints.maxWidth > 600 ? 4 : 3;
@@ -58,6 +59,7 @@ final class _InsightsScreenState extends KekWidgetState<InsightsScreen> {
               condition: _minds.isNotEmpty,
               falseChild: MindCollectionEmptyStateWidget.noInsights(context: context),
               trueChild: SingleChildScrollView(
+                padding: EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom),
                 child: StaggeredGrid.count(
                   axisDirection: AxisDirection.down,
                   crossAxisCount: crossAxisCount,
