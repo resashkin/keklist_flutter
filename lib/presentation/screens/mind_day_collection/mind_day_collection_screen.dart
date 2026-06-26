@@ -271,7 +271,6 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
                     child: DayMindsCard(
                       minds: _dayMinds,
                       onTap: () => _showMindsList(),
-                      onTapEmpty: () => _showMindCreator(),
                     ),
                   ),
                   if (_isPhotoVideoSourceEnabled && !Platform.isAndroid)

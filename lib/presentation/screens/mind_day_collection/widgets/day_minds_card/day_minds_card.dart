@@ -8,13 +8,11 @@ import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_
 final class DayMindsCard extends StatelessWidget {
   final List<Mind> minds;
   final VoidCallback onTap;
-  final VoidCallback onTapEmpty;
 
   const DayMindsCard({
     super.key,
     required this.minds,
     required this.onTap,
-    required this.onTapEmpty,
   });
 
   @override
@@ -23,7 +21,7 @@ final class DayMindsCard extends StatelessWidget {
     final ThemeData theme = Theme.of(context);
 
     return GestureDetector(
-      onTap: isEmpty ? onTapEmpty : onTap,
+      onTap: onTap,
       child: RoundedContainer(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
