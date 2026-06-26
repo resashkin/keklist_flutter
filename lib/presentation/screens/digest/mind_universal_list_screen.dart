@@ -1,6 +1,13 @@
+import 'package:adaptive_dialog/adaptive_dialog.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart' hide DateUtils;
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:swipeable_page_route/swipeable_page_route.dart';
+import 'package:translator/translator.dart';
 import 'package:keklist/domain/constants.dart';
+import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
+import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
@@ -8,8 +15,12 @@ import 'package:keklist/presentation/core/helpers/mind_utils.dart';
 import 'package:keklist/presentation/core/helpers/date_utils.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
+import 'package:keklist/presentation/screens/actions/action_model.dart';
+import 'package:keklist/presentation/screens/actions/actions_screen.dart';
 import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_collection_empty_day_widget.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/messaged_list/mind_message_widget.dart';
+import 'package:keklist/presentation/screens/mind_info/mind_info_screen.dart';
+import 'package:keklist/presentation/screens/mind_one_emoji_collection/mind_one_emoji_collection.dart';
 
 final class MindUniversalListScreen extends StatefulWidget {
   final String title;
@@ -40,6 +51,7 @@ final class MindUniversalListScreen extends StatefulWidget {
 final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalListScreen> {
   final List<Mind> _allMinds = [];
   final List<Mind> _filteredMinds = [];
+  DebugMenuDataState? _debugMenuState;
 
   bool get _isSingleDay => _filteredMinds.map((m) => m.dayIndex).toSet().length <= 1;
 
@@ -62,6 +74,15 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
         }
       },
     )?.disposed(by: this);
+
+    subscribeToBloc<DebugMenuBloc>(
+      onNewState: (state) {
+        if (state is DebugMenuDataState) {
+          _debugMenuState = state;
+        }
+      },
+    )?.disposed(by: this);
+    sendEventToBloc<DebugMenuBloc>(DebugMenuGet());
   }
 
   void _recomputeFiltered() {
@@ -98,6 +119,8 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
         ),
         trueChild: Scrollbar(
           child: ListView.builder(
+            // Clear the floating "Write" button so the last mind can scroll above it.
+            padding: EdgeInsets.only(bottom: widget.onCreate == null ? 0.0 : 96.0 + MediaQuery.paddingOf(context).bottom),
             itemBuilder: (context, index) {
               final bool shouldShowTitle = !_isSingleDay &&
                   (index == 0 || _filteredMinds[index].dayIndex != _filteredMinds[index - 1].dayIndex);
@@ -123,7 +146,7 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
                       child: MindMessageWidget(
                         mind: mind,
                         children: widget.allMinds.where((element) => element.rootId == mind.id).toList(growable: false),
-                        onRootOptions: null,
+                        onRootOptions: (Mind mind) => _showActions(mind: mind),
                         onChildOptions: null,
                       ),
                     ),
@@ -136,5 +159,51 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
         ),
       ),
     );
+  }
+
+  void _showActions({required Mind mind}) {
+    showBarModalBottomSheet(
+      context: context,
+      builder: (context) => ActionsScreen(
+        actions: [
+          if (_debugMenuState?.debugMenuItems.firstWhereOrNull(
+                (element) => element.type == DebugMenuType.translation && element.value,
+              ) !=
+              null)
+            (ActionModel.tranlsateToEnglish(context), () => _translateToEnglish(mind: mind)),
+          (ActionModel.edit(context), () => _editMind(mind)),
+          (ActionModel.showAll(context), () => _showAllMinds(mind)),
+          (ActionModel.delete(context), () => _removeMind(mind)),
+        ],
+      ),
+    );
+  }
+
+  void _translateToEnglish({required Mind mind}) async {
+    final GoogleTranslator translator = GoogleTranslator();
+    final Translation translation = await translator.translate(mind.plainNote, to: 'en');
+
+    if (!mounted) return;
+    await showOkAlertDialog(context: context, message: translation.text);
+  }
+
+  void _editMind(Mind mind) {
+    Navigator.of(context).push(
+      SwipeablePageRoute(
+        builder: (_) => MindInfoScreen(rootMind: mind, allMinds: _allMinds),
+      ),
+    );
+  }
+
+  void _showAllMinds(Mind mind) {
+    Navigator.of(context).push(
+      SwipeablePageRoute(
+        builder: (_) => MindOneEmojiCollectionScreen(emoji: mind.emoji, allMinds: _allMinds),
+      ),
+    );
+  }
+
+  void _removeMind(Mind mind) {
+    sendEventToBloc<MindBloc>(MindDelete(mind: mind));
   }
 }

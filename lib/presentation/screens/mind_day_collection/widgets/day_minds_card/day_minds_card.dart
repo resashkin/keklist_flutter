@@ -7,14 +7,12 @@ import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_
 
 final class DayMindsCard extends StatelessWidget {
   final List<Mind> minds;
-  final bool isToday;
   final VoidCallback onTap;
   final VoidCallback onTapEmpty;
 
   const DayMindsCard({
     super.key,
     required this.minds,
-    required this.isToday,
     required this.onTap,
     required this.onTapEmpty,
   });
@@ -27,7 +25,6 @@ final class DayMindsCard extends StatelessWidget {
     return GestureDetector(
       onTap: isEmpty ? onTapEmpty : onTap,
       child: RoundedContainer(
-        border: isToday ? Border.all(color: theme.colorScheme.primary.withValues(alpha: 0.4), width: 2.0) : null,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
           child: Column(

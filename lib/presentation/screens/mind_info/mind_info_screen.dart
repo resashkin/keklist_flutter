@@ -339,5 +339,8 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
 
   void _removeMind(Mind mind) {
     sendEventToBloc<MindBloc>(MindDelete(mind: mind));
+    if (mind.id == widget.rootMind.id) {
+      Navigator.of(context).pop();
+    }
   }
 }

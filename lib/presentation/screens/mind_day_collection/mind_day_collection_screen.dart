@@ -270,7 +270,6 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
                     padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0),
                     child: DayMindsCard(
                       minds: _dayMinds,
-                      isToday: dayIndex == DateUtils.getTodayIndex(),
                       onTap: () => _showMindsList(),
                       onTapEmpty: () => _showMindCreator(),
                     ),
