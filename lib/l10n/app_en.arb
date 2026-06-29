@@ -728,5 +728,77 @@
             "price": { "type": "String" },
             "date": { "type": "String" }
         }
+    },
+    "emotions": "Emotions",
+    "@emotions": {
+        "description": "Emotions feature title"
+    },
+    "editEmotions": "Edit emotions",
+    "@editEmotions": {
+        "description": "Mind action-menu item to change the emotions tagged on a mind"
+    },
+    "setupEmotions": "Setup emotions",
+    "@setupEmotions": {
+        "description": "Button that opens the emotions management screen"
+    },
+    "archived": "Archived",
+    "@archived": {
+        "description": "Title for the archived emotions screen and section"
+    },
+    "archive": "Archive",
+    "@archive": {
+        "description": "Action to archive an emotion"
+    },
+    "restore": "Restore",
+    "@restore": {
+        "description": "Action to restore an archived emotion"
+    },
+    "deletePermanently": "Delete permanently",
+    "@deletePermanently": {
+        "description": "Action to permanently delete an archived emotion"
+    },
+    "newEmotion": "New emotion",
+    "@newEmotion": {
+        "description": "Title for the create-emotion form"
+    },
+    "editEmotion": "Edit emotion",
+    "@editEmotion": {
+        "description": "Title for the edit-emotion form"
+    },
+    "newFolder": "New folder",
+    "@newFolder": {
+        "description": "Title for the create-folder form"
+    },
+    "editFolder": "Edit folder",
+    "@editFolder": {
+        "description": "Title for the edit-folder form"
+    },
+    "emotionNameHint": "Name",
+    "@emotionNameHint": {
+        "description": "Placeholder for the emotion title field"
+    },
+    "folderNameHint": "Folder name",
+    "@folderNameHint": {
+        "description": "Placeholder for the folder title field"
+    },
+    "noEmotionsYet": "No emotions yet",
+    "@noEmotionsYet": {
+        "description": "Empty state for the emotions list"
+    },
+    "noArchivedEmotions": "No archived emotions",
+    "@noArchivedEmotions": {
+        "description": "Empty state for the archived emotions screen"
+    },
+    "noFolderOption": "No folder",
+    "@noFolderOption": {
+        "description": "Option to keep an emotion outside any folder"
+    },
+    "deleteFolderWithContentsMessage": "Deleting this folder will also remove or archive the emotions inside it. Continue?",
+    "@deleteFolderWithContentsMessage": {
+        "description": "Confirmation when deleting a folder that contains emotions"
+    },
+    "deleteEmotionMessage": "Delete this emotion? It will be removed from any minds using it.",
+    "@deleteEmotionMessage": {
+        "description": "Confirmation when permanently deleting an emotion"
     }
 }

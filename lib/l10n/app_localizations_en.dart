@@ -571,4 +571,60 @@ class AppLocalizationsEn extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'You are a PRO user. Next payment $price will be at $date.';
   }
+
+  @override
+  String get emotions => 'Emotions';
+
+  @override
+  String get editEmotions => 'Edit emotions';
+
+  @override
+  String get setupEmotions => 'Setup emotions';
+
+  @override
+  String get archived => 'Archived';
+
+  @override
+  String get archive => 'Archive';
+
+  @override
+  String get restore => 'Restore';
+
+  @override
+  String get deletePermanently => 'Delete permanently';
+
+  @override
+  String get newEmotion => 'New emotion';
+
+  @override
+  String get editEmotion => 'Edit emotion';
+
+  @override
+  String get newFolder => 'New folder';
+
+  @override
+  String get editFolder => 'Edit folder';
+
+  @override
+  String get emotionNameHint => 'Name';
+
+  @override
+  String get folderNameHint => 'Folder name';
+
+  @override
+  String get noEmotionsYet => 'No emotions yet';
+
+  @override
+  String get noArchivedEmotions => 'No archived emotions';
+
+  @override
+  String get noFolderOption => 'No folder';
+
+  @override
+  String get deleteFolderWithContentsMessage =>
+      'Deleting this folder will also remove or archive the emotions inside it. Continue?';
+
+  @override
+  String get deleteEmotionMessage =>
+      'Delete this emotion? It will be removed from any minds using it.';
 }

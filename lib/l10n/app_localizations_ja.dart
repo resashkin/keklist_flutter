@@ -554,4 +554,59 @@ class AppLocalizationsJa extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'あなたはPROユーザーです。次の支払い $price は $date に予定されています。';
   }
+
+  @override
+  String get emotions => '感情';
+
+  @override
+  String get editEmotions => '感情を編集';
+
+  @override
+  String get setupEmotions => '感情を設定';
+
+  @override
+  String get archived => 'アーカイブ';
+
+  @override
+  String get archive => 'アーカイブ';
+
+  @override
+  String get restore => '復元';
+
+  @override
+  String get deletePermanently => '完全に削除';
+
+  @override
+  String get newEmotion => '新しい感情';
+
+  @override
+  String get editEmotion => '感情を編集';
+
+  @override
+  String get newFolder => '新しいフォルダ';
+
+  @override
+  String get editFolder => 'フォルダを編集';
+
+  @override
+  String get emotionNameHint => '名前';
+
+  @override
+  String get folderNameHint => 'フォルダ名';
+
+  @override
+  String get noEmotionsYet => '感情がまだありません';
+
+  @override
+  String get noArchivedEmotions => 'アーカイブされた感情はありません';
+
+  @override
+  String get noFolderOption => 'フォルダなし';
+
+  @override
+  String get deleteFolderWithContentsMessage =>
+      'このフォルダを削除すると、中の感情も削除またはアーカイブされます。続行しますか？';
+
+  @override
+  String get deleteEmotionMessage => 'この感情を削除しますか？使用しているすべてのマインドから削除されます。';
 }

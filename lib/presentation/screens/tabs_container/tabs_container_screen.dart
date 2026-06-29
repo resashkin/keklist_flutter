@@ -126,7 +126,11 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
       case TabType.settings:
         return SettingsScreen();
       case TabType.today:
-        return MindDayCollectionScreen(key: _todayKey, initialDayIndex: DateUtils.getTodayIndex());
+        return MindDayCollectionScreen(
+          key: _todayKey,
+          initialDayIndex: DateUtils.getTodayIndex(),
+          fabBottomOffset: kBottomNavigationBarHeight + 48.0,
+        );
       case TabType.debugMenu:
         return const SizedBox.shrink();
     }

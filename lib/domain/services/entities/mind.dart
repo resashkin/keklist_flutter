@@ -14,6 +14,7 @@ final class Mind with EquatableMixin {
   final DateTime creationDate;
   final int sortIndex;
   final String? rootId;
+  final List<String> emotionIds;
 
   @override
   bool? get stringify => true;
@@ -30,6 +31,7 @@ final class Mind with EquatableMixin {
     required this.creationDate,
     required this.sortIndex,
     required this.rootId,
+    this.emotionIds = const [],
   });
 
   // JsonSerializable
@@ -44,6 +46,7 @@ final class Mind with EquatableMixin {
         sortIndex,
         dayIndex,
         rootId,
+        emotionIds,
         creationDate.millisecondsSinceEpoch,
       ];
 
@@ -73,6 +76,7 @@ final class Mind with EquatableMixin {
     DateTime? creationDate,
     int? sortIndex,
     String? rootId,
+    List<String>? emotionIds,
   }) {
     return Mind(
       id: id ?? this.id,
@@ -82,6 +86,7 @@ final class Mind with EquatableMixin {
       creationDate: creationDate ?? this.creationDate,
       sortIndex: sortIndex ?? this.sortIndex,
       rootId: rootId ?? this.rootId,
+      emotionIds: emotionIds ?? this.emotionIds,
     );
   }
 
@@ -92,7 +97,8 @@ final class Mind with EquatableMixin {
     ..dayIndex = dayIndex
     ..creationDate = creationDate
     ..sortIndex = sortIndex
-    ..rootId = rootId;
+    ..rootId = rootId
+    ..emotionIds = emotionIds;
 
   Mind copyWithNoteContent(MindNoteContent content) => copyWith(note: content.toRawNoteString());
   Mind appendAudioNote(String path, {String? separator, double? durationSeconds}) =>

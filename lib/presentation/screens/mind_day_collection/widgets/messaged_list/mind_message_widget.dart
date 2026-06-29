@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:keklist/domain/services/entities/emotion.dart';
+import 'package:keklist/presentation/blocs/emotion_bloc/emotion_bloc.dart';
+import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/core/helpers/mind_utils.dart';
 import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/bulleted_list/mind_bullet_list_widget.dart';
@@ -48,6 +52,10 @@ final class MindMessageWidget extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                       ),
+                      if (mind.emotionIds.isNotEmpty) ...[
+                        const SizedBox(height: 16.0),
+                        _MindEmotionsRow(mind: mind),
+                      ],
                     ],
                   ),
                 ),
@@ -89,6 +97,57 @@ final class MindMessageWidget extends StatelessWidget {
           ]
         ],
       ),
+    );
+  }
+}
+
+/// Renders a mind's tagged emotions as small chips under its main emoji.
+/// Resolves ids via [EmotionBloc] (archived included, so tagged minds still
+/// show them) and skips ids that no longer resolve. Tapping a chip immediately
+/// untags that emotion from the mind.
+final class _MindEmotionsRow extends StatelessWidget {
+  final Mind mind;
+
+  const _MindEmotionsRow({required this.mind});
+
+  void _remove(BuildContext context, String emotionId) {
+    context.read<MindBloc>().add(
+          MindSetEmotions(
+            mindId: mind.id,
+            emotionIds: mind.emotionIds.where((id) => id != emotionId).toList(),
+          ),
+        );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<EmotionBloc, EmotionState>(
+      builder: (context, state) {
+        if (state is! EmotionsList) return const SizedBox.shrink();
+        final byId = {for (final Emotion emotion in state.emotions) emotion.id: emotion};
+        final emotions = mind.emotionIds.map((id) => byId[id]).whereType<Emotion>().toList();
+        if (emotions.isEmpty) return const SizedBox.shrink();
+
+        return Wrap(
+          spacing: 6.0,
+          runSpacing: 6.0,
+          alignment: WrapAlignment.center,
+          children: [
+            for (final emotion in emotions)
+              GestureDetector(
+                onTap: () => _remove(context, emotion.id),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.secondaryContainer,
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  child: Text('${emotion.emoji} ${emotion.title}'),
+                ),
+              ),
+          ],
+        );
+      },
     );
   }
 }

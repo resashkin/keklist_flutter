@@ -1,4 +1,5 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
+import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart' hide DateUtils;
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -11,16 +12,22 @@ import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart'
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
-import 'package:keklist/presentation/core/helpers/mind_utils.dart';
 import 'package:keklist/presentation/core/helpers/date_utils.dart';
+import 'package:keklist/presentation/core/helpers/mind_utils.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/presentation/screens/actions/action_model.dart';
+import 'package:keklist/presentation/screens/emotions/emotion_marking_sheet.dart';
 import 'package:keklist/presentation/screens/actions/actions_screen.dart';
 import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_collection_empty_day_widget.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/messaged_list/mind_message_widget.dart';
 import 'package:keklist/presentation/screens/mind_info/mind_info_screen.dart';
 import 'package:keklist/presentation/screens/mind_one_emoji_collection/mind_one_emoji_collection.dart';
+
+enum MindUniversalListTitleType {
+  text,
+  date,
+}
 
 final class MindUniversalListScreen extends StatefulWidget {
   final String title;
@@ -31,6 +38,7 @@ final class MindUniversalListScreen extends StatefulWidget {
   final VoidCallback? onCreate;
   final IconData? createButtonIcon;
   final String? createButtonLabel;
+  final MindUniversalListTitleType titleType;
 
   const MindUniversalListScreen({
     super.key,
@@ -42,6 +50,7 @@ final class MindUniversalListScreen extends StatefulWidget {
     this.onCreate,
     this.createButtonIcon,
     this.createButtonLabel,
+    this.titleType = MindUniversalListTitleType.text,
   });
 
   @override
@@ -54,6 +63,29 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
   DebugMenuDataState? _debugMenuState;
 
   bool get _isSingleDay => _filteredMinds.map((m) => m.dayIndex).toSet().length <= 1;
+
+  bool get _showsDateTitle =>
+      widget.titleType == MindUniversalListTitleType.date && _filteredMinds.isNotEmpty && _isSingleDay;
+
+  Widget _appBarTitle(BuildContext context) {
+    if (!_showsDateTitle) return Text(widget.title);
+
+    final Locale locale = Localizations.localeOf(context);
+    final DateTime dayDate = DateUtils.getDateFromDayIndex(_filteredMinds.first.dayIndex);
+    final String formattedDay = DateFormatters.dayMonthFormat(locale).format(dayDate);
+    final String yearSuffix = dayDate.year == DateTime.now().year ? '' : ' ${dayDate.year}';
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text('$formattedDay$yearSuffix', style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500)),
+        Text(
+          DateFormatters.formatWeekday(dayDate, locale),
+          style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.w300),
+        ),
+      ],
+    );
+  }
 
   @override
   void initState() {
@@ -92,14 +124,19 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
         _allMinds
             .where(widget.filterFunction)
             .where((element) => element.rootId == null)
-            .sortedByProperty((mind) => mind.dayIndex),
+            .toList()
+          ..sort((a, b) {
+            final int dayComparison = a.dayIndex.compareTo(b.dayIndex);
+            if (dayComparison != 0) return dayComparison;
+            return a.sortIndex.compareTo(b.sortIndex);
+          }),
       );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
+      appBar: AppBar(centerTitle: _showsDateTitle, title: _appBarTitle(context)),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: widget.onCreate == null
           ? null
@@ -172,9 +209,21 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
               null)
             (ActionModel.tranlsateToEnglish(context), () => _translateToEnglish(mind: mind)),
           (ActionModel.edit(context), () => _editMind(mind)),
+          if (mind.rootId == null) (ActionModel.addEmotions(context), () => _editEmotions(mind)),
+          (ActionModel.switchDay(context), () => _switchDay(mind)),
           (ActionModel.showAll(context), () => _showAllMinds(mind)),
           (ActionModel.delete(context), () => _removeMind(mind)),
         ],
+      ),
+    );
+  }
+
+  void _editEmotions(Mind mind) {
+    EmotionMarkingSheet.show(
+      context: context,
+      initialSelectedIds: mind.emotionIds.toSet(),
+      onSelectionChanged: (ids) => sendEventToBloc<MindBloc>(
+        MindSetEmotions(mindId: mind.id, emotionIds: ids.toList()),
       ),
     );
   }
@@ -201,6 +250,33 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
         builder: (_) => MindOneEmojiCollectionScreen(emoji: mind.emoji, allMinds: _allMinds),
       ),
     );
+  }
+
+  void _switchDay(Mind mind) async {
+    final int? switchedDay = await _showDateSwitcherToNewDay();
+    if (switchedDay == null) return;
+
+    final List<Mind> switchedDayMinds = MindUtils.findMindsByDayIndex(
+      dayIndex: switchedDay,
+      allMinds: _allMinds,
+    );
+    final int sortIndex = (switchedDayMinds.map((mind) => mind.sortIndex).maxOrNull ?? -1) + 1;
+    final Mind movedMind = mind.copyWith(dayIndex: switchedDay, sortIndex: sortIndex);
+    sendEventToBloc<MindBloc>(MindEdit(mind: movedMind));
+  }
+
+  Future<int?> _showDateSwitcherToNewDay() async {
+    final List<DateTime?>? dates = await showCalendarDatePicker2Dialog(
+      context: context,
+      value: [DateUtils.getDateFromDayIndex(DateUtils.getTodayIndex())],
+      config: CalendarDatePicker2WithActionButtonsConfig(firstDayOfWeek: 1),
+      dialogSize: const Size(325, 400),
+      borderRadius: BorderRadius.circular(15),
+    );
+
+    if (dates?.firstOrNull == null) return null;
+
+    return DateUtils.getDayIndex(from: dates!.first!);
   }
 
   void _removeMind(Mind mind) {

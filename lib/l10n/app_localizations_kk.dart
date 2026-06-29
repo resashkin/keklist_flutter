@@ -572,4 +572,60 @@ class AppLocalizationsKk extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'Сіз PRO қолданушысысыз. Келесі $price төлем $date күні болады.';
   }
+
+  @override
+  String get emotions => 'Эмоциялар';
+
+  @override
+  String get editEmotions => 'Эмоцияларды өңдеу';
+
+  @override
+  String get setupEmotions => 'Эмоцияларды баптау';
+
+  @override
+  String get archived => 'Мұрағат';
+
+  @override
+  String get archive => 'Мұрағаттау';
+
+  @override
+  String get restore => 'Қалпына келтіру';
+
+  @override
+  String get deletePermanently => 'Біржола жою';
+
+  @override
+  String get newEmotion => 'Жаңа эмоция';
+
+  @override
+  String get editEmotion => 'Эмоцияны өңдеу';
+
+  @override
+  String get newFolder => 'Жаңа қалта';
+
+  @override
+  String get editFolder => 'Қалтаны өңдеу';
+
+  @override
+  String get emotionNameHint => 'Атауы';
+
+  @override
+  String get folderNameHint => 'Қалта атауы';
+
+  @override
+  String get noEmotionsYet => 'Әзірге эмоциялар жоқ';
+
+  @override
+  String get noArchivedEmotions => 'Мұрағатталған эмоциялар жоқ';
+
+  @override
+  String get noFolderOption => 'Қалтасыз';
+
+  @override
+  String get deleteFolderWithContentsMessage =>
+      'Бұл қалтаны жою оның ішіндегі эмоцияларды да жояды немесе мұрағаттайды. Жалғастырасыз ба?';
+
+  @override
+  String get deleteEmotionMessage =>
+      'Бұл эмоцияны жою керек пе? Ол оны пайдаланатын барлық майндтардан жойылады.';
 }

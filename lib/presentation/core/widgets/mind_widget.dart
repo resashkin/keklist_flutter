@@ -17,6 +17,10 @@ final class MindWidget extends StatelessWidget {
   final VoidCallback? onLongPress;
   final double fontSize;
 
+  /// Emojis of the emotions tagged on the mind, rendered as a small row at the
+  /// bottom of the card. Empty for emoji-only widgets (pickers, suggestions).
+  final List<String> emotionEmojis;
+
   const MindWidget({
     super.key,
     required this.item,
@@ -25,6 +29,7 @@ final class MindWidget extends StatelessWidget {
     this.onTap,
     this.onLongPress,
     this.fontSize = 50,
+    this.emotionEmojis = const [],
   });
 
   factory MindWidget.justEmoji({
@@ -47,45 +52,23 @@ final class MindWidget extends StatelessWidget {
     bool isHighlighted = true,
     VoidCallback? onTap,
     VoidCallback? onLongTap,
+    List<String> emotionEmojis = const [],
   }) {
-    switch (size) {
-      case MindSize.superSmall:
-        return MindWidget(
-          item: item,
-          badge: badge,
-          isHighlighted: isHighlighted,
-          onTap: onTap,
-          onLongPress: onLongTap,
-          fontSize: 12,
-        );
-      case MindSize.small:
-        return MindWidget(
-          item: item,
-          badge: badge,
-          isHighlighted: isHighlighted,
-          onTap: onTap,
-          onLongPress: onLongTap,
-          fontSize: 32,
-        );
-      case MindSize.medium:
-        return MindWidget(
-          item: item,
-          badge: badge,
-          isHighlighted: isHighlighted,
-          onTap: onTap,
-          onLongPress: onLongTap,
-          fontSize: 40,
-        );
-      case MindSize.large:
-        return MindWidget(
-          item: item,
-          badge: badge,
-          isHighlighted: isHighlighted,
-          onTap: onTap,
-          onLongPress: onLongTap,
-          fontSize: 50,
-        );
-    }
+    final double fontSize = switch (size) {
+      MindSize.superSmall => 12,
+      MindSize.small => 32,
+      MindSize.medium => 40,
+      MindSize.large => 50,
+    };
+    return MindWidget(
+      item: item,
+      badge: badge,
+      isHighlighted: isHighlighted,
+      onTap: onTap,
+      onLongPress: onLongTap,
+      fontSize: fontSize,
+      emotionEmojis: emotionEmojis,
+    );
   }
 
   @override
@@ -122,7 +105,21 @@ final class MindWidget extends StatelessWidget {
               ),
             ),
             falseChild: Container(),
-          )
+          ),
+          if (emotionEmojis.isNotEmpty)
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 2.0),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    emotionEmojis.join(),
+                    style: TextStyle(fontSize: fontSize * 0.26),
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );

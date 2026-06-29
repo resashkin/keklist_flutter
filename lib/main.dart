@@ -22,6 +22,9 @@ import 'package:keklist/domain/repositories/mind/mind_hive_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_hive_repository.dart';
 import 'package:keklist/domain/repositories/weather/object/weather_cache_object.dart';
+import 'package:keklist/domain/repositories/emotion/object/emotion_object.dart';
+import 'package:keklist/domain/repositories/emotion/object/emotion_folder_object.dart';
+import 'package:keklist/domain/repositories/emotion/emotion_hive_repository.dart';
 import 'package:keklist/domain/repositories/weather/weather_repository.dart';
 import 'package:keklist/domain/migrations/migration_runner.dart';
 import 'package:keklist/keklist_app.dart';
@@ -45,6 +48,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
+import 'package:keklist/presentation/blocs/emotion_bloc/emotion_bloc.dart';
 import 'package:keklist/presentation/cubits/used_emoji/used_emoji_cubit.dart';
 import 'package:keklist/presentation/cubits/mind_searcher/mind_searcher_cubit.dart';
 import 'package:keklist/presentation/cubits/weather/weather_cubit.dart';
@@ -229,6 +233,12 @@ Future<void> _initHive(HiveAesCipher cipher) async {
   if (!Hive.isAdapterRegistered(WeatherCacheObjectAdapter().typeId)) {
     Hive.registerAdapter<WeatherCacheObject>(WeatherCacheObjectAdapter());
   }
+  if (!Hive.isAdapterRegistered(EmotionObjectAdapter().typeId)) {
+    Hive.registerAdapter<EmotionObject>(EmotionObjectAdapter());
+  }
+  if (!Hive.isAdapterRegistered(EmotionFolderObjectAdapter().typeId)) {
+    Hive.registerAdapter<EmotionFolderObject>(EmotionFolderObjectAdapter());
+  }
 
   await Hive.initFlutter();
 
@@ -245,14 +255,28 @@ Future<void> _initHive(HiveAesCipher cipher) async {
   await Hive.openBox<WeatherCacheObject>(HiveConstants.weatherCacheBoxName, encryptionCipher: cipher);
   await Hive.openBox(HiveConstants.blocLogSettingsBoxName);
 
-  await _runMigrations(settingsBox, mindBox);
+  final Box<EmotionObject> emotionBox =
+      await Hive.openBox<EmotionObject>(HiveConstants.emotionBoxName, encryptionCipher: cipher);
+  await Hive.openBox<EmotionFolderObject>(HiveConstants.emotionFolderBoxName, encryptionCipher: cipher);
+
+  await _runMigrations(settingsBox, mindBox, emotionBox);
 }
 
-Future<void> _runMigrations(Box<SettingsObject> settingsBox, Box<MindObject> mindBox) async {
+Future<void> _runMigrations(
+  Box<SettingsObject> settingsBox,
+  Box<MindObject> mindBox,
+  Box<EmotionObject> emotionBox,
+) async {
   final settingsRepo = SettingsHiveRepository(box: settingsBox);
   final mindRepo = MindHiveRepository(box: mindBox);
+  final emotionRepo = EmotionHiveRepository(box: emotionBox);
   final fileRepo = const AppFileRepository();
-  final runner = MigrationRunner(settingsRepository: settingsRepo, mindRepository: mindRepo, fileRepository: fileRepo);
+  final runner = MigrationRunner(
+    settingsRepository: settingsRepo,
+    mindRepository: mindRepo,
+    fileRepository: fileRepo,
+    emotionRepository: emotionRepo,
+  );
   await runner.runPendingMigrations();
 }
 
@@ -279,6 +303,7 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
       BlocProvider(create: (context) => mainInjector.get<UsedEmojiCubit>()),
       BlocProvider(create: (context) => MindCreatorBloc(mindRepository: mainInjector.get<MindRepository>())),
       BlocProvider<SettingsBloc>.value(value: mainInjector.get<SettingsBloc>()),
+      BlocProvider<EmotionBloc>.value(value: mainInjector.get<EmotionBloc>()..add(EmotionGetList())),
       BlocProvider(
         create: (context) => UserProfileBloc(
           mindRepository: mainInjector.get<MindRepository>(),

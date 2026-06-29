@@ -1190,6 +1190,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You are a PRO user. Next payment {price} will be at {date}.'**
   String proUserFooter(String price, String date);
+
+  /// Emotions feature title
+  ///
+  /// In en, this message translates to:
+  /// **'Emotions'**
+  String get emotions;
+
+  /// Mind action-menu item to change the emotions tagged on a mind
+  ///
+  /// In en, this message translates to:
+  /// **'Edit emotions'**
+  String get editEmotions;
+
+  /// Button that opens the emotions management screen
+  ///
+  /// In en, this message translates to:
+  /// **'Setup emotions'**
+  String get setupEmotions;
+
+  /// Title for the archived emotions screen and section
+  ///
+  /// In en, this message translates to:
+  /// **'Archived'**
+  String get archived;
+
+  /// Action to archive an emotion
+  ///
+  /// In en, this message translates to:
+  /// **'Archive'**
+  String get archive;
+
+  /// Action to restore an archived emotion
+  ///
+  /// In en, this message translates to:
+  /// **'Restore'**
+  String get restore;
+
+  /// Action to permanently delete an archived emotion
+  ///
+  /// In en, this message translates to:
+  /// **'Delete permanently'**
+  String get deletePermanently;
+
+  /// Title for the create-emotion form
+  ///
+  /// In en, this message translates to:
+  /// **'New emotion'**
+  String get newEmotion;
+
+  /// Title for the edit-emotion form
+  ///
+  /// In en, this message translates to:
+  /// **'Edit emotion'**
+  String get editEmotion;
+
+  /// Title for the create-folder form
+  ///
+  /// In en, this message translates to:
+  /// **'New folder'**
+  String get newFolder;
+
+  /// Title for the edit-folder form
+  ///
+  /// In en, this message translates to:
+  /// **'Edit folder'**
+  String get editFolder;
+
+  /// Placeholder for the emotion title field
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get emotionNameHint;
+
+  /// Placeholder for the folder title field
+  ///
+  /// In en, this message translates to:
+  /// **'Folder name'**
+  String get folderNameHint;
+
+  /// Empty state for the emotions list
+  ///
+  /// In en, this message translates to:
+  /// **'No emotions yet'**
+  String get noEmotionsYet;
+
+  /// Empty state for the archived emotions screen
+  ///
+  /// In en, this message translates to:
+  /// **'No archived emotions'**
+  String get noArchivedEmotions;
+
+  /// Option to keep an emotion outside any folder
+  ///
+  /// In en, this message translates to:
+  /// **'No folder'**
+  String get noFolderOption;
+
+  /// Confirmation when deleting a folder that contains emotions
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting this folder will also remove or archive the emotions inside it. Continue?'**
+  String get deleteFolderWithContentsMessage;
+
+  /// Confirmation when permanently deleting an emotion
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this emotion? It will be removed from any minds using it.'**
+  String get deleteEmotionMessage;
 }
 
 class _AppLocalizationsDelegate

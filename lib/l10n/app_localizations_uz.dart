@@ -574,4 +574,60 @@ class AppLocalizationsUz extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'Siz PRO foydalanuvchisiz. Keyingi $price to\'lov $date da bo\'ladi.';
   }
+
+  @override
+  String get emotions => 'Hissiyotlar';
+
+  @override
+  String get editEmotions => 'Hissiyotlarni tahrirlash';
+
+  @override
+  String get setupEmotions => 'Hissiyotlarni sozlash';
+
+  @override
+  String get archived => 'Arxivlangan';
+
+  @override
+  String get archive => 'Arxivlash';
+
+  @override
+  String get restore => 'Tiklash';
+
+  @override
+  String get deletePermanently => 'Butunlay o\'chirish';
+
+  @override
+  String get newEmotion => 'Yangi hissiyot';
+
+  @override
+  String get editEmotion => 'Hissiyotni tahrirlash';
+
+  @override
+  String get newFolder => 'Yangi papka';
+
+  @override
+  String get editFolder => 'Papkani tahrirlash';
+
+  @override
+  String get emotionNameHint => 'Nomi';
+
+  @override
+  String get folderNameHint => 'Papka nomi';
+
+  @override
+  String get noEmotionsYet => 'Hozircha hissiyotlar yo\'q';
+
+  @override
+  String get noArchivedEmotions => 'Arxivlangan hissiyotlar yo\'q';
+
+  @override
+  String get noFolderOption => 'Papkasiz';
+
+  @override
+  String get deleteFolderWithContentsMessage =>
+      'Bu papkani o\'chirish uning ichidagi hissiyotlarni ham o\'chiradi yoki arxivlaydi. Davom etasizmi?';
+
+  @override
+  String get deleteEmotionMessage =>
+      'Bu hissiyotni o\'chirasizmi? U undan foydalanadigan barcha maindlardan olib tashlanadi.';
 }

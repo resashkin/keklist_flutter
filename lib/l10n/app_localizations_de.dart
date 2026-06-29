@@ -578,4 +578,60 @@ class AppLocalizationsDe extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'Du bist PRO-Nutzer. Die nächste Zahlung von $price erfolgt am $date.';
   }
+
+  @override
+  String get emotions => 'Emotionen';
+
+  @override
+  String get editEmotions => 'Emotionen bearbeiten';
+
+  @override
+  String get setupEmotions => 'Emotionen einrichten';
+
+  @override
+  String get archived => 'Archiviert';
+
+  @override
+  String get archive => 'Archivieren';
+
+  @override
+  String get restore => 'Wiederherstellen';
+
+  @override
+  String get deletePermanently => 'Endgültig löschen';
+
+  @override
+  String get newEmotion => 'Neue Emotion';
+
+  @override
+  String get editEmotion => 'Emotion bearbeiten';
+
+  @override
+  String get newFolder => 'Neuer Ordner';
+
+  @override
+  String get editFolder => 'Ordner bearbeiten';
+
+  @override
+  String get emotionNameHint => 'Name';
+
+  @override
+  String get folderNameHint => 'Ordnername';
+
+  @override
+  String get noEmotionsYet => 'Noch keine Emotionen';
+
+  @override
+  String get noArchivedEmotions => 'Keine archivierten Emotionen';
+
+  @override
+  String get noFolderOption => 'Kein Ordner';
+
+  @override
+  String get deleteFolderWithContentsMessage =>
+      'Beim Löschen dieses Ordners werden auch die darin enthaltenen Emotionen gelöscht oder archiviert. Fortfahren?';
+
+  @override
+  String get deleteEmotionMessage =>
+      'Diese Emotion löschen? Sie wird aus allen Minds entfernt, die sie verwenden.';
 }

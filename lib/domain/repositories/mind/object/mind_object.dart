@@ -29,6 +29,9 @@ class MindObject extends HiveObject {
   @HiveField(7, defaultValue: null)
   late String? rootId;
 
+  @HiveField(8, defaultValue: <String>[])
+  late List<String> emotionIds;
+
   MindObject();
 
   Mind toMind() => Mind(
@@ -39,5 +42,6 @@ class MindObject extends HiveObject {
         creationDate: creationDate,
         sortIndex: sortIndex,
         rootId: rootId,
+        emotionIds: emotionIds,
       );
 }

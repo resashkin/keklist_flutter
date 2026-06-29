@@ -573,4 +573,60 @@ class AppLocalizationsKy extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'Сиз PRO колдонуучусуз. Кийинки $price төлөм $date болот.';
   }
+
+  @override
+  String get emotions => 'Эмоциялар';
+
+  @override
+  String get editEmotions => 'Эмоцияларды түзөтүү';
+
+  @override
+  String get setupEmotions => 'Эмоцияларды жөндөө';
+
+  @override
+  String get archived => 'Архив';
+
+  @override
+  String get archive => 'Архивдөө';
+
+  @override
+  String get restore => 'Калыбына келтирүү';
+
+  @override
+  String get deletePermanently => 'Биротоло өчүрүү';
+
+  @override
+  String get newEmotion => 'Жаңы эмоция';
+
+  @override
+  String get editEmotion => 'Эмоцияны түзөтүү';
+
+  @override
+  String get newFolder => 'Жаңы папка';
+
+  @override
+  String get editFolder => 'Папканы түзөтүү';
+
+  @override
+  String get emotionNameHint => 'Аталышы';
+
+  @override
+  String get folderNameHint => 'Папканын аталышы';
+
+  @override
+  String get noEmotionsYet => 'Азырынча эмоциялар жок';
+
+  @override
+  String get noArchivedEmotions => 'Архивделген эмоциялар жок';
+
+  @override
+  String get noFolderOption => 'Папкасыз';
+
+  @override
+  String get deleteFolderWithContentsMessage =>
+      'Бул папканы өчүрүү анын ичиндеги эмоцияларды да өчүрөт же архивдейт. Улантасызбы?';
+
+  @override
+  String get deleteEmotionMessage =>
+      'Бул эмоцияны өчүрөсүзбү? Ал аны колдонгон бардык майндтардан өчүрүлөт.';
 }

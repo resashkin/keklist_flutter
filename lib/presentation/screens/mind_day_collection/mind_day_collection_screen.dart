@@ -52,7 +52,12 @@ import 'package:keklist/presentation/screens/paywall/paywall_bottom_sheet.dart';
 final class MindDayCollectionScreen extends StatefulWidget {
   final int initialDayIndex;
 
-  const MindDayCollectionScreen({super.key, required this.initialDayIndex});
+  /// Extra bottom offset for the floating "To now" button so it clears an
+  /// overlaying tab bar. Pass the tab bar height when hosted inside the tab
+  /// container; leave 0 for standalone (pushed) usage with no tab bar.
+  final double fabBottomOffset;
+
+  const MindDayCollectionScreen({super.key, required this.initialDayIndex, this.fabBottomOffset = 0.0});
 
   @override
   // ignore: no_logic_in_create_state
@@ -226,6 +231,18 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
           ),
         ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: dayIndex == DateUtils.getTodayIndex()
+          ? null
+          : Padding(
+              padding: EdgeInsets.only(bottom: widget.fabBottomOffset),
+              child: FloatingActionButton.extended(
+                onPressed: () => goToToday(),
+                icon: Icon(dayIndex < DateUtils.getTodayIndex() ? Icons.arrow_downward : Icons.arrow_upward),
+                label: const Text('To now', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500)),
+                enableFeedback: true,
+              ),
+            ),
       body: OverscrollListener(
         onOverscrollTopPointerUp: () => _switchToDayIndexWithScrollToTop(dayIndex - 1),
         onOverscrollBottomPointerUp: () => _switchToDayIndexWithScrollToBottom(dayIndex + 1),

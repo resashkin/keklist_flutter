@@ -8,4 +8,6 @@ final class HiveConstants {
   static const String debugMenuBoxName = 'debug_menu_box';
   static const String weatherCacheBoxName = 'weather_cache_box';
   static const String blocLogSettingsBoxName = 'bloc_log_settings_box';
+  static const String emotionBoxName = 'emotion_box';
+  static const String emotionFolderBoxName = 'emotion_folder_box';
 }

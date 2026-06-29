@@ -575,4 +575,60 @@ class AppLocalizationsIt extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'Sei un utente PRO. Il prossimo pagamento di $price sarà il $date.';
   }
+
+  @override
+  String get emotions => 'Emozioni';
+
+  @override
+  String get editEmotions => 'Modifica emozioni';
+
+  @override
+  String get setupEmotions => 'Configura emozioni';
+
+  @override
+  String get archived => 'Archiviate';
+
+  @override
+  String get archive => 'Archivia';
+
+  @override
+  String get restore => 'Ripristina';
+
+  @override
+  String get deletePermanently => 'Elimina definitivamente';
+
+  @override
+  String get newEmotion => 'Nuova emozione';
+
+  @override
+  String get editEmotion => 'Modifica emozione';
+
+  @override
+  String get newFolder => 'Nuova cartella';
+
+  @override
+  String get editFolder => 'Modifica cartella';
+
+  @override
+  String get emotionNameHint => 'Nome';
+
+  @override
+  String get folderNameHint => 'Nome della cartella';
+
+  @override
+  String get noEmotionsYet => 'Ancora nessuna emozione';
+
+  @override
+  String get noArchivedEmotions => 'Nessuna emozione archiviata';
+
+  @override
+  String get noFolderOption => 'Nessuna cartella';
+
+  @override
+  String get deleteFolderWithContentsMessage =>
+      'Eliminando questa cartella verranno eliminate o archiviate anche le emozioni al suo interno. Continuare?';
+
+  @override
+  String get deleteEmotionMessage =>
+      'Eliminare questa emozione? Verrà rimossa da tutte le menti che la usano.';
 }

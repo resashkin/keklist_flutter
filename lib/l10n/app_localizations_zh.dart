@@ -551,4 +551,58 @@ class AppLocalizationsZh extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return '您是PRO用户。下一次 $price 的付款将于 $date 进行。';
   }
+
+  @override
+  String get emotions => '情绪';
+
+  @override
+  String get editEmotions => '编辑情绪';
+
+  @override
+  String get setupEmotions => '设置情绪';
+
+  @override
+  String get archived => '已归档';
+
+  @override
+  String get archive => '归档';
+
+  @override
+  String get restore => '恢复';
+
+  @override
+  String get deletePermanently => '永久删除';
+
+  @override
+  String get newEmotion => '新建情绪';
+
+  @override
+  String get editEmotion => '编辑情绪';
+
+  @override
+  String get newFolder => '新建文件夹';
+
+  @override
+  String get editFolder => '编辑文件夹';
+
+  @override
+  String get emotionNameHint => '名称';
+
+  @override
+  String get folderNameHint => '文件夹名称';
+
+  @override
+  String get noEmotionsYet => '还没有情绪';
+
+  @override
+  String get noArchivedEmotions => '没有已归档的情绪';
+
+  @override
+  String get noFolderOption => '无文件夹';
+
+  @override
+  String get deleteFolderWithContentsMessage => '删除此文件夹也会删除或归档其中的情绪。是否继续？';
+
+  @override
+  String get deleteEmotionMessage => '删除此情绪？它将从所有使用它的 mind 中移除。';
 }

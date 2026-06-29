@@ -570,4 +570,60 @@ class AppLocalizationsRu extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'Вы PRO пользователь. Следующий платёж $price будет $date.';
   }
+
+  @override
+  String get emotions => 'Эмоции';
+
+  @override
+  String get editEmotions => 'Изменить эмоции';
+
+  @override
+  String get setupEmotions => 'Настроить эмоции';
+
+  @override
+  String get archived => 'Архив';
+
+  @override
+  String get archive => 'Архивировать';
+
+  @override
+  String get restore => 'Восстановить';
+
+  @override
+  String get deletePermanently => 'Удалить навсегда';
+
+  @override
+  String get newEmotion => 'Новая эмоция';
+
+  @override
+  String get editEmotion => 'Изменить эмоцию';
+
+  @override
+  String get newFolder => 'Новая папка';
+
+  @override
+  String get editFolder => 'Изменить папку';
+
+  @override
+  String get emotionNameHint => 'Название';
+
+  @override
+  String get folderNameHint => 'Название папки';
+
+  @override
+  String get noEmotionsYet => 'Пока нет эмоций';
+
+  @override
+  String get noArchivedEmotions => 'Нет архивных эмоций';
+
+  @override
+  String get noFolderOption => 'Без папки';
+
+  @override
+  String get deleteFolderWithContentsMessage =>
+      'Удаление этой папки также удалит или архивирует эмоции внутри неё. Продолжить?';
+
+  @override
+  String get deleteEmotionMessage =>
+      'Удалить эту эмоцию? Она будет удалена из всех минд, где используется.';
 }

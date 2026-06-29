@@ -572,6 +572,62 @@ class AppLocalizationsSr extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'Ви сте PRO корисник. Следећа уплата $price биће $date.';
   }
+
+  @override
+  String get emotions => 'Емоције';
+
+  @override
+  String get editEmotions => 'Измени емоције';
+
+  @override
+  String get setupEmotions => 'Подеси емоције';
+
+  @override
+  String get archived => 'Архивирано';
+
+  @override
+  String get archive => 'Архивирај';
+
+  @override
+  String get restore => 'Врати';
+
+  @override
+  String get deletePermanently => 'Трајно обриши';
+
+  @override
+  String get newEmotion => 'Нова емоција';
+
+  @override
+  String get editEmotion => 'Измени емоцију';
+
+  @override
+  String get newFolder => 'Нова фасцикла';
+
+  @override
+  String get editFolder => 'Измени фасциклу';
+
+  @override
+  String get emotionNameHint => 'Назив';
+
+  @override
+  String get folderNameHint => 'Назив фасцикле';
+
+  @override
+  String get noEmotionsYet => 'Још нема емоција';
+
+  @override
+  String get noArchivedEmotions => 'Нема архивираних емоција';
+
+  @override
+  String get noFolderOption => 'Без фасцикле';
+
+  @override
+  String get deleteFolderWithContentsMessage =>
+      'Брисање ове фасцикле ће такође обрисати или архивирати емоције у њој. Наставити?';
+
+  @override
+  String get deleteEmotionMessage =>
+      'Обрисати ову емоцију? Биће уклоњена из свих мисли које је користе.';
 }
 
 /// The translations for Serbian, using the Latin script (`sr_Latn`).
@@ -1141,4 +1197,60 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
   String proUserFooter(String price, String date) {
     return 'Vi ste PRO korisnik. Sledeća uplata $price biće $date.';
   }
+
+  @override
+  String get emotions => 'Emocije';
+
+  @override
+  String get editEmotions => 'Izmeni emocije';
+
+  @override
+  String get setupEmotions => 'Podesi emocije';
+
+  @override
+  String get archived => 'Arhivirano';
+
+  @override
+  String get archive => 'Arhiviraj';
+
+  @override
+  String get restore => 'Vrati';
+
+  @override
+  String get deletePermanently => 'Trajno obriši';
+
+  @override
+  String get newEmotion => 'Nova emocija';
+
+  @override
+  String get editEmotion => 'Izmeni emociju';
+
+  @override
+  String get newFolder => 'Nova fascikla';
+
+  @override
+  String get editFolder => 'Izmeni fasciklu';
+
+  @override
+  String get emotionNameHint => 'Naziv';
+
+  @override
+  String get folderNameHint => 'Naziv fascikle';
+
+  @override
+  String get noEmotionsYet => 'Još nema emocija';
+
+  @override
+  String get noArchivedEmotions => 'Nema arhiviranih emocija';
+
+  @override
+  String get noFolderOption => 'Bez fascikle';
+
+  @override
+  String get deleteFolderWithContentsMessage =>
+      'Brisanje ove fascikle će takođe obrisati ili arhivirati emocije u njoj. Nastaviti?';
+
+  @override
+  String get deleteEmotionMessage =>
+      'Obrisati ovu emociju? Biće uklonjena iz svih misli koje je koriste.';
 }
