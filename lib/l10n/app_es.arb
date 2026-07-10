@@ -450,13 +450,15 @@
     "deletePermanently": "Eliminar permanentemente",
     "newEmotion": "Nueva emoción",
     "editEmotion": "Editar emoción",
-    "newFolder": "Nueva carpeta",
-    "editFolder": "Editar carpeta",
+    "addSubEmotion": "Añadir sub-emoción",
     "emotionNameHint": "Nombre",
-    "folderNameHint": "Nombre de la carpeta",
+    "parentLabel": "Padre",
+    "selected": "Seleccionadas",
+    "emotionPickHint": "Toca para etiquetar · mantén pulsado para profundizar",
     "noEmotionsYet": "Aún no hay emociones",
     "noArchivedEmotions": "No hay emociones archivadas",
-    "noFolderOption": "Sin carpeta",
-    "deleteFolderWithContentsMessage": "Al eliminar esta carpeta también se eliminarán o archivarán las emociones que contiene. ¿Continuar?",
-    "deleteEmotionMessage": "¿Eliminar esta emoción? Se quitará de todas las mentes que la usan."
+    "archiveEmotionMessage": "¿Archivar esta emoción? Se mantiene en las mentes que la usan, pero se oculta del selector.",
+    "archiveEmotionSubtreeMessage": "¿Archivar esta emoción y todo lo anidado en ella?",
+    "deleteEmotionMessage": "¿Eliminar esta emoción? Se quitará de todas las mentes que la usan.",
+    "deleteEmotionSubtreeMessage": "¿Eliminar esta emoción y todo lo anidado en ella? Lo que aún usan las mentes se archiva en su lugar."
 }

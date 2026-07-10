@@ -187,13 +187,15 @@
     "deletePermanently": "Удалить навсегда",
     "newEmotion": "Новая эмоция",
     "editEmotion": "Изменить эмоцию",
-    "newFolder": "Новая папка",
-    "editFolder": "Изменить папку",
+    "addSubEmotion": "Добавить под-эмоцию",
     "emotionNameHint": "Название",
-    "folderNameHint": "Название папки",
+    "parentLabel": "Родитель",
+    "selected": "Выбрано",
+    "emotionPickHint": "Нажмите, чтобы отметить · удерживайте, чтобы углубиться",
     "noEmotionsYet": "Пока нет эмоций",
     "noArchivedEmotions": "Нет архивных эмоций",
-    "noFolderOption": "Без папки",
-    "deleteFolderWithContentsMessage": "Удаление этой папки также удалит или архивирует эмоции внутри неё. Продолжить?",
-    "deleteEmotionMessage": "Удалить эту эмоцию? Она будет удалена из всех минд, где используется."
+    "archiveEmotionMessage": "Архивировать эту эмоцию? Она останется на миндах, где используется, но скроется из списка выбора.",
+    "archiveEmotionSubtreeMessage": "Архивировать эту эмоцию и всё вложенное в неё?",
+    "deleteEmotionMessage": "Удалить эту эмоцию? Она будет удалена из всех минд, где используется.",
+    "deleteEmotionSubtreeMessage": "Удалить эту эмоцию и всё вложенное в неё? Всё, что ещё используется в миндах, будет архивировано."
 }

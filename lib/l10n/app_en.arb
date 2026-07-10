@@ -765,21 +765,25 @@
     "@editEmotion": {
         "description": "Title for the edit-emotion form"
     },
-    "newFolder": "New folder",
-    "@newFolder": {
-        "description": "Title for the create-folder form"
-    },
-    "editFolder": "Edit folder",
-    "@editFolder": {
-        "description": "Title for the edit-folder form"
+    "addSubEmotion": "Add sub-emotion",
+    "@addSubEmotion": {
+        "description": "Action to add a child emotion under another emotion"
     },
     "emotionNameHint": "Name",
     "@emotionNameHint": {
         "description": "Placeholder for the emotion title field"
     },
-    "folderNameHint": "Folder name",
-    "@folderNameHint": {
-        "description": "Placeholder for the folder title field"
+    "parentLabel": "Parent",
+    "@parentLabel": {
+        "description": "Label showing the parent emotion when creating a child"
+    },
+    "selected": "Selected",
+    "@selected": {
+        "description": "Section header listing the currently selected emotions"
+    },
+    "emotionPickHint": "Tap to tag · long-press to go deeper",
+    "@emotionPickHint": {
+        "description": "Hint in the emotion marking sheet explaining tap vs long-press"
     },
     "noEmotionsYet": "No emotions yet",
     "@noEmotionsYet": {
@@ -789,16 +793,20 @@
     "@noArchivedEmotions": {
         "description": "Empty state for the archived emotions screen"
     },
-    "noFolderOption": "No folder",
-    "@noFolderOption": {
-        "description": "Option to keep an emotion outside any folder"
+    "archiveEmotionMessage": "Archive this emotion? It stays on minds that use it but is hidden from the picker.",
+    "@archiveEmotionMessage": {
+        "description": "Confirmation when archiving a single emotion"
     },
-    "deleteFolderWithContentsMessage": "Deleting this folder will also remove or archive the emotions inside it. Continue?",
-    "@deleteFolderWithContentsMessage": {
-        "description": "Confirmation when deleting a folder that contains emotions"
+    "archiveEmotionSubtreeMessage": "Archive this emotion and everything nested inside it?",
+    "@archiveEmotionSubtreeMessage": {
+        "description": "Confirmation when archiving an emotion that has children"
     },
     "deleteEmotionMessage": "Delete this emotion? It will be removed from any minds using it.",
     "@deleteEmotionMessage": {
         "description": "Confirmation when permanently deleting an emotion"
+    },
+    "deleteEmotionSubtreeMessage": "Delete this emotion and everything nested inside it? Anything still used by minds is archived instead.",
+    "@deleteEmotionSubtreeMessage": {
+        "description": "Confirmation when deleting an emotion that has children"
     }
 }

@@ -6,20 +6,20 @@ abstract class EmotionEvent with EquatableMixin {
   List<Object?> get props => [];
 }
 
-/// Re-emit the current emotions + folders snapshot.
+/// Re-emit the current emotions snapshot.
 final class EmotionGetList extends EmotionEvent {}
 
 final class EmotionCreate extends EmotionEvent {
   final String title;
   final String emoji;
 
-  /// Single folder assignment from the UI (storage still supports many).
-  final String? folderId;
+  /// Parent emotion id, or `null` for a top-level emotion.
+  final String? parentId;
 
-  EmotionCreate({required this.title, required this.emoji, this.folderId});
+  EmotionCreate({required this.title, required this.emoji, this.parentId});
 
   @override
-  List<Object?> get props => [title, emoji, folderId];
+  List<Object?> get props => [title, emoji, parentId];
 }
 
 final class EmotionUpdate extends EmotionEvent {
@@ -31,7 +31,8 @@ final class EmotionUpdate extends EmotionEvent {
   List<Object?> get props => [emotion];
 }
 
-/// Hide an emotion from pickers while keeping it resolvable on tagged minds.
+/// Archive an emotion and its whole subtree — hides them from pickers while
+/// keeping them resolvable on minds that already use them.
 final class EmotionArchive extends EmotionEvent {
   final String id;
 
@@ -41,6 +42,7 @@ final class EmotionArchive extends EmotionEvent {
   List<Object?> get props => [id];
 }
 
+/// Restore a single archived emotion (does not touch its subtree).
 final class EmotionUnarchive extends EmotionEvent {
   final String id;
 
@@ -50,7 +52,8 @@ final class EmotionUnarchive extends EmotionEvent {
   List<Object?> get props => [id];
 }
 
-/// Permanently delete an emotion and strip its id from every mind.
+/// Delete an emotion and its subtree. Any node still referenced by a mind is
+/// archived instead of hard-deleted (and stripped from those minds if deleted).
 final class EmotionDelete extends EmotionEvent {
   final String id;
 
@@ -60,7 +63,7 @@ final class EmotionDelete extends EmotionEvent {
   List<Object?> get props => [id];
 }
 
-/// New ordering of emotion ids within a single section (loose or one folder).
+/// New ordering of sibling emotion ids (all sharing the same parent).
 final class EmotionReorder extends EmotionEvent {
   final List<String> orderedEmotionIds;
 
@@ -68,44 +71,6 @@ final class EmotionReorder extends EmotionEvent {
 
   @override
   List<Object?> get props => [orderedEmotionIds];
-}
-
-final class EmotionFolderCreate extends EmotionEvent {
-  final String title;
-
-  EmotionFolderCreate({required this.title});
-
-  @override
-  List<Object?> get props => [title];
-}
-
-final class EmotionFolderUpdate extends EmotionEvent {
-  final EmotionFolder folder;
-
-  EmotionFolderUpdate({required this.folder});
-
-  @override
-  List<Object?> get props => [folder];
-}
-
-/// Delete a folder. Emotions inside it are archived (if referenced by minds)
-/// or permanently deleted (if not), matching the single-emotion rule.
-final class EmotionFolderDelete extends EmotionEvent {
-  final String id;
-
-  EmotionFolderDelete({required this.id});
-
-  @override
-  List<Object?> get props => [id];
-}
-
-final class EmotionFolderReorder extends EmotionEvent {
-  final List<String> orderedFolderIds;
-
-  EmotionFolderReorder({required this.orderedFolderIds});
-
-  @override
-  List<Object?> get props => [orderedFolderIds];
 }
 
 final class EmotionInternalGetListFromCache extends EmotionEvent {}

@@ -601,16 +601,20 @@ class AppLocalizationsSr extends AppLocalizations {
   String get editEmotion => 'Измени емоцију';
 
   @override
-  String get newFolder => 'Нова фасцикла';
-
-  @override
-  String get editFolder => 'Измени фасциклу';
+  String get addSubEmotion => 'Додај под-емоцију';
 
   @override
   String get emotionNameHint => 'Назив';
 
   @override
-  String get folderNameHint => 'Назив фасцикле';
+  String get parentLabel => 'Родитељ';
+
+  @override
+  String get selected => 'Изабрано';
+
+  @override
+  String get emotionPickHint =>
+      'Додирните за означавање · дуже држите за дубље';
 
   @override
   String get noEmotionsYet => 'Још нема емоција';
@@ -619,15 +623,20 @@ class AppLocalizationsSr extends AppLocalizations {
   String get noArchivedEmotions => 'Нема архивираних емоција';
 
   @override
-  String get noFolderOption => 'Без фасцикле';
+  String get archiveEmotionMessage =>
+      'Архивирати ову емоцију? Остаје на мислима које је користе, али се сакрива из бирача.';
 
   @override
-  String get deleteFolderWithContentsMessage =>
-      'Брисање ове фасцикле ће такође обрисати или архивирати емоције у њој. Наставити?';
+  String get archiveEmotionSubtreeMessage =>
+      'Архивирати ову емоцију и све угнеждено у њој?';
 
   @override
   String get deleteEmotionMessage =>
       'Обрисати ову емоцију? Биће уклоњена из свих мисли које је користе.';
+
+  @override
+  String get deleteEmotionSubtreeMessage =>
+      'Обрисати ову емоцију и све угнеждено у њој? Оно што мисли још користе се уместо тога архивира.';
 }
 
 /// The translations for Serbian, using the Latin script (`sr_Latn`).
@@ -1226,16 +1235,20 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
   String get editEmotion => 'Izmeni emociju';
 
   @override
-  String get newFolder => 'Nova fascikla';
-
-  @override
-  String get editFolder => 'Izmeni fasciklu';
+  String get addSubEmotion => 'Dodaj pod-emociju';
 
   @override
   String get emotionNameHint => 'Naziv';
 
   @override
-  String get folderNameHint => 'Naziv fascikle';
+  String get parentLabel => 'Roditelj';
+
+  @override
+  String get selected => 'Izabrano';
+
+  @override
+  String get emotionPickHint =>
+      'Dodirnite za označavanje · duže držite za dublje';
 
   @override
   String get noEmotionsYet => 'Još nema emocija';
@@ -1244,13 +1257,18 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
   String get noArchivedEmotions => 'Nema arhiviranih emocija';
 
   @override
-  String get noFolderOption => 'Bez fascikle';
+  String get archiveEmotionMessage =>
+      'Arhivirati ovu emociju? Ostaje na mislima koje je koriste, ali se sakriva iz birača.';
 
   @override
-  String get deleteFolderWithContentsMessage =>
-      'Brisanje ove fascikle će takođe obrisati ili arhivirati emocije u njoj. Nastaviti?';
+  String get archiveEmotionSubtreeMessage =>
+      'Arhivirati ovu emociju i sve ugneždeno u njoj?';
 
   @override
   String get deleteEmotionMessage =>
       'Obrisati ovu emociju? Biće uklonjena iz svih misli koje je koriste.';
+
+  @override
+  String get deleteEmotionSubtreeMessage =>
+      'Obrisati ovu emociju i sve ugneždeno u njoj? Ono što misli još koriste se umesto toga arhivira.';
 }

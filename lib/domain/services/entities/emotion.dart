@@ -6,9 +6,10 @@ part 'emotion.g.dart';
 
 /// A user-defined emotion that can be attached to a [Mind].
 ///
-/// An emotion has a required [emoji] and [title]. It can optionally belong to
-/// one or more folders ([folderIds]) — the UI currently assigns a single folder,
-/// but storage supports many to keep the model future-proof.
+/// An emotion has a required [emoji] and [title]. Emotions form an unlimited-depth
+/// tree via [parentId]: a `null` parent is a top-level (root) emotion, otherwise it
+/// is a child of the emotion with that id. Any node — root or nested — can be
+/// tagged on a mind.
 ///
 /// Emotions are never hard-deleted while still referenced by minds; instead they
 /// are [isArchived], which hides them from pickers while keeping them resolvable
@@ -18,7 +19,7 @@ final class Emotion with EquatableMixin {
   final String id;
   final String title;
   final String emoji;
-  final List<String> folderIds;
+  final String? parentId;
   final bool isArchived;
   final int orderIndex;
   final DateTime creationDate;
@@ -27,7 +28,7 @@ final class Emotion with EquatableMixin {
     required this.id,
     required this.title,
     required this.emoji,
-    required this.folderIds,
+    required this.parentId,
     required this.isArchived,
     required this.orderIndex,
     required this.creationDate,
@@ -45,7 +46,7 @@ final class Emotion with EquatableMixin {
         id,
         title,
         emoji,
-        folderIds,
+        parentId,
         isArchived,
         orderIndex,
         creationDate.millisecondsSinceEpoch,
@@ -55,7 +56,7 @@ final class Emotion with EquatableMixin {
     String? id,
     String? title,
     String? emoji,
-    List<String>? folderIds,
+    String? parentId,
     bool? isArchived,
     int? orderIndex,
     DateTime? creationDate,
@@ -64,7 +65,7 @@ final class Emotion with EquatableMixin {
       id: id ?? this.id,
       title: title ?? this.title,
       emoji: emoji ?? this.emoji,
-      folderIds: folderIds ?? this.folderIds,
+      parentId: parentId ?? this.parentId,
       isArchived: isArchived ?? this.isArchived,
       orderIndex: orderIndex ?? this.orderIndex,
       creationDate: creationDate ?? this.creationDate,
@@ -75,7 +76,7 @@ final class Emotion with EquatableMixin {
     ..id = id
     ..title = title
     ..emoji = emoji
-    ..folderIds = folderIds
+    ..parentId = parentId
     ..isArchived = isArchived
     ..orderIndex = orderIndex
     ..creationDate = creationDate;

@@ -583,16 +583,19 @@ class AppLocalizationsJa extends AppLocalizations {
   String get editEmotion => '感情を編集';
 
   @override
-  String get newFolder => '新しいフォルダ';
-
-  @override
-  String get editFolder => 'フォルダを編集';
+  String get addSubEmotion => 'サブ感情を追加';
 
   @override
   String get emotionNameHint => '名前';
 
   @override
-  String get folderNameHint => 'フォルダ名';
+  String get parentLabel => '親';
+
+  @override
+  String get selected => '選択済み';
+
+  @override
+  String get emotionPickHint => 'タップで付与 · 長押しで詳細へ';
 
   @override
   String get noEmotionsYet => '感情がまだありません';
@@ -601,12 +604,16 @@ class AppLocalizationsJa extends AppLocalizations {
   String get noArchivedEmotions => 'アーカイブされた感情はありません';
 
   @override
-  String get noFolderOption => 'フォルダなし';
+  String get archiveEmotionMessage =>
+      'この感情をアーカイブしますか？使用中のマインドには残りますが、選択リストからは非表示になります。';
 
   @override
-  String get deleteFolderWithContentsMessage =>
-      'このフォルダを削除すると、中の感情も削除またはアーカイブされます。続行しますか？';
+  String get archiveEmotionSubtreeMessage => 'この感情と、その中のすべてをアーカイブしますか？';
 
   @override
   String get deleteEmotionMessage => 'この感情を削除しますか？使用しているすべてのマインドから削除されます。';
+
+  @override
+  String get deleteEmotionSubtreeMessage =>
+      'この感情と、その中のすべてを削除しますか？マインドで使用中のものはアーカイブされます。';
 }

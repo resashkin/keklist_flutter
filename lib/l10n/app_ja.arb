@@ -187,13 +187,15 @@
     "deletePermanently": "完全に削除",
     "newEmotion": "新しい感情",
     "editEmotion": "感情を編集",
-    "newFolder": "新しいフォルダ",
-    "editFolder": "フォルダを編集",
+    "addSubEmotion": "サブ感情を追加",
     "emotionNameHint": "名前",
-    "folderNameHint": "フォルダ名",
+    "parentLabel": "親",
+    "selected": "選択済み",
+    "emotionPickHint": "タップで付与 · 長押しで詳細へ",
     "noEmotionsYet": "感情がまだありません",
     "noArchivedEmotions": "アーカイブされた感情はありません",
-    "noFolderOption": "フォルダなし",
-    "deleteFolderWithContentsMessage": "このフォルダを削除すると、中の感情も削除またはアーカイブされます。続行しますか？",
-    "deleteEmotionMessage": "この感情を削除しますか？使用しているすべてのマインドから削除されます。"
+    "archiveEmotionMessage": "この感情をアーカイブしますか？使用中のマインドには残りますが、選択リストからは非表示になります。",
+    "archiveEmotionSubtreeMessage": "この感情と、その中のすべてをアーカイブしますか？",
+    "deleteEmotionMessage": "この感情を削除しますか？使用しているすべてのマインドから削除されます。",
+    "deleteEmotionSubtreeMessage": "この感情と、その中のすべてを削除しますか？マインドで使用中のものはアーカイブされます。"
 }

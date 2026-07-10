@@ -601,16 +601,20 @@ class AppLocalizationsKk extends AppLocalizations {
   String get editEmotion => 'Эмоцияны өңдеу';
 
   @override
-  String get newFolder => 'Жаңа қалта';
-
-  @override
-  String get editFolder => 'Қалтаны өңдеу';
+  String get addSubEmotion => 'Ішкі эмоция қосу';
 
   @override
   String get emotionNameHint => 'Атауы';
 
   @override
-  String get folderNameHint => 'Қалта атауы';
+  String get parentLabel => 'Аталық';
+
+  @override
+  String get selected => 'Таңдалғаны';
+
+  @override
+  String get emotionPickHint =>
+      'Белгілеу үшін түртіңіз · тереңдеу үшін басып тұрыңыз';
 
   @override
   String get noEmotionsYet => 'Әзірге эмоциялар жоқ';
@@ -619,13 +623,18 @@ class AppLocalizationsKk extends AppLocalizations {
   String get noArchivedEmotions => 'Мұрағатталған эмоциялар жоқ';
 
   @override
-  String get noFolderOption => 'Қалтасыз';
+  String get archiveEmotionMessage =>
+      'Бұл эмоцияны мұрағаттау керек пе? Ол пайдаланылатын майндтарда қалады, бірақ таңдау тізімінен жасырылады.';
 
   @override
-  String get deleteFolderWithContentsMessage =>
-      'Бұл қалтаны жою оның ішіндегі эмоцияларды да жояды немесе мұрағаттайды. Жалғастырасыз ба?';
+  String get archiveEmotionSubtreeMessage =>
+      'Бұл эмоцияны және оның ішіндегінің бәрін мұрағаттау керек пе?';
 
   @override
   String get deleteEmotionMessage =>
       'Бұл эмоцияны жою керек пе? Ол оны пайдаланатын барлық майндтардан жойылады.';
+
+  @override
+  String get deleteEmotionSubtreeMessage =>
+      'Бұл эмоцияны және оның ішіндегінің бәрін жою керек пе? Майндтарда әлі қолданылатындары мұрағатталады.';
 }

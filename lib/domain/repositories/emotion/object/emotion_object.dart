@@ -14,8 +14,8 @@ class EmotionObject extends HiveObject {
   @HiveField(2)
   late String emoji;
 
-  @HiveField(3, defaultValue: <String>[])
-  late List<String> folderIds;
+  // HiveField(3) previously held `folderIds` (removed with the folder feature).
+  // The index is retired; new records omit it and old records ignore it on read.
 
   @HiveField(4, defaultValue: false)
   late bool isArchived;
@@ -26,13 +26,16 @@ class EmotionObject extends HiveObject {
   @HiveField(6)
   late DateTime creationDate;
 
+  @HiveField(7, defaultValue: null)
+  late String? parentId;
+
   EmotionObject();
 
   Emotion toEmotion() => Emotion(
         id: id,
         title: title,
         emoji: emoji,
-        folderIds: folderIds,
+        parentId: parentId,
         isArchived: isArchived,
         orderIndex: orderIndex,
         creationDate: creationDate,

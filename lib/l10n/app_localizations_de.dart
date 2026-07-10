@@ -607,16 +607,20 @@ class AppLocalizationsDe extends AppLocalizations {
   String get editEmotion => 'Emotion bearbeiten';
 
   @override
-  String get newFolder => 'Neuer Ordner';
-
-  @override
-  String get editFolder => 'Ordner bearbeiten';
+  String get addSubEmotion => 'Unter-Emotion hinzufügen';
 
   @override
   String get emotionNameHint => 'Name';
 
   @override
-  String get folderNameHint => 'Ordnername';
+  String get parentLabel => 'Übergeordnet';
+
+  @override
+  String get selected => 'Ausgewählt';
+
+  @override
+  String get emotionPickHint =>
+      'Tippen zum Markieren · lange drücken für mehr Tiefe';
 
   @override
   String get noEmotionsYet => 'Noch keine Emotionen';
@@ -625,13 +629,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get noArchivedEmotions => 'Keine archivierten Emotionen';
 
   @override
-  String get noFolderOption => 'Kein Ordner';
+  String get archiveEmotionMessage =>
+      'Diese Emotion archivieren? Sie bleibt an Minds, die sie verwenden, wird aber aus der Auswahl ausgeblendet.';
 
   @override
-  String get deleteFolderWithContentsMessage =>
-      'Beim Löschen dieses Ordners werden auch die darin enthaltenen Emotionen gelöscht oder archiviert. Fortfahren?';
+  String get archiveEmotionSubtreeMessage =>
+      'Diese Emotion und alles darin Verschachtelte archivieren?';
 
   @override
   String get deleteEmotionMessage =>
       'Diese Emotion löschen? Sie wird aus allen Minds entfernt, die sie verwenden.';
+
+  @override
+  String get deleteEmotionSubtreeMessage =>
+      'Diese Emotion und alles darin Verschachtelte löschen? Was noch von Minds verwendet wird, wird stattdessen archiviert.';
 }

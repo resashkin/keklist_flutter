@@ -604,16 +604,20 @@ class AppLocalizationsIt extends AppLocalizations {
   String get editEmotion => 'Modifica emozione';
 
   @override
-  String get newFolder => 'Nuova cartella';
-
-  @override
-  String get editFolder => 'Modifica cartella';
+  String get addSubEmotion => 'Aggiungi sotto-emozione';
 
   @override
   String get emotionNameHint => 'Nome';
 
   @override
-  String get folderNameHint => 'Nome della cartella';
+  String get parentLabel => 'Genitore';
+
+  @override
+  String get selected => 'Selezionate';
+
+  @override
+  String get emotionPickHint =>
+      'Tocca per assegnare · tieni premuto per approfondire';
 
   @override
   String get noEmotionsYet => 'Ancora nessuna emozione';
@@ -622,13 +626,18 @@ class AppLocalizationsIt extends AppLocalizations {
   String get noArchivedEmotions => 'Nessuna emozione archiviata';
 
   @override
-  String get noFolderOption => 'Nessuna cartella';
+  String get archiveEmotionMessage =>
+      'Archiviare questa emozione? Resta sulle menti che la usano, ma viene nascosta dal selettore.';
 
   @override
-  String get deleteFolderWithContentsMessage =>
-      'Eliminando questa cartella verranno eliminate o archiviate anche le emozioni al suo interno. Continuare?';
+  String get archiveEmotionSubtreeMessage =>
+      'Archiviare questa emozione e tutto ciò che contiene?';
 
   @override
   String get deleteEmotionMessage =>
       'Eliminare questa emozione? Verrà rimossa da tutte le menti che la usano.';
+
+  @override
+  String get deleteEmotionSubtreeMessage =>
+      'Eliminare questa emozione e tutto ciò che contiene? Ciò che è ancora usato dalle menti viene archiviato.';
 }

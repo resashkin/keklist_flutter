@@ -35,7 +35,7 @@ void main() {
         id: 'seeded',
         title: 'Joy',
         emoji: '😄',
-        folderIds: const [],
+        parentId: null,
         isArchived: false,
         orderIndex: 0,
         creationDate: DateTime(2024),

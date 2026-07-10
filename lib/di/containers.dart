@@ -8,11 +8,8 @@ import 'package:keklist/domain/repositories/mind/object/mind_object.dart';
 import 'package:keklist/domain/repositories/mind/mind_hive_repository.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 import 'package:keklist/domain/repositories/emotion/object/emotion_object.dart';
-import 'package:keklist/domain/repositories/emotion/object/emotion_folder_object.dart';
 import 'package:keklist/domain/repositories/emotion/emotion_repository.dart';
 import 'package:keklist/domain/repositories/emotion/emotion_hive_repository.dart';
-import 'package:keklist/domain/repositories/emotion/emotion_folder_repository.dart';
-import 'package:keklist/domain/repositories/emotion/emotion_folder_hive_repository.dart';
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
 import 'package:keklist/domain/repositories/settings/settings_hive_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
@@ -63,10 +60,6 @@ final class MainContainer {
       (injector) => EmotionHiveRepository(box: Hive.box<EmotionObject>(HiveConstants.emotionBoxName)),
       isSingleton: true,
     );
-    injector.map<EmotionFolderRepository>(
-      (injector) => EmotionFolderHiveRepository(box: Hive.box<EmotionFolderObject>(HiveConstants.emotionFolderBoxName)),
-      isSingleton: true,
-    );
     injector.map<SettingsRepository>(
       (injector) => SettingsHiveRepository(box: Hive.box<SettingsObject>(HiveConstants.settingsBoxName)),
     );
@@ -112,7 +105,6 @@ final class MainContainer {
     injector.map<EmotionBloc>(
       (i) => EmotionBloc(
         emotionRepository: i.get<EmotionRepository>(),
-        folderRepository: i.get<EmotionFolderRepository>(),
         mindRepository: i.get<MindRepository>(),
       ),
       isSingleton: true,

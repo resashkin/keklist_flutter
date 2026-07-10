@@ -450,13 +450,15 @@
     "deletePermanently": "Trajno obriši",
     "newEmotion": "Nova emocija",
     "editEmotion": "Izmeni emociju",
-    "newFolder": "Nova fascikla",
-    "editFolder": "Izmeni fasciklu",
+    "addSubEmotion": "Dodaj pod-emociju",
     "emotionNameHint": "Naziv",
-    "folderNameHint": "Naziv fascikle",
+    "parentLabel": "Roditelj",
+    "selected": "Izabrano",
+    "emotionPickHint": "Dodirnite za označavanje · duže držite za dublje",
     "noEmotionsYet": "Još nema emocija",
     "noArchivedEmotions": "Nema arhiviranih emocija",
-    "noFolderOption": "Bez fascikle",
-    "deleteFolderWithContentsMessage": "Brisanje ove fascikle će takođe obrisati ili arhivirati emocije u njoj. Nastaviti?",
-    "deleteEmotionMessage": "Obrisati ovu emociju? Biće uklonjena iz svih misli koje je koriste."
+    "archiveEmotionMessage": "Arhivirati ovu emociju? Ostaje na mislima koje je koriste, ali se sakriva iz birača.",
+    "archiveEmotionSubtreeMessage": "Arhivirati ovu emociju i sve ugneždeno u njoj?",
+    "deleteEmotionMessage": "Obrisati ovu emociju? Biće uklonjena iz svih misli koje je koriste.",
+    "deleteEmotionSubtreeMessage": "Obrisati ovu emociju i sve ugneždeno u njoj? Ono što misli još koriste se umesto toga arhivira."
 }

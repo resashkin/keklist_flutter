@@ -187,13 +187,15 @@
     "deletePermanently": "Endgültig löschen",
     "newEmotion": "Neue Emotion",
     "editEmotion": "Emotion bearbeiten",
-    "newFolder": "Neuer Ordner",
-    "editFolder": "Ordner bearbeiten",
+    "addSubEmotion": "Unter-Emotion hinzufügen",
     "emotionNameHint": "Name",
-    "folderNameHint": "Ordnername",
+    "parentLabel": "Übergeordnet",
+    "selected": "Ausgewählt",
+    "emotionPickHint": "Tippen zum Markieren · lange drücken für mehr Tiefe",
     "noEmotionsYet": "Noch keine Emotionen",
     "noArchivedEmotions": "Keine archivierten Emotionen",
-    "noFolderOption": "Kein Ordner",
-    "deleteFolderWithContentsMessage": "Beim Löschen dieses Ordners werden auch die darin enthaltenen Emotionen gelöscht oder archiviert. Fortfahren?",
-    "deleteEmotionMessage": "Diese Emotion löschen? Sie wird aus allen Minds entfernt, die sie verwenden."
+    "archiveEmotionMessage": "Diese Emotion archivieren? Sie bleibt an Minds, die sie verwenden, wird aber aus der Auswahl ausgeblendet.",
+    "archiveEmotionSubtreeMessage": "Diese Emotion und alles darin Verschachtelte archivieren?",
+    "deleteEmotionMessage": "Diese Emotion löschen? Sie wird aus allen Minds entfernt, die sie verwenden.",
+    "deleteEmotionSubtreeMessage": "Diese Emotion und alles darin Verschachtelte löschen? Was noch von Minds verwendet wird, wird stattdessen archiviert."
 }

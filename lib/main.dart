@@ -23,7 +23,6 @@ import 'package:keklist/domain/repositories/settings/settings_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_hive_repository.dart';
 import 'package:keklist/domain/repositories/weather/object/weather_cache_object.dart';
 import 'package:keklist/domain/repositories/emotion/object/emotion_object.dart';
-import 'package:keklist/domain/repositories/emotion/object/emotion_folder_object.dart';
 import 'package:keklist/domain/repositories/emotion/emotion_hive_repository.dart';
 import 'package:keklist/domain/repositories/weather/weather_repository.dart';
 import 'package:keklist/domain/migrations/migration_runner.dart';
@@ -236,9 +235,6 @@ Future<void> _initHive(HiveAesCipher cipher) async {
   if (!Hive.isAdapterRegistered(EmotionObjectAdapter().typeId)) {
     Hive.registerAdapter<EmotionObject>(EmotionObjectAdapter());
   }
-  if (!Hive.isAdapterRegistered(EmotionFolderObjectAdapter().typeId)) {
-    Hive.registerAdapter<EmotionFolderObject>(EmotionFolderObjectAdapter());
-  }
 
   await Hive.initFlutter();
 
@@ -257,7 +253,6 @@ Future<void> _initHive(HiveAesCipher cipher) async {
 
   final Box<EmotionObject> emotionBox =
       await Hive.openBox<EmotionObject>(HiveConstants.emotionBoxName, encryptionCipher: cipher);
-  await Hive.openBox<EmotionFolderObject>(HiveConstants.emotionFolderBoxName, encryptionCipher: cipher);
 
   await _runMigrations(settingsBox, mindBox, emotionBox);
 }

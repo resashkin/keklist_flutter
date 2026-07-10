@@ -187,13 +187,15 @@
     "deletePermanently": "Трајно обриши",
     "newEmotion": "Нова емоција",
     "editEmotion": "Измени емоцију",
-    "newFolder": "Нова фасцикла",
-    "editFolder": "Измени фасциклу",
+    "addSubEmotion": "Додај под-емоцију",
     "emotionNameHint": "Назив",
-    "folderNameHint": "Назив фасцикле",
+    "parentLabel": "Родитељ",
+    "selected": "Изабрано",
+    "emotionPickHint": "Додирните за означавање · дуже држите за дубље",
     "noEmotionsYet": "Још нема емоција",
     "noArchivedEmotions": "Нема архивираних емоција",
-    "noFolderOption": "Без фасцикле",
-    "deleteFolderWithContentsMessage": "Брисање ове фасцикле ће такође обрисати или архивирати емоције у њој. Наставити?",
-    "deleteEmotionMessage": "Обрисати ову емоцију? Биће уклоњена из свих мисли које је користе."
+    "archiveEmotionMessage": "Архивирати ову емоцију? Остаје на мислима које је користе, али се сакрива из бирача.",
+    "archiveEmotionSubtreeMessage": "Архивирати ову емоцију и све угнеждено у њој?",
+    "deleteEmotionMessage": "Обрисати ову емоцију? Биће уклоњена из свих мисли које је користе.",
+    "deleteEmotionSubtreeMessage": "Обрисати ову емоцију и све угнеждено у њој? Оно што мисли још користе се уместо тога архивира."
 }

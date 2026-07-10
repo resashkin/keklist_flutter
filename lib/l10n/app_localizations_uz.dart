@@ -603,16 +603,20 @@ class AppLocalizationsUz extends AppLocalizations {
   String get editEmotion => 'Hissiyotni tahrirlash';
 
   @override
-  String get newFolder => 'Yangi papka';
-
-  @override
-  String get editFolder => 'Papkani tahrirlash';
+  String get addSubEmotion => 'Ost-hissiyot qo\'shish';
 
   @override
   String get emotionNameHint => 'Nomi';
 
   @override
-  String get folderNameHint => 'Papka nomi';
+  String get parentLabel => 'Ota';
+
+  @override
+  String get selected => 'Tanlangan';
+
+  @override
+  String get emotionPickHint =>
+      'Belgilash uchun bosing · chuqurlashish uchun bosib turing';
 
   @override
   String get noEmotionsYet => 'Hozircha hissiyotlar yo\'q';
@@ -621,13 +625,18 @@ class AppLocalizationsUz extends AppLocalizations {
   String get noArchivedEmotions => 'Arxivlangan hissiyotlar yo\'q';
 
   @override
-  String get noFolderOption => 'Papkasiz';
+  String get archiveEmotionMessage =>
+      'Bu hissiyot arxivlansinmi? U ishlatilgan maindlarda qoladi, lekin tanlash ro\'yxatidan yashiriladi.';
 
   @override
-  String get deleteFolderWithContentsMessage =>
-      'Bu papkani o\'chirish uning ichidagi hissiyotlarni ham o\'chiradi yoki arxivlaydi. Davom etasizmi?';
+  String get archiveEmotionSubtreeMessage =>
+      'Bu hissiyot va uning ichidagi hamma narsa arxivlansinmi?';
 
   @override
   String get deleteEmotionMessage =>
       'Bu hissiyotni o\'chirasizmi? U undan foydalanadigan barcha maindlardan olib tashlanadi.';
+
+  @override
+  String get deleteEmotionSubtreeMessage =>
+      'Bu hissiyot va uning ichidagi hamma narsa o\'chirilsinmi? Maindlarda hali ishlatilayotganlari o\'rniga arxivlanadi.';
 }

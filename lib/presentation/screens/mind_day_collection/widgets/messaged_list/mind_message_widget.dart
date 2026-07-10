@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:keklist/domain/services/entities/emotion.dart';
 import 'package:keklist/presentation/blocs/emotion_bloc/emotion_bloc.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
+import 'package:keklist/presentation/screens/emotions/widgets/emotion_chip.dart';
 import 'package:keklist/presentation/core/helpers/mind_utils.dart';
 import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/bulleted_list/mind_bullet_list_widget.dart';
@@ -134,16 +135,11 @@ final class _MindEmotionsRow extends StatelessWidget {
           alignment: WrapAlignment.center,
           children: [
             for (final emotion in emotions)
-              GestureDetector(
+              EmotionChip(
+                emojis: state.lineageEmojis(emotion),
+                label: emotion.title,
+                selected: true,
                 onTap: () => _remove(context, emotion.id),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.secondaryContainer,
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  child: Text('${emotion.emoji} ${emotion.title}'),
-                ),
               ),
           ],
         );

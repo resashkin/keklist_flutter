@@ -602,16 +602,20 @@ class AppLocalizationsKy extends AppLocalizations {
   String get editEmotion => 'Эмоцияны түзөтүү';
 
   @override
-  String get newFolder => 'Жаңы папка';
-
-  @override
-  String get editFolder => 'Папканы түзөтүү';
+  String get addSubEmotion => 'Ички эмоция кошуу';
 
   @override
   String get emotionNameHint => 'Аталышы';
 
   @override
-  String get folderNameHint => 'Папканын аталышы';
+  String get parentLabel => 'Ата-эне';
+
+  @override
+  String get selected => 'Тандалган';
+
+  @override
+  String get emotionPickHint =>
+      'Белгилөө үчүн басыңыз · тереңдөө үчүн кармап туруңуз';
 
   @override
   String get noEmotionsYet => 'Азырынча эмоциялар жок';
@@ -620,13 +624,18 @@ class AppLocalizationsKy extends AppLocalizations {
   String get noArchivedEmotions => 'Архивделген эмоциялар жок';
 
   @override
-  String get noFolderOption => 'Папкасыз';
+  String get archiveEmotionMessage =>
+      'Бул эмоцияны архивдейсизби? Ал колдонулган майндтарда калат, бирок тандоо тизмесинен жашырылат.';
 
   @override
-  String get deleteFolderWithContentsMessage =>
-      'Бул папканы өчүрүү анын ичиндеги эмоцияларды да өчүрөт же архивдейт. Улантасызбы?';
+  String get archiveEmotionSubtreeMessage =>
+      'Бул эмоцияны жана анын ичиндегинин баарын архивдейсизби?';
 
   @override
   String get deleteEmotionMessage =>
       'Бул эмоцияны өчүрөсүзбү? Ал аны колдонгон бардык майндтардан өчүрүлөт.';
+
+  @override
+  String get deleteEmotionSubtreeMessage =>
+      'Бул эмоцияны жана анын ичиндегинин баарын өчүрөсүзбү? Майндтарда дагы колдонулгандары архивделет.';
 }

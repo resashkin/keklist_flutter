@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:keklist/domain/services/entities/emotion.dart';
-import 'package:keklist/domain/services/entities/emotion_folder.dart';
 import 'package:keklist/presentation/blocs/emotion_bloc/emotion_bloc.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
@@ -8,18 +7,23 @@ import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/screens/mind_picker/mind_picker_screen.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-/// Create or edit a single [Emotion]: emoji (required), title (required) and an
-/// optional single folder. Dispatches to [EmotionBloc] and pops on save.
+/// Create or edit a single [Emotion]: emoji (required) and title (required).
+/// The tree position is fixed by [parentId] at creation (set by where the user
+/// tapped "add"); editing keeps the emotion's existing parent.
 final class EmotionEditorScreen extends StatefulWidget {
   final Emotion? initial;
-  final List<EmotionFolder> folders;
-  final String? initialFolderId;
+
+  /// Parent for a newly created emotion (`null` → top level). Ignored when editing.
+  final String? parentId;
+
+  /// Human label of the parent, shown as context when creating a child.
+  final String? parentLabel;
 
   const EmotionEditorScreen({
     super.key,
     this.initial,
-    required this.folders,
-    this.initialFolderId,
+    this.parentId,
+    this.parentLabel,
   });
 
   @override
@@ -29,7 +33,6 @@ final class EmotionEditorScreen extends StatefulWidget {
 class _EmotionEditorScreenState extends KekWidgetState<EmotionEditorScreen> {
   final TextEditingController _titleController = TextEditingController();
   late String _emoji = widget.initial?.emoji ?? '🙂';
-  late String? _folderId = widget.initial?.folderIds.firstOrNull ?? widget.initialFolderId;
 
   bool get _isEditing => widget.initial != null;
   bool get _canSave => _titleController.text.trim().isNotEmpty;
@@ -53,16 +56,10 @@ class _EmotionEditorScreenState extends KekWidgetState<EmotionEditorScreen> {
 
     if (_isEditing) {
       sendEventToBloc<EmotionBloc>(
-        EmotionUpdate(
-          emotion: widget.initial!.copyWith(
-            title: title,
-            emoji: _emoji,
-            folderIds: _folderId == null ? const [] : [_folderId!],
-          ),
-        ),
+        EmotionUpdate(emotion: widget.initial!.copyWith(title: title, emoji: _emoji)),
       );
     } else {
-      sendEventToBloc<EmotionBloc>(EmotionCreate(title: title, emoji: _emoji, folderId: _folderId));
+      sendEventToBloc<EmotionBloc>(EmotionCreate(title: title, emoji: _emoji, parentId: widget.parentId));
     }
     Navigator.of(context).pop();
   }
@@ -92,6 +89,15 @@ class _EmotionEditorScreenState extends KekWidgetState<EmotionEditorScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              if (!_isEditing && widget.parentLabel != null)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 12.0),
+                  child: Text(
+                    '${context.l10n.parentLabel}: ${widget.parentLabel}',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
+                  ),
+                ),
               Center(
                 child: GestureDetector(
                   onTap: _pickEmoji,
@@ -116,18 +122,6 @@ class _EmotionEditorScreenState extends KekWidgetState<EmotionEditorScreen> {
                   labelText: context.l10n.emotionNameHint,
                   border: const OutlineInputBorder(),
                 ),
-              ),
-              const SizedBox(height: 16.0),
-              DropdownButtonFormField<String?>(
-                initialValue: _folderId,
-                decoration: const InputDecoration(border: OutlineInputBorder()),
-                items: [
-                  DropdownMenuItem<String?>(value: null, child: Text(context.l10n.noFolderOption)),
-                  ...widget.folders.map(
-                    (folder) => DropdownMenuItem<String?>(value: folder.id, child: Text(folder.title)),
-                  ),
-                ],
-                onChanged: (value) => setState(() => _folderId = value),
               ),
             ],
           ),

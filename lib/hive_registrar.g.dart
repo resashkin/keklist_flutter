@@ -4,7 +4,6 @@
 
 import 'package:hive_ce/hive_ce.dart';
 import 'package:keklist/domain/repositories/debug_menu/object/debug_menu_object.dart';
-import 'package:keklist/domain/repositories/emotion/object/emotion_folder_object.dart';
 import 'package:keklist/domain/repositories/emotion/object/emotion_object.dart';
 import 'package:keklist/domain/repositories/mind/object/mind_object.dart';
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
@@ -13,7 +12,6 @@ import 'package:keklist/domain/repositories/weather/object/weather_cache_object.
 extension HiveRegistrar on HiveInterface {
   void registerAdapters() {
     registerAdapter(DebugMenuObjectAdapter());
-    registerAdapter(EmotionFolderObjectAdapter());
     registerAdapter(EmotionObjectAdapter());
     registerAdapter(MindObjectAdapter());
     registerAdapter(SettingsObjectAdapter());
@@ -24,7 +22,6 @@ extension HiveRegistrar on HiveInterface {
 extension IsolatedHiveRegistrar on IsolatedHiveInterface {
   void registerAdapters() {
     registerAdapter(DebugMenuObjectAdapter());
-    registerAdapter(EmotionFolderObjectAdapter());
     registerAdapter(EmotionObjectAdapter());
     registerAdapter(MindObjectAdapter());
     registerAdapter(SettingsObjectAdapter());

@@ -20,10 +20,10 @@ class EmotionObjectAdapter extends TypeAdapter<EmotionObject> {
       ..id = fields[0] as String
       ..title = fields[1] as String
       ..emoji = fields[2] as String
-      ..folderIds = fields[3] == null ? [] : (fields[3] as List).cast<String>()
       ..isArchived = fields[4] == null ? false : fields[4] as bool
       ..orderIndex = fields[5] == null ? 0 : (fields[5] as num).toInt()
-      ..creationDate = fields[6] as DateTime;
+      ..creationDate = fields[6] as DateTime
+      ..parentId = fields[7] as String?;
   }
 
   @override
@@ -36,14 +36,14 @@ class EmotionObjectAdapter extends TypeAdapter<EmotionObject> {
       ..write(obj.title)
       ..writeByte(2)
       ..write(obj.emoji)
-      ..writeByte(3)
-      ..write(obj.folderIds)
       ..writeByte(4)
       ..write(obj.isArchived)
       ..writeByte(5)
       ..write(obj.orderIndex)
       ..writeByte(6)
-      ..write(obj.creationDate);
+      ..write(obj.creationDate)
+      ..writeByte(7)
+      ..write(obj.parentId);
   }
 
   @override

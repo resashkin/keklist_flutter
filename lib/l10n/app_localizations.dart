@@ -1245,17 +1245,11 @@ abstract class AppLocalizations {
   /// **'Edit emotion'**
   String get editEmotion;
 
-  /// Title for the create-folder form
+  /// Action to add a child emotion under another emotion
   ///
   /// In en, this message translates to:
-  /// **'New folder'**
-  String get newFolder;
-
-  /// Title for the edit-folder form
-  ///
-  /// In en, this message translates to:
-  /// **'Edit folder'**
-  String get editFolder;
+  /// **'Add sub-emotion'**
+  String get addSubEmotion;
 
   /// Placeholder for the emotion title field
   ///
@@ -1263,11 +1257,23 @@ abstract class AppLocalizations {
   /// **'Name'**
   String get emotionNameHint;
 
-  /// Placeholder for the folder title field
+  /// Label showing the parent emotion when creating a child
   ///
   /// In en, this message translates to:
-  /// **'Folder name'**
-  String get folderNameHint;
+  /// **'Parent'**
+  String get parentLabel;
+
+  /// Section header listing the currently selected emotions
+  ///
+  /// In en, this message translates to:
+  /// **'Selected'**
+  String get selected;
+
+  /// Hint in the emotion marking sheet explaining tap vs long-press
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to tag · long-press to go deeper'**
+  String get emotionPickHint;
 
   /// Empty state for the emotions list
   ///
@@ -1281,23 +1287,29 @@ abstract class AppLocalizations {
   /// **'No archived emotions'**
   String get noArchivedEmotions;
 
-  /// Option to keep an emotion outside any folder
+  /// Confirmation when archiving a single emotion
   ///
   /// In en, this message translates to:
-  /// **'No folder'**
-  String get noFolderOption;
+  /// **'Archive this emotion? It stays on minds that use it but is hidden from the picker.'**
+  String get archiveEmotionMessage;
 
-  /// Confirmation when deleting a folder that contains emotions
+  /// Confirmation when archiving an emotion that has children
   ///
   /// In en, this message translates to:
-  /// **'Deleting this folder will also remove or archive the emotions inside it. Continue?'**
-  String get deleteFolderWithContentsMessage;
+  /// **'Archive this emotion and everything nested inside it?'**
+  String get archiveEmotionSubtreeMessage;
 
   /// Confirmation when permanently deleting an emotion
   ///
   /// In en, this message translates to:
   /// **'Delete this emotion? It will be removed from any minds using it.'**
   String get deleteEmotionMessage;
+
+  /// Confirmation when deleting an emotion that has children
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this emotion and everything nested inside it? Anything still used by minds is archived instead.'**
+  String get deleteEmotionSubtreeMessage;
 }
 
 class _AppLocalizationsDelegate

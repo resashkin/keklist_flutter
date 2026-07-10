@@ -3,126 +3,109 @@
 ## Overview
 
 Emotions let a user understand how they feel about a `Mind`. A user maintains their
-own library of **emotions** (title + emoji) which can optionally be grouped into
-flat (single-level) **folders**. Any mind can be tagged with multiple emotions.
+own library of **emotions** (title + emoji) organized as an **unlimited-depth tree**:
+any emotion can have a parent, so categories and specifics live in the same model
+(e.g. Joy → Serenity → Calm). Any node — root or nested — can be tagged on a mind,
+and a mind can carry multiple emotions.
 
 The feature ships with five default emotions seeded on first launch: 😠 Angry,
-😨 Fear, 😢 Sad, 😄 Joy, ❤️ Love (loose — no folder). They are ordinary editable
-data afterwards.
+😨 Fear, 😢 Sad, 😄 Joy, ❤️ Love (top-level). They are ordinary editable data
+afterwards; the user builds depth by adding sub-emotions.
+
+> History: an earlier iteration used single-level, title-only **folders**. Folders
+> were removed in favor of parent emotions. Existing emotions simply become
+> top-level (`parentId = null`); no folder migration is performed.
 
 ## Implementation Details
 
 ### 1. Domain Layer
 
-**Entities** (`lib/domain/services/entities/`)
-- `Emotion` — `id, title, emoji, folderIds (List<String>), isArchived, orderIndex, creationDate`.
-  Storage supports membership in many folders; the UI assigns a single one.
-- `EmotionFolder` — `id, title, orderIndex, creationDate` (title-only, no emoji).
+**Entity** (`lib/domain/services/entities/emotion.dart`)
+- `Emotion` — `id, title, emoji, parentId (String?), isArchived, orderIndex, creationDate`.
+  `parentId == null` → top-level root; otherwise a child of that emotion.
 
-**Hive objects** (`lib/domain/repositories/emotion/object/`)
-- `EmotionObject` — `@HiveType(typeId: 3)`
-- `EmotionFolderObject` — `@HiveType(typeId: 5)`
-- `MindObject` gained `@HiveField(8) emotionIds` (default `[]`), surfaced on `Mind`.
+**Hive object** (`lib/domain/repositories/emotion/object/emotion_object.dart`)
+- `EmotionObject` — `@HiveType(typeId: 3)`. `parentId` at `@HiveField(7)`. Field
+  index 3 (the old `folderIds`) is retired — new records omit it, old records
+  ignore it on read.
+- `MindObject` has `@HiveField(8) emotionIds` (default `[]`), surfaced on `Mind`.
 
-**Repositories** (`lib/domain/repositories/emotion/`)
-- `EmotionRepository` / `EmotionHiveRepository`
-- `EmotionFolderRepository` / `EmotionFolderHiveRepository`
-- Both are stream-backed (`BehaviorSubject` + box `watch()`), registered as DI
-  singletons, and use two new encrypted Hive boxes (`emotion_box`,
-  `emotion_folder_box`).
+**Repository** (`lib/domain/repositories/emotion/`)
+- `EmotionRepository` / `EmotionHiveRepository` — stream-backed
+  (`BehaviorSubject` + box `watch()`), DI singleton, one encrypted Hive box
+  (`emotion_box`).
 
 **Migration**
-- `MigrationV3SeedEmotions` (schema v3) seeds the five defaults, guarded by the
-  schema version **and** an empty-box check (so deleting all emotions does not
-  re-seed). `MigrationContext`/`MigrationRunner` now carry an `EmotionRepository`.
+- `MigrationV3SeedEmotions` (schema v3) seeds the five defaults as top-level
+  emotions (`parentId: null`), guarded by the schema version **and** an
+  empty-box check. `MigrationContext`/`MigrationRunner` carry an `EmotionRepository`.
 
 ### 2. BLoC Layer
 
 **`EmotionBloc`** (`lib/presentation/blocs/emotion_bloc/`)
-- State `EmotionsList { emotions, folders }` with helpers: `activeEmotions`,
-  `archivedEmotions`, `looseEmotions`, `emotionsInFolder(id)`.
-- Events: create / update / archive / unarchive / delete / reorder emotions;
-  create / update / delete / reorder folders.
-- **Archive vs delete**: deleting an emotion strips its id from every mind.
-  Deleting a folder cascades — emotions still referenced by minds are archived,
-  the rest are deleted.
-- Listens to both repository streams and re-emits.
+- State `EmotionsList { emotions }` with tree helpers: `byId`, `activeEmotions`,
+  `archivedEmotions`, `childrenOf(parentId)`, `rootEmotions`, `hasActiveChildren`,
+  `ancestorsOf`, and `lineageEmojis` (all ancestor emojis + own).
+- Events: `EmotionCreate {title, emoji, parentId}`, `EmotionUpdate`,
+  `EmotionArchive`, `EmotionUnarchive`, `EmotionDelete`, `EmotionReorder`.
+- **Cascade (recursive):** archiving a node archives its whole subtree. Deleting a
+  node walks its subtree — any node still referenced by a mind is archived instead
+  of hard-deleted; unreferenced nodes are deleted and stripped from minds.
+- `orderIndex` is per-sibling-group; `EmotionReorder` persists a new sibling order.
 
 **`MindBloc`**
-- New `MindSetEmotions { mindId, emotionIds }` event (used by the marking sheet —
-  persists immediately).
-- `MindCreate` gained an `emotionIds` parameter so new minds carry their tags.
+- `MindSetEmotions { mindId, emotionIds }` (used by the marking sheet — persists
+  immediately). `MindCreate` also accepts optional `emotionIds`.
 
 ### 3. UI Layer
 
-- **`EmotionMarkingSheet`** — grouped single-scroll bottom sheet (loose emotions +
-  folder sections), multi-select chips, "Setup emotions" button. Calls
-  `onSelectionChanged` on every toggle. Also surfaces selected-but-archived
-  emotions so they can be untagged.
-- **`EmotionsScreen`** — management screen: add menu (emotion/folder), overflow →
-  Archived. Per-section `ReorderableListView` for drag-and-drop ordering. Row
-  action shows **Archive** (if used by minds) or **Delete**.
-- **`EmotionArchivedScreen`** — restore or permanently delete archived emotions.
-- **`EmotionEditorScreen`** — create/edit an emotion (emoji picker + title +
-  optional single folder).
-- **`MindCreatorScreen`** — "+ Add emotions" link / chips rendered under the main
-  emoji; `onDone` now returns `(text, emoji, emotionIds)`.
-- **Action menu** — `AddEmotionsMenuActionModel` added to the mind action sheet in
-  `MindInfoScreen`; opens the marking sheet and saves immediately.
-- **Mind display** — `MindMessageWidget` (the per-mind bubble in `MindInfoScreen`)
-  renders the tagged emotions as chips directly under the main emoji, resolving
-  ids via `EmotionBloc` (archived included, unresolved ids skipped). This is the
-  live "real mind" surface.
-- **Mind card** — `MindWidget` also accepts an optional `emotionEmojis` list
-  (small scaled-down row at the bottom) for the icon-grid representation; emoji-
-  only widgets (pickers, suggestions) pass none. Note: the icon-grid list widget
-  is not currently mounted in the day view (which uses an emoji-row card), so the
-  primary visible display is `MindMessageWidget`.
+- **`EmotionChip`** (`screens/emotions/widgets/emotion_chip.dart`) — shared pill
+  that renders emojis **inline** (no clipping avatar — fixes the earlier cut-emoji
+  bug), an optional chevron to hint long-press-drills, and a selected style.
+- **`EmotionMarkingSheet`** — one tree level at a time. **Tap** a chip to toggle
+  the tag, **long-press** to drill into its children (chevron badge marks parents).
+  A "Selected" section shows tagged emotions with full-lineage chips; a breadcrumb
+  header + back button navigate up; "Setup emotions" opens management.
+- **`EmotionsScreen`** — expandable tree. Parents expand inline; per-node overflow
+  menu: add sub-emotion / edit / archive / delete. Each sibling group is a
+  non-scrolling `ReorderableListView` for drag-reorder; overflow → Archived.
+- **`EmotionArchivedScreen`** — restore or permanently delete archived emotions
+  (shown with lineage emojis).
+- **`EmotionEditorScreen`** — create/edit an emotion (emoji picker + title). Tree
+  position is fixed by `parentId` at creation.
+- **Mind display** — `MindMessageWidget` renders tagged emotions as full-lineage
+  `EmotionChip`s under the note; tapping a chip immediately untags it. Resolves ids
+  via `EmotionBloc` (archived included, unresolved ids skipped).
+- **Action menu** — "Edit emotions" (`AddEmotionsMenuActionModel`) in the per-mind
+  action sheets (`MindInfoScreen`, `MindOneEmojiCollectionScreen`,
+  `MindUniversalListScreen`), shown only for root minds (not comments).
 - **Settings** — "Emotions" row under *User Data* opens the management screen.
 
 ## How It Works
 
-1. On first launch, migration v3 seeds the five default emotions.
-2. The user tags a mind either while editing (`MindCreatorScreen` → marking sheet,
-   persisted on Save via `MindCreate`/edit) or from a mind's action menu
-   (marking sheet → `MindSetEmotions`, persisted immediately).
-3. Emotion/folder management happens in `EmotionsScreen`, reachable from Settings
-   or the marking sheet. Ordering is `orderIndex`-driven with drag-and-drop.
-4. Emotions referenced by minds are archived rather than deleted, staying
-   resolvable on those minds while hidden from pickers.
-
-## Updated Files
-
-**Domain**: `entities/emotion.dart`, `entities/emotion_folder.dart`,
-`repositories/emotion/*`, `repositories/mind/object/mind_object.dart`,
-`services/entities/mind.dart`, `hive_constants.dart`,
-`migrations/migration.dart`, `migrations/migration_runner.dart`,
-`migrations/migration_registry.dart`, `migrations/migrations/migration_v3_seed_emotions.dart`
-
-**DI / bootstrap**: `di/containers.dart`, `main.dart`
-
-**BLoC**: `blocs/emotion_bloc/*`, `blocs/mind_bloc/mind_event.dart`,
-`blocs/mind_bloc/mind_bloc.dart`
-
-**UI**: `screens/emotions/*`, `screens/mind_creator/mind_creator_screen.dart`,
-`screens/mind_day_collection/mind_day_collection_screen.dart`,
-`screens/mind_info/mind_info_screen.dart`, `screens/actions/action_model.dart`,
-`screens/settings/settings_screen.dart`
-
-**Localization**: 18 keys added to all 12 ARB files (default emotion names are
-plain data, not localized).
+1. On first launch, migration v3 seeds the five default top-level emotions.
+2. The user tags a mind from its action menu → "Edit emotions" (marking sheet →
+   `MindSetEmotions`, persisted immediately), or untags by tapping a chip on the mind.
+3. Tree management happens in `EmotionsScreen` (Settings or the marking sheet).
+   Ordering is `orderIndex`-driven per sibling group with drag-and-drop.
+4. Nodes referenced by minds are archived rather than deleted, staying resolvable
+   (with full lineage) on those minds while hidden from pickers.
 
 ## Testing
 
-- `fvm flutter test` — full suite green (migration tests updated for schema v3).
-- Manual: first launch seeds five emotions; tag a mind from the editor and from
-  the action menu; create/rename/reorder/archive/delete emotions and folders;
-  confirm archived emotions still show on tagged minds but not in the picker.
+- `fvm flutter test` — full suite green (migration-runner test builds `Emotion`
+  with `parentId`).
+- Manual: tag a mind, drill into a parent via long-press, reorder siblings,
+  archive/delete a parent (subtree cascades), confirm archived emotions still
+  render on tagged minds but not in the picker, and that chips show the full
+  ancestor-emoji lineage without clipping.
 
 ## Edge Cases & Considerations
 
-- `emotionIds` defaults to `[]` via Hive `defaultValue`, so existing minds need no
+- `emotionIds` defaults to `[]` via Hive `defaultValue`; existing minds need no
   data migration.
-- A single `orderIndex` orders an emotion within its one UI folder; per-folder
-  ordering would be needed only if multi-folder UI is later exposed.
-- Boxes are AES-encrypted like minds/settings (emotion titles are user content).
+- `copyWith` cannot reset `parentId` to null (standard nullable-copyWith limit);
+  parent is set once at creation. Cascade delete does not reparent (by design).
+- Lineage resolves through archived ancestors too, so a deep tagged emotion still
+  shows its full emoji chain even if an ancestor was archived.
+- The box is AES-encrypted like minds/settings (emotion titles are user content).

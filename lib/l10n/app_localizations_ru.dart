@@ -599,16 +599,20 @@ class AppLocalizationsRu extends AppLocalizations {
   String get editEmotion => 'Изменить эмоцию';
 
   @override
-  String get newFolder => 'Новая папка';
-
-  @override
-  String get editFolder => 'Изменить папку';
+  String get addSubEmotion => 'Добавить под-эмоцию';
 
   @override
   String get emotionNameHint => 'Название';
 
   @override
-  String get folderNameHint => 'Название папки';
+  String get parentLabel => 'Родитель';
+
+  @override
+  String get selected => 'Выбрано';
+
+  @override
+  String get emotionPickHint =>
+      'Нажмите, чтобы отметить · удерживайте, чтобы углубиться';
 
   @override
   String get noEmotionsYet => 'Пока нет эмоций';
@@ -617,13 +621,18 @@ class AppLocalizationsRu extends AppLocalizations {
   String get noArchivedEmotions => 'Нет архивных эмоций';
 
   @override
-  String get noFolderOption => 'Без папки';
+  String get archiveEmotionMessage =>
+      'Архивировать эту эмоцию? Она останется на миндах, где используется, но скроется из списка выбора.';
 
   @override
-  String get deleteFolderWithContentsMessage =>
-      'Удаление этой папки также удалит или архивирует эмоции внутри неё. Продолжить?';
+  String get archiveEmotionSubtreeMessage =>
+      'Архивировать эту эмоцию и всё вложенное в неё?';
 
   @override
   String get deleteEmotionMessage =>
       'Удалить эту эмоцию? Она будет удалена из всех минд, где используется.';
+
+  @override
+  String get deleteEmotionSubtreeMessage =>
+      'Удалить эту эмоцию и всё вложенное в неё? Всё, что ещё используется в миндах, будет архивировано.';
 }

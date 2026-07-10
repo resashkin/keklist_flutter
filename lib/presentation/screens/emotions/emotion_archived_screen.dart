@@ -40,7 +40,7 @@ final class EmotionArchivedScreen extends StatelessWidget {
             children: [
               for (final emotion in archived)
                 ListTile(
-                  leading: Text(emotion.emoji, style: const TextStyle(fontSize: 24)),
+                  leading: Text(state.lineageEmojis(emotion).join(' '), style: const TextStyle(fontSize: 20)),
                   title: Text(emotion.title),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,

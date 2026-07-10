@@ -600,16 +600,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editEmotion => 'Edit emotion';
 
   @override
-  String get newFolder => 'New folder';
-
-  @override
-  String get editFolder => 'Edit folder';
+  String get addSubEmotion => 'Add sub-emotion';
 
   @override
   String get emotionNameHint => 'Name';
 
   @override
-  String get folderNameHint => 'Folder name';
+  String get parentLabel => 'Parent';
+
+  @override
+  String get selected => 'Selected';
+
+  @override
+  String get emotionPickHint => 'Tap to tag · long-press to go deeper';
 
   @override
   String get noEmotionsYet => 'No emotions yet';
@@ -618,13 +621,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noArchivedEmotions => 'No archived emotions';
 
   @override
-  String get noFolderOption => 'No folder';
+  String get archiveEmotionMessage =>
+      'Archive this emotion? It stays on minds that use it but is hidden from the picker.';
 
   @override
-  String get deleteFolderWithContentsMessage =>
-      'Deleting this folder will also remove or archive the emotions inside it. Continue?';
+  String get archiveEmotionSubtreeMessage =>
+      'Archive this emotion and everything nested inside it?';
 
   @override
   String get deleteEmotionMessage =>
       'Delete this emotion? It will be removed from any minds using it.';
+
+  @override
+  String get deleteEmotionSubtreeMessage =>
+      'Delete this emotion and everything nested inside it? Anything still used by minds is archived instead.';
 }

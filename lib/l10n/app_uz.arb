@@ -450,13 +450,15 @@
     "deletePermanently": "Butunlay o'chirish",
     "newEmotion": "Yangi hissiyot",
     "editEmotion": "Hissiyotni tahrirlash",
-    "newFolder": "Yangi papka",
-    "editFolder": "Papkani tahrirlash",
+    "addSubEmotion": "Ost-hissiyot qo'shish",
     "emotionNameHint": "Nomi",
-    "folderNameHint": "Papka nomi",
+    "parentLabel": "Ota",
+    "selected": "Tanlangan",
+    "emotionPickHint": "Belgilash uchun bosing · chuqurlashish uchun bosib turing",
     "noEmotionsYet": "Hozircha hissiyotlar yo'q",
     "noArchivedEmotions": "Arxivlangan hissiyotlar yo'q",
-    "noFolderOption": "Papkasiz",
-    "deleteFolderWithContentsMessage": "Bu papkani o'chirish uning ichidagi hissiyotlarni ham o'chiradi yoki arxivlaydi. Davom etasizmi?",
-    "deleteEmotionMessage": "Bu hissiyotni o'chirasizmi? U undan foydalanadigan barcha maindlardan olib tashlanadi."
+    "archiveEmotionMessage": "Bu hissiyot arxivlansinmi? U ishlatilgan maindlarda qoladi, lekin tanlash ro'yxatidan yashiriladi.",
+    "archiveEmotionSubtreeMessage": "Bu hissiyot va uning ichidagi hamma narsa arxivlansinmi?",
+    "deleteEmotionMessage": "Bu hissiyotni o'chirasizmi? U undan foydalanadigan barcha maindlardan olib tashlanadi.",
+    "deleteEmotionSubtreeMessage": "Bu hissiyot va uning ichidagi hamma narsa o'chirilsinmi? Maindlarda hali ishlatilayotganlari o'rniga arxivlanadi."
 }

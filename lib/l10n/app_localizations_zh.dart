@@ -580,16 +580,19 @@ class AppLocalizationsZh extends AppLocalizations {
   String get editEmotion => '编辑情绪';
 
   @override
-  String get newFolder => '新建文件夹';
-
-  @override
-  String get editFolder => '编辑文件夹';
+  String get addSubEmotion => '添加子情绪';
 
   @override
   String get emotionNameHint => '名称';
 
   @override
-  String get folderNameHint => '文件夹名称';
+  String get parentLabel => '父级';
+
+  @override
+  String get selected => '已选择';
+
+  @override
+  String get emotionPickHint => '点按标记 · 长按进入下级';
 
   @override
   String get noEmotionsYet => '还没有情绪';
@@ -598,11 +601,14 @@ class AppLocalizationsZh extends AppLocalizations {
   String get noArchivedEmotions => '没有已归档的情绪';
 
   @override
-  String get noFolderOption => '无文件夹';
+  String get archiveEmotionMessage => '归档此情绪？使用它的 mind 会保留，但会从选择列表中隐藏。';
 
   @override
-  String get deleteFolderWithContentsMessage => '删除此文件夹也会删除或归档其中的情绪。是否继续？';
+  String get archiveEmotionSubtreeMessage => '归档此情绪及其内部的全部内容？';
 
   @override
   String get deleteEmotionMessage => '删除此情绪？它将从所有使用它的 mind 中移除。';
+
+  @override
+  String get deleteEmotionSubtreeMessage => '删除此情绪及其内部的全部内容？仍被 mind 使用的将改为归档。';
 }

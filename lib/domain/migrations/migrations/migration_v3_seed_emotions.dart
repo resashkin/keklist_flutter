@@ -44,7 +44,7 @@ class MigrationV3SeedEmotions extends Migration {
             id: uuid.v4(),
             title: _defaults[i].title,
             emoji: _defaults[i].emoji,
-            folderIds: const [],
+            parentId: null,
             isArchived: false,
             orderIndex: i,
             creationDate: now,
