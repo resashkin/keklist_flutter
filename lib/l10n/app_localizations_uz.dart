@@ -612,9 +612,6 @@ class AppLocalizationsUz extends AppLocalizations {
   String get parentLabel => 'Ota';
 
   @override
-  String get selected => 'Tanlangan';
-
-  @override
   String get emotionPickHint =>
       'Belgilash uchun bosing · chuqurlashish uchun bosib turing';
 

@@ -777,10 +777,6 @@
     "@parentLabel": {
         "description": "Label showing the parent emotion when creating a child"
     },
-    "selected": "Selected",
-    "@selected": {
-        "description": "Section header listing the currently selected emotions"
-    },
     "emotionPickHint": "Tap to tag · long-press to go deeper",
     "@emotionPickHint": {
         "description": "Hint in the emotion marking sheet explaining tap vs long-press"

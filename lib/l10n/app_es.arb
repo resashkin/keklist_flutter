@@ -453,7 +453,6 @@
     "addSubEmotion": "Añadir sub-emoción",
     "emotionNameHint": "Nombre",
     "parentLabel": "Padre",
-    "selected": "Seleccionadas",
     "emotionPickHint": "Toca para etiquetar · mantén pulsado para profundizar",
     "noEmotionsYet": "Aún no hay emociones",
     "noArchivedEmotions": "No hay emociones archivadas",

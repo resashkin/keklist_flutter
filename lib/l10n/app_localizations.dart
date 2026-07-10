@@ -1263,12 +1263,6 @@ abstract class AppLocalizations {
   /// **'Parent'**
   String get parentLabel;
 
-  /// Section header listing the currently selected emotions
-  ///
-  /// In en, this message translates to:
-  /// **'Selected'**
-  String get selected;
-
   /// Hint in the emotion marking sheet explaining tap vs long-press
   ///
   /// In en, this message translates to:

@@ -190,7 +190,6 @@
     "addSubEmotion": "サブ感情を追加",
     "emotionNameHint": "名前",
     "parentLabel": "親",
-    "selected": "選択済み",
     "emotionPickHint": "タップで付与 · 長押しで詳細へ",
     "noEmotionsYet": "感情がまだありません",
     "noArchivedEmotions": "アーカイブされた感情はありません",

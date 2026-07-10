@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:keklist/domain/services/entities/emotion.dart';
 import 'package:keklist/presentation/blocs/emotion_bloc/emotion_bloc.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
@@ -112,6 +113,7 @@ final class _MindEmotionsRow extends StatelessWidget {
   const _MindEmotionsRow({required this.mind});
 
   void _remove(BuildContext context, String emotionId) {
+    Haptics.vibrate(HapticsType.soft);
     context.read<MindBloc>().add(
           MindSetEmotions(
             mindId: mind.id,

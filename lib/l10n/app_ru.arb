@@ -190,7 +190,6 @@
     "addSubEmotion": "Добавить под-эмоцию",
     "emotionNameHint": "Название",
     "parentLabel": "Родитель",
-    "selected": "Выбрано",
     "emotionPickHint": "Нажмите, чтобы отметить · удерживайте, чтобы углубиться",
     "noEmotionsYet": "Пока нет эмоций",
     "noArchivedEmotions": "Нет архивных эмоций",

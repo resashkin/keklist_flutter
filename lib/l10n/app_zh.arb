@@ -190,7 +190,6 @@
     "addSubEmotion": "添加子情绪",
     "emotionNameHint": "名称",
     "parentLabel": "父级",
-    "selected": "已选择",
     "emotionPickHint": "点按标记 · 长按进入下级",
     "noEmotionsYet": "还没有情绪",
     "noArchivedEmotions": "没有已归档的情绪",

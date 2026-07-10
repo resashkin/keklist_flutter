@@ -610,9 +610,6 @@ class AppLocalizationsSr extends AppLocalizations {
   String get parentLabel => 'Родитељ';
 
   @override
-  String get selected => 'Изабрано';
-
-  @override
   String get emotionPickHint =>
       'Додирните за означавање · дуже држите за дубље';
 
@@ -1242,9 +1239,6 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
 
   @override
   String get parentLabel => 'Roditelj';
-
-  @override
-  String get selected => 'Izabrano';
 
   @override
   String get emotionPickHint =>

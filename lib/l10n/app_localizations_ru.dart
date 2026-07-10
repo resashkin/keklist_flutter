@@ -608,9 +608,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get parentLabel => 'Родитель';
 
   @override
-  String get selected => 'Выбрано';
-
-  @override
   String get emotionPickHint =>
       'Нажмите, чтобы отметить · удерживайте, чтобы углубиться';
 

@@ -609,9 +609,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get parentLabel => 'Parent';
 
   @override
-  String get selected => 'Selected';
-
-  @override
   String get emotionPickHint => 'Tap to tag · long-press to go deeper';
 
   @override

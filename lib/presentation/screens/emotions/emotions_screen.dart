@@ -1,6 +1,7 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:keklist/domain/services/entities/emotion.dart';
 import 'package:keklist/presentation/blocs/emotion_bloc/emotion_bloc.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
@@ -109,6 +110,7 @@ class _EmotionsScreenState extends State<EmotionsScreen> {
           final reordered = [...siblings];
           final moved = reordered.removeAt(oldIndex);
           reordered.insert(newIndex, moved);
+          Haptics.vibrate(HapticsType.light);
           context.read<EmotionBloc>().add(EmotionReorder(orderedEmotionIds: reordered.map((e) => e.id).toList()));
         },
         children: [

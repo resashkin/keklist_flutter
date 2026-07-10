@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
+import 'package:keklist/presentation/core/widgets/kek_bottom_sheet.dart';
 
 /// Result from password input bottom sheet
 class PasswordInputResult {
@@ -82,33 +83,19 @@ class _PasswordInputBottomSheetState extends State<PasswordInputBottomSheet> {
     final theme = Theme.of(context);
 
     return Container(
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-      ),
+      decoration: KekBottomSheetStyle.decoration(context),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Drag handle
-          Center(
-            child: Container(
-              margin: const EdgeInsets.only(top: 12, bottom: 8),
-              width: 32,
-              height: 4,
-              decoration: BoxDecoration(
-                color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.4),
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-          ),
+          KekBottomSheetStyle.handle(context),
 
           // Title
           Padding(
             padding: const EdgeInsets.fromLTRB(24, 8, 24, 0),
             child: Text(
               widget.title,
-              style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+              style: KekBottomSheetStyle.titleStyle(context),
               textAlign: TextAlign.center,
             ),
           ),

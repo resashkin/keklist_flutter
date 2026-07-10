@@ -592,9 +592,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get parentLabel => '親';
 
   @override
-  String get selected => '選択済み';
-
-  @override
   String get emotionPickHint => 'タップで付与 · 長押しで詳細へ';
 
   @override

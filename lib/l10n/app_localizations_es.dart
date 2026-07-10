@@ -614,9 +614,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get parentLabel => 'Padre';
 
   @override
-  String get selected => 'Seleccionadas';
-
-  @override
   String get emotionPickHint =>
       'Toca para etiquetar · mantén pulsado para profundizar';
 

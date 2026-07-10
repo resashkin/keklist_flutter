@@ -453,7 +453,6 @@
     "addSubEmotion": "Dodaj pod-emociju",
     "emotionNameHint": "Naziv",
     "parentLabel": "Roditelj",
-    "selected": "Izabrano",
     "emotionPickHint": "Dodirnite za označavanje · duže držite za dublje",
     "noEmotionsYet": "Još nema emocija",
     "noArchivedEmotions": "Nema arhiviranih emocija",

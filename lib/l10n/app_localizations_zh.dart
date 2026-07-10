@@ -589,9 +589,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get parentLabel => '父级';
 
   @override
-  String get selected => '已选择';
-
-  @override
   String get emotionPickHint => '点按标记 · 长按进入下级';
 
   @override

@@ -25,6 +25,19 @@ final class EmotionsList extends EmotionState {
 
   bool hasActiveChildren(String id) => activeEmotions.any((e) => e.parentId == id);
 
+  /// All descendant ids of [id] (any archive state), at any depth.
+  Set<String> descendantIdsOf(String id) {
+    final result = <String>{};
+    final queue = <String>[id];
+    while (queue.isNotEmpty) {
+      final parentId = queue.removeLast();
+      for (final child in emotions.where((e) => e.parentId == parentId)) {
+        if (result.add(child.id)) queue.add(child.id);
+      }
+    }
+    return result;
+  }
+
   /// Ancestors of [emotion] from root down to its direct parent (excludes itself).
   /// Resolves through archived nodes too so lineage still renders on tagged minds.
   List<Emotion> ancestorsOf(Emotion emotion) {

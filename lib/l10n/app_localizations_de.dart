@@ -616,9 +616,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get parentLabel => 'Übergeordnet';
 
   @override
-  String get selected => 'Ausgewählt';
-
-  @override
   String get emotionPickHint =>
       'Tippen zum Markieren · lange drücken für mehr Tiefe';
 

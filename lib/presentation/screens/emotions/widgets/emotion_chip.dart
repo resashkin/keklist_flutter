@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 
 /// A pill chip that renders one or more emojis followed by a label. Emojis are
 /// laid out inline as plain text (no circular avatar), which avoids the clipping
-/// that `FilterChip.avatar` caused for wide emojis. Optionally shows a chevron to
-/// hint that long-press drills into children.
+/// that `FilterChip.avatar` caused for wide emojis. Shows a chevron to hint that
+/// long-press drills into children, and a count badge when the chip's subtree
+/// holds selected emotions.
 final class EmotionChip extends StatelessWidget {
   final List<String> emojis;
   final String label;
   final bool selected;
   final bool hasChildren;
+
+  /// Number of this chip's descendants that are currently selected. When > 0 and
+  /// the chip itself isn't [selected], a count badge is shown to signal that a
+  /// selection lives deeper in its subtree.
+  final int selectedDescendantCount;
   final VoidCallback? onTap;
   final VoidCallback? onLongPress;
 
@@ -18,6 +24,7 @@ final class EmotionChip extends StatelessWidget {
     required this.label,
     this.selected = false,
     this.hasChildren = false,
+    this.selectedDescendantCount = 0,
     this.onTap,
     this.onLongPress,
   });
@@ -28,6 +35,13 @@ final class EmotionChip extends StatelessWidget {
     final Color background = selected ? scheme.secondaryContainer : scheme.surfaceContainerHighest;
     final Color foreground = selected ? scheme.onSecondaryContainer : scheme.onSurface;
 
+    // Constant border width across states so the chip never resizes when toggled.
+    // The accent border is reserved for a *directly* selected chip; the count
+    // badge shows whenever the subtree holds selections, even if the chip itself
+    // is also selected.
+    final Color borderColor = selected ? scheme.secondary : scheme.outlineVariant;
+    final bool showBadge = selectedDescendantCount > 0;
+
     return GestureDetector(
       onTap: onTap,
       onLongPress: onLongPress,
@@ -36,6 +50,7 @@ final class EmotionChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: background,
           borderRadius: BorderRadius.circular(20.0),
+          border: Border.all(color: borderColor, width: 1.5),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -47,8 +62,37 @@ final class EmotionChip extends StatelessWidget {
               const SizedBox(width: 4.0),
               Icon(Icons.chevron_right, size: 16.0, color: foreground.withValues(alpha: 0.6)),
             ],
+            if (showBadge) ...[
+              const SizedBox(width: 4.0),
+              _CountBadge(count: selectedDescendantCount),
+            ],
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _CountBadge extends StatelessWidget {
+  final int count;
+
+  const _CountBadge({required this.count});
+
+  @override
+  Widget build(BuildContext context) {
+    final ColorScheme scheme = Theme.of(context).colorScheme;
+    return Container(
+      constraints: const BoxConstraints(minWidth: 16.0),
+      height: 16.0,
+      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: scheme.secondary,
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: Text(
+        '$count',
+        style: TextStyle(color: scheme.onSecondary, fontSize: 11.0, fontWeight: FontWeight.w600, height: 1.0),
       ),
     );
   }

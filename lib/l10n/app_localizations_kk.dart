@@ -610,9 +610,6 @@ class AppLocalizationsKk extends AppLocalizations {
   String get parentLabel => 'Аталық';
 
   @override
-  String get selected => 'Таңдалғаны';
-
-  @override
   String get emotionPickHint =>
       'Белгілеу үшін түртіңіз · тереңдеу үшін басып тұрыңыз';
 

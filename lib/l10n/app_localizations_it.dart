@@ -613,9 +613,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get parentLabel => 'Genitore';
 
   @override
-  String get selected => 'Selezionate';
-
-  @override
   String get emotionPickHint =>
       'Tocca per assegnare · tieni premuto per approfondire';
 
