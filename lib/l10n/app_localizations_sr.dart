@@ -580,9 +580,6 @@ class AppLocalizationsSr extends AppLocalizations {
   String get editEmotions => 'Измени емоције';
 
   @override
-  String get setupEmotions => 'Подеси емоције';
-
-  @override
   String get archived => 'Архивирано';
 
   @override
@@ -601,13 +598,20 @@ class AppLocalizationsSr extends AppLocalizations {
   String get editEmotion => 'Измени емоцију';
 
   @override
-  String get addSubEmotion => 'Додај под-емоцију';
+  String get addEmotion => 'Додај емоцију';
 
   @override
   String get emotionNameHint => 'Назив';
 
   @override
-  String get parentLabel => 'Родитељ';
+  String get doneEditing => 'Готово';
+
+  @override
+  String get emotionEditHint => 'Додирните за преименовање · ✕ за уклањање';
+
+  @override
+  String get emotionInUseMessage =>
+      'Ова емоција се користи у неким мислима. Архивирајте је да остане тамо, или је обришите свуда.';
 
   @override
   String get emotionPickHint =>
@@ -620,20 +624,8 @@ class AppLocalizationsSr extends AppLocalizations {
   String get noArchivedEmotions => 'Нема архивираних емоција';
 
   @override
-  String get archiveEmotionMessage =>
-      'Архивирати ову емоцију? Остаје на мислима које је користе, али се сакрива из бирача.';
-
-  @override
-  String get archiveEmotionSubtreeMessage =>
-      'Архивирати ову емоцију и све угнеждено у њој?';
-
-  @override
   String get deleteEmotionMessage =>
       'Обрисати ову емоцију? Биће уклоњена из свих мисли које је користе.';
-
-  @override
-  String get deleteEmotionSubtreeMessage =>
-      'Обрисати ову емоцију и све угнеждено у њој? Оно што мисли још користе се уместо тога архивира.';
 }
 
 /// The translations for Serbian, using the Latin script (`sr_Latn`).
@@ -1211,9 +1203,6 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
   String get editEmotions => 'Izmeni emocije';
 
   @override
-  String get setupEmotions => 'Podesi emocije';
-
-  @override
   String get archived => 'Arhivirano';
 
   @override
@@ -1232,13 +1221,20 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
   String get editEmotion => 'Izmeni emociju';
 
   @override
-  String get addSubEmotion => 'Dodaj pod-emociju';
+  String get addEmotion => 'Dodaj emociju';
 
   @override
   String get emotionNameHint => 'Naziv';
 
   @override
-  String get parentLabel => 'Roditelj';
+  String get doneEditing => 'Gotovo';
+
+  @override
+  String get emotionEditHint => 'Dodirnite za preimenovanje · ✕ za uklanjanje';
+
+  @override
+  String get emotionInUseMessage =>
+      'Ova emocija se koristi u nekim mislima. Arhivirajte je da ostane tamo, ili je obrišite svuda.';
 
   @override
   String get emotionPickHint =>
@@ -1251,18 +1247,6 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
   String get noArchivedEmotions => 'Nema arhiviranih emocija';
 
   @override
-  String get archiveEmotionMessage =>
-      'Arhivirati ovu emociju? Ostaje na mislima koje je koriste, ali se sakriva iz birača.';
-
-  @override
-  String get archiveEmotionSubtreeMessage =>
-      'Arhivirati ovu emociju i sve ugneždeno u njoj?';
-
-  @override
   String get deleteEmotionMessage =>
       'Obrisati ovu emociju? Biće uklonjena iz svih misli koje je koriste.';
-
-  @override
-  String get deleteEmotionSubtreeMessage =>
-      'Obrisati ovu emociju i sve ugneždeno u njoj? Ono što misli još koriste se umesto toga arhivira.';
 }

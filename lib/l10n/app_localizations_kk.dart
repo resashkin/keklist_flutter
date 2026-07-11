@@ -580,9 +580,6 @@ class AppLocalizationsKk extends AppLocalizations {
   String get editEmotions => 'Эмоцияларды өңдеу';
 
   @override
-  String get setupEmotions => 'Эмоцияларды баптау';
-
-  @override
   String get archived => 'Мұрағат';
 
   @override
@@ -601,13 +598,20 @@ class AppLocalizationsKk extends AppLocalizations {
   String get editEmotion => 'Эмоцияны өңдеу';
 
   @override
-  String get addSubEmotion => 'Ішкі эмоция қосу';
+  String get addEmotion => 'Эмоция қосу';
 
   @override
   String get emotionNameHint => 'Атауы';
 
   @override
-  String get parentLabel => 'Аталық';
+  String get doneEditing => 'Дайын';
+
+  @override
+  String get emotionEditHint => 'Атын өзгерту үшін түртіңіз · ✕ жою үшін';
+
+  @override
+  String get emotionInUseMessage =>
+      'Бұл эмоция кейбір майндтарда қолданылады. Оны сонда сақтау үшін мұрағаттаңыз немесе барлық жерден жойыңыз.';
 
   @override
   String get emotionPickHint =>
@@ -620,18 +624,6 @@ class AppLocalizationsKk extends AppLocalizations {
   String get noArchivedEmotions => 'Мұрағатталған эмоциялар жоқ';
 
   @override
-  String get archiveEmotionMessage =>
-      'Бұл эмоцияны мұрағаттау керек пе? Ол пайдаланылатын майндтарда қалады, бірақ таңдау тізімінен жасырылады.';
-
-  @override
-  String get archiveEmotionSubtreeMessage =>
-      'Бұл эмоцияны және оның ішіндегінің бәрін мұрағаттау керек пе?';
-
-  @override
   String get deleteEmotionMessage =>
       'Бұл эмоцияны жою керек пе? Ол оны пайдаланатын барлық майндтардан жойылады.';
-
-  @override
-  String get deleteEmotionSubtreeMessage =>
-      'Бұл эмоцияны және оның ішіндегінің бәрін жою керек пе? Майндтарда әлі қолданылатындары мұрағатталады.';
 }

@@ -1203,12 +1203,6 @@ abstract class AppLocalizations {
   /// **'Edit emotions'**
   String get editEmotions;
 
-  /// Button that opens the emotions management screen
-  ///
-  /// In en, this message translates to:
-  /// **'Setup emotions'**
-  String get setupEmotions;
-
   /// Title for the archived emotions screen and section
   ///
   /// In en, this message translates to:
@@ -1245,11 +1239,11 @@ abstract class AppLocalizations {
   /// **'Edit emotion'**
   String get editEmotion;
 
-  /// Action to add a child emotion under another emotion
+  /// Link to create a new emotion at the current level
   ///
   /// In en, this message translates to:
-  /// **'Add sub-emotion'**
-  String get addSubEmotion;
+  /// **'Add emotion'**
+  String get addEmotion;
 
   /// Placeholder for the emotion title field
   ///
@@ -1257,11 +1251,23 @@ abstract class AppLocalizations {
   /// **'Name'**
   String get emotionNameHint;
 
-  /// Label showing the parent emotion when creating a child
+  /// Hint link that exits emotion edit mode
   ///
   /// In en, this message translates to:
-  /// **'Parent'**
-  String get parentLabel;
+  /// **'Done'**
+  String get doneEditing;
+
+  /// Hint shown while the emotion marking sheet is in edit mode
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to rename · ✕ to remove'**
+  String get emotionEditHint;
+
+  /// Message when removing an emotion used by minds, offering archive or delete
+  ///
+  /// In en, this message translates to:
+  /// **'This emotion is used by some minds. Archive it to keep it there, or delete it everywhere.'**
+  String get emotionInUseMessage;
 
   /// Hint in the emotion marking sheet explaining tap vs long-press
   ///
@@ -1281,29 +1287,11 @@ abstract class AppLocalizations {
   /// **'No archived emotions'**
   String get noArchivedEmotions;
 
-  /// Confirmation when archiving a single emotion
-  ///
-  /// In en, this message translates to:
-  /// **'Archive this emotion? It stays on minds that use it but is hidden from the picker.'**
-  String get archiveEmotionMessage;
-
-  /// Confirmation when archiving an emotion that has children
-  ///
-  /// In en, this message translates to:
-  /// **'Archive this emotion and everything nested inside it?'**
-  String get archiveEmotionSubtreeMessage;
-
   /// Confirmation when permanently deleting an emotion
   ///
   /// In en, this message translates to:
   /// **'Delete this emotion? It will be removed from any minds using it.'**
   String get deleteEmotionMessage;
-
-  /// Confirmation when deleting an emotion that has children
-  ///
-  /// In en, this message translates to:
-  /// **'Delete this emotion and everything nested inside it? Anything still used by minds is archived instead.'**
-  String get deleteEmotionSubtreeMessage;
 }
 
 class _AppLocalizationsDelegate

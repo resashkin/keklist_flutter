@@ -582,9 +582,6 @@ class AppLocalizationsUz extends AppLocalizations {
   String get editEmotions => 'Hissiyotlarni tahrirlash';
 
   @override
-  String get setupEmotions => 'Hissiyotlarni sozlash';
-
-  @override
   String get archived => 'Arxivlangan';
 
   @override
@@ -603,13 +600,21 @@ class AppLocalizationsUz extends AppLocalizations {
   String get editEmotion => 'Hissiyotni tahrirlash';
 
   @override
-  String get addSubEmotion => 'Ost-hissiyot qo\'shish';
+  String get addEmotion => 'Hissiyot qo\'shish';
 
   @override
   String get emotionNameHint => 'Nomi';
 
   @override
-  String get parentLabel => 'Ota';
+  String get doneEditing => 'Tayyor';
+
+  @override
+  String get emotionEditHint =>
+      'Nomini o\'zgartirish uchun bosing · ✕ o\'chirish uchun';
+
+  @override
+  String get emotionInUseMessage =>
+      'Bu hissiyot ba\'zi maindlarda ishlatiladi. Uni o\'sha yerda saqlash uchun arxivlang yoki hamma joydan o\'chiring.';
 
   @override
   String get emotionPickHint =>
@@ -622,18 +627,6 @@ class AppLocalizationsUz extends AppLocalizations {
   String get noArchivedEmotions => 'Arxivlangan hissiyotlar yo\'q';
 
   @override
-  String get archiveEmotionMessage =>
-      'Bu hissiyot arxivlansinmi? U ishlatilgan maindlarda qoladi, lekin tanlash ro\'yxatidan yashiriladi.';
-
-  @override
-  String get archiveEmotionSubtreeMessage =>
-      'Bu hissiyot va uning ichidagi hamma narsa arxivlansinmi?';
-
-  @override
   String get deleteEmotionMessage =>
       'Bu hissiyotni o\'chirasizmi? U undan foydalanadigan barcha maindlardan olib tashlanadi.';
-
-  @override
-  String get deleteEmotionSubtreeMessage =>
-      'Bu hissiyot va uning ichidagi hamma narsa o\'chirilsinmi? Maindlarda hali ishlatilayotganlari o\'rniga arxivlanadi.';
 }

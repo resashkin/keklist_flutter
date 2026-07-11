@@ -559,9 +559,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get editEmotions => '编辑情绪';
 
   @override
-  String get setupEmotions => '设置情绪';
-
-  @override
   String get archived => '已归档';
 
   @override
@@ -580,13 +577,19 @@ class AppLocalizationsZh extends AppLocalizations {
   String get editEmotion => '编辑情绪';
 
   @override
-  String get addSubEmotion => '添加子情绪';
+  String get addEmotion => '添加情绪';
 
   @override
   String get emotionNameHint => '名称';
 
   @override
-  String get parentLabel => '父级';
+  String get doneEditing => '完成';
+
+  @override
+  String get emotionEditHint => '点按重命名 · ✕ 删除';
+
+  @override
+  String get emotionInUseMessage => '此情绪已被一些 mind 使用。归档可将其保留在那里，或彻底删除。';
 
   @override
   String get emotionPickHint => '点按标记 · 长按进入下级';
@@ -598,14 +601,5 @@ class AppLocalizationsZh extends AppLocalizations {
   String get noArchivedEmotions => '没有已归档的情绪';
 
   @override
-  String get archiveEmotionMessage => '归档此情绪？使用它的 mind 会保留，但会从选择列表中隐藏。';
-
-  @override
-  String get archiveEmotionSubtreeMessage => '归档此情绪及其内部的全部内容？';
-
-  @override
   String get deleteEmotionMessage => '删除此情绪？它将从所有使用它的 mind 中移除。';
-
-  @override
-  String get deleteEmotionSubtreeMessage => '删除此情绪及其内部的全部内容？仍被 mind 使用的将改为归档。';
 }

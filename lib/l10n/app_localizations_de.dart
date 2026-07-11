@@ -586,9 +586,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get editEmotions => 'Emotionen bearbeiten';
 
   @override
-  String get setupEmotions => 'Emotionen einrichten';
-
-  @override
   String get archived => 'Archiviert';
 
   @override
@@ -607,13 +604,20 @@ class AppLocalizationsDe extends AppLocalizations {
   String get editEmotion => 'Emotion bearbeiten';
 
   @override
-  String get addSubEmotion => 'Unter-Emotion hinzufügen';
+  String get addEmotion => 'Emotion hinzufügen';
 
   @override
   String get emotionNameHint => 'Name';
 
   @override
-  String get parentLabel => 'Übergeordnet';
+  String get doneEditing => 'Fertig';
+
+  @override
+  String get emotionEditHint => 'Tippen zum Umbenennen · ✕ zum Entfernen';
+
+  @override
+  String get emotionInUseMessage =>
+      'Diese Emotion wird von einigen Minds verwendet. Archiviere sie, um sie dort zu behalten, oder lösche sie überall.';
 
   @override
   String get emotionPickHint =>
@@ -626,18 +630,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get noArchivedEmotions => 'Keine archivierten Emotionen';
 
   @override
-  String get archiveEmotionMessage =>
-      'Diese Emotion archivieren? Sie bleibt an Minds, die sie verwenden, wird aber aus der Auswahl ausgeblendet.';
-
-  @override
-  String get archiveEmotionSubtreeMessage =>
-      'Diese Emotion und alles darin Verschachtelte archivieren?';
-
-  @override
   String get deleteEmotionMessage =>
       'Diese Emotion löschen? Sie wird aus allen Minds entfernt, die sie verwenden.';
-
-  @override
-  String get deleteEmotionSubtreeMessage =>
-      'Diese Emotion und alles darin Verschachtelte löschen? Was noch von Minds verwendet wird, wird stattdessen archiviert.';
 }

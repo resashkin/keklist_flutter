@@ -579,9 +579,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editEmotions => 'Edit emotions';
 
   @override
-  String get setupEmotions => 'Setup emotions';
-
-  @override
   String get archived => 'Archived';
 
   @override
@@ -600,13 +597,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editEmotion => 'Edit emotion';
 
   @override
-  String get addSubEmotion => 'Add sub-emotion';
+  String get addEmotion => 'Add emotion';
 
   @override
   String get emotionNameHint => 'Name';
 
   @override
-  String get parentLabel => 'Parent';
+  String get doneEditing => 'Done';
+
+  @override
+  String get emotionEditHint => 'Tap to rename · ✕ to remove';
+
+  @override
+  String get emotionInUseMessage =>
+      'This emotion is used by some minds. Archive it to keep it there, or delete it everywhere.';
 
   @override
   String get emotionPickHint => 'Tap to tag · long-press to go deeper';
@@ -618,18 +622,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noArchivedEmotions => 'No archived emotions';
 
   @override
-  String get archiveEmotionMessage =>
-      'Archive this emotion? It stays on minds that use it but is hidden from the picker.';
-
-  @override
-  String get archiveEmotionSubtreeMessage =>
-      'Archive this emotion and everything nested inside it?';
-
-  @override
   String get deleteEmotionMessage =>
       'Delete this emotion? It will be removed from any minds using it.';
-
-  @override
-  String get deleteEmotionSubtreeMessage =>
-      'Delete this emotion and everything nested inside it? Anything still used by minds is archived instead.';
 }

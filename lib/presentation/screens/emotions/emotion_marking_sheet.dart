@@ -1,18 +1,24 @@
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
+import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 import 'package:keklist/domain/services/entities/emotion.dart';
 import 'package:keklist/presentation/blocs/emotion_bloc/emotion_bloc.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/core/widgets/kek_bottom_sheet.dart';
-import 'package:keklist/presentation/screens/emotions/emotions_screen.dart';
+import 'package:keklist/presentation/screens/emotions/emotion_archived_screen.dart';
+import 'package:keklist/presentation/screens/emotions/emotion_editor_sheet.dart';
 import 'package:keklist/presentation/screens/emotions/widgets/emotion_chip.dart';
 
-/// Bottom sheet for tagging a mind with emotions. Emotions form a tree; the sheet
-/// shows one level at a time. Tap a chip to toggle the tag, long-press to drill
-/// into its children. Opens at 33% of the screen and can be dragged up to ~95%
-/// via the handle; dragging below the minimum dismisses it. Calls
-/// [onSelectionChanged] on every toggle so the caller can persist immediately.
+/// Bottom sheet for tagging a mind with emotions, and — via its edit mode — the
+/// only place to manage the emotion tree. Shows one tree level at a time: tap a
+/// chip to toggle the tag, long-press to drill into children.
+///
+/// Edit mode (toggled from the footer hint) makes the chips jiggle, shows a
+/// corner cross to delete/archive, and lets you rename (tap) or add emotions.
+/// Opens at 50% of the screen and drags up to ~95%; dragging below the minimum
+/// dismisses it.
 final class EmotionMarkingSheet extends StatefulWidget {
   final Set<String> initialSelectedIds;
   final ValueChanged<Set<String>> onSelectionChanged;
@@ -54,6 +60,7 @@ class _EmotionMarkingSheetState extends State<EmotionMarkingSheet> {
   /// Navigation path of parent ids; `null` is the root level.
   final List<String?> _path = [null];
   bool _dismissing = false;
+  bool _editMode = false;
 
   String? get _currentParentId => _path.last;
 
@@ -82,9 +89,44 @@ class _EmotionMarkingSheetState extends State<EmotionMarkingSheet> {
     setState(() => _path.removeLast());
   }
 
-  void _openSetup() => Navigator.of(context).push(
-        MaterialPageRoute(builder: (_) => const EmotionsScreen()),
-      );
+  void _toggleEditMode() {
+    Haptics.vibrate(HapticsType.light);
+    setState(() => _editMode = !_editMode);
+  }
+
+  void _openArchived() =>
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const EmotionArchivedScreen()));
+
+  void _openEditor({Emotion? emotion}) =>
+      EmotionEditorSheet.show(context: context, initial: emotion, parentId: _currentParentId);
+
+  Future<void> _onCross(Emotion emotion, EmotionsList state) async {
+    Haptics.vibrate(HapticsType.soft);
+    final referenced = context.read<MindRepository>().values.expand((mind) => mind.emotionIds).toSet();
+    final subtree = {emotion.id, ...state.descendantIdsOf(emotion.id)};
+    final bool isUsed = subtree.any(referenced.contains);
+
+    if (!isUsed) {
+      context.read<EmotionBloc>().add(EmotionDelete(id: emotion.id));
+      return;
+    }
+
+    final action = await showModalActionSheet<String>(
+      context: context,
+      title: emotion.title,
+      message: context.l10n.emotionInUseMessage,
+      actions: [
+        SheetAction(key: 'archive', label: context.l10n.archive),
+        SheetAction(key: 'delete', label: context.l10n.delete, isDestructiveAction: true),
+      ],
+    );
+    if (!mounted) return;
+    if (action == 'archive') {
+      context.read<EmotionBloc>().add(EmotionArchive(id: emotion.id));
+    } else if (action == 'delete') {
+      context.read<EmotionBloc>().add(EmotionDelete(id: emotion.id));
+    }
+  }
 
   // --- Draggable handle → drives the sheet size ------------------------------
 
@@ -156,31 +198,35 @@ class _EmotionMarkingSheetState extends State<EmotionMarkingSheet> {
                             child: SingleChildScrollView(
                               controller: scrollController,
                               padding: const EdgeInsets.all(16.0),
-                              child: children.isEmpty
-                                  ? Padding(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  if (children.isEmpty)
+                                    Padding(
                                       padding: const EdgeInsets.symmetric(vertical: 24.0),
                                       child: Center(child: Text(context.l10n.noEmotionsYet)),
                                     )
-                                  : Wrap(
-                                      spacing: 8.0,
-                                      runSpacing: 8.0,
+                                  else
+                                    Wrap(
+                                      spacing: 10.0,
+                                      runSpacing: 10.0,
                                       alignment: WrapAlignment.center,
                                       children: [
-                                        for (final emotion in children)
-                                          EmotionChip(
-                                            emojis: [emotion.emoji],
-                                            label: emotion.title,
-                                            selected: _selected.contains(emotion.id),
-                                            hasChildren: state.hasActiveChildren(emotion.id),
-                                            selectedDescendantCount:
-                                                state.descendantIdsOf(emotion.id).where(_selected.contains).length,
-                                            onTap: () => _toggle(emotion),
-                                            onLongPress: state.hasActiveChildren(emotion.id)
-                                                ? () => _drillInto(emotion)
-                                                : null,
-                                          ),
+                                        for (int i = 0; i < children.length; i++)
+                                          _buildChip(context, state, children[i], i),
                                       ],
                                     ),
+                                  const SizedBox(height: 12.0),
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: TextButton.icon(
+                                      onPressed: () => _openEditor(),
+                                      icon: const Icon(Icons.add, size: 18),
+                                      label: Text(context.l10n.addEmotion),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -194,6 +240,27 @@ class _EmotionMarkingSheetState extends State<EmotionMarkingSheet> {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildChip(BuildContext context, EmotionsList state, Emotion emotion, int index) {
+    final bool hasChildren = state.hasActiveChildren(emotion.id);
+    final chip = EmotionChip(
+      emojis: [emotion.emoji],
+      label: emotion.title,
+      selected: !_editMode && _selected.contains(emotion.id),
+      hasChildren: hasChildren,
+      selectedDescendantCount: state.descendantIdsOf(emotion.id).where(_selected.contains).length,
+      onTap: _editMode ? () => _openEditor(emotion: emotion) : () => _toggle(emotion),
+      onLongPress: hasChildren ? () => _drillInto(emotion) : null,
+    );
+
+    if (!_editMode) return chip;
+
+    return _EditableChip(
+      index: index,
+      onCross: () => _onCross(emotion, state),
+      child: chip,
     );
   }
 
@@ -221,9 +288,7 @@ class _EmotionMarkingSheetState extends State<EmotionMarkingSheet> {
         children: [
           SizedBox(
             width: 48,
-            child: parent == null
-                ? null
-                : IconButton(icon: const Icon(Icons.arrow_back), onPressed: _goBack),
+            child: parent == null ? null : IconButton(icon: const Icon(Icons.arrow_back), onPressed: _goBack),
           ),
           Expanded(
             child: Text(
@@ -234,28 +299,100 @@ class _EmotionMarkingSheetState extends State<EmotionMarkingSheet> {
               style: KekBottomSheetStyle.titleStyle(context),
             ),
           ),
-          SizedBox(
-            width: 48,
-            child: IconButton(
-              icon: const Icon(Icons.tune),
-              tooltip: context.l10n.setupEmotions,
-              onPressed: _openSetup,
-            ),
-          ),
+          const SizedBox(width: 48),
         ],
       ),
     );
   }
 
   Widget _buildHint(BuildContext context) {
+    final hintStyle = Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor);
+    final linkStyle = Theme.of(context).textTheme.bodySmall?.copyWith(
+          color: Theme.of(context).colorScheme.primary,
+          fontWeight: FontWeight.w600,
+        );
+
+    WidgetSpan link(String text, VoidCallback onTap) => WidgetSpan(
+          alignment: PlaceholderAlignment.middle,
+          child: GestureDetector(onTap: onTap, child: Text(text, style: linkStyle)),
+        );
+
     return Container(
       width: double.infinity,
       padding: EdgeInsets.fromLTRB(16.0, 10.0, 16.0, 10.0 + MediaQuery.paddingOf(context).bottom),
-      child: Text(
-        context.l10n.emotionPickHint,
+      child: Text.rich(
+        TextSpan(
+          style: hintStyle,
+          children: [
+            TextSpan(text: '${_editMode ? context.l10n.emotionEditHint : context.l10n.emotionPickHint}   ·   '),
+            link(_editMode ? context.l10n.doneEditing : context.l10n.edit, _toggleEditMode),
+            const TextSpan(text: '   ·   '),
+            link(context.l10n.archived, _openArchived),
+          ],
+        ),
         textAlign: TextAlign.center,
-        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
       ),
+    );
+  }
+}
+
+/// Wraps a chip in edit mode: an iOS-style jiggle plus a corner cross badge.
+class _EditableChip extends StatefulWidget {
+  final int index;
+  final Widget child;
+  final VoidCallback onCross;
+
+  const _EditableChip({required this.index, required this.child, required this.onCross});
+
+  @override
+  State<_EditableChip> createState() => _EditableChipState();
+}
+
+class _EditableChipState extends State<_EditableChip> with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    // Slightly different periods per chip so they don't jiggle in lockstep.
+    duration: Duration(milliseconds: 110 + (widget.index % 4) * 15),
+  )..repeat(reverse: true);
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final ColorScheme scheme = Theme.of(context).colorScheme;
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            final double angle = (_controller.value * 2 - 1) * 0.035;
+            return Transform.rotate(angle: angle, child: child);
+          },
+          child: widget.child,
+        ),
+        Positioned(
+          top: -6,
+          left: -6,
+          child: GestureDetector(
+            onTap: widget.onCross,
+            child: Container(
+              width: 20,
+              height: 20,
+              decoration: BoxDecoration(
+                color: scheme.onSurfaceVariant,
+                shape: BoxShape.circle,
+                border: Border.all(color: scheme.surface, width: 1.5),
+              ),
+              child: Icon(Icons.close, size: 12, color: scheme.surface),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

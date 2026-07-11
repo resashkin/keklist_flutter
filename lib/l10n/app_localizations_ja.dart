@@ -562,9 +562,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get editEmotions => '感情を編集';
 
   @override
-  String get setupEmotions => '感情を設定';
-
-  @override
   String get archived => 'アーカイブ';
 
   @override
@@ -583,13 +580,20 @@ class AppLocalizationsJa extends AppLocalizations {
   String get editEmotion => '感情を編集';
 
   @override
-  String get addSubEmotion => 'サブ感情を追加';
+  String get addEmotion => '感情を追加';
 
   @override
   String get emotionNameHint => '名前';
 
   @override
-  String get parentLabel => '親';
+  String get doneEditing => '完了';
+
+  @override
+  String get emotionEditHint => 'タップで名前変更 · ✕ で削除';
+
+  @override
+  String get emotionInUseMessage =>
+      'この感情は一部のマインドで使われています。アーカイブしてそこに残すか、すべてから削除します。';
 
   @override
   String get emotionPickHint => 'タップで付与 · 長押しで詳細へ';
@@ -601,16 +605,5 @@ class AppLocalizationsJa extends AppLocalizations {
   String get noArchivedEmotions => 'アーカイブされた感情はありません';
 
   @override
-  String get archiveEmotionMessage =>
-      'この感情をアーカイブしますか？使用中のマインドには残りますが、選択リストからは非表示になります。';
-
-  @override
-  String get archiveEmotionSubtreeMessage => 'この感情と、その中のすべてをアーカイブしますか？';
-
-  @override
   String get deleteEmotionMessage => 'この感情を削除しますか？使用しているすべてのマインドから削除されます。';
-
-  @override
-  String get deleteEmotionSubtreeMessage =>
-      'この感情と、その中のすべてを削除しますか？マインドで使用中のものはアーカイブされます。';
 }

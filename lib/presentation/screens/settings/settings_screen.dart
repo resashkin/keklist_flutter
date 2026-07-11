@@ -22,7 +22,6 @@ import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/screens/actions/action_model.dart';
 import 'package:keklist/presentation/screens/actions/actions_screen.dart';
 import 'package:keklist/presentation/screens/debug_menu/debug_menu_screen.dart';
-import 'package:keklist/presentation/screens/emotions/emotions_screen.dart';
 import 'package:keklist/presentation/screens/language_picker/language_picker_screen.dart';
 import 'package:keklist/presentation/screens/settings/widgets/password_input_bottom_sheet.dart';
 import 'package:keklist/presentation/screens/tabs_settings/tabs_settings_screen.dart';
@@ -140,12 +139,6 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
                 title: Text(context.l10n.importData),
                 leading: const Icon(Icons.download, color: Colors.greenAccent),
                 onPressed: (BuildContext context) => _handleImport(),
-              ),
-              SettingsTile.navigation(
-                title: Text(context.l10n.emotions),
-                leading: const Icon(Icons.favorite, color: Colors.pinkAccent),
-                onPressed: (BuildContext context) =>
-                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const EmotionsScreen())),
               ),
             ],
           ),

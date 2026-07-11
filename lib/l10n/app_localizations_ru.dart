@@ -578,9 +578,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get editEmotions => 'Изменить эмоции';
 
   @override
-  String get setupEmotions => 'Настроить эмоции';
-
-  @override
   String get archived => 'Архив';
 
   @override
@@ -599,13 +596,21 @@ class AppLocalizationsRu extends AppLocalizations {
   String get editEmotion => 'Изменить эмоцию';
 
   @override
-  String get addSubEmotion => 'Добавить под-эмоцию';
+  String get addEmotion => 'Добавить эмоцию';
 
   @override
   String get emotionNameHint => 'Название';
 
   @override
-  String get parentLabel => 'Родитель';
+  String get doneEditing => 'Готово';
+
+  @override
+  String get emotionEditHint =>
+      'Нажмите, чтобы переименовать · ✕ чтобы удалить';
+
+  @override
+  String get emotionInUseMessage =>
+      'Эта эмоция используется в некоторых миндах. Архивируйте, чтобы сохранить её там, или удалите везде.';
 
   @override
   String get emotionPickHint =>
@@ -618,18 +623,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get noArchivedEmotions => 'Нет архивных эмоций';
 
   @override
-  String get archiveEmotionMessage =>
-      'Архивировать эту эмоцию? Она останется на миндах, где используется, но скроется из списка выбора.';
-
-  @override
-  String get archiveEmotionSubtreeMessage =>
-      'Архивировать эту эмоцию и всё вложенное в неё?';
-
-  @override
   String get deleteEmotionMessage =>
       'Удалить эту эмоцию? Она будет удалена из всех минд, где используется.';
-
-  @override
-  String get deleteEmotionSubtreeMessage =>
-      'Удалить эту эмоцию и всё вложенное в неё? Всё, что ещё используется в миндах, будет архивировано.';
 }
