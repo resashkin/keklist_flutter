@@ -73,4 +73,17 @@ final class EmotionReorder extends EmotionEvent {
   List<Object?> get props => [orderedEmotionIds];
 }
 
+/// Move an emotion under [newParentId] (`null` = top level) at [index] among that
+/// parent's children. Covers drag-reorder, nesting and promoting up a level.
+final class EmotionMove extends EmotionEvent {
+  final String id;
+  final String? newParentId;
+  final int index;
+
+  EmotionMove({required this.id, required this.newParentId, required this.index});
+
+  @override
+  List<Object?> get props => [id, newParentId, index];
+}
+
 final class EmotionInternalGetListFromCache extends EmotionEvent {}

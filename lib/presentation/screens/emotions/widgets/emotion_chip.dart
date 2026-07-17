@@ -18,6 +18,10 @@ final class EmotionChip extends StatelessWidget {
   final VoidCallback? onTap;
   final VoidCallback? onLongPress;
 
+  /// When provided, the children chevron becomes its own tap target (used in edit
+  /// mode so tapping the chevron drills in while tapping the body renames).
+  final VoidCallback? onChevronTap;
+
   const EmotionChip({
     super.key,
     required this.emojis,
@@ -27,6 +31,7 @@ final class EmotionChip extends StatelessWidget {
     this.selectedDescendantCount = 0,
     this.onTap,
     this.onLongPress,
+    this.onChevronTap,
   });
 
   @override
@@ -60,7 +65,14 @@ final class EmotionChip extends StatelessWidget {
             Text(label, style: TextStyle(color: foreground, fontSize: 14.0)),
             if (hasChildren) ...[
               const SizedBox(width: 4.0),
-              Icon(Icons.chevron_right, size: 16.0, color: foreground.withValues(alpha: 0.6)),
+              GestureDetector(
+                onTap: onChevronTap,
+                child: Icon(
+                  Icons.chevron_right,
+                  size: 18.0,
+                  color: onChevronTap != null ? scheme.primary : foreground.withValues(alpha: 0.6),
+                ),
+              ),
             ],
             if (showBadge) ...[
               const SizedBox(width: 4.0),

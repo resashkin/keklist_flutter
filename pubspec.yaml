@@ -3,7 +3,7 @@ description: write moments to see your life
 
 publish_to: "none"
 
-version: 5.0.0+138
+version: 5.0.0+140
 
 environment:
   sdk: ">=3.10.0"
@@ -78,7 +78,6 @@ dependencies:
   crypto: ^3.0.7
   shared_preferences: ^2.5.5
   native_liquid_glass: ^0.2.10
-
 dev_dependencies:
   flutter_lints: ^6.0.0
   flutter_test:

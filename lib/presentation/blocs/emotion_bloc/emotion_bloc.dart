@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:keklist/domain/repositories/emotion/emotion_repository.dart';
@@ -31,6 +32,7 @@ final class EmotionBloc extends Bloc<EmotionEvent, EmotionState> with DisposeBag
     on<EmotionUnarchive>(_unarchiveEmotion);
     on<EmotionDelete>(_deleteEmotion);
     on<EmotionReorder>(_reorderEmotions);
+    on<EmotionMove>(_moveEmotion);
 
     _emotionRepository.stream.listen((_) => add(EmotionInternalGetListFromCache())).disposed(by: this);
   }
@@ -144,6 +146,54 @@ final class EmotionBloc extends Bloc<EmotionEvent, EmotionState> with DisposeBag
     if (updated.isNotEmpty) {
       await _emotionRepository.updateEmotions(emotions: updated);
     }
+  }
+
+  /// Move [event.id] under [event.newParentId] (null = top level) at [event.index]
+  /// among that parent's children, reindexing the destination siblings. Handles
+  /// reorder (same parent), nest (parent is another emotion) and promote (parent
+  /// is an ancestor). Refuses to move an emotion into its own subtree.
+  Future<void> _moveEmotion(EmotionMove event, Emitter<EmotionState> emit) async {
+    final all = _emotionRepository.values.toList();
+    final moved = all.firstWhereOrNull((e) => e.id == event.id);
+    if (moved == null || event.newParentId == moved.id) return;
+
+    if (event.newParentId != null) {
+      final subtree = <String>{};
+      final queue = <String>[moved.id];
+      while (queue.isNotEmpty) {
+        final parentId = queue.removeLast();
+        for (final child in all.where((e) => e.parentId == parentId)) {
+          if (subtree.add(child.id)) queue.add(child.id);
+        }
+      }
+      if (subtree.contains(event.newParentId)) return; // would create a cycle
+    }
+
+    final siblings = all.where((e) => e.parentId == event.newParentId && e.id != moved.id).toList()
+      ..sort((a, b) => a.orderIndex.compareTo(b.orderIndex));
+    final int idx = event.index.clamp(0, siblings.length);
+    final ordered = [...siblings.sublist(0, idx), moved, ...siblings.sublist(idx)];
+
+    final updates = <Emotion>[];
+    for (int i = 0; i < ordered.length; i++) {
+      final s = ordered[i];
+      if (s.id == moved.id) {
+        if (s.parentId != event.newParentId || s.orderIndex != i) {
+          updates.add(Emotion(
+            id: s.id,
+            title: s.title,
+            emoji: s.emoji,
+            parentId: event.newParentId,
+            isArchived: s.isArchived,
+            orderIndex: i,
+            creationDate: s.creationDate,
+          ));
+        }
+      } else if (s.orderIndex != i) {
+        updates.add(s.copyWith(orderIndex: i));
+      }
+    }
+    if (updates.isNotEmpty) await _emotionRepository.updateEmotions(emotions: updates);
   }
 
   static final Emotion _sentinel = Emotion(

@@ -62,6 +62,11 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
   final List<Mind> _filteredMinds = [];
   DebugMenuDataState? _debugMenuState;
 
+  final ScrollController _scrollController = ScrollController();
+  final Set<String> _knownMindIds = {};
+  String? _pendingScrollMindId;
+  final GlobalKey _pendingScrollItemKey = GlobalKey();
+
   bool get _isSingleDay => _filteredMinds.map((m) => m.dayIndex).toSet().length <= 1;
 
   bool get _showsDateTitle =>
@@ -93,6 +98,7 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
 
     _allMinds.addAll(widget.allMinds);
     _recomputeFiltered();
+    _knownMindIds.addAll(_filteredMinds.map((mind) => mind.id));
 
     subscribeToBloc<MindBloc>(
       onNewState: (state) async {
@@ -102,7 +108,11 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
               ..clear()
               ..addAll(state.values);
             _recomputeFiltered();
+            _detectCreatedMind();
           });
+          if (_pendingScrollMindId != null) {
+            _scrollToPendingMind(attemptsLeft: 8);
+          }
         }
       },
     )?.disposed(by: this);
@@ -115,6 +125,73 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
       },
     )?.disposed(by: this);
     sendEventToBloc<DebugMenuBloc>(DebugMenuGet());
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  // A mind whose id was never in the filtered list before is a freshly created
+  // (or moved-in) one — MindBloc only emits a generic MindList, so an id diff
+  // is the only way to tell creation apart from edit/delete.
+  void _detectCreatedMind() {
+    final List<Mind> newMinds = _filteredMinds.where((mind) => !_knownMindIds.contains(mind.id)).toList();
+    final bool hadMinds = _knownMindIds.isNotEmpty;
+    _knownMindIds
+      ..clear()
+      ..addAll(_filteredMinds.map((mind) => mind.id));
+    if (!hadMinds || newMinds.isEmpty) return;
+    _pendingScrollMindId = newMinds.last.id;
+  }
+
+  // Item extents are estimates until rows are built, so a single animateTo can
+  // undershoot: step toward the target each frame until the pending row exists,
+  // then let ensureVisible finish precisely. maxScrollExtent (not the row's own
+  // bottom) is the target for the last row so it clears the floating button.
+  void _scrollToPendingMind({required int attemptsLeft}) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final String? mindId = _pendingScrollMindId;
+      if (!mounted || mindId == null || !_scrollController.hasClients) {
+        _pendingScrollMindId = null;
+        return;
+      }
+      final int index = _filteredMinds.indexWhere((mind) => mind.id == mindId);
+      if (index == -1 || attemptsLeft <= 0) {
+        _pendingScrollMindId = null;
+        return;
+      }
+
+      final bool isLast = index == _filteredMinds.length - 1;
+      final BuildContext? itemContext = _pendingScrollItemKey.currentContext;
+      if (!isLast && itemContext != null) {
+        _pendingScrollMindId = null;
+        Scrollable.ensureVisible(
+          itemContext,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+          alignment: 0.5,
+        );
+        return;
+      }
+
+      final ScrollPosition position = _scrollController.position;
+      final double target = isLast
+          ? position.maxScrollExtent
+          : (position.maxScrollExtent * (index + 1) / _filteredMinds.length).clamp(0.0, position.maxScrollExtent);
+      await _scrollController.animateTo(
+        target,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+      if (!mounted || !_scrollController.hasClients) return;
+      if (isLast && _scrollController.offset >= _scrollController.position.maxScrollExtent) {
+        _pendingScrollMindId = null;
+        return;
+      }
+      _scrollToPendingMind(attemptsLeft: attemptsLeft - 1);
+    });
   }
 
   void _recomputeFiltered() {
@@ -155,7 +232,9 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
           child: MindCollectionEmptyStateWidget.noMinds(context: context, text: widget.emptyStateMessage),
         ),
         trueChild: Scrollbar(
+          controller: _scrollController,
           child: ListView.builder(
+            controller: _scrollController,
             // Clear the floating "Write" button so the last mind can scroll above it.
             padding: EdgeInsets.only(bottom: widget.onCreate == null ? 0.0 : 96.0 + MediaQuery.paddingOf(context).bottom),
             itemBuilder: (context, index) {
@@ -167,6 +246,7 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
               );
               final Mind mind = _filteredMinds[index];
               return Padding(
+                key: mind.id == _pendingScrollMindId ? _pendingScrollItemKey : null,
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
