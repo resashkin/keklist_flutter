@@ -64,7 +64,16 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
       onNewState: (state) {
         final bool next = _readUseLiquidGlass(state);
         if (next != _useLiquidGlass) {
-          setState(() => _useLiquidGlass = next);
+          setState(() {
+            _useLiquidGlass = next;
+            // Rebuild the cached body children so screens that depend on the
+            // theme (e.g. the Today tab's `fabBottomOffset`) pick up the new
+            // value instead of keeping their build-time offset.
+            final Iterable<Widget> bodyWidgets = _tabTypes.map(_bodyWidgetByType);
+            _bodyWidgets
+              ..clear()
+              ..addAll(bodyWidgets);
+          });
         }
       },
     )?.disposed(by: this);
@@ -74,8 +83,8 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
     if (state is! DebugMenuDataState) return _useLiquidGlass;
     return state.debugMenuItems
         .firstWhere(
-          (item) => item.type == DebugMenuType.useLiquidGlass,
-          orElse: () => DebugMenuData(type: DebugMenuType.useLiquidGlass, value: true),
+          (item) => item.type == DebugMenuType.uiTheme,
+          orElse: () => DebugMenuData(type: DebugMenuType.uiTheme, value: true),
         )
         .value;
   }
@@ -129,7 +138,11 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
         return MindDayCollectionScreen(
           key: _todayKey,
           initialDayIndex: DateUtils.getTodayIndex(),
-          fabBottomOffset: kBottomNavigationBarHeight + 48.0,
+          // Only lift the FAB above the translucent Liquid Glass nav bar, which
+          // overlaps the body via `extendBody`. In Material mode the solid nav
+          // bar already reserves its space, so the extra offset would leave a
+          // strange gap under the FAB.
+          fabBottomOffset: _useLiquidGlass ? kBottomNavigationBarHeight + 48.0 : 0.0,
         );
       case TabType.debugMenu:
         return const SizedBox.shrink();

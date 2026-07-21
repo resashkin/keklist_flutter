@@ -30,6 +30,7 @@ import 'package:keklist/presentation/core/helpers/mind_utils.dart';
 import 'package:keklist/presentation/core/helpers/date_utils.dart';
 import 'package:keklist/presentation/screens/mind_info/mind_info_screen.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
+import 'package:keklist/presentation/core/widgets/kek_floating_button.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/domain/services/entities/mind_note_content.dart';
 import 'package:keklist/domain/repositories/weather/weather_repository.dart';
@@ -236,11 +237,11 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
           ? null
           : Padding(
               padding: EdgeInsets.only(bottom: widget.fabBottomOffset),
-              child: FloatingActionButton.extended(
+              child: KekFloatingButton(
                 onPressed: () => goToToday(),
-                icon: Icon(dayIndex < DateUtils.getTodayIndex() ? Icons.arrow_downward : Icons.arrow_upward),
-                label: const Text('To now', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500)),
-                enableFeedback: true,
+                label: 'To now',
+                fallbackIcon: dayIndex < DateUtils.getTodayIndex() ? Icons.arrow_downward : Icons.arrow_upward,
+                sfSymbol: dayIndex < DateUtils.getTodayIndex() ? 'arrow.down' : 'arrow.up',
               ),
             ),
       body: OverscrollListener(

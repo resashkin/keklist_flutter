@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -39,7 +40,7 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
   }
 
   bool _isVisibleOnThisPlatform(DebugMenuType type) {
-    if (type == DebugMenuType.useLiquidGlass) {
+    if (type == DebugMenuType.uiTheme) {
       return !kIsWeb && Platform.isIOS;
     }
     return true;
@@ -56,6 +57,9 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
             SettingsSection(
               title: const Text('Feature Flags'),
               tiles: visibleItems.map((debugMenuItem) {
+                if (debugMenuItem.type == DebugMenuType.uiTheme) {
+                  return _uiThemeTile(debugMenuItem);
+                }
                 return SettingsTile.switchTile(
                   title: Text(_getDebugMenuItemTitle(debugMenuItem.type)),
                   description: Text(_getDebugMenuItemDescription(debugMenuItem.type)),
@@ -154,12 +158,32 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
     );
   }
 
+  SettingsTile _uiThemeTile(DebugMenuData debugMenuItem) {
+    return SettingsTile(
+      title: Text(_getDebugMenuItemTitle(debugMenuItem.type)),
+      description: Text(_getDebugMenuItemDescription(debugMenuItem.type)),
+      trailing: CupertinoSlidingSegmentedControl<bool>(
+        groupValue: debugMenuItem.value,
+        children: const {
+          false: Padding(padding: EdgeInsets.symmetric(horizontal: 8.0), child: Text('Material')),
+          true: Padding(padding: EdgeInsets.symmetric(horizontal: 8.0), child: Text('Liquid Glass')),
+        },
+        onValueChanged: (bool? value) {
+          if (value == null) return;
+          sendEventToBloc<DebugMenuBloc>(
+            DebugMenuUpdate(flagType: DebugMenuType.uiTheme, value: value),
+          );
+        },
+      ),
+    );
+  }
+
   String _getDebugMenuItemTitle(DebugMenuType type) => switch (type) {
         DebugMenuType.translation => 'Translate Content',
         DebugMenuType.sensitiveContent => 'Sensitive Content',
         DebugMenuType.simulatePro => 'Simulate Pro Subscription',
         DebugMenuType.useProductionRevenueCat => 'Use Production RevenueCat',
-        DebugMenuType.useLiquidGlass => 'Liquid Glass Tab Bar (iOS)',
+        DebugMenuType.uiTheme => 'UI Theme (iOS)',
         DebugMenuType.enableBlocLogs => 'Enable BLoC Logs',
       };
 
@@ -172,8 +196,8 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
           'Forces isPro=true in MembershipBloc, bypassing RevenueCat. Password required to enable.',
         DebugMenuType.useProductionRevenueCat =>
           'Use production RevenueCat API keys instead of test keys. Restart required to take effect.',
-        DebugMenuType.useLiquidGlass =>
-          'Use the native UITabBar via native_liquid_glass on iOS. Liquid Glass effect requires iOS 26+; older iOS falls back to the system tab bar style.',
+        DebugMenuType.uiTheme =>
+          'Material or native Liquid Glass for the tab bar and floating buttons. Liquid Glass requires iOS 26+; older iOS falls back to Material/system styles.',
         DebugMenuType.enableBlocLogs =>
           'Master switch for BLoC console logs (events, transitions, errors, lifecycle). Configure verbosity and per-BLoC silencing in BLoC Log Settings.',
       };

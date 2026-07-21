@@ -75,8 +75,8 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
     if (state is! DebugMenuDataState) return _useLiquidGlass;
     return state.debugMenuItems
         .firstWhere(
-          (item) => item.type == DebugMenuType.useLiquidGlass,
-          orElse: () => DebugMenuData(type: DebugMenuType.useLiquidGlass, value: true),
+          (item) => item.type == DebugMenuType.uiTheme,
+          orElse: () => DebugMenuData(type: DebugMenuType.uiTheme, value: true),
         )
         .value;
   }

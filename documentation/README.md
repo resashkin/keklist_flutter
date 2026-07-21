@@ -14,6 +14,11 @@ Each document provides:
 
 ## Available Documentation
 
+### Conventions
+
+- **[CODE_STYLE.md](./CODE_STYLE.md)**
+  Source of truth for code style: one-line comments only, self-documenting code, and moving complex descriptions into this folder.
+
 ### Features
 
 - **[LAZY_ONBOARDING_IMPLEMENTATION.md](./LAZY_ONBOARDING_IMPLEMENTATION.md)**

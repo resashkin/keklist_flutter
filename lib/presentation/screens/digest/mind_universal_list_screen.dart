@@ -16,6 +16,7 @@ import 'package:keklist/presentation/core/helpers/date_utils.dart';
 import 'package:keklist/presentation/core/helpers/mind_utils.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
+import 'package:keklist/presentation/core/widgets/kek_floating_button.dart';
 import 'package:keklist/presentation/screens/actions/action_model.dart';
 import 'package:keklist/presentation/screens/emotions/emotion_marking_sheet.dart';
 import 'package:keklist/presentation/screens/actions/actions_screen.dart';
@@ -217,14 +218,11 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: widget.onCreate == null
           ? null
-          : FloatingActionButton.extended(
+          : KekFloatingButton(
               onPressed: widget.onCreate,
-              icon: Icon(widget.createButtonIcon ?? Icons.add),
-              label: Text(
-                widget.createButtonLabel ?? '',
-                style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
-              ),
-              enableFeedback: true,
+              label: widget.createButtonLabel ?? '',
+              fallbackIcon: widget.createButtonIcon ?? Icons.add,
+              sfSymbol: 'plus',
             ),
       body: BoolWidget(
         condition: _filteredMinds.isNotEmpty,
