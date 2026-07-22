@@ -18,6 +18,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get appearance => 'Внешний вид';
 
   @override
+  String get interfaceStyle => 'Стиль интерфейса';
+
+  @override
   String get exportToCsv => 'Экспорт в CSV';
 
   @override

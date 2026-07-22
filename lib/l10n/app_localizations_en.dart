@@ -18,6 +18,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appearance => 'Appearance';
 
   @override
+  String get interfaceStyle => 'Interface Style';
+
+  @override
   String get exportToCsv => 'Export to CSV';
 
   @override

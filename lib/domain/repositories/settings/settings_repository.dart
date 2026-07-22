@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:keklist/domain/repositories/settings/keklist_interface_style.dart';
 import 'package:keklist/domain/repositories/settings/keklist_theme_mode.dart';
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
 import 'package:keklist/domain/services/language_manager.dart';
@@ -11,6 +12,7 @@ abstract class SettingsRepository {
   FutureOr<void> updateUserName(String string);
   FutureOr<void> updateSettings(KeklistSettings settings);
   FutureOr<void> updateThemePreference(KeklistThemeMode themeMode);
+  FutureOr<void> updateInterfaceStyle(KeklistInterfaceStyle style);
   FutureOr<void> updateMindContentVisibility(bool isVisible);
   FutureOr<void> updateShouldShowTitles(bool shouldShowTitles);
   FutureOr<void> updatePreviousAppVersion(String? previousAppVersion);
@@ -24,6 +26,7 @@ final class KeklistSettings {
   final bool isMindContentVisible;
   final String? previousAppVersion;
   final KeklistThemeMode themePreference;
+  final KeklistInterfaceStyle interfaceStyle;
   final bool shouldShowTitles;
   final String? userName;
   final SupportedLanguage language;
@@ -42,6 +45,7 @@ final class KeklistSettings {
     required this.isMindContentVisible,
     required this.previousAppVersion,
     required this.themePreference,
+    required this.interfaceStyle,
     required this.shouldShowTitles,
     required this.userName,
     required this.language,
@@ -62,6 +66,7 @@ final class KeklistSettings {
     ..previousAppVersion = previousAppVersion
     ..isDarkMode = themePreference == KeklistThemeMode.dark
     ..themePreferenceIndex = themePreference.index
+    ..interfaceStyleIndex = interfaceStyle.index
     ..shouldShowTitles = shouldShowTitles
     ..userName = userName
     ..language = language.code
@@ -80,6 +85,7 @@ final class KeklistSettings {
         isMindContentVisible: true,
         previousAppVersion: null,
         themePreference: KeklistThemeMode.system,
+        interfaceStyle: KeklistInterfaceStyle.liquidGlass,
         shouldShowTitles: true,
         userName: null,
         language: _detectDeviceLocale(),

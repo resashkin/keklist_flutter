@@ -8,6 +8,7 @@
         "description": "Foydalanuvchi ma'lumotlari bo'limi sarlavhasi"
     },
     "appearance": "Ko'rinish",
+    "interfaceStyle": "Interfeys uslubi",
     "@appearance": {
         "description": "Ko'rinish bo'limi sarlavhasi"
     },

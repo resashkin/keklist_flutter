@@ -18,6 +18,9 @@ class AppLocalizationsKk extends AppLocalizations {
   String get appearance => 'Көрініс';
 
   @override
+  String get interfaceStyle => 'Интерфейс стилі';
+
+  @override
   String get exportToCsv => 'CSV-ға экспорттау';
 
   @override

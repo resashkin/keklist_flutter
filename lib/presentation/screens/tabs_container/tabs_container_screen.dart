@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart' hide DateUtils;
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
 import 'package:keklist/domain/repositories/tabs/models/tabs_settings.dart';
-import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
+import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bloc.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_event.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_state.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/helpers/date_utils.dart';
+import 'package:keklist/presentation/core/helpers/interface_style_utils.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/presentation/core/widgets/bottom_navigation_bar.dart';
 import 'package:keklist/presentation/screens/insights/insights_screen.dart';
@@ -59,16 +59,14 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
     )?.disposed(by: this);
     sendEventToBloc<TabsContainerBloc>(TabsContainerGetCurrentState());
 
-    _useLiquidGlass = _readUseLiquidGlass(context.read<DebugMenuBloc>().state);
-    subscribeToBloc<DebugMenuBloc>(
+    _useLiquidGlass = _readUseLiquidGlass(context.read<SettingsBloc>().state);
+    subscribeToBloc<SettingsBloc>(
       onNewState: (state) {
         final bool next = _readUseLiquidGlass(state);
         if (next != _useLiquidGlass) {
           setState(() {
             _useLiquidGlass = next;
-            // Rebuild the cached body children so screens that depend on the
-            // theme (e.g. the Today tab's `fabBottomOffset`) pick up the new
-            // value instead of keeping their build-time offset.
+            // Rebuild cached body children so the Today tab's fabBottomOffset tracks the new value.
             final Iterable<Widget> bodyWidgets = _tabTypes.map(_bodyWidgetByType);
             _bodyWidgets
               ..clear()
@@ -79,14 +77,9 @@ final class _TabsContainerScreenState extends State<TabsContainerScreen> with Di
     )?.disposed(by: this);
   }
 
-  bool _readUseLiquidGlass(DebugMenuState state) {
-    if (state is! DebugMenuDataState) return _useLiquidGlass;
-    return state.debugMenuItems
-        .firstWhere(
-          (item) => item.type == DebugMenuType.uiTheme,
-          orElse: () => DebugMenuData(type: DebugMenuType.uiTheme, value: true),
-        )
-        .value;
+  bool _readUseLiquidGlass(SettingsState state) {
+    if (state is! SettingsDataState) return _useLiquidGlass;
+    return resolveUseLiquidGlass(state.settings.interfaceStyle);
   }
 
   @override

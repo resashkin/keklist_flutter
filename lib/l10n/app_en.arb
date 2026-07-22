@@ -11,6 +11,10 @@
     "@appearance": {
         "description": "Appearance section title"
     },
+    "interfaceStyle": "Interface Style",
+    "@interfaceStyle": {
+        "description": "Interface style setting label (Material vs Liquid Glass)"
+    },
     "exportToCsv": "Export to CSV",
     "@exportToCsv": {
         "description": "Export to CSV button"

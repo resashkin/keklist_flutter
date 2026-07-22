@@ -135,6 +135,12 @@ abstract class AppLocalizations {
   /// **'Appearance'**
   String get appearance;
 
+  /// Interface style setting label (Material vs Liquid Glass)
+  ///
+  /// In en, this message translates to:
+  /// **'Interface Style'**
+  String get interfaceStyle;
+
   /// Export to CSV button
   ///
   /// In en, this message translates to:

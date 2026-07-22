@@ -2,6 +2,7 @@
     "settings": "設定",
     "userData": "ユーザーデータ",
     "appearance": "外観",
+    "interfaceStyle": "インターフェーススタイル",
     "exportToCsv": "CSVにエクスポート",
     "exportData": "データをエクスポート",
     "importData": "データをインポート",

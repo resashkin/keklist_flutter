@@ -1,8 +1,7 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
-import 'package:keklist/presentation/blocs/debug_menu_bloc/debug_menu_bloc.dart';
+import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
+import 'package:keklist/presentation/core/helpers/interface_style_utils.dart';
 import 'package:native_liquid_glass/native_liquid_glass.dart';
 
 /// Floating action button that follows the debug-menu UI theme: the native
@@ -35,10 +34,9 @@ final class KekFloatingButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DebugMenuBloc, DebugMenuState>(
-      // DebugMenuUpdate emits transient DebugMenuLoadingState; only data
-      // states carry the theme.
-      buildWhen: (_, state) => state is DebugMenuDataState,
+    return BlocBuilder<SettingsBloc, SettingsState>(
+      // Only data states carry the interface style; ignore transient states.
+      buildWhen: (_, state) => state is SettingsDataState,
       builder: (context, state) {
         if (_readUseLiquidGlass(state) && NativeLiquidGlassUtils.supportsLiquidGlass) {
           return LiquidGlassButton(
@@ -65,8 +63,8 @@ final class KekFloatingButton extends StatelessWidget {
     );
   }
 
-  bool _readUseLiquidGlass(DebugMenuState state) {
-    if (state is! DebugMenuDataState) return true;
-    return state.debugMenuItems.firstWhereOrNull((item) => item.type == DebugMenuType.uiTheme)?.value ?? true;
+  bool _readUseLiquidGlass(SettingsState state) {
+    if (state is! SettingsDataState) return isLiquidGlassAvailableOnThisPlatform();
+    return resolveUseLiquidGlass(state.settings.interfaceStyle);
   }
 }

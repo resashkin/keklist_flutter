@@ -2,6 +2,7 @@
     "settings": "Подешавања",
     "userData": "Кориснички подаци",
     "appearance": "Изглед",
+    "interfaceStyle": "Стил интерфејса",
     "exportToCsv": "Извоз у CSV",
     "exportData": "Извоз података",
     "importData": "Увоз података",

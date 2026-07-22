@@ -18,6 +18,9 @@ class AppLocalizationsUz extends AppLocalizations {
   String get appearance => 'Ko\'rinish';
 
   @override
+  String get interfaceStyle => 'Interfeys uslubi';
+
+  @override
   String get exportToCsv => 'CSV ga eksport qilish';
 
   @override

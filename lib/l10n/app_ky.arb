@@ -8,6 +8,7 @@
         "description": "Колдонуучу маалыматтары бөлүмүнүн аталышы"
     },
     "appearance": "Көрүнүш",
+    "interfaceStyle": "Интерфейс стили",
     "@appearance": {
         "description": "Көрүнүш бөлүмүнүн аталышы"
     },

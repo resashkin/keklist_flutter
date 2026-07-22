@@ -18,6 +18,9 @@ class AppLocalizationsSr extends AppLocalizations {
   String get appearance => 'Изглед';
 
   @override
+  String get interfaceStyle => 'Стил интерфејса';
+
+  @override
   String get exportToCsv => 'Извоз у CSV';
 
   @override
@@ -640,6 +643,9 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
 
   @override
   String get appearance => 'Izgled';
+
+  @override
+  String get interfaceStyle => 'Stil interfejsa';
 
   @override
   String get exportToCsv => 'Izvezi u CSV';

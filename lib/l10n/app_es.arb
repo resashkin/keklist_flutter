@@ -8,6 +8,7 @@
         "description": "Título de sección de datos de usuario"
     },
     "appearance": "Apariencia",
+    "interfaceStyle": "Estilo de interfaz",
     "@appearance": {
         "description": "Título de sección de apariencia"
     },

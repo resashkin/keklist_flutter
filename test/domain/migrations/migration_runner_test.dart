@@ -4,6 +4,7 @@ import 'package:keklist/domain/migrations/migration_runner.dart';
 import 'package:keklist/domain/repositories/emotion/emotion_repository.dart';
 import 'package:keklist/domain/repositories/files/app_file_repository.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
+import 'package:keklist/domain/repositories/settings/keklist_interface_style.dart';
 import 'package:keklist/domain/repositories/settings/keklist_theme_mode.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
 import 'package:keklist/domain/services/entities/emotion.dart';
@@ -55,6 +56,7 @@ void main() {
         isMindContentVisible: true,
         previousAppVersion: null,
         themePreference: KeklistThemeMode.dark,
+        interfaceStyle: KeklistInterfaceStyle.liquidGlass,
         shouldShowTitles: true,
         userName: null,
         language: SupportedLanguage.english,
@@ -75,6 +77,7 @@ void main() {
           isMindContentVisible: true,
           previousAppVersion: null,
           themePreference: KeklistThemeMode.dark,
+          interfaceStyle: KeklistInterfaceStyle.liquidGlass,
           shouldShowTitles: true,
           userName: null,
           language: SupportedLanguage.english,
@@ -97,6 +100,7 @@ void main() {
           isMindContentVisible: true,
           previousAppVersion: null,
           themePreference: KeklistThemeMode.dark,
+          interfaceStyle: KeklistInterfaceStyle.liquidGlass,
           shouldShowTitles: true,
           userName: null,
           language: SupportedLanguage.english,
@@ -117,6 +121,7 @@ void main() {
           isMindContentVisible: true,
           previousAppVersion: null,
           themePreference: KeklistThemeMode.dark,
+          interfaceStyle: KeklistInterfaceStyle.liquidGlass,
           shouldShowTitles: true,
           userName: null,
           language: SupportedLanguage.english,

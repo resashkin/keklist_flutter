@@ -2,6 +2,7 @@
     "settings": "Настройки",
     "userData": "Данные пользователя",
     "appearance": "Внешний вид",
+    "interfaceStyle": "Стиль интерфейса",
     "exportToCsv": "Экспорт в CSV",
     "exportData": "Экспорт данных",
     "importData": "Импорт данных",

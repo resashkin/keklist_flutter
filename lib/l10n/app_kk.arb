@@ -8,6 +8,7 @@
         "description": "Пайдаланушы деректері бөлімінің атауы"
     },
     "appearance": "Көрініс",
+    "interfaceStyle": "Интерфейс стилі",
     "@appearance": {
         "description": "Көрініс бөлімінің атауы"
     },

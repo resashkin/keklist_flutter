@@ -8,6 +8,7 @@
         "description": "Titolo sezione dati utente"
     },
     "appearance": "Aspetto",
+    "interfaceStyle": "Stile interfaccia",
     "@appearance": {
         "description": "Titolo sezione aspetto"
     },

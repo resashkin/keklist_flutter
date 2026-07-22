@@ -26,8 +26,5 @@ enum DebugMenuType {
   sensitiveContent,
   simulatePro,
   useProductionRevenueCat,
-
-  /// UI theme switch: `true` = native Liquid Glass (iOS 26+), `false` = Material.
-  uiTheme,
   enableBlocLogs,
 }

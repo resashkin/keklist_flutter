@@ -1,7 +1,3 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
@@ -13,7 +9,7 @@ import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/screens/bloc_log_settings/bloc_log_settings_screen.dart';
-import 'package:settings_ui/settings_ui.dart';
+import 'package:keklist/presentation/core/widgets/settings/settings_section.dart';
 
 final class DebugMenuScreen extends StatefulWidget {
   const DebugMenuScreen({super.key});
@@ -39,31 +35,20 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
     sendEventToBloc<DebugMenuBloc>(DebugMenuGet());
   }
 
-  bool _isVisibleOnThisPlatform(DebugMenuType type) {
-    if (type == DebugMenuType.uiTheme) {
-      return !kIsWeb && Platform.isIOS;
-    }
-    return true;
-  }
-
   @override
   Widget build(BuildContext context) {
-    final visibleItems = _debugMenuItems.where((item) => _isVisibleOnThisPlatform(item.type)).toList();
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.debugMenu)),
-      body: SettingsList(
-        sections: [
-          if (visibleItems.isNotEmpty)
-            SettingsSection(
-              title: const Text('Feature Flags'),
-              tiles: visibleItems.map((debugMenuItem) {
-                if (debugMenuItem.type == DebugMenuType.uiTheme) {
-                  return _uiThemeTile(debugMenuItem);
-                }
-                return SettingsTile.switchTile(
+      body: SettingsListView(
+        children: [
+          if (_debugMenuItems.isNotEmpty) ...[
+            const SettingsSectionHeader('Feature Flags'),
+            SettingsSectionCard(
+              children: _debugMenuItems.map((debugMenuItem) {
+                return SwitchListTile(
                   title: Text(_getDebugMenuItemTitle(debugMenuItem.type)),
-                  description: Text(_getDebugMenuItemDescription(debugMenuItem.type)),
-                  onToggle: (bool value) {
+                  subtitle: Text(_getDebugMenuItemDescription(debugMenuItem.type)),
+                  onChanged: (bool value) {
                     if (debugMenuItem.type == DebugMenuType.simulatePro && value == true) {
                       _onEnableSimulatePro();
                     } else {
@@ -78,26 +63,29 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
                       }
                     }
                   },
-                  initialValue: debugMenuItem.value,
+                  value: debugMenuItem.value,
                 );
               }).toList(),
             ),
-          SettingsSection(
-            title: const Text('Development Tools'),
-            tiles: [
-              SettingsTile.navigation(
+          ],
+          const SettingsSectionHeader('Development Tools'),
+          SettingsSectionCard(
+            children: [
+              ListTile(
                 title: const Text('BLoC Log Settings'),
-                description: const Text('Configure verbosity and per-BLoC silencing for console logs'),
-                onPressed: (context) {
+                subtitle: const Text('Configure verbosity and per-BLoC silencing for console logs'),
+                trailing: settingsNavTrailing(context),
+                onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(builder: (_) => const BlocLogSettingsScreen()),
                   );
                 },
               ),
-              SettingsTile.navigation(
+              ListTile(
                 title: const Text('Reset Lazy Onboarding'),
-                description: const Text('Delete onboarding minds and reset the flag to show onboarding again'),
-                onPressed: (context) => _resetOnboarding(context),
+                subtitle: const Text('Delete onboarding minds and reset the flag to show onboarding again'),
+                trailing: settingsNavTrailing(context),
+                onTap: () => _resetOnboarding(context),
               ),
             ],
           ),
@@ -158,32 +146,11 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
     );
   }
 
-  SettingsTile _uiThemeTile(DebugMenuData debugMenuItem) {
-    return SettingsTile(
-      title: Text(_getDebugMenuItemTitle(debugMenuItem.type)),
-      description: Text(_getDebugMenuItemDescription(debugMenuItem.type)),
-      trailing: CupertinoSlidingSegmentedControl<bool>(
-        groupValue: debugMenuItem.value,
-        children: const {
-          false: Padding(padding: EdgeInsets.symmetric(horizontal: 8.0), child: Text('Material')),
-          true: Padding(padding: EdgeInsets.symmetric(horizontal: 8.0), child: Text('Liquid Glass')),
-        },
-        onValueChanged: (bool? value) {
-          if (value == null) return;
-          sendEventToBloc<DebugMenuBloc>(
-            DebugMenuUpdate(flagType: DebugMenuType.uiTheme, value: value),
-          );
-        },
-      ),
-    );
-  }
-
   String _getDebugMenuItemTitle(DebugMenuType type) => switch (type) {
         DebugMenuType.translation => 'Translate Content',
         DebugMenuType.sensitiveContent => 'Sensitive Content',
         DebugMenuType.simulatePro => 'Simulate Pro Subscription',
         DebugMenuType.useProductionRevenueCat => 'Use Production RevenueCat',
-        DebugMenuType.uiTheme => 'UI Theme (iOS)',
         DebugMenuType.enableBlocLogs => 'Enable BLoC Logs',
       };
 
@@ -196,8 +163,6 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
           'Forces isPro=true in MembershipBloc, bypassing RevenueCat. Password required to enable.',
         DebugMenuType.useProductionRevenueCat =>
           'Use production RevenueCat API keys instead of test keys. Restart required to take effect.',
-        DebugMenuType.uiTheme =>
-          'Material or native Liquid Glass for the tab bar and floating buttons. Liquid Glass requires iOS 26+; older iOS falls back to Material/system styles.',
         DebugMenuType.enableBlocLogs =>
           'Master switch for BLoC console logs (events, transitions, errors, lifecycle). Configure verbosity and per-BLoC silencing in BLoC Log Settings.',
       };

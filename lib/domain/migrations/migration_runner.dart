@@ -67,6 +67,7 @@ class MigrationRunner {
                 isMindContentVisible: updatedSettings.isMindContentVisible,
                 previousAppVersion: updatedSettings.previousAppVersion,
                 themePreference: updatedSettings.themePreference,
+                interfaceStyle: updatedSettings.interfaceStyle,
                 shouldShowTitles: updatedSettings.shouldShowTitles,
                 userName: updatedSettings.userName,
                 language: updatedSettings.language,

@@ -8,6 +8,7 @@
         "description": "Naslov sekcije korisničkih podataka"
     },
     "appearance": "Izgled",
+    "interfaceStyle": "Stil interfejsa",
     "@appearance": {
         "description": "Naslov sekcije izgleda"
     },

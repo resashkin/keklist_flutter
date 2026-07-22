@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 import 'package:keklist/domain/hive_constants.dart';
+import 'package:keklist/domain/repositories/settings/keklist_interface_style.dart';
 import 'package:keklist/domain/repositories/settings/keklist_theme_mode.dart';
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
@@ -40,6 +41,14 @@ final class SettingsHiveRepository implements SettingsRepository {
     if (settingsObject == null) return;
     settingsObject.themePreferenceIndex = themeMode.index;
     settingsObject.isDarkMode = themeMode == KeklistThemeMode.dark;
+    await settingsObject.save();
+  }
+
+  @override
+  FutureOr<void> updateInterfaceStyle(KeklistInterfaceStyle style) async {
+    final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.globalSettingsIndex);
+    if (settingsObject == null) return;
+    settingsObject.interfaceStyleIndex = style.index;
     await settingsObject.save();
   }
 

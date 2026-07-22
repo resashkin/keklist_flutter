@@ -1041,10 +1041,10 @@ packages:
     dependency: "direct main"
     description:
       name: native_liquid_glass
-      sha256: d65d57b9e4907e07fc6136f7b0f6e45dc58c9efe7be554e3bdfdd820a4b09a10
+      sha256: "4745b794461528f65a64e2b2a4df36c8cf34eb9c4bc6f0ac8fc948d2495184a2"
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.10"
+    version: "0.2.14"
   nested:
     dependency: transitive
     description:
@@ -1349,14 +1349,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.27.0"
-  settings_ui:
-    dependency: "direct main"
-    description:
-      name: settings_ui
-      sha256: "7437c9c867f331ff6c90e951f2333441eab5cf5e654c3a7f3e4aad0c01db51ef"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.1"
   share_plus:
     dependency: "direct main"
     description:

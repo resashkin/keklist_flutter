@@ -18,6 +18,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get appearance => '外观';
 
   @override
+  String get interfaceStyle => '界面风格';
+
+  @override
   String get exportToCsv => '导出到CSV';
 
   @override

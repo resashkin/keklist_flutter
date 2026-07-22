@@ -39,13 +39,16 @@ class SettingsObjectAdapter extends TypeAdapter<SettingsObject> {
       ..isMediaFolderRecursive = fields[17] == null ? false : fields[17] as bool
       ..themePreferenceIndex = fields[18] == null
           ? -1
-          : (fields[18] as num).toInt();
+          : (fields[18] as num).toInt()
+      ..interfaceStyleIndex = fields[19] == null
+          ? 1
+          : (fields[19] as num).toInt();
   }
 
   @override
   void write(BinaryWriter writer, SettingsObject obj) {
     writer
-      ..writeByte(17)
+      ..writeByte(18)
       ..writeByte(0)
       ..write(obj.isMindContentVisible)
       ..writeByte(1)
@@ -79,7 +82,9 @@ class SettingsObjectAdapter extends TypeAdapter<SettingsObject> {
       ..writeByte(17)
       ..write(obj.isMediaFolderRecursive)
       ..writeByte(18)
-      ..write(obj.themePreferenceIndex);
+      ..write(obj.themePreferenceIndex)
+      ..writeByte(19)
+      ..write(obj.interfaceStyleIndex);
   }
 
   @override
