@@ -581,27 +581,31 @@ final class MindDayCollectionScreenState extends KekWidgetState<MindDayCollectio
   }
 
   void _showMindCreator({String? initialText, String? initialEmoji}) {
-    showCupertinoModalBottomSheet(
-      context: context,
-      builder: (_) {
-        return MindCreatorScreen(
-          initialEmoji: initialEmoji,
-          initialText: initialText,
-          onDone: (String text, String emoji) {
-            final String normalizedText = text.trim();
-            final MindNoteContent content = normalizedText.isEmpty
-                ? MindNoteContent.empty()
-                : MindNoteContent.parse(normalizedText);
-            final MindCreate event = MindCreate(
-              dayIndex: dayIndex,
-              mindContent: content.pieces,
-              emoji: emoji,
-              rootId: null,
-            );
-            sendEventToBloc<MindBloc>(event);
-          },
-        );
-      },
+    // Pushed as a full-screen route (not a bottom sheet) so a stray swipe can't
+    // dismiss it; fullscreenDialog disables the iOS back-swipe — close/save only.
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (_) {
+          return MindCreatorScreen(
+            initialEmoji: initialEmoji,
+            initialText: initialText,
+            onDone: (String text, String emoji) {
+              final String normalizedText = text.trim();
+              final MindNoteContent content = normalizedText.isEmpty
+                  ? MindNoteContent.empty()
+                  : MindNoteContent.parse(normalizedText);
+              final MindCreate event = MindCreate(
+                dayIndex: dayIndex,
+                mindContent: content.pieces,
+                emoji: emoji,
+                rootId: null,
+              );
+              sendEventToBloc<MindBloc>(event);
+            },
+          );
+        },
+      ),
     );
   }
 }

@@ -46,7 +46,9 @@ final class KekFloatingButton extends StatelessWidget {
             style: LiquidGlassButtonStyle.glass,
             height: _fabHeight,
             iconSize: 24.0,
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            // Must match the package's hardcoded wrap-content estimate (32px total
+            // horizontal insets); a wider padding here clips the native label.
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
             labelTextStyle: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
           );
         }
