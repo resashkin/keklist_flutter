@@ -456,7 +456,7 @@
     "noArchivedEmotions": "No hay emociones archivadas",
     "addEmotion": "Añadir emoción",
     "doneEditing": "Listo",
-    "emotionEditHint": "Toca para renombrar · ✕ para quitar",
+    "emotionEditHint": "Toca para renombrar · ✕ para quitar · arrastra para reordenar",
     "emotionInUseMessage": "Esta emoción se usa en algunas mentes. Archívala para conservarla ahí, o elimínala en todas partes.",
     "deleteEmotionMessage": "¿Eliminar esta emoción? Se quitará de todas las mentes que la usan."
 }

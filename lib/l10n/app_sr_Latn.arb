@@ -456,7 +456,7 @@
     "noArchivedEmotions": "Nema arhiviranih emocija",
     "addEmotion": "Dodaj emociju",
     "doneEditing": "Gotovo",
-    "emotionEditHint": "Dodirnite za preimenovanje · ✕ za uklanjanje",
+    "emotionEditHint": "Dodirnite za preimenovanje · ✕ za uklanjanje · prevucite za preuređivanje",
     "emotionInUseMessage": "Ova emocija se koristi u nekim mislima. Arhivirajte je da ostane tamo, ili je obrišite svuda.",
     "deleteEmotionMessage": "Obrisati ovu emociju? Biće uklonjena iz svih misli koje je koriste."
 }

@@ -611,7 +611,8 @@ class AppLocalizationsKy extends AppLocalizations {
   String get doneEditing => 'Даяр';
 
   @override
-  String get emotionEditHint => 'Атын өзгөртүү үчүн басыңыз · ✕ өчүрүү үчүн';
+  String get emotionEditHint =>
+      'Атын өзгөртүү үчүн басыңыз · ✕ өчүрүү үчүн · иреттөө үчүн сүйрөңүз';
 
   @override
   String get emotionInUseMessage =>

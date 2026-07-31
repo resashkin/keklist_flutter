@@ -456,7 +456,7 @@
     "noArchivedEmotions": "Arxivlangan hissiyotlar yo'q",
     "addEmotion": "Hissiyot qo'shish",
     "doneEditing": "Tayyor",
-    "emotionEditHint": "Nomini o'zgartirish uchun bosing · ✕ o'chirish uchun",
+    "emotionEditHint": "Nomini o'zgartirish uchun bosing · ✕ o'chirish uchun · tartiblash uchun torting",
     "emotionInUseMessage": "Bu hissiyot ba'zi maindlarda ishlatiladi. Uni o'sha yerda saqlash uchun arxivlang yoki hamma joydan o'chiring.",
     "deleteEmotionMessage": "Bu hissiyotni o'chirasizmi? U undan foydalanadigan barcha maindlardan olib tashlanadi."
 }

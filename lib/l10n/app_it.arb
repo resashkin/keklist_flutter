@@ -456,7 +456,7 @@
     "noArchivedEmotions": "Nessuna emozione archiviata",
     "addEmotion": "Aggiungi emozione",
     "doneEditing": "Fatto",
-    "emotionEditHint": "Tocca per rinominare · ✕ per rimuovere",
+    "emotionEditHint": "Tocca per rinominare · ✕ per rimuovere · trascina per riordinare",
     "emotionInUseMessage": "Questa emozione è usata in alcune menti. Archiviala per mantenerla lì, o eliminala ovunque.",
     "deleteEmotionMessage": "Eliminare questa emozione? Verrà rimossa da tutte le menti che la usano."
 }

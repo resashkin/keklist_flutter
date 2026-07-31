@@ -610,7 +610,8 @@ class AppLocalizationsKk extends AppLocalizations {
   String get doneEditing => 'Дайын';
 
   @override
-  String get emotionEditHint => 'Атын өзгерту үшін түртіңіз · ✕ жою үшін';
+  String get emotionEditHint =>
+      'Атын өзгерту үшін түртіңіз · ✕ жою үшін · реттеу үшін сүйреңіз';
 
   @override
   String get emotionInUseMessage =>

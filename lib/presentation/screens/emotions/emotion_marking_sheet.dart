@@ -14,32 +14,41 @@ import 'package:keklist/presentation/screens/emotions/emotion_editor_sheet.dart'
 import 'package:keklist/presentation/screens/emotions/widgets/emotion_chip.dart';
 
 /// Bottom sheet for tagging a mind with emotions, and — via its edit mode — the
-/// only place to manage the emotion tree. Shows one tree level at a time.
+/// only place to manage emotions. Shows one tree level at a time in a fixed-height
+/// sheet.
 ///
 /// Normal mode: tap a chip to tag it, long-press (or the chevron) to drill in.
 /// Edit mode: chips jiggle; tap to rename, corner cross to delete/archive (two
-/// taps), long-press-drag to move. While dragging, holding ~1s over a chip
-/// drills into it (so you can drop inside), and holding ~1s over the back arrow
-/// goes up a level — the drag stays alive across navigation.
+/// taps), long-press-drag to reorder among siblings.
+///
+/// Nesting is deliberately not authorable here — see
+/// `documentation/adr/ADR-0002-emotion-nesting-ui-removal.md`. Existing nested
+/// emotions stay reachable through drill-in, and new emotions can only be added
+/// at the top level.
 final class EmotionMarkingSheet extends StatefulWidget {
   final Set<String> initialSelectedIds;
   final ValueChanged<Set<String>> onSelectionChanged;
+
+  /// Opens the sheet aimed at this emotion: the path is seeded with its ancestor
+  /// chain, then its chip is scrolled into view and briefly ringed.
+  final String? focusEmotionId;
 
   const EmotionMarkingSheet({
     super.key,
     required this.initialSelectedIds,
     required this.onSelectionChanged,
+    this.focusEmotionId,
   });
 
-  static const double _initialSize = 0.5;
-  static const double _minSize = 0.25;
-  static const double _maxSize = 0.95;
-  static const Duration _springDelay = Duration(seconds: 1);
+  /// Fraction of the screen the sheet occupies. Fixed — the sheet is not resizable.
+  static const double _heightFactor = 0.5;
+  static const Duration _focusRingDuration = Duration(milliseconds: 1800);
 
   static Future<void> show({
     required BuildContext context,
     required Set<String> initialSelectedIds,
     required ValueChanged<Set<String>> onSelectionChanged,
+    String? focusEmotionId,
   }) {
     return showModalBottomSheet<void>(
       context: context,
@@ -48,6 +57,7 @@ final class EmotionMarkingSheet extends StatefulWidget {
       builder: (_) => EmotionMarkingSheet(
         initialSelectedIds: initialSelectedIds,
         onSelectionChanged: onSelectionChanged,
+        focusEmotionId: focusEmotionId,
       ),
     );
   }
@@ -58,22 +68,24 @@ final class EmotionMarkingSheet extends StatefulWidget {
 
 class _EmotionMarkingSheetState extends State<EmotionMarkingSheet> {
   late final Set<String> _selected = {...widget.initialSelectedIds};
-  final DraggableScrollableController _dragController = DraggableScrollableController();
+  final ScrollController _scrollController = ScrollController();
 
   /// Navigation path of parent ids; `null` is the root level.
   final List<String?> _path = [null];
-  bool _dismissing = false;
   bool _editMode = false;
 
   // Latest built level, for the pointer handlers.
   EmotionsList? _state;
   List<Emotion> _levelChildren = const [];
-  ScrollController? _scrollController;
 
   // Keys for hit-testing during a custom drag.
   final Map<String, GlobalKey> _chipKeys = {};
   final GlobalKey _scrollAreaKey = GlobalKey();
-  final GlobalKey _backKey = GlobalKey();
+
+  // --- Focus (deep link) state -----------------------------------------------
+  bool _focusApplied = false;
+  String? _focusedId;
+  Timer? _focusTimer;
 
   // --- Custom drag state -----------------------------------------------------
   String? _draggingId;
@@ -81,11 +93,6 @@ class _EmotionMarkingSheetState extends State<EmotionMarkingSheet> {
   Size _dragChipSize = Size.zero;
   int? _insertIndex;
   OverlayEntry? _dragOverlay;
-
-  String? _springTargetId; // chip being hovered toward a spring-in
-  Timer? _springTimer;
-  bool _overBack = false;
-  Timer? _backSpringTimer;
   Timer? _autoScrollTimer;
 
   // Two-step cross delete.
@@ -99,12 +106,11 @@ class _EmotionMarkingSheetState extends State<EmotionMarkingSheet> {
 
   @override
   void dispose() {
-    _springTimer?.cancel();
-    _backSpringTimer?.cancel();
     _autoScrollTimer?.cancel();
     _armTimer?.cancel();
+    _focusTimer?.cancel();
     _dragOverlay?.remove();
-    _dragController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -138,6 +144,35 @@ class _EmotionMarkingSheetState extends State<EmotionMarkingSheet> {
 
   void _openEditor({Emotion? emotion}) =>
       EmotionEditorSheet.show(context: context, initial: emotion, parentId: _currentParentId);
+
+  /// Seeds the path with the focused emotion's ancestors, then scrolls its chip
+  /// into view and rings it. Runs once, on the first frame with a loaded state.
+  void _applyFocus(EmotionsList state) {
+    _focusApplied = true;
+    final String? id = widget.focusEmotionId;
+    final Emotion? target = id == null ? null : state.byId(id);
+    if (target == null) return;
+
+    final List<String?> ancestors = state.ancestorsOf(target).map((e) => e.id).toList();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      setState(() {
+        _path
+          ..clear()
+          ..addAll([null, ...ancestors]);
+        _focusedId = target.id;
+      });
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final BuildContext? chipContext = _chipKey(target.id).currentContext;
+        if (chipContext != null) {
+          Scrollable.ensureVisible(chipContext, duration: const Duration(milliseconds: 250), alignment: 0.5);
+        }
+      });
+      _focusTimer = Timer(EmotionMarkingSheet._focusRingDuration, () {
+        if (mounted) setState(() => _focusedId = null);
+      });
+    });
+  }
 
   Future<void> _onCross(Emotion emotion, EmotionsList state) async {
     final referenced = context.read<MindRepository>().values.expand((mind) => mind.emotionIds).toSet();
@@ -181,9 +216,8 @@ class _EmotionMarkingSheetState extends State<EmotionMarkingSheet> {
 
   // --- Custom drag: long-press lifecycle -------------------------------------
   // A long-press (not a passive Listener) is used so that once the drag is
-  // recognized it WINS the gesture arena — the sheet and inner scroll then yield
-  // instead of also moving. The recognizer lives on the persistent body wrapper,
-  // so spring-load navigation (rebuilding the level) doesn't cancel the drag.
+  // recognized it WINS the gesture arena — the inner scroll then yields instead
+  // of also moving. Reorder among siblings is the only drop intent.
 
   void _onLongPressStart(Offset pos) {
     if (!_editMode || _draggingId != null) return;
@@ -219,99 +253,47 @@ class _EmotionMarkingSheetState extends State<EmotionMarkingSheet> {
   }
 
   void _updateHover(Offset pos) {
-    // Back arrow → spring up a level.
-    if (_canGoBack && _rectOf(_backKey)?.contains(pos) == true) {
-      if (!_overBack) setState(() => _overBack = true);
-      _springTargetId = null;
-      _springTimer?.cancel();
-      _backSpringTimer ??= Timer(EmotionMarkingSheet._springDelay, _springBack);
-      _stopAutoScroll();
-      return;
-    }
-    if (_overBack) setState(() => _overBack = false);
-    _backSpringTimer?.cancel();
-    _backSpringTimer = null;
-
     final target = _chipIdAt(pos, exclude: _draggingId);
     if (target != null) {
       final box = _chipKey(target).currentContext?.findRenderObject() as RenderBox?;
       final index = _levelChildren.indexWhere((e) => e.id == target);
       double frac = 0.5;
       if (box != null) frac = (box.globalToLocal(pos).dx / box.size.width).clamp(0.0, 1.0);
-
-      // Central band springs into the chip; the edges are reorder zones.
-      final bool canSpring = frac > 0.25 && frac < 0.75;
-      if (canSpring) {
-        if (_springTargetId != target) {
-          _springTargetId = target;
-          _springTimer?.cancel();
-          _springTimer = Timer(EmotionMarkingSheet._springDelay, () => _springInto(target));
-        }
-      } else {
-        _springTargetId = null;
-        _springTimer?.cancel();
-      }
       final int insert = frac > 0.5 ? index + 1 : index;
       if (_insertIndex != insert) setState(() => _insertIndex = insert);
     } else {
-      _springTargetId = null;
-      _springTimer?.cancel();
       final end = _levelChildren.length;
       if (_insertIndex != end) setState(() => _insertIndex = end);
     }
     _maybeAutoScroll(pos);
   }
 
-  void _springInto(String id) {
-    if (!mounted || _draggingId == null) return;
-    Haptics.vibrate(HapticsType.medium);
-    _springTargetId = null;
-    _springTimer?.cancel();
-    setState(() {
-      _path.add(id);
-      _insertIndex = null;
-    });
-  }
-
-  void _springBack() {
-    if (!mounted || _draggingId == null || !_canGoBack) return;
-    Haptics.vibrate(HapticsType.medium);
-    _backSpringTimer?.cancel();
-    _backSpringTimer = null;
-    setState(() {
-      _path.removeLast();
-      _overBack = false;
-      _insertIndex = null;
-    });
-  }
-
   void _finishDrag() {
     final id = _draggingId;
+    final int? insertIndex = _insertIndex;
     _cancelDrag();
     if (id == null) return;
 
-    final sameParent = _state?.byId(id)?.parentId == _currentParentId;
-    int idx = _insertIndex ?? _levelChildren.length;
-    if (sameParent) {
-      final from = _levelChildren.indexWhere((e) => e.id == id);
-      if (from >= 0 && from < idx) idx -= 1;
-    }
+    final List<String> ids = _levelChildren.map((e) => e.id).toList();
+    final int from = ids.indexOf(id);
+    if (from < 0) return;
+    int to = insertIndex ?? ids.length;
+    ids.removeAt(from);
+    if (from < to) to -= 1;
+    ids.insert(to.clamp(0, ids.length), id);
+    if (from == to) return;
+
     Haptics.vibrate(HapticsType.light);
-    context.read<EmotionBloc>().add(EmotionMove(id: id, newParentId: _currentParentId, index: idx));
+    context.read<EmotionBloc>().add(EmotionReorder(orderedEmotionIds: ids));
   }
 
   void _cancelDrag() {
-    _springTimer?.cancel();
-    _backSpringTimer?.cancel();
-    _backSpringTimer = null;
     _stopAutoScroll();
     _dragOverlay?.remove();
     _dragOverlay = null;
     setState(() {
       _draggingId = null;
       _insertIndex = null;
-      _springTargetId = null;
-      _overBack = false;
     });
   }
 
@@ -332,8 +314,7 @@ class _EmotionMarkingSheetState extends State<EmotionMarkingSheet> {
 
   void _maybeAutoScroll(Offset pos) {
     final area = _rectOf(_scrollAreaKey);
-    final controller = _scrollController;
-    if (area == null || controller == null || !controller.hasClients) {
+    if (area == null || !_scrollController.hasClients) {
       _stopAutoScroll();
       return;
     }
@@ -349,9 +330,9 @@ class _EmotionMarkingSheetState extends State<EmotionMarkingSheet> {
       return;
     }
     _autoScrollTimer ??= Timer.periodic(const Duration(milliseconds: 16), (_) {
-      if (!controller.hasClients) return;
-      final p = controller.position;
-      controller.jumpTo((p.pixels + direction * 8).clamp(p.minScrollExtent, p.maxScrollExtent));
+      if (!_scrollController.hasClients) return;
+      final p = _scrollController.position;
+      _scrollController.jumpTo((p.pixels + direction * 8).clamp(p.minScrollExtent, p.maxScrollExtent));
     });
   }
 
@@ -360,126 +341,88 @@ class _EmotionMarkingSheetState extends State<EmotionMarkingSheet> {
     _autoScrollTimer = null;
   }
 
-  // --- Sheet drag handle -----------------------------------------------------
-
-  void _onHandleDrag(DragUpdateDetails details) {
-    if (!_dragController.isAttached) return;
-    final double screenHeight = MediaQuery.of(context).size.height;
-    final double next = (_dragController.size - details.primaryDelta! / screenHeight)
-        .clamp(EmotionMarkingSheet._minSize, EmotionMarkingSheet._maxSize);
-    _dragController.jumpTo(next);
-  }
-
-  void _onHandleDragEnd(DragEndDetails details) {
-    if (!_dragController.isAttached) return;
-    final double size = _dragController.size;
-    if (size < 0.3) {
-      _dismiss();
-    } else {
-      final double target = size < 0.72 ? EmotionMarkingSheet._initialSize : EmotionMarkingSheet._maxSize;
-      _dragController.animateTo(target, duration: const Duration(milliseconds: 200), curve: Curves.easeOut);
-    }
-  }
-
-  void _dismiss() {
-    if (_dismissing) return;
-    _dismissing = true;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) Navigator.of(context).pop();
-    });
-  }
-
   // --- Build -----------------------------------------------------------------
 
   @override
   Widget build(BuildContext context) {
-    return DraggableScrollableSheet(
-      controller: _dragController,
-      expand: false,
-      snap: true,
-      initialChildSize: EmotionMarkingSheet._initialSize,
-      minChildSize: EmotionMarkingSheet._minSize,
-      maxChildSize: EmotionMarkingSheet._maxSize,
-      snapSizes: const [EmotionMarkingSheet._initialSize, EmotionMarkingSheet._maxSize],
-      builder: (context, scrollController) {
-        _scrollController = scrollController;
-        return NotificationListener<DraggableScrollableNotification>(
-          onNotification: (n) {
-            if (_draggingId == null && n.extent <= n.minExtent + 0.001) _dismiss();
-            return false;
-          },
-          child: Container(
-            decoration: KekBottomSheetStyle.decoration(context),
-            clipBehavior: Clip.antiAlias,
-            child: Column(
-              children: [
-                _buildHandle(context),
-                Expanded(
-                  child: BlocBuilder<EmotionBloc, EmotionState>(
-                    builder: (context, state) {
-                      if (state is! EmotionsList) {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-                      _state = state;
-                      _levelChildren = state.childrenOf(_currentParentId);
-                      final parent = _currentParentId == null ? null : state.byId(_currentParentId!);
+    return FractionallySizedBox(
+      heightFactor: EmotionMarkingSheet._heightFactor,
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        decoration: KekBottomSheetStyle.decoration(context),
+        clipBehavior: Clip.antiAlias,
+        child: Column(
+          children: [
+            KekBottomSheetStyle.handle(context),
+            Expanded(
+              child: BlocBuilder<EmotionBloc, EmotionState>(
+                builder: (context, state) {
+                  if (state is! EmotionsList) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  _state = state;
+                  _levelChildren = state.childrenOf(_currentParentId);
+                  final parent = _currentParentId == null ? null : state.byId(_currentParentId!);
+                  if (!_focusApplied) _applyFocus(state);
 
-                      return GestureDetector(
-                        behavior: HitTestBehavior.translucent,
-                        onLongPressStart: _editMode ? (d) => _onLongPressStart(d.globalPosition) : null,
-                        onLongPressMoveUpdate: _editMode ? (d) => _onLongPressMove(d.globalPosition) : null,
-                        onLongPressEnd: _editMode ? (_) => _onLongPressEnd() : null,
-                        onLongPressCancel: _editMode
-                            ? () {
-                                if (_draggingId != null) _cancelDrag();
-                              }
-                            : null,
-                        child: Column(
-                          children: [
-                            _buildHeader(context, state, parent),
-                            Expanded(
-                              child: SingleChildScrollView(
-                                key: _scrollAreaKey,
-                                controller: scrollController,
-                                physics: _draggingId != null
-                                    ? const NeverScrollableScrollPhysics()
-                                    : const AlwaysScrollableScrollPhysics(),
-                                padding: const EdgeInsets.all(16.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                                  children: [
-                                    if (_levelChildren.isEmpty)
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(vertical: 24.0),
-                                        child: Center(child: Text(context.l10n.noEmotionsYet)),
-                                      )
-                                    else
-                                      _buildChipsArea(context, state, _levelChildren),
-                                    const SizedBox(height: 12.0),
-                                    Align(
-                                      alignment: Alignment.center,
-                                      child: TextButton.icon(
-                                        onPressed: () => _openEditor(),
-                                        icon: const Icon(Icons.add, size: 18),
-                                        label: Text(context.l10n.addEmotion),
-                                      ),
+                  return GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onLongPressStart: _editMode ? (d) => _onLongPressStart(d.globalPosition) : null,
+                    onLongPressMoveUpdate: _editMode ? (d) => _onLongPressMove(d.globalPosition) : null,
+                    onLongPressEnd: _editMode ? (_) => _onLongPressEnd() : null,
+                    onLongPressCancel: _editMode
+                        ? () {
+                            if (_draggingId != null) _cancelDrag();
+                          }
+                        : null,
+                    child: Column(
+                      children: [
+                        _buildHeader(context, state, parent),
+                        Expanded(
+                          child: SingleChildScrollView(
+                            key: _scrollAreaKey,
+                            controller: _scrollController,
+                            physics: _draggingId != null
+                                ? const NeverScrollableScrollPhysics()
+                                : const AlwaysScrollableScrollPhysics(),
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                if (_levelChildren.isEmpty)
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 24.0),
+                                    child: Center(child: Text(context.l10n.noEmotionsYet)),
+                                  )
+                                else
+                                  _buildChipsArea(context, state, _levelChildren),
+                                // Creating an emotion is a top-level-only action, so the
+                                // link never offers to nest one inside another.
+                                if (_currentParentId == null) ...[
+                                  const SizedBox(height: 12.0),
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: TextButton.icon(
+                                      onPressed: () => _openEditor(),
+                                      icon: const Icon(Icons.add, size: 18),
+                                      label: Text(context.l10n.addEmotion),
                                     ),
-                                  ],
-                                ),
-                              ),
+                                  ),
+                                ],
+                              ],
                             ),
-                          ],
+                          ),
                         ),
-                      );
-                    },
-                  ),
-                ),
-                _buildHint(context),
-              ],
+                      ],
+                    ),
+                  );
+                },
+              ),
             ),
-          ),
-        );
-      },
+            _buildHint(context),
+          ],
+        ),
+      ),
     );
   }
 
@@ -489,7 +432,14 @@ class _EmotionMarkingSheetState extends State<EmotionMarkingSheet> {
         spacing: 10.0,
         runSpacing: 10.0,
         alignment: WrapAlignment.center,
-        children: [for (final emotion in children) _staticChip(context, state, emotion)],
+        children: [
+          for (final emotion in children)
+            _FocusRing(
+              key: _chipKey(emotion.id),
+              active: _focusedId == emotion.id,
+              child: _staticChip(context, state, emotion),
+            ),
+        ],
       );
     }
 
@@ -504,8 +454,8 @@ class _EmotionMarkingSheetState extends State<EmotionMarkingSheet> {
         widgets.add(_EditableChip(
           key: _chipKey(emotion.id),
           index: i,
-          isNestTarget: _springTargetId == emotion.id,
           armed: _armedRemoveId == emotion.id,
+          dragActive: _draggingId != null,
           onCross: () => _onCrossTap(emotion, state),
           child: _staticChip(context, state, emotion, forEdit: true),
         ));
@@ -515,15 +465,30 @@ class _EmotionMarkingSheetState extends State<EmotionMarkingSheet> {
     return Wrap(spacing: 0, runSpacing: 10.0, alignment: WrapAlignment.center, children: widgets);
   }
 
-  /// Animated placeholder that opens where the dragged chip will land.
+  /// Landing slot for a reordered chip. When open it shows a transparent ghost
+  /// of the held chip at the exact footprint it will occupy on release (net-zero
+  /// with the removed chip, so rows don't hop). Instant, so moving it snaps
+  /// instead of wobbling the wrap.
   Widget _gap(int index) {
-    final bool open = _draggingId != null && _springTargetId == null && _insertIndex == index;
+    final bool open = _draggingId != null && _insertIndex == index;
     final double height = _dragChipSize.height > 0 ? _dragChipSize.height : 34.0;
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 150),
-      curve: Curves.easeOut,
-      width: open ? _dragChipSize.width + 10.0 : 10.0,
+    if (!open) return SizedBox(width: 10.0, height: height);
+    final Emotion? dragged = _draggingId == null ? null : _state?.byId(_draggingId!);
+    return SizedBox(
+      width: _dragChipSize.width + 10.0,
       height: height,
+      child: Center(
+        child: dragged == null
+            ? null
+            : Opacity(
+                opacity: 0.35,
+                child: EmotionChip(
+                  emojis: [dragged.emoji],
+                  label: dragged.title,
+                  hasChildren: _state!.hasActiveChildren(dragged.id),
+                ),
+              ),
+      ),
     );
   }
 
@@ -566,51 +531,21 @@ class _EmotionMarkingSheetState extends State<EmotionMarkingSheet> {
     );
   }
 
-  Widget _buildHandle(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onVerticalDragUpdate: _onHandleDrag,
-      onVerticalDragEnd: _onHandleDragEnd,
-      child: Container(
-        width: double.infinity,
-        alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: KekBottomSheetStyle.handleBar(context),
-      ),
-    );
-  }
-
+  /// Left slot holds Edit at the root and the back arrow when drilled in — the
+  /// two never compete for it, since editing is a root-level activity.
   Widget _buildHeader(BuildContext context, EmotionsList state, Emotion? parent) {
-    final ColorScheme scheme = Theme.of(context).colorScheme;
     final String title =
         parent == null ? context.l10n.emotions : '${state.lineageEmojis(parent).join(' ')}  ${parent.title}';
 
-    Widget back;
-    if (parent == null) {
-      back = const SizedBox(width: 48);
-    } else {
-      final bool active = _draggingId != null && _overBack;
-      back = AnimatedContainer(
-        key: _backKey,
-        duration: const Duration(milliseconds: 150),
-        decoration: BoxDecoration(
-          color: active ? scheme.primaryContainer : Colors.transparent,
-          borderRadius: BorderRadius.circular(24),
-        ),
-        child: IconButton(
-          icon: Icon(Icons.arrow_back, color: active ? scheme.onPrimaryContainer : null),
-          onPressed: _goBack,
-        ),
-      );
-    }
-
-    final editButton = TextButton(
-      onPressed: _toggleEditMode,
-      child: Text(
-        _editMode ? context.l10n.doneEditing : context.l10n.edit,
-        style: TextStyle(fontSize: 16.0, fontWeight: _editMode ? FontWeight.bold : FontWeight.normal),
-      ),
-    );
+    final Widget leading = _canGoBack
+        ? IconButton(icon: const Icon(Icons.arrow_back), onPressed: _goBack)
+        : TextButton(
+            onPressed: _toggleEditMode,
+            child: Text(
+              _editMode ? context.l10n.doneEditing : context.l10n.edit,
+              style: TextStyle(fontSize: 16.0, fontWeight: _editMode ? FontWeight.bold : FontWeight.normal),
+            ),
+          );
 
     return SizedBox(
       height: 52,
@@ -628,8 +563,14 @@ class _EmotionMarkingSheetState extends State<EmotionMarkingSheet> {
               ),
             ),
           ),
-          Align(alignment: Alignment.centerLeft, child: back),
-          Align(alignment: Alignment.centerRight, child: editButton),
+          Align(alignment: Alignment.centerLeft, child: leading),
+          Align(
+            alignment: Alignment.centerRight,
+            child: IconButton(
+              icon: const Icon(Icons.close),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ),
         ],
       ),
     );
@@ -664,21 +605,44 @@ class _EmotionMarkingSheetState extends State<EmotionMarkingSheet> {
   }
 }
 
-/// Wraps a chip in edit mode: an iOS-style jiggle, a corner cross badge, and a
-/// highlight ring when it is the current spring-in / nest target.
+/// Briefly rings a chip that the sheet was opened to point at, so the target is
+/// obvious even when the level already fits on screen and nothing scrolls.
+class _FocusRing extends StatelessWidget {
+  final bool active;
+  final Widget child;
+
+  const _FocusRing({super.key, required this.active, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 250),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(22.0),
+        border: Border.all(
+          color: active ? Theme.of(context).colorScheme.primary : Colors.transparent,
+          width: 3.0,
+        ),
+      ),
+      child: child,
+    );
+  }
+}
+
+/// Wraps a chip in edit mode: an iOS-style jiggle and a corner cross badge.
 class _EditableChip extends StatefulWidget {
   final int index;
   final Widget child;
-  final bool isNestTarget;
   final bool armed;
+  final bool dragActive;
   final VoidCallback onCross;
 
   const _EditableChip({
     super.key,
     required this.index,
     required this.child,
-    required this.isNestTarget,
     required this.armed,
+    required this.dragActive,
     required this.onCross,
   });
 
@@ -689,8 +653,27 @@ class _EditableChip extends StatefulWidget {
 class _EditableChipState extends State<_EditableChip> with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     vsync: this,
+    value: 0.5,
     duration: Duration(milliseconds: 110 + (widget.index % 4) * 15),
-  )..repeat(reverse: true);
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    if (!widget.dragActive) _controller.repeat(reverse: true);
+  }
+
+  @override
+  void didUpdateWidget(covariant _EditableChip oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.dragActive == oldWidget.dragActive) return;
+    if (widget.dragActive) {
+      _controller.stop();
+      _controller.animateTo(0.5, duration: const Duration(milliseconds: 120));
+    } else {
+      _controller.repeat(reverse: true);
+    }
+  }
 
   @override
   void dispose() {
@@ -715,11 +698,7 @@ class _EditableChipState extends State<_EditableChip> with SingleTickerProviderS
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(22.0),
               border: Border.all(
-                color: widget.armed
-                    ? scheme.error
-                    : widget.isNestTarget
-                        ? scheme.primary
-                        : Colors.transparent,
+                color: widget.armed ? scheme.error : Colors.transparent,
                 width: 2.0,
               ),
             ),

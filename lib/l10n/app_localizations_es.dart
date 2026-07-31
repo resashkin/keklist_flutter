@@ -614,7 +614,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get doneEditing => 'Listo';
 
   @override
-  String get emotionEditHint => 'Toca para renombrar · ✕ para quitar';
+  String get emotionEditHint =>
+      'Toca para renombrar · ✕ para quitar · arrastra para reordenar';
 
   @override
   String get emotionInUseMessage =>

@@ -1266,7 +1266,7 @@ abstract class AppLocalizations {
   /// Hint shown while the emotion marking sheet is in edit mode
   ///
   /// In en, this message translates to:
-  /// **'Tap to rename · ✕ to remove'**
+  /// **'Tap to rename · ✕ to remove · drag to reorder'**
   String get emotionEditHint;
 
   /// Message when removing an emotion used by minds, offering archive or delete

@@ -592,7 +592,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get doneEditing => '完了';
 
   @override
-  String get emotionEditHint => 'タップで名前変更 · ✕ で削除';
+  String get emotionEditHint => 'タップで名前変更 · ✕ で削除 · ドラッグで並び替え';
 
   @override
   String get emotionInUseMessage =>

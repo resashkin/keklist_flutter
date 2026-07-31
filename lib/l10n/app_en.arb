@@ -777,7 +777,7 @@
     "@doneEditing": {
         "description": "Hint link that exits emotion edit mode"
     },
-    "emotionEditHint": "Tap to rename · ✕ to remove",
+    "emotionEditHint": "Tap to rename · ✕ to remove · drag to reorder",
     "@emotionEditHint": {
         "description": "Hint shown while the emotion marking sheet is in edit mode"
     },

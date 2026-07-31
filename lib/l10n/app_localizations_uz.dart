@@ -613,7 +613,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get emotionEditHint =>
-      'Nomini o\'zgartirish uchun bosing · ✕ o\'chirish uchun';
+      'Nomini o\'zgartirish uchun bosing · ✕ o\'chirish uchun · tartiblash uchun torting';
 
   @override
   String get emotionInUseMessage =>

@@ -589,7 +589,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get doneEditing => '完成';
 
   @override
-  String get emotionEditHint => '点按重命名 · ✕ 删除';
+  String get emotionEditHint => '点按重命名 · ✕ 删除 · 拖动排序';
 
   @override
   String get emotionInUseMessage => '此情绪已被一些 mind 使用。归档可将其保留在那里，或彻底删除。';

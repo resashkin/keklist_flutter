@@ -610,7 +610,8 @@ class AppLocalizationsSr extends AppLocalizations {
   String get doneEditing => 'Готово';
 
   @override
-  String get emotionEditHint => 'Додирните за преименовање · ✕ за уклањање';
+  String get emotionEditHint =>
+      'Додирните за преименовање · ✕ за уклањање · превуците за преуређивање';
 
   @override
   String get emotionInUseMessage =>
@@ -1236,7 +1237,8 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
   String get doneEditing => 'Gotovo';
 
   @override
-  String get emotionEditHint => 'Dodirnite za preimenovanje · ✕ za uklanjanje';
+  String get emotionEditHint =>
+      'Dodirnite za preimenovanje · ✕ za uklanjanje · prevucite za preuređivanje';
 
   @override
   String get emotionInUseMessage =>

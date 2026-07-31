@@ -193,7 +193,7 @@
     "noArchivedEmotions": "アーカイブされた感情はありません",
     "addEmotion": "感情を追加",
     "doneEditing": "完了",
-    "emotionEditHint": "タップで名前変更 · ✕ で削除",
+    "emotionEditHint": "タップで名前変更 · ✕ で削除 · ドラッグで並び替え",
     "emotionInUseMessage": "この感情は一部のマインドで使われています。アーカイブしてそこに残すか、すべてから削除します。",
     "deleteEmotionMessage": "この感情を削除しますか？使用しているすべてのマインドから削除されます。"
 }

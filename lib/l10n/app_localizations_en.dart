@@ -609,7 +609,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get doneEditing => 'Done';
 
   @override
-  String get emotionEditHint => 'Tap to rename · ✕ to remove';
+  String get emotionEditHint => 'Tap to rename · ✕ to remove · drag to reorder';
 
   @override
   String get emotionInUseMessage =>

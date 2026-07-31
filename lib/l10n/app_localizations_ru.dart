@@ -609,7 +609,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get emotionEditHint =>
-      'Нажмите, чтобы переименовать · ✕ чтобы удалить';
+      'Нажмите, чтобы переименовать · ✕ чтобы удалить · перетащите, чтобы упорядочить';
 
   @override
   String get emotionInUseMessage =>

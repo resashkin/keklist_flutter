@@ -193,7 +193,7 @@
     "noArchivedEmotions": "Keine archivierten Emotionen",
     "addEmotion": "Emotion hinzufügen",
     "doneEditing": "Fertig",
-    "emotionEditHint": "Tippen zum Umbenennen · ✕ zum Entfernen",
+    "emotionEditHint": "Tippen zum Umbenennen · ✕ zum Entfernen · ziehen zum Sortieren",
     "emotionInUseMessage": "Diese Emotion wird von einigen Minds verwendet. Archiviere sie, um sie dort zu behalten, oder lösche sie überall.",
     "deleteEmotionMessage": "Diese Emotion löschen? Sie wird aus allen Minds entfernt, die sie verwenden."
 }

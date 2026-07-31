@@ -616,7 +616,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get doneEditing => 'Fertig';
 
   @override
-  String get emotionEditHint => 'Tippen zum Umbenennen · ✕ zum Entfernen';
+  String get emotionEditHint =>
+      'Tippen zum Umbenennen · ✕ zum Entfernen · ziehen zum Sortieren';
 
   @override
   String get emotionInUseMessage =>

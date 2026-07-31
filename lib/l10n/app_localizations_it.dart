@@ -613,7 +613,8 @@ class AppLocalizationsIt extends AppLocalizations {
   String get doneEditing => 'Fatto';
 
   @override
-  String get emotionEditHint => 'Tocca per rinominare · ✕ per rimuovere';
+  String get emotionEditHint =>
+      'Tocca per rinominare · ✕ per rimuovere · trascina per riordinare';
 
   @override
   String get emotionInUseMessage =>

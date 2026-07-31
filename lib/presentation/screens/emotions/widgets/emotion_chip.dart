@@ -15,6 +15,10 @@ final class EmotionChip extends StatelessWidget {
   /// the chip itself isn't [selected], a count badge is shown to signal that a
   /// selection lives deeper in its subtree.
   final int selectedDescendantCount;
+
+  /// Adopts the reflection-comment bubble's palette, for chips rendered inside a
+  /// Mind card so both content types read as one surface. See ADR-0002.
+  final bool useCommentPalette;
   final VoidCallback? onTap;
   final VoidCallback? onLongPress;
 
@@ -29,6 +33,7 @@ final class EmotionChip extends StatelessWidget {
     this.selected = false,
     this.hasChildren = false,
     this.selectedDescendantCount = 0,
+    this.useCommentPalette = false,
     this.onTap,
     this.onLongPress,
     this.onChevronTap,
@@ -37,14 +42,20 @@ final class EmotionChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ColorScheme scheme = Theme.of(context).colorScheme;
-    final Color background = selected ? scheme.secondaryContainer : scheme.surfaceContainerHighest;
-    final Color foreground = selected ? scheme.onSecondaryContainer : scheme.onSurface;
+    final Color background = useCommentPalette
+        ? scheme.primaryContainer
+        : (selected ? scheme.secondaryContainer : scheme.surfaceContainerHighest);
+    final Color foreground = useCommentPalette
+        ? scheme.onPrimaryContainer
+        : (selected ? scheme.onSecondaryContainer : scheme.onSurface);
 
     // Constant border width across states so the chip never resizes when toggled.
     // The accent border is reserved for a *directly* selected chip; the count
     // badge shows whenever the subtree holds selections, even if the chip itself
     // is also selected.
-    final Color borderColor = selected ? scheme.secondary : scheme.outlineVariant;
+    final Color borderColor = useCommentPalette
+        ? scheme.primary
+        : (selected ? scheme.secondary : scheme.outlineVariant);
     final bool showBadge = selectedDescendantCount > 0;
 
     return GestureDetector(

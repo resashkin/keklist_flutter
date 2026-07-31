@@ -5,6 +5,7 @@ import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:keklist/domain/services/entities/emotion.dart';
 import 'package:keklist/presentation/blocs/emotion_bloc/emotion_bloc.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
+import 'package:keklist/presentation/screens/emotions/emotion_marking_sheet.dart';
 import 'package:keklist/presentation/screens/emotions/widgets/emotion_chip.dart';
 import 'package:keklist/presentation/core/helpers/mind_utils.dart';
 import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
@@ -105,21 +106,24 @@ final class MindMessageWidget extends StatelessWidget {
 
 /// Renders a mind's tagged emotions as small chips under its main emoji.
 /// Resolves ids via [EmotionBloc] (archived included, so tagged minds still
-/// show them) and skips ids that no longer resolve. Tapping a chip immediately
-/// untags that emotion from the mind.
+/// show them) and skips ids that no longer resolve. Tapping a chip opens the
+/// marking sheet aimed at that emotion rather than untagging it outright, which
+/// was too easy to trigger by accident. See ADR-0002.
 final class _MindEmotionsRow extends StatelessWidget {
   final Mind mind;
 
   const _MindEmotionsRow({required this.mind});
 
-  void _remove(BuildContext context, String emotionId) {
+  void _openSheet(BuildContext context, String emotionId) {
     Haptics.vibrate(HapticsType.soft);
-    context.read<MindBloc>().add(
-          MindSetEmotions(
-            mindId: mind.id,
-            emotionIds: mind.emotionIds.where((id) => id != emotionId).toList(),
+    EmotionMarkingSheet.show(
+      context: context,
+      initialSelectedIds: mind.emotionIds.toSet(),
+      focusEmotionId: emotionId,
+      onSelectionChanged: (ids) => context.read<MindBloc>().add(
+            MindSetEmotions(mindId: mind.id, emotionIds: ids.toList()),
           ),
-        );
+    );
   }
 
   @override
@@ -141,7 +145,8 @@ final class _MindEmotionsRow extends StatelessWidget {
                 emojis: state.lineageEmojis(emotion),
                 label: emotion.title,
                 selected: true,
-                onTap: () => _remove(context, emotion.id),
+                useCommentPalette: true,
+                onTap: () => _openSheet(context, emotion.id),
               ),
           ],
         );
