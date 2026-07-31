@@ -492,6 +492,10 @@
     "@audioFilesToExport": {
         "description": "Audio files count label for export"
     },
+    "emotionsToExport": "Emotions",
+    "@emotionsToExport": {
+        "description": "Emotions count label for export"
+    },
     "mindsExported": "Minds exported",
     "@mindsExported": {
         "description": "Minds exported count"
@@ -736,10 +740,6 @@
     "emotions": "Emotions",
     "@emotions": {
         "description": "Emotions feature title"
-    },
-    "editEmotions": "Edit emotions",
-    "@editEmotions": {
-        "description": "Mind action-menu item to change the emotions tagged on a mind"
     },
     "archived": "Archived",
     "@archived": {

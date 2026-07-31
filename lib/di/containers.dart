@@ -79,6 +79,7 @@ final class MainContainer {
       (injector) => ExportImportService(
         mindRepository: injector.get<MindRepository>(),
         fileRepository: injector.get<AppFileRepository>(),
+        emotionRepository: injector.get<EmotionRepository>(),
       ),
       isSingleton: true,
     );

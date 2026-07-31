@@ -386,6 +386,9 @@ class AppLocalizationsSr extends AppLocalizations {
   String get audioFilesToExport => 'Аудио фајлови';
 
   @override
+  String get emotionsToExport => 'Емоције';
+
+  @override
   String get mindsExported => 'Белешке извезене';
 
   @override
@@ -578,9 +581,6 @@ class AppLocalizationsSr extends AppLocalizations {
 
   @override
   String get emotions => 'Емоције';
-
-  @override
-  String get editEmotions => 'Измени емоције';
 
   @override
   String get archived => 'Архивирано';
@@ -1014,6 +1014,9 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
   String get audioFilesToExport => 'Audio fajlovi';
 
   @override
+  String get emotionsToExport => 'Emocije';
+
+  @override
   String get mindsExported => 'Umovi izvezeni';
 
   @override
@@ -1205,9 +1208,6 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
 
   @override
   String get emotions => 'Emocije';
-
-  @override
-  String get editEmotions => 'Izmeni emocije';
 
   @override
   String get archived => 'Arhivirano';

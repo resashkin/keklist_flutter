@@ -386,6 +386,9 @@ class AppLocalizationsUz extends AppLocalizations {
   String get audioFilesToExport => 'Audio fayllar';
 
   @override
+  String get emotionsToExport => 'Hislar';
+
+  @override
   String get mindsExported => 'Fikrlar eksport qilindi';
 
   @override
@@ -580,9 +583,6 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get emotions => 'Hissiyotlar';
-
-  @override
-  String get editEmotions => 'Hissiyotlarni tahrirlash';
 
   @override
   String get archived => 'Arxivlangan';

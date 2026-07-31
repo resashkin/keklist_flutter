@@ -96,6 +96,31 @@ final class EmotionChip extends StatelessWidget {
   }
 }
 
+/// Messenger-style "add a reaction" affordance: a compact outlined pill sized to
+/// sit beside [EmotionChip]s. Uses the smiley-with-plus glyph so the control
+/// reads as "add a feeling" rather than a generic add button. See ADR-0004.
+final class EmotionAddChip extends StatelessWidget {
+  final VoidCallback? onTap;
+
+  const EmotionAddChip({super.key, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final ColorScheme scheme = Theme.of(context).colorScheme;
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.0),
+          border: Border.all(color: scheme.outlineVariant, width: 1.5),
+        ),
+        child: Icon(Icons.add_reaction_outlined, size: 20.0, color: scheme.onSurfaceVariant),
+      ),
+    );
+  }
+}
+
 class _CountBadge extends StatelessWidget {
   final int count;
 

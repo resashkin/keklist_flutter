@@ -15,7 +15,6 @@ import 'package:keklist/presentation/core/widgets/overscroll_listener.dart';
 import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
 import 'package:keklist/presentation/screens/actions/action_model.dart';
 import 'package:keklist/presentation/screens/actions/actions_screen.dart';
-import 'package:keklist/presentation/screens/emotions/emotion_marking_sheet.dart';
 import 'package:keklist/presentation/screens/mind_one_emoji_collection/mind_one_emoji_collection.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/messaged_list/mind_message_widget.dart';
@@ -306,7 +305,6 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
               null)
             (ActionModel.tranlsateToEnglish(context), () => _translateToEnglish(mind: mind)),
           (ActionModel.edit(context), () => _editMind(mind)),
-          if (mind.rootId == null) (ActionModel.addEmotions(context), () => _addEmotions(mind)),
           (ActionModel.showAll(context), () => _showAllMinds(mind)),
           (ActionModel.delete(context), () => _removeMind(mind)),
         ],
@@ -329,16 +327,6 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
     });
     _createMindEditingController.text = mind.note;
     _mindCreatorFocusNode.requestFocus();
-  }
-
-  void _addEmotions(Mind mind) {
-    EmotionMarkingSheet.show(
-      context: context,
-      initialSelectedIds: mind.emotionIds.toSet(),
-      onSelectionChanged: (ids) => sendEventToBloc<MindBloc>(
-        MindSetEmotions(mindId: mind.id, emotionIds: ids.toList()),
-      ),
-    );
   }
 
   void _showAllMinds(Mind mind) {

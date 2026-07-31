@@ -849,6 +849,12 @@ abstract class AppLocalizations {
   /// **'Audio files'**
   String get audioFilesToExport;
 
+  /// Emotions count label for export
+  ///
+  /// In en, this message translates to:
+  /// **'Emotions'**
+  String get emotionsToExport;
+
   /// Minds exported count
   ///
   /// In en, this message translates to:
@@ -1202,12 +1208,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Emotions'**
   String get emotions;
-
-  /// Mind action-menu item to change the emotions tagged on a mind
-  ///
-  /// In en, this message translates to:
-  /// **'Edit emotions'**
-  String get editEmotions;
 
   /// Title for the archived emotions screen and section
   ///

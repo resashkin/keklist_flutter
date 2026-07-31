@@ -377,6 +377,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get audioFilesToExport => '音频文件';
 
   @override
+  String get emotionsToExport => '情绪';
+
+  @override
   String get mindsExported => '笔记已导出';
 
   @override
@@ -557,9 +560,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get emotions => '情绪';
-
-  @override
-  String get editEmotions => '编辑情绪';
 
   @override
   String get archived => '已归档';

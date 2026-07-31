@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:keklist/domain/repositories/emotion/emotion_repository.dart';
 import 'package:keklist/domain/repositories/files/app_file_repository.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
@@ -13,6 +14,8 @@ import 'package:path_provider_platform_interface/path_provider_platform_interfac
 class MockMindRepository extends Mock implements MindRepository {}
 
 class MockAppFileRepository extends Mock implements AppFileRepository {}
+
+class MockEmotionRepository extends Mock implements EmotionRepository {}
 
 class MockPathProviderPlatform extends PathProviderPlatform {
   @override
@@ -47,9 +50,12 @@ void main() {
   setUp(() async {
     mockMindRepository = MockMindRepository();
     mockFileRepository = MockAppFileRepository();
+    final mockEmotionRepository = MockEmotionRepository();
+    when(() => mockEmotionRepository.values).thenReturn(const []);
     service = ExportImportService(
       mindRepository: mockMindRepository,
       fileRepository: mockFileRepository,
+      emotionRepository: mockEmotionRepository,
     );
 
     // Setup temp directory for tests

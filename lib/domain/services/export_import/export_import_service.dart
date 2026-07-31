@@ -5,24 +5,35 @@ import 'dart:typed_data';
 import 'package:archive/archive.dart';
 import 'package:csv/csv.dart';
 import 'package:encrypt/encrypt.dart';
+import 'package:keklist/domain/repositories/emotion/emotion_repository.dart';
 import 'package:keklist/domain/repositories/files/app_file_repository.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
+import 'package:keklist/domain/services/entities/emotion.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/domain/services/entities/mind_note_content.dart';
 import 'package:keklist/domain/services/export_import/models/export_result.dart';
 import 'package:keklist/domain/services/export_import/models/import_result.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pointycastle/export.dart' as pc;
+import 'package:uuid/uuid.dart';
 
 /// Service responsible for exporting and importing minds with audio files
 /// Supports CSV, ZIP, and encrypted ZIP formats with AES-256 encryption
 final class ExportImportService {
   final MindRepository _mindRepository;
   final AppFileRepository _fileRepository;
+  final EmotionRepository _emotionRepository;
 
-  const ExportImportService({required MindRepository mindRepository, required AppFileRepository fileRepository})
-    : _mindRepository = mindRepository,
-      _fileRepository = fileRepository;
+  const ExportImportService({
+    required MindRepository mindRepository,
+    required AppFileRepository fileRepository,
+    required EmotionRepository emotionRepository,
+  }) : _mindRepository = mindRepository,
+       _fileRepository = fileRepository,
+       _emotionRepository = emotionRepository;
+
+  /// Name of the emotion definitions entry inside a ZIP export.
+  static const String emotionsFileName = 'emotions.csv';
 
   // Encryption constants
   static const int _saltLength = 16;
@@ -89,6 +100,17 @@ final class ExportImportService {
       // Add minds.csv to root
       archive.addFile(ArchiveFile('minds.csv', csv.length, utf8.encode(csv)));
 
+      // Every emotion travels, archived and unused included: minds may still be
+      // tagged with archived ones, and a missing parent would orphan its children.
+      final emotions = _emotionRepository.values.toList();
+      if (emotions.isNotEmpty) {
+        final emotionsCsv =
+            const CsvEncoder(fieldDelimiter: ';').convert(emotions.map((e) => e.toCSVEntry()).toList());
+        archive.addFile(
+          ArchiveFile(emotionsFileName, emotionsCsv.length, utf8.encode(emotionsCsv)),
+        );
+      }
+
       // Add audio files
       int successfulAudioCount = 0;
       for (final relativePath in audioFiles) {
@@ -147,6 +169,72 @@ final class ExportImportService {
         exception: e is Exception ? e : Exception(e.toString()),
       );
     }
+  }
+
+  /// Reconciles incoming emotion definitions against what is already stored and
+  /// returns a map of incoming id -> effective id.
+  ///
+  /// An incoming id that is unknown locally is created as-is. An id that already
+  /// exists is reused when the definition matches, and cloned under a fresh id
+  /// when it differs, so neither version is lost. Callers must push every
+  /// imported `emotionIds` entry through the returned map — and cloned children
+  /// have their `parentId` remapped here — or tags would point at the wrong row
+  /// and nested emotions would orphan. See ADR-0004.
+  Future<Map<String, String>> _reconcileEmotions(List<Emotion> incoming) async {
+    if (incoming.isEmpty) return const {};
+
+    final existingById = {for (final emotion in _emotionRepository.values) emotion.id: emotion};
+    final remap = <String, String>{};
+    final toCreate = <Emotion>[];
+
+    for (final emotion in incoming) {
+      final local = existingById[emotion.id];
+      if (local == null) {
+        remap[emotion.id] = emotion.id;
+        toCreate.add(emotion);
+      } else if (local.hasSameDefinitionAs(emotion)) {
+        remap[emotion.id] = local.id;
+      } else {
+        final cloneId = const Uuid().v4();
+        remap[emotion.id] = cloneId;
+        toCreate.add(emotion.copyWith(id: cloneId));
+      }
+    }
+
+    // Re-point created rows at the effective parent, so a cloned child follows
+    // its cloned parent instead of the local one it no longer matches.
+    final resolved = toCreate.map((emotion) {
+      final parentId = emotion.parentId;
+      if (parentId == null) return emotion;
+      final mapped = remap[parentId];
+      return mapped == null || mapped == parentId ? emotion : emotion.copyWith(parentId: mapped);
+    }).toList();
+
+    if (resolved.isNotEmpty) {
+      await _emotionRepository.createEmotions(emotions: resolved);
+    }
+    return remap;
+  }
+
+  /// Parses an `emotions.csv` payload into definitions, skipping unusable rows.
+  List<Emotion> _parseEmotionsCsv(String content) {
+    if (content.trim().isEmpty) return const [];
+    final rows = const CsvDecoder(fieldDelimiter: ';').convert(content);
+    return rows.map(Emotion.fromCSVEntry).whereType<Emotion>().toList();
+  }
+
+  /// Applies an emotion id remap to a mind's tags, dropping ids that did not
+  /// travel with the archive rather than leaving them dangling.
+  List<Mind> _remapMindEmotions(List<Mind> minds, Map<String, String> remap) {
+    if (remap.isEmpty) return minds;
+    return minds.map((mind) {
+      if (mind.emotionIds.isEmpty) return mind;
+      final mapped = mind.emotionIds.map((id) => remap[id]).whereType<String>().toList();
+      return mapped.length == mind.emotionIds.length &&
+              List.generate(mapped.length, (i) => mapped[i] == mind.emotionIds[i]).every((same) => same)
+          ? mind
+          : mind.copyWith(emotionIds: mapped);
+    }).toList();
   }
 
   /// Import minds from a file (CSV, ZIP, or encrypted ZIP)
@@ -223,6 +311,7 @@ final class ExportImportService {
             sortIndex: int.parse(row[4].toString()),
             creationDate: DateTime.parse(row[5].toString()),
             rootId: row[6].toString() == 'null' ? null : row[6].toString(),
+            emotionIds: Mind.emotionIdsFromCSVEntry(row),
           );
           mindsToImport.add(mind);
         } catch (e) {
@@ -332,6 +421,7 @@ final class ExportImportService {
             sortIndex: int.parse(row[4].toString()),
             creationDate: DateTime.parse(row[5].toString()),
             rootId: row[6].toString() == 'null' ? null : row[6].toString(),
+            emotionIds: Mind.emotionIdsFromCSVEntry(row),
           );
           mindsToImport.add(mind);
         } catch (e) {
@@ -341,6 +431,25 @@ final class ExportImportService {
 
       if (mindsToImport.isEmpty) {
         return const ImportFailure(error: ImportError.invalidFormat, details: 'No valid minds found in archive');
+      }
+
+      // Emotions must be reconciled before minds are written, so tags land on the
+      // effective ids. Archives predating emotions.csv simply skip this.
+      ArchiveFile? emotionsFile;
+      for (final file in archive) {
+        if (file.name == emotionsFileName) {
+          emotionsFile = file;
+          break;
+        }
+      }
+      if (emotionsFile != null) {
+        final remap = await _reconcileEmotions(
+          _parseEmotionsCsv(utf8.decode(emotionsFile.content as List<int>)),
+        );
+        final remapped = _remapMindEmotions(List<Mind>.from(mindsToImport), remap);
+        mindsToImport
+          ..clear()
+          ..addAll(remapped);
       }
 
       // Copy audio files to app directory

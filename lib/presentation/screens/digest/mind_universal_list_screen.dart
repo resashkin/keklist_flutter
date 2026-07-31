@@ -18,7 +18,6 @@ import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/presentation/core/widgets/kek_floating_button.dart';
 import 'package:keklist/presentation/screens/actions/action_model.dart';
-import 'package:keklist/presentation/screens/emotions/emotion_marking_sheet.dart';
 import 'package:keklist/presentation/screens/actions/actions_screen.dart';
 import 'package:keklist/presentation/screens/mind_collection/local_widgets/mind_collection_empty_day_widget.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/messaged_list/mind_message_widget.dart';
@@ -287,21 +286,10 @@ final class _MindUniversalListScreenState extends KekWidgetState<MindUniversalLi
               null)
             (ActionModel.tranlsateToEnglish(context), () => _translateToEnglish(mind: mind)),
           (ActionModel.edit(context), () => _editMind(mind)),
-          if (mind.rootId == null) (ActionModel.addEmotions(context), () => _editEmotions(mind)),
           (ActionModel.switchDay(context), () => _switchDay(mind)),
           (ActionModel.showAll(context), () => _showAllMinds(mind)),
           (ActionModel.delete(context), () => _removeMind(mind)),
         ],
-      ),
-    );
-  }
-
-  void _editEmotions(Mind mind) {
-    EmotionMarkingSheet.show(
-      context: context,
-      initialSelectedIds: mind.emotionIds.toSet(),
-      onSelectionChanged: (ids) => sendEventToBloc<MindBloc>(
-        MindSetEmotions(mindId: mind.id, emotionIds: ids.toList()),
       ),
     );
   }

@@ -72,6 +72,41 @@ final class Emotion with EquatableMixin {
     );
   }
 
+  /// Positional, header-less row for `emotions.csv`. See
+  /// `documentation/adr/ADR-0004-emotions-in-export-and-add-anchor.md`.
+  List<String> toCSVEntry() => [
+        id,
+        title,
+        emoji,
+        parentId ?? 'null',
+        isArchived.toString(),
+        orderIndex.toString(),
+        creationDate.toString(),
+      ];
+
+  /// Rebuilds an emotion from a [toCSVEntry] row, or `null` if the row is unusable.
+  static Emotion? fromCSVEntry(List<dynamic> row) {
+    if (row.length < 7) return null;
+    try {
+      return Emotion(
+        id: row[0].toString(),
+        title: row[1].toString(),
+        emoji: row[2].toString(),
+        parentId: row[3].toString() == 'null' ? null : row[3].toString(),
+        isArchived: row[4].toString().toLowerCase() == 'true',
+        orderIndex: int.parse(row[5].toString()),
+        creationDate: DateTime.parse(row[6].toString()),
+      );
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// Whether [other] describes the same emotion, ignoring bookkeeping fields that
+  /// legitimately drift between devices (order, archive state, creation date).
+  bool hasSameDefinitionAs(Emotion other) =>
+      title == other.title && emoji == other.emoji && parentId == other.parentId;
+
   EmotionObject toObject() => EmotionObject()
     ..id = id
     ..title = title

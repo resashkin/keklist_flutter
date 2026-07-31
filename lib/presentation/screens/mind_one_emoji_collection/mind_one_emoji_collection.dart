@@ -4,7 +4,6 @@ import 'package:flutter/material.dart' hide DateUtils;
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 import 'package:keklist/presentation/core/helpers/extensions/state_extensions.dart';
 import 'package:keklist/presentation/screens/actions/action_model.dart';
-import 'package:keklist/presentation/screens/emotions/emotion_marking_sheet.dart';
 import 'package:keklist/presentation/screens/actions/actions_screen.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/messaged_list/mind_monolog_list_widget.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
@@ -153,19 +152,8 @@ final class _MindOneEmojiCollectionScreenState extends State<MindOneEmojiCollect
               }
             },
           ),
-          if (mind.rootId == null) (ActionModel.addEmotions(context), () => _editEmotions(mind)),
           (ActionModel.delete(context), () => sendEventToBloc<MindBloc>(MindDelete(mind: mind))),
         ],
-      ),
-    );
-  }
-
-  void _editEmotions(Mind mind) {
-    EmotionMarkingSheet.show(
-      context: context,
-      initialSelectedIds: mind.emotionIds.toSet(),
-      onSelectionChanged: (ids) => sendEventToBloc<MindBloc>(
-        MindSetEmotions(mindId: mind.id, emotionIds: ids.toList()),
       ),
     );
   }

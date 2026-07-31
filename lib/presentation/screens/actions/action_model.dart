@@ -18,7 +18,6 @@ sealed class ActionModel {
   factory ActionModel.extraActions(BuildContext context) => ExtraActionsMenuActionModel(context: context);
   factory ActionModel.mindOptions(BuildContext context) => MindOptionsMenuActionModel(context: context);
   factory ActionModel.edit(BuildContext context) => EditMenuActionModel(context: context);
-  factory ActionModel.addEmotions(BuildContext context) => AddEmotionsMenuActionModel(context: context);
   factory ActionModel.delete(BuildContext context) => DeleteMenuActionModel(context: context);
   factory ActionModel.share(BuildContext context) => ShareMenuActionModel(context: context);
   factory ActionModel.switchDay(BuildContext context) => SwitchDayMenuActionModel(context: context);
@@ -54,14 +53,6 @@ final class MindOptionsMenuActionModel extends ActionModel {
       : super(
           title: context.l10n.mindOptions,
           icon: const Icon(Icons.more_vert),
-        );
-}
-
-final class AddEmotionsMenuActionModel extends ActionModel {
-  AddEmotionsMenuActionModel({required BuildContext context})
-      : super(
-          title: context.l10n.editEmotions,
-          icon: const Icon(Icons.favorite_border),
         );
 }
 

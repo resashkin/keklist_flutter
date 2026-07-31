@@ -380,6 +380,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get audioFilesToExport => '音声ファイル';
 
   @override
+  String get emotionsToExport => '感情';
+
+  @override
   String get mindsExported => 'メモをエクスポートしました';
 
   @override
@@ -560,9 +563,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get emotions => '感情';
-
-  @override
-  String get editEmotions => '感情を編集';
 
   @override
   String get archived => 'アーカイブ';

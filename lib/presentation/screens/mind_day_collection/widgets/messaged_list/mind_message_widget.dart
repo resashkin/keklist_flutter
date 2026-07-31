@@ -55,7 +55,9 @@ final class MindMessageWidget extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                       ),
-                      if (mind.emotionIds.isNotEmpty) ...[
+                      // Always shown on root minds so there is a stable anchor to
+                      // add the first emotion, not only to see existing ones.
+                      if (mind.rootId == null) ...[
                         const SizedBox(height: 16.0),
                         _MindEmotionsRow(mind: mind),
                       ],
@@ -114,7 +116,9 @@ final class _MindEmotionsRow extends StatelessWidget {
 
   const _MindEmotionsRow({required this.mind});
 
-  void _openSheet(BuildContext context, String emotionId) {
+  /// Opens the marking sheet, optionally aimed at [emotionId]; the add chip
+  /// passes none and simply opens at the top level.
+  void _openSheet(BuildContext context, {String? emotionId}) {
     Haptics.vibrate(HapticsType.soft);
     EmotionMarkingSheet.show(
       context: context,
@@ -133,7 +137,6 @@ final class _MindEmotionsRow extends StatelessWidget {
         if (state is! EmotionsList) return const SizedBox.shrink();
         final byId = {for (final Emotion emotion in state.emotions) emotion.id: emotion};
         final emotions = mind.emotionIds.map((id) => byId[id]).whereType<Emotion>().toList();
-        if (emotions.isEmpty) return const SizedBox.shrink();
 
         return Wrap(
           spacing: 6.0,
@@ -146,8 +149,9 @@ final class _MindEmotionsRow extends StatelessWidget {
                 label: emotion.title,
                 selected: true,
                 useCommentPalette: true,
-                onTap: () => _openSheet(context, emotion.id),
+                onTap: () => _openSheet(context, emotionId: emotion.id),
               ),
+            EmotionAddChip(onTap: () => _openSheet(context)),
           ],
         );
       },

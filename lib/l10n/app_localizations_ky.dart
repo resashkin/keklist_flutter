@@ -386,6 +386,9 @@ class AppLocalizationsKy extends AppLocalizations {
   String get audioFilesToExport => 'Аудио файлдар';
 
   @override
+  String get emotionsToExport => 'Эмоциялар';
+
+  @override
   String get mindsExported => 'Ойлор экспортталды';
 
   @override
@@ -579,9 +582,6 @@ class AppLocalizationsKy extends AppLocalizations {
 
   @override
   String get emotions => 'Эмоциялар';
-
-  @override
-  String get editEmotions => 'Эмоцияларды түзөтүү';
 
   @override
   String get archived => 'Архив';

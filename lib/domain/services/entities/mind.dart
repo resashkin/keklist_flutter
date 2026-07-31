@@ -58,6 +58,9 @@ final class Mind with EquatableMixin {
         'sort_index': sortIndex,
       };
 
+  /// Positional, header-less row. Columns are only ever appended: readers guard
+  /// on length, so an older build ignores trailing fields it does not know.
+  /// Ids are joined with `,` because the CSV field delimiter is `;`.
   List<String> toCSVEntry() => [
         id,
         emoji,
@@ -66,7 +69,15 @@ final class Mind with EquatableMixin {
         sortIndex.toString(),
         creationDate.toString(),
         rootId?.toString() ?? "null",
+        emotionIds.join(','),
       ];
+
+  /// Parses the emotion id column of a [toCSVEntry] row, tolerating rows written
+  /// before the column existed.
+  static List<String> emotionIdsFromCSVEntry(List<dynamic> row) {
+    if (row.length <= 7) return const [];
+    return row[7].toString().split(',').map((id) => id.trim()).where((id) => id.isNotEmpty).toList();
+  }
 
   Mind copyWith({
     String? id,

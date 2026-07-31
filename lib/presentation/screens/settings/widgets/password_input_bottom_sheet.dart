@@ -20,6 +20,7 @@ class PasswordInputBottomSheet extends StatefulWidget {
   /// Optional metadata to display (for export)
   final int? mindsCount;
   final int? audioFilesCount;
+  final int? emotionsCount;
 
   const PasswordInputBottomSheet({
     super.key,
@@ -27,6 +28,7 @@ class PasswordInputBottomSheet extends StatefulWidget {
     this.isOptional = false,
     this.mindsCount,
     this.audioFilesCount,
+    this.emotionsCount,
   });
 
   /// Show the bottom sheet and return the password, or null if cancelled
@@ -36,6 +38,7 @@ class PasswordInputBottomSheet extends StatefulWidget {
     bool isOptional = false,
     int? mindsCount,
     int? audioFilesCount,
+    int? emotionsCount,
   }) {
     return showModalBottomSheet<String>(
       context: context,
@@ -48,6 +51,7 @@ class PasswordInputBottomSheet extends StatefulWidget {
           isOptional: isOptional,
           mindsCount: mindsCount,
           audioFilesCount: audioFilesCount,
+          emotionsCount: emotionsCount,
         ),
       ),
     );
@@ -123,6 +127,13 @@ class _PasswordInputBottomSheetState extends State<PasswordInputBottomSheet> {
                           const SizedBox(height: 8),
                           Text(
                             '${context.l10n.audioFilesToExport} - ${widget.audioFilesCount}',
+                            style: theme.textTheme.bodyMedium,
+                          ),
+                        ],
+                        if (widget.emotionsCount != null && widget.emotionsCount! > 0) ...[
+                          const SizedBox(height: 8),
+                          Text(
+                            '${context.l10n.emotionsToExport} - ${widget.emotionsCount}',
                             style: theme.textTheme.bodyMedium,
                           ),
                         ],

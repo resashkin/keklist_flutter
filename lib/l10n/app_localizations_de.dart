@@ -387,6 +387,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get audioFilesToExport => 'Audiodateien';
 
   @override
+  String get emotionsToExport => 'Emotionen';
+
+  @override
   String get mindsExported => 'Notizen exportiert';
 
   @override
@@ -584,9 +587,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get emotions => 'Emotionen';
-
-  @override
-  String get editEmotions => 'Emotionen bearbeiten';
 
   @override
   String get archived => 'Archiviert';

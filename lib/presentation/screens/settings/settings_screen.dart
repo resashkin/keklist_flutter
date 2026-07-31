@@ -11,6 +11,7 @@ import 'package:keklist/domain/constants.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/domain/services/entities/mind_note_content.dart';
 import 'package:keklist/domain/services/export_import/models/import_result.dart';
+import 'package:keklist/presentation/blocs/emotion_bloc/emotion_bloc.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/blocs/membership_bloc/membership_bloc.dart';
 import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
@@ -413,6 +414,9 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     }
     final audioFilesCount = audioFiles.length;
 
+    final emotionState = context.read<EmotionBloc>().state;
+    final emotionsCount = emotionState is EmotionsList ? emotionState.emotions.length : 0;
+
     // Show password input bottom sheet with metadata
     final password = await PasswordInputBottomSheet.show(
       context: context,
@@ -420,6 +424,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
       isOptional: true,
       mindsCount: mindsCount,
       audioFilesCount: audioFilesCount,
+      emotionsCount: emotionsCount,
     );
 
     if (password == null) return; // User cancelled

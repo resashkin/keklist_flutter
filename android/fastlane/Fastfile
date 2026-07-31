@@ -21,9 +21,26 @@ default_platform(:android)
 platform :android do
   desc "Build AAB and upload to Play Store internal testing track"
   lane :build_and_upload_to_internal do
+    # Same K2 workaround the Firebase lane applies before building.
+    sh("bash #{File.expand_path('../../scripts/patch_revenuecat_k2.sh', __dir__)}")
+
+    # Play rejects a version code any track has already consumed, so derive the
+    # next one from the highest in use rather than trusting pubspec.yaml.
+    codes = %w[internal alpha beta production].flat_map do |track|
+      begin
+        google_play_track_version_codes(track: track)
+      rescue => e
+        UI.important("Could not read '#{track}' track (#{e.message}); ignoring it")
+        []
+      end
+    end
+    latest_build = codes.compact.max || 0
+    next_build = latest_build + 1
+    UI.message("📈 Version code: #{next_build} (latest on Play: #{latest_build})")
+
     # Build Flutter app for Android
-    sh("cd .. && fvm flutter build appbundle --release")
-    
+    sh("cd .. && fvm flutter build appbundle --release --build-number=#{next_build}")
+
     # Upload to Play Store internal testing track
     upload_to_play_store(
       track: "internal",
