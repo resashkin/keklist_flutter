@@ -105,6 +105,13 @@ class _EmotionMarkingSheetState extends State<EmotionMarkingSheet> {
   GlobalKey _chipKey(String id) => _chipKeys.putIfAbsent(id, () => GlobalKey());
 
   @override
+  void initState() {
+    super.initState();
+    // First open of the marker is where the starter emotions come into being.
+    context.read<EmotionBloc>().add(EmotionSeedDefaults());
+  }
+
+  @override
   void dispose() {
     _autoScrollTimer?.cancel();
     _armTimer?.cancel();

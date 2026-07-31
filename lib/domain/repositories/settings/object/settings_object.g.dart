@@ -42,13 +42,14 @@ class SettingsObjectAdapter extends TypeAdapter<SettingsObject> {
           : (fields[18] as num).toInt()
       ..interfaceStyleIndex = fields[19] == null
           ? 1
-          : (fields[19] as num).toInt();
+          : (fields[19] as num).toInt()
+      ..hasSeededEmotions = fields[20] == null ? false : fields[20] as bool;
   }
 
   @override
   void write(BinaryWriter writer, SettingsObject obj) {
     writer
-      ..writeByte(18)
+      ..writeByte(19)
       ..writeByte(0)
       ..write(obj.isMindContentVisible)
       ..writeByte(1)
@@ -84,7 +85,9 @@ class SettingsObjectAdapter extends TypeAdapter<SettingsObject> {
       ..writeByte(18)
       ..write(obj.themePreferenceIndex)
       ..writeByte(19)
-      ..write(obj.interfaceStyleIndex);
+      ..write(obj.interfaceStyleIndex)
+      ..writeByte(20)
+      ..write(obj.hasSeededEmotions);
   }
 
   @override

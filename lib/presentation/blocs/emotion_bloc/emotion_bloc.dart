@@ -6,7 +6,9 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:keklist/domain/repositories/emotion/emotion_repository.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
+import 'package:keklist/domain/repositories/settings/settings_repository.dart';
 import 'package:keklist/domain/services/entities/emotion.dart';
+import 'package:keklist/domain/services/entities/emotion_seed.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:uuid/uuid.dart';
 
@@ -16,13 +18,16 @@ part 'emotion_state.dart';
 final class EmotionBloc extends Bloc<EmotionEvent, EmotionState> with DisposeBag {
   final EmotionRepository _emotionRepository;
   final MindRepository _mindRepository;
+  final SettingsRepository _settingsRepository;
   final Uuid _uuid = const Uuid();
 
   EmotionBloc({
     required EmotionRepository emotionRepository,
     required MindRepository mindRepository,
+    required SettingsRepository settingsRepository,
   })  : _emotionRepository = emotionRepository,
         _mindRepository = mindRepository,
+        _settingsRepository = settingsRepository,
         super(EmotionsList(emotions: const [])) {
     on<EmotionGetList>((_, emit) => _emitList(emit));
     on<EmotionInternalGetListFromCache>((_, emit) => _emitList(emit));
@@ -33,6 +38,7 @@ final class EmotionBloc extends Bloc<EmotionEvent, EmotionState> with DisposeBag
     on<EmotionDelete>(_deleteEmotion);
     on<EmotionReorder>(_reorderEmotions);
     on<EmotionMove>(_moveEmotion);
+    on<EmotionSeedDefaults>(_seedDefaults);
 
     _emotionRepository.stream.listen((_) => add(EmotionInternalGetListFromCache())).disposed(by: this);
   }
@@ -82,6 +88,36 @@ final class EmotionBloc extends Bloc<EmotionEvent, EmotionState> with DisposeBag
     if (affected.isNotEmpty) {
       await _mindRepository.updateMinds(minds: affected);
     }
+  }
+
+  /// Create the starter emotions in the user's language. Requires both that
+  /// seeding never ran and that the store is empty: the flag alone would
+  /// duplicate onto an existing set installed before the flag existed, and the
+  /// emptiness check alone would resurrect emotions the user deleted on purpose.
+  Future<void> _seedDefaults(EmotionSeedDefaults event, Emitter<EmotionState> emit) async {
+    if (_settingsRepository.value.hasSeededEmotions) return;
+    final existing = await _emotionRepository.obtainEmotions();
+    if (existing.isNotEmpty) {
+      await _settingsRepository.updateHasSeededEmotions(true);
+      return;
+    }
+
+    final seeds = EmotionSeed.forLanguage(_settingsRepository.value.language);
+    final now = DateTime.now().toUtc();
+    final emotions = <Emotion>[
+      for (int i = 0; i < seeds.length; i++)
+        Emotion(
+          id: _uuid.v4(),
+          title: seeds[i].title,
+          emoji: seeds[i].emoji,
+          parentId: null,
+          isArchived: false,
+          orderIndex: i,
+          creationDate: now,
+        ),
+    ];
+    await _emotionRepository.createEmotions(emotions: emotions);
+    await _settingsRepository.updateHasSeededEmotions(true);
   }
 
   Future<void> _createEmotion(EmotionCreate event, Emitter<EmotionState> emit) async {

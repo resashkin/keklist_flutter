@@ -74,6 +74,13 @@ final class SettingsHiveRepository implements SettingsRepository {
   }
 
   @override
+  FutureOr<void> updateHasSeededEmotions(bool value) async {
+    final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.globalSettingsIndex);
+    settingsObject?.hasSeededEmotions = value;
+    await settingsObject?.save();
+  }
+
+  @override
   FutureOr<void> updateSettings(KeklistSettings settings) async {
     await _hiveBox.put(HiveConstants.globalSettingsIndex, settings.toObject());
   }

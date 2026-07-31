@@ -86,4 +86,8 @@ final class EmotionMove extends EmotionEvent {
   List<Object?> get props => [id, newParentId, index];
 }
 
+/// Create the localized starter emotions, once ever. No-op unless the store is
+/// empty *and* seeding has never run — see ADR-0003.
+final class EmotionSeedDefaults extends EmotionEvent {}
+
 final class EmotionInternalGetListFromCache extends EmotionEvent {}

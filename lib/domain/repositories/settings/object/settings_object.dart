@@ -66,6 +66,9 @@ final class SettingsObject extends HiveObject {
   @HiveField(19, defaultValue: 1)
   late int interfaceStyleIndex;
 
+  @HiveField(20, defaultValue: false)
+  late bool hasSeededEmotions;
+
   SettingsObject();
 
   KeklistSettings toSettings() => KeklistSettings(
@@ -88,5 +91,6 @@ final class SettingsObject extends HiveObject {
         isMediaFolderSourceEnabled: isMediaFolderSourceEnabled,
         mediaFolderPath: mediaFolderPath,
         isMediaFolderRecursive: isMediaFolderRecursive,
+        hasSeededEmotions: hasSeededEmotions,
       );
 }

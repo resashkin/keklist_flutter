@@ -106,6 +106,7 @@ final class MainContainer {
       (i) => EmotionBloc(
         emotionRepository: i.get<EmotionRepository>(),
         mindRepository: i.get<MindRepository>(),
+        settingsRepository: i.get<SettingsRepository>(),
       ),
       isSingleton: true,
     );

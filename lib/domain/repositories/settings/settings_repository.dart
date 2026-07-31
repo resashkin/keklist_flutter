@@ -20,6 +20,7 @@ abstract class SettingsRepository {
   FutureOr<void> updateIsPhotoVideoSourceEnabled(bool value);
   FutureOr<void> updateWeatherSettings({bool? isEnabled, double? latitude, double? longitude});
   FutureOr<void> updateMediaFolderSource({bool? isEnabled, String? folderPath, bool? isRecursive});
+  FutureOr<void> updateHasSeededEmotions(bool value);
 }
 
 final class KeklistSettings {
@@ -41,6 +42,10 @@ final class KeklistSettings {
   final String? mediaFolderPath;
   final bool isMediaFolderRecursive;
 
+  /// Set once the starter emotions have been created, so they are never seeded
+  /// twice — including after the user deletes them all. See ADR-0003.
+  final bool hasSeededEmotions;
+
   KeklistSettings({
     required this.isMindContentVisible,
     required this.previousAppVersion,
@@ -59,6 +64,7 @@ final class KeklistSettings {
     this.isMediaFolderSourceEnabled = false,
     this.mediaFolderPath,
     this.isMediaFolderRecursive = false,
+    this.hasSeededEmotions = false,
   });
 
   SettingsObject toObject() => SettingsObject()
@@ -79,7 +85,8 @@ final class KeklistSettings {
     ..weatherLongitude = weatherLongitude
     ..isMediaFolderSourceEnabled = isMediaFolderSourceEnabled
     ..mediaFolderPath = mediaFolderPath
-    ..isMediaFolderRecursive = isMediaFolderRecursive;
+    ..isMediaFolderRecursive = isMediaFolderRecursive
+    ..hasSeededEmotions = hasSeededEmotions;
 
   factory KeklistSettings.initial() => KeklistSettings(
         isMindContentVisible: true,
@@ -99,6 +106,7 @@ final class KeklistSettings {
         isMediaFolderSourceEnabled: false,
         mediaFolderPath: null,
         isMediaFolderRecursive: false,
+        hasSeededEmotions: false,
       );
 
   /// Detect device locale and return supported language or fallback to English
