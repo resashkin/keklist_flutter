@@ -96,26 +96,41 @@ final class EmotionChip extends StatelessWidget {
   }
 }
 
-/// Messenger-style "add a reaction" affordance: a compact outlined pill sized to
-/// sit beside [EmotionChip]s. Uses the smiley-with-plus glyph so the control
-/// reads as "add a feeling" rather than a generic add button. See ADR-0004.
+/// Messenger-style "add a reaction" affordance: an outlined pill using the
+/// smiley-with-plus glyph, so the control reads as "add a feeling" rather than a
+/// generic add button. See ADR-0004.
+///
+/// With a [label] it grows wider for a bigger tap target and states what it does
+/// — used on minds with no emotions yet, where the icon alone has no neighbouring
+/// chips to give it meaning. Height is identical in both forms.
 final class EmotionAddChip extends StatelessWidget {
   final VoidCallback? onTap;
+  final String? label;
 
-  const EmotionAddChip({super.key, this.onTap});
+  const EmotionAddChip({super.key, this.onTap, this.label});
 
   @override
   Widget build(BuildContext context) {
     final ColorScheme scheme = Theme.of(context).colorScheme;
+    final String? label = this.label;
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+        padding: EdgeInsets.symmetric(horizontal: label == null ? 10.0 : 14.0, vertical: 6.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20.0),
           border: Border.all(color: scheme.outlineVariant, width: 1.5),
         ),
-        child: Icon(Icons.add_reaction_outlined, size: 20.0, color: scheme.onSurfaceVariant),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.add_reaction_outlined, size: 20.0, color: scheme.onSurfaceVariant),
+            if (label != null) ...[
+              const SizedBox(width: 8.0),
+              Text(label, style: TextStyle(color: scheme.onSurfaceVariant, fontSize: 14.0)),
+            ],
+          ],
+        ),
       ),
     );
   }

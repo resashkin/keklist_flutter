@@ -602,6 +602,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get addEmotion => 'Добавить эмоцию';
 
   @override
+  String get addEmotionsToMind => 'Добавить эмоции';
+
+  @override
   String get emotionNameHint => 'Название';
 
   @override
@@ -616,8 +619,10 @@ class AppLocalizationsRu extends AppLocalizations {
       'Эта эмоция используется в некоторых миндах. Архивируйте, чтобы сохранить её там, или удалите везде.';
 
   @override
-  String get emotionPickHint =>
-      'Нажмите, чтобы отметить · удерживайте, чтобы углубиться';
+  String get emotionPickHint => 'Нажмите, чтобы отметить';
+
+  @override
+  String get emotionDrillHint => 'удерживайте, чтобы углубиться';
 
   @override
   String get noEmotionsYet => 'Пока нет эмоций';

@@ -1251,6 +1251,12 @@ abstract class AppLocalizations {
   /// **'Add emotion'**
   String get addEmotion;
 
+  /// Button on a mind card that opens the emotion marking sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Add emotions'**
+  String get addEmotionsToMind;
+
   /// Placeholder for the emotion title field
   ///
   /// In en, this message translates to:
@@ -1278,8 +1284,14 @@ abstract class AppLocalizations {
   /// Hint in the emotion marking sheet explaining tap vs long-press
   ///
   /// In en, this message translates to:
-  /// **'Tap to tag · long-press to go deeper'**
+  /// **'Tap to tag'**
   String get emotionPickHint;
+
+  /// No description provided for @emotionDrillHint.
+  ///
+  /// In en, this message translates to:
+  /// **'long-press to go deeper'**
+  String get emotionDrillHint;
 
   /// Empty state for the emotions list
   ///

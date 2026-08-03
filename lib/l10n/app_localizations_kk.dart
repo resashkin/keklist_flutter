@@ -604,6 +604,9 @@ class AppLocalizationsKk extends AppLocalizations {
   String get addEmotion => 'Эмоция қосу';
 
   @override
+  String get addEmotionsToMind => 'Эмоциялар қосу';
+
+  @override
   String get emotionNameHint => 'Атауы';
 
   @override
@@ -618,8 +621,10 @@ class AppLocalizationsKk extends AppLocalizations {
       'Бұл эмоция кейбір майндтарда қолданылады. Оны сонда сақтау үшін мұрағаттаңыз немесе барлық жерден жойыңыз.';
 
   @override
-  String get emotionPickHint =>
-      'Белгілеу үшін түртіңіз · тереңдеу үшін басып тұрыңыз';
+  String get emotionPickHint => 'Белгілеу үшін түртіңіз';
+
+  @override
+  String get emotionDrillHint => 'тереңдеу үшін басып тұрыңыз';
 
   @override
   String get noEmotionsYet => 'Әзірге эмоциялар жоқ';

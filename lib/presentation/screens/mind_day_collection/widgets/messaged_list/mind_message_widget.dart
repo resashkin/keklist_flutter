@@ -7,6 +7,7 @@ import 'package:keklist/presentation/blocs/emotion_bloc/emotion_bloc.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/screens/emotions/emotion_marking_sheet.dart';
 import 'package:keklist/presentation/screens/emotions/widgets/emotion_chip.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/core/helpers/mind_utils.dart';
 import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/bulleted_list/mind_bullet_list_widget.dart';
@@ -137,6 +138,18 @@ final class _MindEmotionsRow extends StatelessWidget {
         if (state is! EmotionsList) return const SizedBox.shrink();
         final byId = {for (final Emotion emotion in state.emotions) emotion.id: emotion};
         final emotions = mind.emotionIds.map((id) => byId[id]).whereType<Emotion>().toList();
+
+        // With no chips to sit beside, the icon alone reads as ambiguous — so the
+        // empty state gets a labelled, wider target pulled to the trailing edge.
+        if (emotions.isEmpty) {
+          return Align(
+            alignment: Alignment.centerRight,
+            child: EmotionAddChip(
+              label: context.l10n.addEmotionsToMind,
+              onTap: () => _openSheet(context),
+            ),
+          );
+        }
 
         return Wrap(
           spacing: 6.0,

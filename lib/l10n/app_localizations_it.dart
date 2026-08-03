@@ -607,6 +607,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get addEmotion => 'Aggiungi emozione';
 
   @override
+  String get addEmotionsToMind => 'Aggiungi emozioni';
+
+  @override
   String get emotionNameHint => 'Nome';
 
   @override
@@ -621,8 +624,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questa emozione è usata in alcune menti. Archiviala per mantenerla lì, o eliminala ovunque.';
 
   @override
-  String get emotionPickHint =>
-      'Tocca per assegnare · tieni premuto per approfondire';
+  String get emotionPickHint => 'Tocca per assegnare';
+
+  @override
+  String get emotionDrillHint => 'tieni premuto per approfondire';
 
   @override
   String get noEmotionsYet => 'Ancora nessuna emozione';

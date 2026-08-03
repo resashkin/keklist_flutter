@@ -583,6 +583,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get addEmotion => '添加情绪';
 
   @override
+  String get addEmotionsToMind => '添加情绪';
+
+  @override
   String get emotionNameHint => '名称';
 
   @override
@@ -595,7 +598,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get emotionInUseMessage => '此情绪已被一些 mind 使用。归档可将其保留在那里，或彻底删除。';
 
   @override
-  String get emotionPickHint => '点按标记 · 长按进入下级';
+  String get emotionPickHint => '点按标记';
+
+  @override
+  String get emotionDrillHint => '长按进入下级';
 
   @override
   String get noEmotionsYet => '还没有情绪';

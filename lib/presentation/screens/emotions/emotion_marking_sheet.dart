@@ -583,6 +583,18 @@ class _EmotionMarkingSheetState extends State<EmotionMarkingSheet> {
     );
   }
 
+  /// Long-press only drills in when a chip actually has children, and nesting can
+  /// no longer be authored (ADR-0002) — so the hint promises it only where some
+  /// chip on this level can deliver it.
+  String _pickHint(BuildContext context) {
+    final state = _state;
+    final bool canDrill =
+        state != null && _levelChildren.any((emotion) => state.hasActiveChildren(emotion.id));
+    return canDrill
+        ? '${context.l10n.emotionPickHint} · ${context.l10n.emotionDrillHint}'
+        : context.l10n.emotionPickHint;
+  }
+
   Widget _buildHint(BuildContext context) {
     final hintStyle = Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor);
     final linkStyle = Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -602,7 +614,7 @@ class _EmotionMarkingSheetState extends State<EmotionMarkingSheet> {
         TextSpan(
           style: hintStyle,
           children: [
-            TextSpan(text: '${_editMode ? context.l10n.emotionEditHint : context.l10n.emotionPickHint}   ·   '),
+            TextSpan(text: '${_editMode ? context.l10n.emotionEditHint : _pickHint(context)}   ·   '),
             link(context.l10n.archived, _openArchived),
           ],
         ),

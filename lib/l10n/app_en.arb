@@ -769,6 +769,10 @@
     "@addEmotion": {
         "description": "Link to create a new emotion at the current level"
     },
+    "addEmotionsToMind": "Add emotions",
+    "@addEmotionsToMind": {
+        "description": "Button on a mind card that opens the emotion marking sheet"
+    },
     "emotionNameHint": "Name",
     "@emotionNameHint": {
         "description": "Placeholder for the emotion title field"
@@ -785,7 +789,8 @@
     "@emotionInUseMessage": {
         "description": "Message when removing an emotion used by minds, offering archive or delete"
     },
-    "emotionPickHint": "Tap to tag · long-press to go deeper",
+    "emotionPickHint": "Tap to tag",
+    "emotionDrillHint": "long-press to go deeper",
     "@emotionPickHint": {
         "description": "Hint in the emotion marking sheet explaining tap vs long-press"
     },

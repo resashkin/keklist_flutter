@@ -606,6 +606,9 @@ class AppLocalizationsUz extends AppLocalizations {
   String get addEmotion => 'Hissiyot qo\'shish';
 
   @override
+  String get addEmotionsToMind => 'Hislar qo\'shish';
+
+  @override
   String get emotionNameHint => 'Nomi';
 
   @override
@@ -620,8 +623,10 @@ class AppLocalizationsUz extends AppLocalizations {
       'Bu hissiyot ba\'zi maindlarda ishlatiladi. Uni o\'sha yerda saqlash uchun arxivlang yoki hamma joydan o\'chiring.';
 
   @override
-  String get emotionPickHint =>
-      'Belgilash uchun bosing · chuqurlashish uchun bosib turing';
+  String get emotionPickHint => 'Belgilash uchun bosing';
+
+  @override
+  String get emotionDrillHint => 'chuqurlashish uchun bosib turing';
 
   @override
   String get noEmotionsYet => 'Hozircha hissiyotlar yo\'q';
