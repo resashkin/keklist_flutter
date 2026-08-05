@@ -39,6 +39,16 @@ Archive, Build IPA, Signing, Upload to TestFilght
 
 Locally: Archive * Build IPA * Signing * Upload to TF
 
+### ios submit_to_review
+
+```sh
+[bundle exec] fastlane ios submit_to_review
+```
+
+Submit the newest TestFlight build for App Store review
+
+Usage: bundle exec fastlane submit_to_review notes:"What changed"
+
 ### ios register_new_device
 
 ```sh

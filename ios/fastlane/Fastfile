@@ -1,5 +1,7 @@
 default_platform(:ios)
 
+APP_IDENTIFIER = "com.sashkyn.kekable"
+
 APP_IDENTIFIERS = [
   "com.sashkyn.kekable", 
   #"com.sashkyn.kekable.watchkitapp",
@@ -180,6 +182,61 @@ platform :ios do
 end
 
 platform :ios do
+  desc "Submit the newest TestFlight build for App Store review"
+  desc "Usage: bundle exec fastlane submit_to_review notes:\"What changed\""
+  lane :submit_to_review do |options|
+    notes = options[:notes].to_s.strip
+    UI.user_error!("notes: is required — see ADR-0006") if notes.empty?
+
+    version = File.read(File.expand_path("../../pubspec.yaml", __dir__))[/^version:\s*([^\s+]+)/, 1]
+    UI.user_error!("Could not read version from pubspec.yaml") if version.nil?
+
+    api_key = app_store_connect_api_key(
+      key_id: "#{ENV["APPSTORE_KEY_ID"]}",
+      issuer_id: "#{ENV["APPSTORE_ISSUER_ID"]}",
+      key_content: "#{ENV["APPSTORE_API_KEY_CONTENT_BASE_64"]}",
+      is_key_content_base64: true
+    )
+
+    # The same app record also holds a live macOS app, so every lookup is pinned
+    # to iOS — otherwise a macOS version can be picked up instead. See ADR-0006 D4.
+    app_store_build_number(api_key: api_key, app_identifier: APP_IDENTIFIER, platform: "ios", live: true)
+    live_version = lane_context[SharedValues::LATEST_VERSION].to_s
+    if live_version == version
+      UI.user_error!("pubspec version #{version} is already live on the App Store — bump pubspec.yaml first")
+    end
+
+    build = latest_testflight_build_number(api_key: api_key, app_identifier: APP_IDENTIFIER, initial_build_number: 0)
+    UI.message("🚀 Submitting #{version} (build #{build}) for review — live is #{live_version}")
+
+    # deliver manages the WHOLE store listing. This tree deliberately holds only
+    # release notes, and screenshots/binary upload are skipped, so a submission
+    # can never overwrite the live description, keywords or screenshots.
+    notes_file = File.join(__dir__, "metadata", "en-US", "release_notes.txt")
+    FileUtils.mkdir_p(File.dirname(notes_file))
+    File.write(notes_file, "#{notes}\n")
+    UI.message("📝 Release notes → #{notes_file}")
+
+    upload_to_app_store(
+      api_key: api_key,
+      app_identifier: APP_IDENTIFIER,
+      platform: "ios",
+      app_version: version,
+      build_number: build.to_s,
+      metadata_path: File.join(__dir__, "metadata"),
+      skip_binary_upload: true,
+      skip_screenshots: true,
+      submit_for_review: true,
+      automatic_release: true,
+      force: true,
+      precheck_include_in_app_purchases: false,
+      submission_information: {
+        add_id_info_uses_idfa: false,
+        export_compliance_uses_encryption: false
+      }
+    )
+  end
+
   desc "Register new device"
   lane :register_new_device do  |options|
     api_key = app_store_connect_api_key(
