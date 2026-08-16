@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' hide DateUtils;
+import 'package:material_ui/material_ui.dart' hide DateUtils;
 import 'package:keklist/domain/constants.dart';
 import 'package:keklist/presentation/screens/date_gallery/media_viewer_screen.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';

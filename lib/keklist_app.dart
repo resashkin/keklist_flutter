@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:keklist/domain/repositories/settings/keklist_theme_mode.dart';
 import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';

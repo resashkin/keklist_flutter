@@ -1,5 +1,5 @@
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/material.dart' hide DateUtils;
+import 'package:material_ui/material_ui.dart' hide DateUtils;
 import 'package:keklist/domain/constants.dart';
 import 'package:keklist/domain/services/entities/weather_data.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';

@@ -1,5 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/material.dart' hide DateUtils;
+import 'package:material_ui/material_ui.dart' hide DateUtils;
 import 'package:intl/intl.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/presentation/core/helpers/date_utils.dart';

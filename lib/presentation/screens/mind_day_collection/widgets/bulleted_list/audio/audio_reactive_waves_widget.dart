@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 final class AudioReactiveWavesWidget extends StatelessWidget {
   final double amplitude; // 0.0 to 1.0

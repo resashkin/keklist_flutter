@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A pill chip that renders one or more emojis followed by a label. Emojis are
 /// laid out inline as plain text (no circular avatar), which avoids the clipping

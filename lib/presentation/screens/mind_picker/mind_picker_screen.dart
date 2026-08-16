@@ -6,7 +6,7 @@ import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/core/widgets/mind_widget.dart';
 import 'package:keklist/presentation/cubits/used_emoji/used_emoji_cubit.dart';
 import 'package:emojis/emoji.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 
 final class MindPickerScreen extends StatefulWidget {

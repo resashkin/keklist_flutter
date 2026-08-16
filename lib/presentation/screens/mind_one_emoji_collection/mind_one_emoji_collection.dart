@@ -1,6 +1,6 @@
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart' hide DateUtils;
+import 'package:material_ui/material_ui.dart' hide DateUtils;
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 import 'package:keklist/presentation/core/helpers/extensions/state_extensions.dart';
 import 'package:keklist/presentation/screens/actions/action_model.dart';

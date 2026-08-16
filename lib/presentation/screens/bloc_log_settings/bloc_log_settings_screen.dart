@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:keklist/domain/repositories/bloc_log_settings/bloc_log_settings.dart';
 import 'package:keklist/domain/repositories/bloc_log_settings/bloc_log_settings_repository.dart';

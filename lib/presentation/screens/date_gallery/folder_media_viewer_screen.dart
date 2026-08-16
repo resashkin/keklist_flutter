@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:keklist/native/android/media_folder_channel.dart';
 import 'package:keklist/presentation/screens/date_gallery/folder_media_item.dart';
 import 'package:photo_view/photo_view.dart';

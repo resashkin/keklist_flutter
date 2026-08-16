@@ -1,5 +1,5 @@
 import 'dart:math' as math;
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 final class WaveProgressWidget extends StatelessWidget {
   const WaveProgressWidget({super.key, required this.progress, this.waveform, this.onSeek});

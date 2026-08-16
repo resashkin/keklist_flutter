@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../domain/services/entities/mind.dart';
 import '../extensions/localization_extensions.dart';

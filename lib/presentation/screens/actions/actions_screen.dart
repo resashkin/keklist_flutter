@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:keklist/presentation/screens/actions/action_model.dart';
 
 final class ActionsScreen extends StatelessWidget {
