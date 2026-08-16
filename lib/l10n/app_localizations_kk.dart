@@ -18,6 +18,9 @@ class AppLocalizationsKk extends AppLocalizations {
   String get appearance => 'Көрініс';
 
   @override
+  String get interfaceStyle => 'Интерфейс стилі';
+
+  @override
   String get exportToCsv => 'CSV-ға экспорттау';
 
   @override
@@ -383,6 +386,9 @@ class AppLocalizationsKk extends AppLocalizations {
   String get audioFilesToExport => 'Аудио файлдар';
 
   @override
+  String get emotionsToExport => 'Эмоциялар';
+
+  @override
   String get mindsExported => 'Ойлар экспортталды';
 
   @override
@@ -572,4 +578,61 @@ class AppLocalizationsKk extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'Сіз PRO қолданушысысыз. Келесі $price төлем $date күні болады.';
   }
+
+  @override
+  String get emotions => 'Эмоциялар';
+
+  @override
+  String get archived => 'Мұрағат';
+
+  @override
+  String get archive => 'Мұрағаттау';
+
+  @override
+  String get restore => 'Қалпына келтіру';
+
+  @override
+  String get deletePermanently => 'Біржола жою';
+
+  @override
+  String get newEmotion => 'Жаңа эмоция';
+
+  @override
+  String get editEmotion => 'Эмоцияны өңдеу';
+
+  @override
+  String get addEmotion => 'Эмоция қосу';
+
+  @override
+  String get addEmotionsToMind => 'Эмоциялар қосу';
+
+  @override
+  String get emotionNameHint => 'Атауы';
+
+  @override
+  String get doneEditing => 'Дайын';
+
+  @override
+  String get emotionEditHint =>
+      'Атын өзгерту үшін түртіңіз · ✕ жою үшін · реттеу үшін сүйреңіз';
+
+  @override
+  String get emotionInUseMessage =>
+      'Бұл эмоция кейбір майндтарда қолданылады. Оны сонда сақтау үшін мұрағаттаңыз немесе барлық жерден жойыңыз.';
+
+  @override
+  String get emotionPickHint => 'Белгілеу үшін түртіңіз';
+
+  @override
+  String get emotionDrillHint => 'тереңдеу үшін басып тұрыңыз';
+
+  @override
+  String get noEmotionsYet => 'Әзірге эмоциялар жоқ';
+
+  @override
+  String get noArchivedEmotions => 'Мұрағатталған эмоциялар жоқ';
+
+  @override
+  String get deleteEmotionMessage =>
+      'Бұл эмоцияны жою керек пе? Ол оны пайдаланатын барлық майндтардан жойылады.';
 }

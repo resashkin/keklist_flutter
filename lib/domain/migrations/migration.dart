@@ -1,3 +1,4 @@
+import 'package:keklist/domain/repositories/emotion/emotion_repository.dart';
 import 'package:keklist/domain/repositories/files/app_file_repository.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
@@ -20,11 +21,13 @@ class MigrationContext {
   final MindRepository mindRepository;
   final SettingsRepository settingsRepository;
   final AppFileRepository fileRepository;
+  final EmotionRepository emotionRepository;
 
   const MigrationContext({
     required this.mindRepository,
     required this.settingsRepository,
     required this.fileRepository,
+    required this.emotionRepository,
   });
 }
 

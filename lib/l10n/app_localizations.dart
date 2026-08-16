@@ -135,6 +135,12 @@ abstract class AppLocalizations {
   /// **'Appearance'**
   String get appearance;
 
+  /// Interface style setting label (Material vs Liquid Glass)
+  ///
+  /// In en, this message translates to:
+  /// **'Interface Style'**
+  String get interfaceStyle;
+
   /// Export to CSV button
   ///
   /// In en, this message translates to:
@@ -843,6 +849,12 @@ abstract class AppLocalizations {
   /// **'Audio files'**
   String get audioFilesToExport;
 
+  /// Emotions count label for export
+  ///
+  /// In en, this message translates to:
+  /// **'Emotions'**
+  String get emotionsToExport;
+
   /// Minds exported count
   ///
   /// In en, this message translates to:
@@ -1190,6 +1202,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You are a PRO user. Next payment {price} will be at {date}.'**
   String proUserFooter(String price, String date);
+
+  /// Emotions feature title
+  ///
+  /// In en, this message translates to:
+  /// **'Emotions'**
+  String get emotions;
+
+  /// Title for the archived emotions screen and section
+  ///
+  /// In en, this message translates to:
+  /// **'Archived'**
+  String get archived;
+
+  /// Action to archive an emotion
+  ///
+  /// In en, this message translates to:
+  /// **'Archive'**
+  String get archive;
+
+  /// Action to restore an archived emotion
+  ///
+  /// In en, this message translates to:
+  /// **'Restore'**
+  String get restore;
+
+  /// Action to permanently delete an archived emotion
+  ///
+  /// In en, this message translates to:
+  /// **'Delete permanently'**
+  String get deletePermanently;
+
+  /// Title for the create-emotion form
+  ///
+  /// In en, this message translates to:
+  /// **'New emotion'**
+  String get newEmotion;
+
+  /// Title for the edit-emotion form
+  ///
+  /// In en, this message translates to:
+  /// **'Edit emotion'**
+  String get editEmotion;
+
+  /// Link to create a new emotion at the current level
+  ///
+  /// In en, this message translates to:
+  /// **'Add emotion'**
+  String get addEmotion;
+
+  /// Button on a mind card that opens the emotion marking sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Add emotions'**
+  String get addEmotionsToMind;
+
+  /// Placeholder for the emotion title field
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get emotionNameHint;
+
+  /// Hint link that exits emotion edit mode
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get doneEditing;
+
+  /// Hint shown while the emotion marking sheet is in edit mode
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to rename · ✕ to remove · drag to reorder'**
+  String get emotionEditHint;
+
+  /// Message when removing an emotion used by minds, offering archive or delete
+  ///
+  /// In en, this message translates to:
+  /// **'This emotion is used by some minds. Archive it to keep it there, or delete it everywhere.'**
+  String get emotionInUseMessage;
+
+  /// Hint in the emotion marking sheet explaining tap vs long-press
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to tag'**
+  String get emotionPickHint;
+
+  /// No description provided for @emotionDrillHint.
+  ///
+  /// In en, this message translates to:
+  /// **'long-press to go deeper'**
+  String get emotionDrillHint;
+
+  /// Empty state for the emotions list
+  ///
+  /// In en, this message translates to:
+  /// **'No emotions yet'**
+  String get noEmotionsYet;
+
+  /// Empty state for the archived emotions screen
+  ///
+  /// In en, this message translates to:
+  /// **'No archived emotions'**
+  String get noArchivedEmotions;
+
+  /// Confirmation when permanently deleting an emotion
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this emotion? It will be removed from any minds using it.'**
+  String get deleteEmotionMessage;
 }
 
 class _AppLocalizationsDelegate

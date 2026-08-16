@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:keklist/domain/repositories/settings/keklist_interface_style.dart';
 import 'package:keklist/domain/repositories/settings/keklist_theme_mode.dart';
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
 import 'package:keklist/domain/services/language_manager.dart';
@@ -11,6 +12,7 @@ abstract class SettingsRepository {
   FutureOr<void> updateUserName(String string);
   FutureOr<void> updateSettings(KeklistSettings settings);
   FutureOr<void> updateThemePreference(KeklistThemeMode themeMode);
+  FutureOr<void> updateInterfaceStyle(KeklistInterfaceStyle style);
   FutureOr<void> updateMindContentVisibility(bool isVisible);
   FutureOr<void> updateShouldShowTitles(bool shouldShowTitles);
   FutureOr<void> updatePreviousAppVersion(String? previousAppVersion);
@@ -18,12 +20,14 @@ abstract class SettingsRepository {
   FutureOr<void> updateIsPhotoVideoSourceEnabled(bool value);
   FutureOr<void> updateWeatherSettings({bool? isEnabled, double? latitude, double? longitude});
   FutureOr<void> updateMediaFolderSource({bool? isEnabled, String? folderPath, bool? isRecursive});
+  FutureOr<void> updateHasSeededEmotions(bool value);
 }
 
 final class KeklistSettings {
   final bool isMindContentVisible;
   final String? previousAppVersion;
   final KeklistThemeMode themePreference;
+  final KeklistInterfaceStyle interfaceStyle;
   final bool shouldShowTitles;
   final String? userName;
   final SupportedLanguage language;
@@ -38,10 +42,15 @@ final class KeklistSettings {
   final String? mediaFolderPath;
   final bool isMediaFolderRecursive;
 
+  /// Set once the starter emotions have been created, so they are never seeded
+  /// twice — including after the user deletes them all. See ADR-0003.
+  final bool hasSeededEmotions;
+
   KeklistSettings({
     required this.isMindContentVisible,
     required this.previousAppVersion,
     required this.themePreference,
+    required this.interfaceStyle,
     required this.shouldShowTitles,
     required this.userName,
     required this.language,
@@ -55,6 +64,7 @@ final class KeklistSettings {
     this.isMediaFolderSourceEnabled = false,
     this.mediaFolderPath,
     this.isMediaFolderRecursive = false,
+    this.hasSeededEmotions = false,
   });
 
   SettingsObject toObject() => SettingsObject()
@@ -62,6 +72,7 @@ final class KeklistSettings {
     ..previousAppVersion = previousAppVersion
     ..isDarkMode = themePreference == KeklistThemeMode.dark
     ..themePreferenceIndex = themePreference.index
+    ..interfaceStyleIndex = interfaceStyle.index
     ..shouldShowTitles = shouldShowTitles
     ..userName = userName
     ..language = language.code
@@ -74,12 +85,14 @@ final class KeklistSettings {
     ..weatherLongitude = weatherLongitude
     ..isMediaFolderSourceEnabled = isMediaFolderSourceEnabled
     ..mediaFolderPath = mediaFolderPath
-    ..isMediaFolderRecursive = isMediaFolderRecursive;
+    ..isMediaFolderRecursive = isMediaFolderRecursive
+    ..hasSeededEmotions = hasSeededEmotions;
 
   factory KeklistSettings.initial() => KeklistSettings(
         isMindContentVisible: true,
         previousAppVersion: null,
         themePreference: KeklistThemeMode.system,
+        interfaceStyle: KeklistInterfaceStyle.liquidGlass,
         shouldShowTitles: true,
         userName: null,
         language: _detectDeviceLocale(),
@@ -93,6 +106,7 @@ final class KeklistSettings {
         isMediaFolderSourceEnabled: false,
         mediaFolderPath: null,
         isMediaFolderRecursive: false,
+        hasSeededEmotions: false,
       );
 
   /// Detect device locale and return supported language or fallback to English

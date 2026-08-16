@@ -23,13 +23,16 @@ class MindObjectAdapter extends TypeAdapter<MindObject> {
       ..dayIndex = (fields[3] as num).toInt()
       ..creationDate = fields[4] as DateTime
       ..sortIndex = (fields[5] as num).toInt()
-      ..rootId = fields[7] as String?;
+      ..rootId = fields[7] as String?
+      ..emotionIds = fields[8] == null
+          ? []
+          : (fields[8] as List).cast<String>();
   }
 
   @override
   void write(BinaryWriter writer, MindObject obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -43,7 +46,9 @@ class MindObjectAdapter extends TypeAdapter<MindObject> {
       ..writeByte(5)
       ..write(obj.sortIndex)
       ..writeByte(7)
-      ..write(obj.rootId);
+      ..write(obj.rootId)
+      ..writeByte(8)
+      ..write(obj.emotionIds);
   }
 
   @override

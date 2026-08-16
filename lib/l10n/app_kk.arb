@@ -8,6 +8,7 @@
         "description": "Пайдаланушы деректері бөлімінің атауы"
     },
     "appearance": "Көрініс",
+    "interfaceStyle": "Интерфейс стилі",
     "@appearance": {
         "description": "Көрініс бөлімінің атауы"
     },
@@ -383,6 +384,7 @@
     "importError": "Импорт сәтсіз",
     "mindsToExport": "Ойлар",
     "audioFilesToExport": "Аудио файлдар",
+    "emotionsToExport": "Эмоциялар",
     "mindsExported": "Ойлар экспортталды",
     "audioFilesExported": "Аудио файлдар экспортталды",
     "mindsImported": "Ойлар импортталды",
@@ -440,5 +442,23 @@
     "audioRecordStopError": "Жазуды тоқтату мүмкін болмады. Қайталап көріңіз.",
     "emojiPickerUsedInMinds": "Used in minds",
     "emojiPickerAll": "All",
-    "proUserFooter": "Сіз PRO қолданушысысыз. Келесі {price} төлем {date} күні болады."
+    "proUserFooter": "Сіз PRO қолданушысысыз. Келесі {price} төлем {date} күні болады.",
+    "emotions": "Эмоциялар",
+    "archived": "Мұрағат",
+    "archive": "Мұрағаттау",
+    "restore": "Қалпына келтіру",
+    "deletePermanently": "Біржола жою",
+    "newEmotion": "Жаңа эмоция",
+    "editEmotion": "Эмоцияны өңдеу",
+    "emotionNameHint": "Атауы",
+    "emotionPickHint": "Белгілеу үшін түртіңіз",
+    "emotionDrillHint": "тереңдеу үшін басып тұрыңыз",
+    "noEmotionsYet": "Әзірге эмоциялар жоқ",
+    "noArchivedEmotions": "Мұрағатталған эмоциялар жоқ",
+    "addEmotion": "Эмоция қосу",
+    "addEmotionsToMind": "Эмоциялар қосу",
+    "doneEditing": "Дайын",
+    "emotionEditHint": "Атын өзгерту үшін түртіңіз · ✕ жою үшін · реттеу үшін сүйреңіз",
+    "emotionInUseMessage": "Бұл эмоция кейбір майндтарда қолданылады. Оны сонда сақтау үшін мұрағаттаңыз немесе барлық жерден жойыңыз.",
+    "deleteEmotionMessage": "Бұл эмоцияны жою керек пе? Ол оны пайдаланатын барлық майндтардан жойылады."
 }

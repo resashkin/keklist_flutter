@@ -18,6 +18,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get appearance => 'Внешний вид';
 
   @override
+  String get interfaceStyle => 'Стиль интерфейса';
+
+  @override
   String get exportToCsv => 'Экспорт в CSV';
 
   @override
@@ -383,6 +386,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get audioFilesToExport => 'Аудиофайлы';
 
   @override
+  String get emotionsToExport => 'Эмоции';
+
+  @override
   String get mindsExported => 'Заметки экспортированы';
 
   @override
@@ -570,4 +576,61 @@ class AppLocalizationsRu extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'Вы PRO пользователь. Следующий платёж $price будет $date.';
   }
+
+  @override
+  String get emotions => 'Эмоции';
+
+  @override
+  String get archived => 'Архив';
+
+  @override
+  String get archive => 'Архивировать';
+
+  @override
+  String get restore => 'Восстановить';
+
+  @override
+  String get deletePermanently => 'Удалить навсегда';
+
+  @override
+  String get newEmotion => 'Новая эмоция';
+
+  @override
+  String get editEmotion => 'Изменить эмоцию';
+
+  @override
+  String get addEmotion => 'Добавить эмоцию';
+
+  @override
+  String get addEmotionsToMind => 'Добавить эмоции';
+
+  @override
+  String get emotionNameHint => 'Название';
+
+  @override
+  String get doneEditing => 'Готово';
+
+  @override
+  String get emotionEditHint =>
+      'Нажмите, чтобы переименовать · ✕ чтобы удалить · перетащите, чтобы упорядочить';
+
+  @override
+  String get emotionInUseMessage =>
+      'Эта эмоция используется в некоторых миндах. Архивируйте, чтобы сохранить её там, или удалите везде.';
+
+  @override
+  String get emotionPickHint => 'Нажмите, чтобы отметить';
+
+  @override
+  String get emotionDrillHint => 'удерживайте, чтобы углубиться';
+
+  @override
+  String get noEmotionsYet => 'Пока нет эмоций';
+
+  @override
+  String get noArchivedEmotions => 'Нет архивных эмоций';
+
+  @override
+  String get deleteEmotionMessage =>
+      'Удалить эту эмоцию? Она будет удалена из всех минд, где используется.';
 }

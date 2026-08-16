@@ -8,6 +8,7 @@
         "description": "Titolo sezione dati utente"
     },
     "appearance": "Aspetto",
+    "interfaceStyle": "Stile interfaccia",
     "@appearance": {
         "description": "Titolo sezione aspetto"
     },
@@ -383,6 +384,7 @@
     "importError": "Importazione fallita",
     "mindsToExport": "Mind",
     "audioFilesToExport": "File audio",
+    "emotionsToExport": "Emozioni",
     "mindsExported": "Mind esportate",
     "audioFilesExported": "File audio esportati",
     "mindsImported": "Mind importate",
@@ -440,5 +442,23 @@
     "audioRecordStopError": "Impossibile fermare la registrazione. Riprova.",
     "emojiPickerUsedInMinds": "Used in minds",
     "emojiPickerAll": "All",
-    "proUserFooter": "Sei un utente PRO. Il prossimo pagamento di {price} sarà il {date}."
+    "proUserFooter": "Sei un utente PRO. Il prossimo pagamento di {price} sarà il {date}.",
+    "emotions": "Emozioni",
+    "archived": "Archiviate",
+    "archive": "Archivia",
+    "restore": "Ripristina",
+    "deletePermanently": "Elimina definitivamente",
+    "newEmotion": "Nuova emozione",
+    "editEmotion": "Modifica emozione",
+    "emotionNameHint": "Nome",
+    "emotionPickHint": "Tocca per assegnare",
+    "emotionDrillHint": "tieni premuto per approfondire",
+    "noEmotionsYet": "Ancora nessuna emozione",
+    "noArchivedEmotions": "Nessuna emozione archiviata",
+    "addEmotion": "Aggiungi emozione",
+    "addEmotionsToMind": "Aggiungi emozioni",
+    "doneEditing": "Fatto",
+    "emotionEditHint": "Tocca per rinominare · ✕ per rimuovere · trascina per riordinare",
+    "emotionInUseMessage": "Questa emozione è usata in alcune menti. Archiviala per mantenerla lì, o eliminala ovunque.",
+    "deleteEmotionMessage": "Eliminare questa emozione? Verrà rimossa da tutte le menti che la usano."
 }

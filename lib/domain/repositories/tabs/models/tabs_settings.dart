@@ -82,6 +82,15 @@ enum TabType implements Equatable {
         TabType.debugMenu => Icon(Icons.bug_report)
       };
 
+  String get sfSymbolName => switch (this) {
+        TabType.calendar => 'calendar',
+        TabType.insights => 'chart.bar.fill',
+        TabType.profile => 'person.crop.circle',
+        TabType.settings => 'gearshape',
+        TabType.today => 'sun.max',
+        TabType.debugMenu => 'ant',
+      };
+
   @override
   List<Object?> get props => [this];
 

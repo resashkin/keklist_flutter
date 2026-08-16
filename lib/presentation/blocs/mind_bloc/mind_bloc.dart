@@ -35,6 +35,7 @@ final class MindBloc extends Bloc<MindEvent, MindState> with DisposeBag {
     on<MindGetList>(_getMinds);
     on<MindUpdateMobileWidgets>(_updateMobileWidgets);
     on<MindCreate>(_createMind);
+    on<MindSetEmotions>(_setMindEmotions);
     on<MindDelete>(_deleteMind);
     on<MindClearCache>(_clearCache);
     on<MindEdit>(_editMind);
@@ -99,8 +100,15 @@ final class MindBloc extends Bloc<MindEvent, MindState> with DisposeBag {
       creationDate: DateTime.now().toUtc(),
       sortIndex: sortIndex,
       rootId: event.rootId,
+      emotionIds: event.emotionIds,
     );
     _mindRepository.createMind(mind: mind);
+  }
+
+  Future<void> _setMindEmotions(MindSetEmotions event, Emitter<MindState> emit) async {
+    final Mind? mind = await _mindRepository.obtainMind(mindId: event.mindId);
+    if (mind == null) return;
+    await _mindRepository.updateMind(mind: mind.copyWith(emotionIds: event.emotionIds));
   }
 
   Future<void> _deleteMind(MindDelete event, Emitter<MindState> emit) async {

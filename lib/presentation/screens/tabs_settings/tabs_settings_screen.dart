@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:keklist/domain/repositories/tabs/models/tabs_settings.dart';
+import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_bloc.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_event.dart';
 import 'package:keklist/presentation/blocs/tabs_container_bloc/tabs_container_state.dart';
 import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
+import 'package:keklist/presentation/core/helpers/interface_style_utils.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:keklist/presentation/core/widgets/bottom_navigation_bar.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
@@ -23,6 +26,8 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
   final List<TabModel> _selectedTabModels = [];
   final List<TabModel> _hiddenTabModels = [];
   final List<BottomNavigationBarItem> _tabItems = [];
+  final List<TabType> _tabTypes = [];
+  bool _useLiquidGlass = true;
 
   @override
   void initState() {
@@ -38,9 +43,8 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
           _hiddenTabModels
             ..clear()
             ..addAll(state.hiddenTabs.where((tab) => tab.type != TabType.debugMenu));
-          final Iterable<BottomNavigationBarItem> items = state.selectedTabs
-              .where((tab) => tab.type != TabType.debugMenu)
-              .map(
+          final visibleTabs = state.selectedTabs.where((tab) => tab.type != TabType.debugMenu);
+          final Iterable<BottomNavigationBarItem> items = visibleTabs.map(
             (item) => BottomNavigationBarItem(
               icon: item.type.materialIcon,
               label: item.type.localizedLabel(context),
@@ -49,11 +53,27 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
           _tabItems
             ..clear()
             ..addAll(items);
+          _tabTypes
+            ..clear()
+            ..addAll(visibleTabs.map((tab) => tab.type));
         });
       }
     })?.disposed(by: this);
 
     sendEventToBloc<TabsContainerBloc>(TabsContainerGetCurrentState());
+
+    _useLiquidGlass = _readUseLiquidGlass(context.read<SettingsBloc>().state);
+    subscribeToBloc<SettingsBloc>(onNewState: (state) {
+      final bool next = _readUseLiquidGlass(state);
+      if (next != _useLiquidGlass) {
+        setState(() => _useLiquidGlass = next);
+      }
+    })?.disposed(by: this);
+  }
+
+  bool _readUseLiquidGlass(SettingsState state) {
+    if (state is! SettingsDataState) return _useLiquidGlass;
+    return resolveUseLiquidGlass(state.settings.interfaceStyle);
   }
 
   @override
@@ -66,11 +86,14 @@ final class _TabsSettingsScreenState extends State<TabsSettingsScreen> with Disp
   Widget build(BuildContext context) {
     final listItems = _buildListItems();
     return Scaffold(
+      extendBody: _useLiquidGlass,
       bottomNavigationBar: BoolWidget(
         condition: _tabItems.length >= 2,
         falseChild: const SizedBox.shrink(),
         trueChild: AdaptiveBottomNavigationBar(
           items: List.of(_tabItems.length >= 2 ? _tabItems : _buildFakeItems()),
+          tabTypes: _tabTypes,
+          useLiquidGlass: _useLiquidGlass,
           selectedIndex: _selectedIndex,
           onTap: (int index) => setState(() => _selectedIndex = index),
         ),

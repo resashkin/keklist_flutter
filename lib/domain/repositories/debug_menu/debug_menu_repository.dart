@@ -21,4 +21,10 @@ final class DebugMenuData {
   });
 }
 
-enum DebugMenuType { translation, sensitiveContent, simulatePro, useProductionRevenueCat }
+enum DebugMenuType {
+  translation,
+  sensitiveContent,
+  simulatePro,
+  useProductionRevenueCat,
+  enableBlocLogs,
+}

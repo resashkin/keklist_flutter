@@ -23,6 +23,16 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Build AAB and upload to Play Store internal testing track
 
+### android promote_to_production
+
+```sh
+[bundle exec] fastlane android promote_to_production
+```
+
+Promote the newest internal build to production at 100%
+
+Usage: bundle exec fastlane promote_to_production notes:"What changed"
+
 ### android build_aab_flutter
 
 ```sh

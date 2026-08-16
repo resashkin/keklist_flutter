@@ -8,7 +8,8 @@ import 'package:keklist/presentation/core/dispose_bag.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
-import 'package:settings_ui/settings_ui.dart';
+import 'package:keklist/presentation/screens/bloc_log_settings/bloc_log_settings_screen.dart';
+import 'package:keklist/presentation/core/widgets/settings/settings_section.dart';
 
 final class DebugMenuScreen extends StatefulWidget {
   const DebugMenuScreen({super.key});
@@ -38,16 +39,16 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.debugMenu)),
-      body: SettingsList(
-        sections: [
-          if (_debugMenuItems.isNotEmpty)
-            SettingsSection(
-              title: const Text('Feature Flags'),
-              tiles: _debugMenuItems.map((debugMenuItem) {
-                return SettingsTile.switchTile(
+      body: SettingsListView(
+        children: [
+          if (_debugMenuItems.isNotEmpty) ...[
+            const SettingsSectionHeader('Feature Flags'),
+            SettingsSectionCard(
+              children: _debugMenuItems.map((debugMenuItem) {
+                return SwitchListTile(
                   title: Text(_getDebugMenuItemTitle(debugMenuItem.type)),
-                  description: Text(_getDebugMenuItemDescription(debugMenuItem.type)),
-                  onToggle: (bool value) {
+                  subtitle: Text(_getDebugMenuItemDescription(debugMenuItem.type)),
+                  onChanged: (bool value) {
                     if (debugMenuItem.type == DebugMenuType.simulatePro && value == true) {
                       _onEnableSimulatePro();
                     } else {
@@ -62,17 +63,29 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
                       }
                     }
                   },
-                  initialValue: debugMenuItem.value,
+                  value: debugMenuItem.value,
                 );
               }).toList(),
             ),
-          SettingsSection(
-            title: const Text('Development Tools'),
-            tiles: [
-              SettingsTile.navigation(
+          ],
+          const SettingsSectionHeader('Development Tools'),
+          SettingsSectionCard(
+            children: [
+              ListTile(
+                title: const Text('BLoC Log Settings'),
+                subtitle: const Text('Configure verbosity and per-BLoC silencing for console logs'),
+                trailing: settingsNavTrailing(context),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const BlocLogSettingsScreen()),
+                  );
+                },
+              ),
+              ListTile(
                 title: const Text('Reset Lazy Onboarding'),
-                description: const Text('Delete onboarding minds and reset the flag to show onboarding again'),
-                onPressed: (context) => _resetOnboarding(context),
+                subtitle: const Text('Delete onboarding minds and reset the flag to show onboarding again'),
+                trailing: settingsNavTrailing(context),
+                onTap: () => _resetOnboarding(context),
               ),
             ],
           ),
@@ -138,6 +151,7 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
         DebugMenuType.sensitiveContent => 'Sensitive Content',
         DebugMenuType.simulatePro => 'Simulate Pro Subscription',
         DebugMenuType.useProductionRevenueCat => 'Use Production RevenueCat',
+        DebugMenuType.enableBlocLogs => 'Enable BLoC Logs',
       };
 
   String _getDebugMenuItemDescription(DebugMenuType type) => switch (type) {
@@ -149,5 +163,7 @@ final class _DebugMenuScreenState extends KekWidgetState<DebugMenuScreen> {
           'Forces isPro=true in MembershipBloc, bypassing RevenueCat. Password required to enable.',
         DebugMenuType.useProductionRevenueCat =>
           'Use production RevenueCat API keys instead of test keys. Restart required to take effect.',
+        DebugMenuType.enableBlocLogs =>
+          'Master switch for BLoC console logs (events, transitions, errors, lifecycle). Configure verbosity and per-BLoC silencing in BLoC Log Settings.',
       };
 }

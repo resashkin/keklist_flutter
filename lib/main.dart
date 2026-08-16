@@ -1,9 +1,13 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
+import 'dart:developer' as developer;
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:crypto/crypto.dart';
+import 'package:keklist/domain/repositories/bloc_log_settings/bloc_log_settings.dart';
+import 'package:keklist/domain/repositories/bloc_log_settings/bloc_log_settings_repository.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
@@ -18,9 +22,10 @@ import 'package:keklist/domain/repositories/mind/mind_hive_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_hive_repository.dart';
 import 'package:keklist/domain/repositories/weather/object/weather_cache_object.dart';
+import 'package:keklist/domain/repositories/emotion/object/emotion_object.dart';
+import 'package:keklist/domain/repositories/emotion/emotion_hive_repository.dart';
 import 'package:keklist/domain/repositories/weather/weather_repository.dart';
 import 'package:keklist/domain/migrations/migration_runner.dart';
-import 'package:keklist/domain/services/export_import/export_import_service.dart';
 import 'package:keklist/keklist_app.dart';
 import 'package:keklist/domain/hive_constants.dart';
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
@@ -42,8 +47,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
+import 'package:keklist/presentation/blocs/emotion_bloc/emotion_bloc.dart';
 import 'package:keklist/presentation/cubits/used_emoji/used_emoji_cubit.dart';
 import 'package:keklist/presentation/cubits/mind_searcher/mind_searcher_cubit.dart';
+import 'package:keklist/presentation/cubits/weather/weather_cubit.dart';
+import 'package:keklist/presentation/screens/date_gallery/bloc/date_gallery_bloc.dart';
+import 'package:keklist/presentation/screens/mind_day_collection/widgets/day_media_tile/day_folder_media_preview_cubit.dart';
+import 'package:keklist/presentation/screens/mind_day_collection/widgets/day_media_tile/day_media_preview_cubit.dart';
 import 'package:keklist/di/containers.dart';
 
 import 'presentation/native/ios/watch/watch_communication_manager.dart';
@@ -93,7 +103,7 @@ final class _AppRootState extends State<_AppRoot> {
     final injector = MainContainer(streamingSharedPreferences: streamingPrefs).initialize(Injector());
 
     _connectToWatchCommunicationManager(injector);
-    _enableDebugBLOCLogs();
+    _enableDebugBLOCLogs(injector);
 
     final debugBox = Hive.box<DebugMenuObject>(HiveConstants.debugMenuBoxName);
     final useProductionRC = debugBox.get(DebugMenuType.useProductionRevenueCat.name)?.value ?? false;
@@ -222,6 +232,9 @@ Future<void> _initHive(HiveAesCipher cipher) async {
   if (!Hive.isAdapterRegistered(WeatherCacheObjectAdapter().typeId)) {
     Hive.registerAdapter<WeatherCacheObject>(WeatherCacheObjectAdapter());
   }
+  if (!Hive.isAdapterRegistered(EmotionObjectAdapter().typeId)) {
+    Hive.registerAdapter<EmotionObject>(EmotionObjectAdapter());
+  }
 
   await Hive.initFlutter();
 
@@ -236,15 +249,29 @@ Future<void> _initHive(HiveAesCipher cipher) async {
   final Box<MindObject> mindBox = await Hive.openBox<MindObject>(HiveConstants.mindBoxName, encryptionCipher: cipher);
   await Hive.openBox<DebugMenuObject>(HiveConstants.debugMenuBoxName, encryptionCipher: cipher);
   await Hive.openBox<WeatherCacheObject>(HiveConstants.weatherCacheBoxName, encryptionCipher: cipher);
+  await Hive.openBox(HiveConstants.blocLogSettingsBoxName);
 
-  await _runMigrations(settingsBox, mindBox);
+  final Box<EmotionObject> emotionBox =
+      await Hive.openBox<EmotionObject>(HiveConstants.emotionBoxName, encryptionCipher: cipher);
+
+  await _runMigrations(settingsBox, mindBox, emotionBox);
 }
 
-Future<void> _runMigrations(Box<SettingsObject> settingsBox, Box<MindObject> mindBox) async {
+Future<void> _runMigrations(
+  Box<SettingsObject> settingsBox,
+  Box<MindObject> mindBox,
+  Box<EmotionObject> emotionBox,
+) async {
   final settingsRepo = SettingsHiveRepository(box: settingsBox);
   final mindRepo = MindHiveRepository(box: mindBox);
+  final emotionRepo = EmotionHiveRepository(box: emotionBox);
   final fileRepo = const AppFileRepository();
-  final runner = MigrationRunner(settingsRepository: settingsRepo, mindRepository: mindRepo, fileRepository: fileRepo);
+  final runner = MigrationRunner(
+    settingsRepository: settingsRepo,
+    mindRepository: mindRepo,
+    fileRepository: fileRepo,
+    emotionRepository: emotionRepo,
+  );
   await runner.runPendingMigrations();
 }
 
@@ -270,12 +297,8 @@ Widget _getApplication(Injector mainInjector) => MultiProvider(
       BlocProvider(create: (context) => mainInjector.get<MindSearcherCubit>()),
       BlocProvider(create: (context) => mainInjector.get<UsedEmojiCubit>()),
       BlocProvider(create: (context) => MindCreatorBloc(mindRepository: mainInjector.get<MindRepository>())),
-      BlocProvider(
-        create: (context) => SettingsBloc(
-          repository: mainInjector.get<SettingsRepository>(),
-          exportImportService: mainInjector.get<ExportImportService>(),
-        ),
-      ),
+      BlocProvider<SettingsBloc>.value(value: mainInjector.get<SettingsBloc>()),
+      BlocProvider<EmotionBloc>.value(value: mainInjector.get<EmotionBloc>()..add(EmotionGetList())),
       BlocProvider(
         create: (context) => UserProfileBloc(
           mindRepository: mainInjector.get<MindRepository>(),
@@ -330,10 +353,12 @@ void _setupBlockingLoadingWidget() {
     ..dismissOnTap = false;
 }
 
-void _enableDebugBLOCLogs() {
-  if (!kReleaseMode) {
-    Bloc.observer = _LoggerBlocObserver();
-  }
+void _enableDebugBLOCLogs(Injector injector) {
+  if (kReleaseMode) return;
+  Bloc.observer = _LoggerBlocObserver(
+    debugMenuRepository: injector.get<DebugMenuRepository>(),
+    settingsRepository: injector.get<BlocLogSettingsRepository>(),
+  );
 }
 
 void _connectToWatchCommunicationManager(Injector mainInjector) {
@@ -344,34 +369,140 @@ void _connectToWatchCommunicationManager(Injector mainInjector) {
   }
 }
 
+const Map<Type, String> _kBlocEmojis = {
+  MindBloc: '🧠',
+  MindCreatorBloc: '✍️',
+  MindSearcherCubit: '🔎',
+  SettingsBloc: '⚙️',
+  DebugMenuBloc: '🐞',
+  MembershipBloc: '💎',
+  TabsContainerBloc: '🗂️',
+  LazyOnboardingBloc: '🚀',
+  AudioPlayerBloc: '🎧',
+  UserProfileBloc: '👤',
+  UsedEmojiCubit: '🎨',
+  WeatherCubit: '🌤️',
+  DayMediaPreviewCubit: '🖼️',
+  DayFolderMediaPreviewCubit: '📁',
+  DateGalleryBloc: '🗓️',
+};
+
+// Stable fallback pool for BLoCs not explicitly mapped above.
+// Picks deterministically by hash of the type name, so a given unmapped BLoC
+// keeps the same emoji across all log lines in a session.
+const List<String> _kFallbackEmojiPool = [
+  '🔵', '🟢', '🟡', '🟠', '🔴', '🟣', '⚫', '⚪',
+  '🌀', '✨', '🔶', '🔷', '🟦', '🟩', '🟨', '🟥',
+];
+
+const int _kPayloadTruncateAt = 120;
+
+String _emojiForBloc(BlocBase bloc) {
+  final String? mapped = _kBlocEmojis[bloc.runtimeType];
+  if (mapped != null) return mapped;
+  final int index = bloc.runtimeType.toString().hashCode.abs() % _kFallbackEmojiPool.length;
+  return _kFallbackEmojiPool[index];
+}
+
 final class _LoggerBlocObserver extends BlocObserver {
-  @override
-  void onEvent(Bloc bloc, Object? event) {
-    super.onEvent(bloc, event);
-    print('onEvent: $event');
+  final DebugMenuRepository _debugMenuRepository;
+  final BlocLogSettingsRepository _settingsRepository;
+
+  bool _enabled = false;
+  BlocLogSettings _settings = const BlocLogSettings.initial();
+
+  _LoggerBlocObserver({
+    required DebugMenuRepository debugMenuRepository,
+    required BlocLogSettingsRepository settingsRepository,
+  })  : _debugMenuRepository = debugMenuRepository,
+        _settingsRepository = settingsRepository {
+    _refreshEnabled(_debugMenuRepository.value);
+    _settings = _settingsRepository.value;
+    _debugMenuRepository.stream.listen(_refreshEnabled);
+    _settingsRepository.stream.listen((next) => _settings = next);
+  }
+
+  void _refreshEnabled(List<DebugMenuData> items) {
+    _enabled = items
+            .firstWhereOrNull((item) => item.type == DebugMenuType.enableBlocLogs)
+            ?.value ??
+        false;
+  }
+
+  bool _shouldLog(BlocBase bloc) {
+    if (!_enabled) return false;
+    return !_settings.silenced.contains(bloc.runtimeType.toString());
+  }
+
+  // Prefix excludes the bloc name — `developer.log(name: ...)` already
+  // renders it as `[BlocName]` in front of every line.
+  String _prefix(BlocBase bloc) => _emojiForBloc(bloc);
+
+  String _truncate(String s) =>
+      s.length <= _kPayloadTruncateAt ? s : '${s.substring(0, _kPayloadTruncateAt)}…';
+
+  String _payloadSuffix(Object? value, String typeName) {
+    if (!_settings.verbose) return '';
+    return ' | ${_truncate(value.toString())}';
+  }
+
+  void _emit(BlocBase bloc, String message) {
+    developer.log(message, name: bloc.runtimeType.toString());
   }
 
   @override
-  void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
-    super.onError(bloc, error, stackTrace);
-    print(error);
+  void onCreate(BlocBase bloc) {
+    super.onCreate(bloc);
+    _settingsRepository.recordKnownBloc(bloc.runtimeType.toString());
+    if (!_shouldLog(bloc)) return;
+    _emit(bloc, '${_prefix(bloc)} create');
+  }
+
+  @override
+  void onEvent(Bloc bloc, Object? event) {
+    super.onEvent(bloc, event);
+    if (!_shouldLog(bloc)) return;
+    final String typeName = event.runtimeType.toString();
+    _emit(bloc, '${_prefix(bloc)} event: $typeName${_payloadSuffix(event, typeName)}');
   }
 
   @override
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
-    print('onChange: ${bloc.state}');
+    if (!_shouldLog(bloc)) return;
+    final String nextType = change.nextState.runtimeType.toString();
+    _emit(bloc, '${_prefix(bloc)} state: $nextType${_payloadSuffix(change.nextState, nextType)}');
   }
 
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
-    print('onTransition: $bloc.state');
+    if (!_shouldLog(bloc)) return;
+    final String fromType = transition.currentState.runtimeType.toString();
+    final String toType = transition.nextState.runtimeType.toString();
+    _emit(
+      bloc,
+      '${_prefix(bloc)} transition: $fromType → $toType${_payloadSuffix(transition.nextState, toType)}',
+    );
+  }
+
+  @override
+  void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
+    super.onError(bloc, error, stackTrace);
+    if (!_shouldLog(bloc)) return;
+    developer.log(
+      '${_prefix(bloc)} error: $error',
+      name: bloc.runtimeType.toString(),
+      level: 1000, // SEVERE
+      error: error,
+      stackTrace: stackTrace,
+    );
   }
 
   @override
   void onClose(BlocBase bloc) {
     super.onClose(bloc);
-    print('onClose: ${bloc.runtimeType}');
+    if (!_shouldLog(bloc)) return;
+    _emit(bloc, '${_prefix(bloc)} close');
   }
 }

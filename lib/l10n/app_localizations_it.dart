@@ -18,6 +18,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get appearance => 'Aspetto';
 
   @override
+  String get interfaceStyle => 'Stile interfaccia';
+
+  @override
   String get exportToCsv => 'Esporta in CSV';
 
   @override
@@ -384,6 +387,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get audioFilesToExport => 'File audio';
 
   @override
+  String get emotionsToExport => 'Emozioni';
+
+  @override
   String get mindsExported => 'Mind esportate';
 
   @override
@@ -575,4 +581,61 @@ class AppLocalizationsIt extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'Sei un utente PRO. Il prossimo pagamento di $price sarà il $date.';
   }
+
+  @override
+  String get emotions => 'Emozioni';
+
+  @override
+  String get archived => 'Archiviate';
+
+  @override
+  String get archive => 'Archivia';
+
+  @override
+  String get restore => 'Ripristina';
+
+  @override
+  String get deletePermanently => 'Elimina definitivamente';
+
+  @override
+  String get newEmotion => 'Nuova emozione';
+
+  @override
+  String get editEmotion => 'Modifica emozione';
+
+  @override
+  String get addEmotion => 'Aggiungi emozione';
+
+  @override
+  String get addEmotionsToMind => 'Aggiungi emozioni';
+
+  @override
+  String get emotionNameHint => 'Nome';
+
+  @override
+  String get doneEditing => 'Fatto';
+
+  @override
+  String get emotionEditHint =>
+      'Tocca per rinominare · ✕ per rimuovere · trascina per riordinare';
+
+  @override
+  String get emotionInUseMessage =>
+      'Questa emozione è usata in alcune menti. Archiviala per mantenerla lì, o eliminala ovunque.';
+
+  @override
+  String get emotionPickHint => 'Tocca per assegnare';
+
+  @override
+  String get emotionDrillHint => 'tieni premuto per approfondire';
+
+  @override
+  String get noEmotionsYet => 'Ancora nessuna emozione';
+
+  @override
+  String get noArchivedEmotions => 'Nessuna emozione archiviata';
+
+  @override
+  String get deleteEmotionMessage =>
+      'Eliminare questa emozione? Verrà rimossa da tutte le menti che la usano.';
 }

@@ -18,6 +18,9 @@ class AppLocalizationsUz extends AppLocalizations {
   String get appearance => 'Ko\'rinish';
 
   @override
+  String get interfaceStyle => 'Interfeys uslubi';
+
+  @override
   String get exportToCsv => 'CSV ga eksport qilish';
 
   @override
@@ -383,6 +386,9 @@ class AppLocalizationsUz extends AppLocalizations {
   String get audioFilesToExport => 'Audio fayllar';
 
   @override
+  String get emotionsToExport => 'Hislar';
+
+  @override
   String get mindsExported => 'Fikrlar eksport qilindi';
 
   @override
@@ -574,4 +580,61 @@ class AppLocalizationsUz extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'Siz PRO foydalanuvchisiz. Keyingi $price to\'lov $date da bo\'ladi.';
   }
+
+  @override
+  String get emotions => 'Hissiyotlar';
+
+  @override
+  String get archived => 'Arxivlangan';
+
+  @override
+  String get archive => 'Arxivlash';
+
+  @override
+  String get restore => 'Tiklash';
+
+  @override
+  String get deletePermanently => 'Butunlay o\'chirish';
+
+  @override
+  String get newEmotion => 'Yangi hissiyot';
+
+  @override
+  String get editEmotion => 'Hissiyotni tahrirlash';
+
+  @override
+  String get addEmotion => 'Hissiyot qo\'shish';
+
+  @override
+  String get addEmotionsToMind => 'Hislar qo\'shish';
+
+  @override
+  String get emotionNameHint => 'Nomi';
+
+  @override
+  String get doneEditing => 'Tayyor';
+
+  @override
+  String get emotionEditHint =>
+      'Nomini o\'zgartirish uchun bosing · ✕ o\'chirish uchun · tartiblash uchun torting';
+
+  @override
+  String get emotionInUseMessage =>
+      'Bu hissiyot ba\'zi maindlarda ishlatiladi. Uni o\'sha yerda saqlash uchun arxivlang yoki hamma joydan o\'chiring.';
+
+  @override
+  String get emotionPickHint => 'Belgilash uchun bosing';
+
+  @override
+  String get emotionDrillHint => 'chuqurlashish uchun bosib turing';
+
+  @override
+  String get noEmotionsYet => 'Hozircha hissiyotlar yo\'q';
+
+  @override
+  String get noArchivedEmotions => 'Arxivlangan hissiyotlar yo\'q';
+
+  @override
+  String get deleteEmotionMessage =>
+      'Bu hissiyotni o\'chirasizmi? U undan foydalanadigan barcha maindlardan olib tashlanadi.';
 }

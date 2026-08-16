@@ -4,6 +4,7 @@ import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:keklist/domain/repositories/settings/keklist_interface_style.dart';
 import 'package:keklist/domain/repositories/settings/keklist_theme_mode.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
 import 'package:keklist/domain/services/export_import/export_import_service.dart';
@@ -32,6 +33,7 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     on<SettingsGet>(_getSettings);
     on<SettingGetWhatsNew>(_sendWhatsNewIfNeeded);
     on<SettingsChangeThemePreference>(_changeThemePreference);
+    on<SettingsChangeInterfaceStyle>(_changeInterfaceStyle);
     on<SettingsUpdateShouldShowTitlesMode>(_updateShouldShowTitlesMode);
     on<SettingsChangeLanguage>(_changeLanguage);
     on<SettingsEnableDebugMenu>(_enableDebugMenu);
@@ -68,7 +70,6 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
 
       switch (result) {
         case ExportSuccess success:
-          // Handle based on export action
           if (event.action == SettingsExportAction.saveToFiles) {
             // Save to file system using file picker
             final timestamp = DateTime.now().toIso8601String().replaceAll(':', '-').split('.').first;
@@ -176,6 +177,10 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
     await _repository.updateThemePreference(event.themePreference);
   }
 
+  FutureOr<void> _changeInterfaceStyle(SettingsChangeInterfaceStyle event, Emitter<SettingsState> emit) async {
+    await _repository.updateInterfaceStyle(event.interfaceStyle);
+  }
+
   FutureOr<void> _sendWhatsNewIfNeeded(SettingGetWhatsNew event, Emitter<SettingsState> emit) async {
     // Cбор и отправка стейта Whats new.
     final String? previousAppVersion = _repository.value.previousAppVersion;
@@ -204,6 +209,7 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> with Dispose
       isMindContentVisible: currentSettings.isMindContentVisible,
       previousAppVersion: currentSettings.previousAppVersion,
       themePreference: currentSettings.themePreference,
+      interfaceStyle: currentSettings.interfaceStyle,
       shouldShowTitles: currentSettings.shouldShowTitles,
       userName: currentSettings.userName,
       language: currentSettings.language,

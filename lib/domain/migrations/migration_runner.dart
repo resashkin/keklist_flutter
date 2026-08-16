@@ -2,6 +2,7 @@
 
 import 'package:keklist/domain/migrations/migration.dart';
 import 'package:keklist/domain/migrations/migration_registry.dart';
+import 'package:keklist/domain/repositories/emotion/emotion_repository.dart';
 import 'package:keklist/domain/repositories/files/app_file_repository.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
@@ -11,11 +12,13 @@ class MigrationRunner {
   final SettingsRepository settingsRepository;
   final MindRepository mindRepository;
   final AppFileRepository fileRepository;
+  final EmotionRepository emotionRepository;
 
   const MigrationRunner({
     required this.settingsRepository,
     required this.mindRepository,
     required this.fileRepository,
+    required this.emotionRepository,
   });
 
   /// Run all pending migrations (those with version > current dataSchemaVersion)
@@ -43,6 +46,7 @@ class MigrationRunner {
         mindRepository: mindRepository,
         settingsRepository: settingsRepository,
         fileRepository: fileRepository,
+        emotionRepository: emotionRepository,
       );
 
       for (final migration in pendingMigrations) {
@@ -63,6 +67,7 @@ class MigrationRunner {
                 isMindContentVisible: updatedSettings.isMindContentVisible,
                 previousAppVersion: updatedSettings.previousAppVersion,
                 themePreference: updatedSettings.themePreference,
+                interfaceStyle: updatedSettings.interfaceStyle,
                 shouldShowTitles: updatedSettings.shouldShowTitles,
                 userName: updatedSettings.userName,
                 language: updatedSettings.language,
@@ -76,6 +81,7 @@ class MigrationRunner {
                 isMediaFolderSourceEnabled: updatedSettings.isMediaFolderSourceEnabled,
                 mediaFolderPath: updatedSettings.mediaFolderPath,
                 isMediaFolderRecursive: updatedSettings.isMediaFolderRecursive,
+                hasSeededEmotions: updatedSettings.hasSeededEmotions,
               ),
             );
 

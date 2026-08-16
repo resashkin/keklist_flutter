@@ -14,7 +14,15 @@ Each document provides:
 
 ## Available Documentation
 
+### Conventions
+
+- **[CODE_STYLE.md](./CODE_STYLE.md)**
+  Source of truth for code style: one-line comments only, self-documenting code, and moving complex descriptions into this folder.
+
 ### Features
+
+- **[APPEARANCE_SETTINGS_IMPLEMENTATION.md](./APPEARANCE_SETTINGS_IMPLEMENTATION.md)**
+  Dedicated Appearance screen with interface style (Material / Liquid Glass, iOS-only) and theme mode. Replaces the boolean Liquid Glass debug flag with a persisted `KeklistInterfaceStyle` user setting.
 
 - **[LAZY_ONBOARDING_IMPLEMENTATION.md](./LAZY_ONBOARDING_IMPLEMENTATION.md)**
   Lazy onboarding system that shows educational minds to new users. Uses ID prefix pattern for identification and function references for type-safe localization.

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
+import 'package:keklist/presentation/core/widgets/kek_bottom_sheet.dart';
 
 /// Result from password input bottom sheet
 class PasswordInputResult {
@@ -19,6 +20,7 @@ class PasswordInputBottomSheet extends StatefulWidget {
   /// Optional metadata to display (for export)
   final int? mindsCount;
   final int? audioFilesCount;
+  final int? emotionsCount;
 
   const PasswordInputBottomSheet({
     super.key,
@@ -26,6 +28,7 @@ class PasswordInputBottomSheet extends StatefulWidget {
     this.isOptional = false,
     this.mindsCount,
     this.audioFilesCount,
+    this.emotionsCount,
   });
 
   /// Show the bottom sheet and return the password, or null if cancelled
@@ -35,6 +38,7 @@ class PasswordInputBottomSheet extends StatefulWidget {
     bool isOptional = false,
     int? mindsCount,
     int? audioFilesCount,
+    int? emotionsCount,
   }) {
     return showModalBottomSheet<String>(
       context: context,
@@ -47,6 +51,7 @@ class PasswordInputBottomSheet extends StatefulWidget {
           isOptional: isOptional,
           mindsCount: mindsCount,
           audioFilesCount: audioFilesCount,
+          emotionsCount: emotionsCount,
         ),
       ),
     );
@@ -82,33 +87,19 @@ class _PasswordInputBottomSheetState extends State<PasswordInputBottomSheet> {
     final theme = Theme.of(context);
 
     return Container(
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-      ),
+      decoration: KekBottomSheetStyle.decoration(context),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Drag handle
-          Center(
-            child: Container(
-              margin: const EdgeInsets.only(top: 12, bottom: 8),
-              width: 32,
-              height: 4,
-              decoration: BoxDecoration(
-                color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.4),
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-          ),
+          KekBottomSheetStyle.handle(context),
 
           // Title
           Padding(
             padding: const EdgeInsets.fromLTRB(24, 8, 24, 0),
             child: Text(
               widget.title,
-              style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+              style: KekBottomSheetStyle.titleStyle(context),
               textAlign: TextAlign.center,
             ),
           ),
@@ -136,6 +127,13 @@ class _PasswordInputBottomSheetState extends State<PasswordInputBottomSheet> {
                           const SizedBox(height: 8),
                           Text(
                             '${context.l10n.audioFilesToExport} - ${widget.audioFilesCount}',
+                            style: theme.textTheme.bodyMedium,
+                          ),
+                        ],
+                        if (widget.emotionsCount != null && widget.emotionsCount! > 0) ...[
+                          const SizedBox(height: 8),
+                          Text(
+                            '${context.l10n.emotionsToExport} - ${widget.emotionsCount}',
                             style: theme.textTheme.bodyMedium,
                           ),
                         ],

@@ -18,6 +18,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appearance => 'Appearance';
 
   @override
+  String get interfaceStyle => 'Interface Style';
+
+  @override
   String get exportToCsv => 'Export to CSV';
 
   @override
@@ -383,6 +386,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get audioFilesToExport => 'Audio files';
 
   @override
+  String get emotionsToExport => 'Emotions';
+
+  @override
   String get mindsExported => 'Minds exported';
 
   @override
@@ -571,4 +577,60 @@ class AppLocalizationsEn extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'You are a PRO user. Next payment $price will be at $date.';
   }
+
+  @override
+  String get emotions => 'Emotions';
+
+  @override
+  String get archived => 'Archived';
+
+  @override
+  String get archive => 'Archive';
+
+  @override
+  String get restore => 'Restore';
+
+  @override
+  String get deletePermanently => 'Delete permanently';
+
+  @override
+  String get newEmotion => 'New emotion';
+
+  @override
+  String get editEmotion => 'Edit emotion';
+
+  @override
+  String get addEmotion => 'Add emotion';
+
+  @override
+  String get addEmotionsToMind => 'Add emotions';
+
+  @override
+  String get emotionNameHint => 'Name';
+
+  @override
+  String get doneEditing => 'Done';
+
+  @override
+  String get emotionEditHint => 'Tap to rename · ✕ to remove · drag to reorder';
+
+  @override
+  String get emotionInUseMessage =>
+      'This emotion is used by some minds. Archive it to keep it there, or delete it everywhere.';
+
+  @override
+  String get emotionPickHint => 'Tap to tag';
+
+  @override
+  String get emotionDrillHint => 'long-press to go deeper';
+
+  @override
+  String get noEmotionsYet => 'No emotions yet';
+
+  @override
+  String get noArchivedEmotions => 'No archived emotions';
+
+  @override
+  String get deleteEmotionMessage =>
+      'Delete this emotion? It will be removed from any minds using it.';
 }

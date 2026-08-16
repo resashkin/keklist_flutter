@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 import 'package:keklist/domain/hive_constants.dart';
+import 'package:keklist/domain/repositories/settings/keklist_interface_style.dart';
 import 'package:keklist/domain/repositories/settings/keklist_theme_mode.dart';
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
@@ -44,6 +45,14 @@ final class SettingsHiveRepository implements SettingsRepository {
   }
 
   @override
+  FutureOr<void> updateInterfaceStyle(KeklistInterfaceStyle style) async {
+    final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.globalSettingsIndex);
+    if (settingsObject == null) return;
+    settingsObject.interfaceStyleIndex = style.index;
+    await settingsObject.save();
+  }
+
+  @override
   FutureOr<void> updateMindContentVisibility(bool isVisible) async {
     final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.globalSettingsIndex);
     settingsObject?.isMindContentVisible = isVisible;
@@ -61,6 +70,13 @@ final class SettingsHiveRepository implements SettingsRepository {
   FutureOr<void> updatePreviousAppVersion(String? previousAppVersion) async {
     final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.globalSettingsIndex);
     settingsObject?.previousAppVersion = previousAppVersion;
+    await settingsObject?.save();
+  }
+
+  @override
+  FutureOr<void> updateHasSeededEmotions(bool value) async {
+    final SettingsObject? settingsObject = _hiveBox.get(HiveConstants.globalSettingsIndex);
+    settingsObject?.hasSeededEmotions = value;
     await settingsObject?.save();
   }
 

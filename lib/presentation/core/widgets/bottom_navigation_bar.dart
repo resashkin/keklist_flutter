@@ -3,17 +3,23 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:keklist/domain/repositories/tabs/models/tabs_settings.dart';
+import 'package:keklist/presentation/core/widgets/liquid_glass_navigation_bar.dart';
 
 final class AdaptiveBottomNavigationBar extends StatelessWidget {
   final int selectedIndex;
-  final Function(int) onTap;
+  final ValueChanged<int> onTap;
   final List<BottomNavigationBarItem> items;
+  final List<TabType>? tabTypes;
+  final bool useLiquidGlass;
 
   const AdaptiveBottomNavigationBar({
     super.key,
     required this.onTap,
     required this.selectedIndex,
     required this.items,
+    this.tabTypes,
+    this.useLiquidGlass = false,
   });
 
   @override
@@ -29,6 +35,13 @@ final class AdaptiveBottomNavigationBar extends StatelessWidget {
         onTap: onTap,
       );
     } else if (Platform.isIOS) {
+      if (useLiquidGlass && tabTypes != null) {
+        return LiquidGlassNavigationBar(
+          tabTypes: tabTypes!,
+          selectedIndex: selectedIndex,
+          onTap: onTap,
+        );
+      }
       return CupertinoTabBar(
         items: items,
         currentIndex: selectedIndex,

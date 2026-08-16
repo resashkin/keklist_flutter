@@ -18,6 +18,9 @@ class AppLocalizationsSr extends AppLocalizations {
   String get appearance => 'Изглед';
 
   @override
+  String get interfaceStyle => 'Стил интерфејса';
+
+  @override
   String get exportToCsv => 'Извоз у CSV';
 
   @override
@@ -383,6 +386,9 @@ class AppLocalizationsSr extends AppLocalizations {
   String get audioFilesToExport => 'Аудио фајлови';
 
   @override
+  String get emotionsToExport => 'Емоције';
+
+  @override
   String get mindsExported => 'Белешке извезене';
 
   @override
@@ -572,6 +578,63 @@ class AppLocalizationsSr extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'Ви сте PRO корисник. Следећа уплата $price биће $date.';
   }
+
+  @override
+  String get emotions => 'Емоције';
+
+  @override
+  String get archived => 'Архивирано';
+
+  @override
+  String get archive => 'Архивирај';
+
+  @override
+  String get restore => 'Врати';
+
+  @override
+  String get deletePermanently => 'Трајно обриши';
+
+  @override
+  String get newEmotion => 'Нова емоција';
+
+  @override
+  String get editEmotion => 'Измени емоцију';
+
+  @override
+  String get addEmotion => 'Додај емоцију';
+
+  @override
+  String get addEmotionsToMind => 'Додај емоције';
+
+  @override
+  String get emotionNameHint => 'Назив';
+
+  @override
+  String get doneEditing => 'Готово';
+
+  @override
+  String get emotionEditHint =>
+      'Додирните за преименовање · ✕ за уклањање · превуците за преуређивање';
+
+  @override
+  String get emotionInUseMessage =>
+      'Ова емоција се користи у неким мислима. Архивирајте је да остане тамо, или је обришите свуда.';
+
+  @override
+  String get emotionPickHint => 'Додирните за означавање';
+
+  @override
+  String get emotionDrillHint => 'дуже држите за дубље';
+
+  @override
+  String get noEmotionsYet => 'Још нема емоција';
+
+  @override
+  String get noArchivedEmotions => 'Нема архивираних емоција';
+
+  @override
+  String get deleteEmotionMessage =>
+      'Обрисати ову емоцију? Биће уклоњена из свих мисли које је користе.';
 }
 
 /// The translations for Serbian, using the Latin script (`sr_Latn`).
@@ -586,6 +649,9 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
 
   @override
   String get appearance => 'Izgled';
+
+  @override
+  String get interfaceStyle => 'Stil interfejsa';
 
   @override
   String get exportToCsv => 'Izvezi u CSV';
@@ -953,6 +1019,9 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
   String get audioFilesToExport => 'Audio fajlovi';
 
   @override
+  String get emotionsToExport => 'Emocije';
+
+  @override
   String get mindsExported => 'Umovi izvezeni';
 
   @override
@@ -1141,4 +1210,61 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
   String proUserFooter(String price, String date) {
     return 'Vi ste PRO korisnik. Sledeća uplata $price biće $date.';
   }
+
+  @override
+  String get emotions => 'Emocije';
+
+  @override
+  String get archived => 'Arhivirano';
+
+  @override
+  String get archive => 'Arhiviraj';
+
+  @override
+  String get restore => 'Vrati';
+
+  @override
+  String get deletePermanently => 'Trajno obriši';
+
+  @override
+  String get newEmotion => 'Nova emocija';
+
+  @override
+  String get editEmotion => 'Izmeni emociju';
+
+  @override
+  String get addEmotion => 'Dodaj emociju';
+
+  @override
+  String get addEmotionsToMind => 'Dodaj emocije';
+
+  @override
+  String get emotionNameHint => 'Naziv';
+
+  @override
+  String get doneEditing => 'Gotovo';
+
+  @override
+  String get emotionEditHint =>
+      'Dodirnite za preimenovanje · ✕ za uklanjanje · prevucite za preuređivanje';
+
+  @override
+  String get emotionInUseMessage =>
+      'Ova emocija se koristi u nekim mislima. Arhivirajte je da ostane tamo, ili je obrišite svuda.';
+
+  @override
+  String get emotionPickHint => 'Dodirnite za označavanje';
+
+  @override
+  String get emotionDrillHint => 'duže držite za dublje';
+
+  @override
+  String get noEmotionsYet => 'Još nema emocija';
+
+  @override
+  String get noArchivedEmotions => 'Nema arhiviranih emocija';
+
+  @override
+  String get deleteEmotionMessage =>
+      'Obrisati ovu emociju? Biće uklonjena iz svih misli koje je koriste.';
 }

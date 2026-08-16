@@ -18,6 +18,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get appearance => 'Erscheinungsbild';
 
   @override
+  String get interfaceStyle => 'Oberflächenstil';
+
+  @override
   String get exportToCsv => 'In CSV exportieren';
 
   @override
@@ -384,6 +387,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get audioFilesToExport => 'Audiodateien';
 
   @override
+  String get emotionsToExport => 'Emotionen';
+
+  @override
   String get mindsExported => 'Notizen exportiert';
 
   @override
@@ -578,4 +584,61 @@ class AppLocalizationsDe extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'Du bist PRO-Nutzer. Die nächste Zahlung von $price erfolgt am $date.';
   }
+
+  @override
+  String get emotions => 'Emotionen';
+
+  @override
+  String get archived => 'Archiviert';
+
+  @override
+  String get archive => 'Archivieren';
+
+  @override
+  String get restore => 'Wiederherstellen';
+
+  @override
+  String get deletePermanently => 'Endgültig löschen';
+
+  @override
+  String get newEmotion => 'Neue Emotion';
+
+  @override
+  String get editEmotion => 'Emotion bearbeiten';
+
+  @override
+  String get addEmotion => 'Emotion hinzufügen';
+
+  @override
+  String get addEmotionsToMind => 'Emotionen hinzufügen';
+
+  @override
+  String get emotionNameHint => 'Name';
+
+  @override
+  String get doneEditing => 'Fertig';
+
+  @override
+  String get emotionEditHint =>
+      'Tippen zum Umbenennen · ✕ zum Entfernen · ziehen zum Sortieren';
+
+  @override
+  String get emotionInUseMessage =>
+      'Diese Emotion wird von einigen Minds verwendet. Archiviere sie, um sie dort zu behalten, oder lösche sie überall.';
+
+  @override
+  String get emotionPickHint => 'Tippen zum Markieren';
+
+  @override
+  String get emotionDrillHint => 'lange drücken für mehr Tiefe';
+
+  @override
+  String get noEmotionsYet => 'Noch keine Emotionen';
+
+  @override
+  String get noArchivedEmotions => 'Keine archivierten Emotionen';
+
+  @override
+  String get deleteEmotionMessage =>
+      'Diese Emotion löschen? Sie wird aus allen Minds entfernt, die sie verwenden.';
 }

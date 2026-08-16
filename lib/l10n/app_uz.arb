@@ -8,6 +8,7 @@
         "description": "Foydalanuvchi ma'lumotlari bo'limi sarlavhasi"
     },
     "appearance": "Ko'rinish",
+    "interfaceStyle": "Interfeys uslubi",
     "@appearance": {
         "description": "Ko'rinish bo'limi sarlavhasi"
     },
@@ -383,6 +384,7 @@
     "importError": "Import muvaffaqiyatsiz",
     "mindsToExport": "Fikrlar",
     "audioFilesToExport": "Audio fayllar",
+    "emotionsToExport": "Hislar",
     "mindsExported": "Fikrlar eksport qilindi",
     "audioFilesExported": "Audio fayllar eksport qilindi",
     "mindsImported": "Fikrlar import qilindi",
@@ -440,5 +442,23 @@
     "audioRecordStopError": "Yozishni to'xtatish imkoni bo'lmadi. Qayta urinib ko'ring.",
     "emojiPickerUsedInMinds": "Used in minds",
     "emojiPickerAll": "All",
-    "proUserFooter": "Siz PRO foydalanuvchisiz. Keyingi {price} to'lov {date} da bo'ladi."
+    "proUserFooter": "Siz PRO foydalanuvchisiz. Keyingi {price} to'lov {date} da bo'ladi.",
+    "emotions": "Hissiyotlar",
+    "archived": "Arxivlangan",
+    "archive": "Arxivlash",
+    "restore": "Tiklash",
+    "deletePermanently": "Butunlay o'chirish",
+    "newEmotion": "Yangi hissiyot",
+    "editEmotion": "Hissiyotni tahrirlash",
+    "emotionNameHint": "Nomi",
+    "emotionPickHint": "Belgilash uchun bosing",
+    "emotionDrillHint": "chuqurlashish uchun bosib turing",
+    "noEmotionsYet": "Hozircha hissiyotlar yo'q",
+    "noArchivedEmotions": "Arxivlangan hissiyotlar yo'q",
+    "addEmotion": "Hissiyot qo'shish",
+    "addEmotionsToMind": "Hislar qo'shish",
+    "doneEditing": "Tayyor",
+    "emotionEditHint": "Nomini o'zgartirish uchun bosing · ✕ o'chirish uchun · tartiblash uchun torting",
+    "emotionInUseMessage": "Bu hissiyot ba'zi maindlarda ishlatiladi. Uni o'sha yerda saqlash uchun arxivlang yoki hamma joydan o'chiring.",
+    "deleteEmotionMessage": "Bu hissiyotni o'chirasizmi? U undan foydalanadigan barcha maindlardan olib tashlanadi."
 }

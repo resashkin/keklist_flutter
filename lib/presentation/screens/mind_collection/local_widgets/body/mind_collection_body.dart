@@ -51,7 +51,7 @@ final class _MindCollectionBody extends StatelessWidget {
         trueChild: GestureDetector(
           onPanDown: (_) => hideKeyboard(),
           child: ScrollablePositionedList.builder(
-            padding: const EdgeInsets.only(top: 16.0),
+            padding: EdgeInsets.only(top: 16.0, bottom: MediaQuery.paddingOf(context).bottom),
             itemCount: 99999999999,
             itemScrollController: itemScrollController,
             itemPositionsListener: itemPositionsListener,

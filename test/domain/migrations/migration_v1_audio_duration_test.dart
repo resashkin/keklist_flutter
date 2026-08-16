@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:keklist/domain/migrations/migration.dart';
 import 'package:keklist/domain/migrations/migrations/migration_v1_audio_duration.dart';
+import 'package:keklist/domain/repositories/emotion/emotion_repository.dart';
 import 'package:keklist/domain/repositories/files/app_file_repository.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
@@ -10,6 +11,8 @@ import 'package:mocktail/mocktail.dart';
 class MockMindRepository extends Mock implements MindRepository {}
 
 class MockSettingsRepository extends Mock implements SettingsRepository {}
+
+class MockEmotionRepository extends Mock implements EmotionRepository {}
 
 void main() {
   setUpAll(() {
@@ -42,6 +45,7 @@ void main() {
         mindRepository: mockMindRepo,
         settingsRepository: mockSettingsRepo,
         fileRepository: const AppFileRepository(),
+        emotionRepository: MockEmotionRepository(),
       );
     });
 

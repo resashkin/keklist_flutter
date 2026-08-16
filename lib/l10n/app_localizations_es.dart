@@ -18,6 +18,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get appearance => 'Apariencia';
 
   @override
+  String get interfaceStyle => 'Estilo de interfaz';
+
+  @override
   String get exportToCsv => 'Exportar a CSV';
 
   @override
@@ -385,6 +388,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get audioFilesToExport => 'Archivos de audio';
 
   @override
+  String get emotionsToExport => 'Emociones';
+
+  @override
   String get mindsExported => 'Mentes exportadas';
 
   @override
@@ -576,4 +582,61 @@ class AppLocalizationsEs extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'Eres usuario PRO. El próximo pago de $price será el $date.';
   }
+
+  @override
+  String get emotions => 'Emociones';
+
+  @override
+  String get archived => 'Archivadas';
+
+  @override
+  String get archive => 'Archivar';
+
+  @override
+  String get restore => 'Restaurar';
+
+  @override
+  String get deletePermanently => 'Eliminar permanentemente';
+
+  @override
+  String get newEmotion => 'Nueva emoción';
+
+  @override
+  String get editEmotion => 'Editar emoción';
+
+  @override
+  String get addEmotion => 'Añadir emoción';
+
+  @override
+  String get addEmotionsToMind => 'Añadir emociones';
+
+  @override
+  String get emotionNameHint => 'Nombre';
+
+  @override
+  String get doneEditing => 'Listo';
+
+  @override
+  String get emotionEditHint =>
+      'Toca para renombrar · ✕ para quitar · arrastra para reordenar';
+
+  @override
+  String get emotionInUseMessage =>
+      'Esta emoción se usa en algunas mentes. Archívala para conservarla ahí, o elimínala en todas partes.';
+
+  @override
+  String get emotionPickHint => 'Toca para etiquetar';
+
+  @override
+  String get emotionDrillHint => 'mantén pulsado para profundizar';
+
+  @override
+  String get noEmotionsYet => 'Aún no hay emociones';
+
+  @override
+  String get noArchivedEmotions => 'No hay emociones archivadas';
+
+  @override
+  String get deleteEmotionMessage =>
+      '¿Eliminar esta emoción? Se quitará de todas las mentes que la usan.';
 }

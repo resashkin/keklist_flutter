@@ -11,6 +11,7 @@ import 'package:keklist/domain/constants.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:keklist/domain/services/entities/mind_note_content.dart';
 import 'package:keklist/domain/services/export_import/models/import_result.dart';
+import 'package:keklist/presentation/blocs/emotion_bloc/emotion_bloc.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/blocs/membership_bloc/membership_bloc.dart';
 import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
@@ -21,14 +22,14 @@ import 'package:keklist/presentation/core/helpers/platform_utils.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/screens/actions/action_model.dart';
 import 'package:keklist/presentation/screens/actions/actions_screen.dart';
+import 'package:keklist/presentation/screens/appearance_settings/appearance_settings_screen.dart';
 import 'package:keklist/presentation/screens/debug_menu/debug_menu_screen.dart';
 import 'package:keklist/presentation/screens/language_picker/language_picker_screen.dart';
 import 'package:keklist/presentation/screens/settings/widgets/password_input_bottom_sheet.dart';
 import 'package:keklist/presentation/screens/tabs_settings/tabs_settings_screen.dart';
-import 'package:keklist/domain/repositories/settings/keklist_theme_mode.dart';
 import 'package:keklist/presentation/screens/web_page/web_page_screen.dart';
 import 'package:keklist/presentation/screens/paywall/paywall_bottom_sheet.dart';
-import 'package:settings_ui/settings_ui.dart';
+import 'package:keklist/presentation/core/widgets/settings/settings_section.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // TODO: move methods from MindBloc to SettingsBloc
@@ -42,7 +43,6 @@ final class SettingsScreen extends StatefulWidget {
 
 final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
   //bool _isSensitiveContentShowed = false;
-  KeklistThemeMode _themePreference = KeklistThemeMode.system;
   String? translateLanguageCode;
   int _appBarTapCount = 0;
   bool _isDebugMenuVisible = false;
@@ -59,7 +59,6 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
         switch (state) {
           case SettingsDataState state:
             setState(() {
-              _themePreference = state.settings.themePreference;
               _isDebugMenuVisible = state.settings.isDebugMenuVisible;
             });
             break;
@@ -79,7 +78,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
               EasyLoading.dismiss();
             }
             break;
-          case SettingsExportSuccess state:
+          case SettingsExportSuccess _:
             // Success - no alert needed, metadata was shown in password sheet
             break;
           case SettingsExportError state:
@@ -120,155 +119,130 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final lightSettingsListBackground = Color.fromRGBO(242, 242, 247, 1);
-    // final darkSettingsListBackground = CupertinoColors.black;
-
     return Scaffold(
       appBar: AppBar(
         title: GestureDetector(onTap: _handleAppBarTap, child: Text(context.l10n.settings)),
       ),
-      body: SettingsList(
-        sections: [
-          SettingsSection(
-            title: Text(context.l10n.userData.toUpperCase()),
-            tiles: [
-              SettingsTile(
+      body: SettingsListView(
+        children: [
+          SettingsSectionHeader(context.l10n.userData.toUpperCase()),
+          SettingsSectionCard(
+            children: [
+              ListTile(
                 title: Text(context.l10n.exportData),
                 leading: const Icon(Icons.upload, color: Colors.redAccent),
-                onPressed: (BuildContext context) => _handleExport(),
+                onTap: () => _handleExport(),
               ),
-              SettingsTile(
+              ListTile(
                 title: Text(context.l10n.importData),
                 leading: const Icon(Icons.download, color: Colors.greenAccent),
-                onPressed: (BuildContext context) => _handleImport(),
+                onTap: () => _handleImport(),
               ),
             ],
           ),
-          SettingsSection(
-            title: Text('APPLICATION'),
-            tiles: [
-              // SettingsTile.navigation(title: Text('Our new features'), enabled: false, trailing: SizedBox.shrink()),
-              // CustomSettingsTile(
-              //   child: Container(
-              //     color: Color.fromRGBO(27, 27, 27, 1),
-              //     child: Column(
-              //       children: [
-              //         StoriesWidget(
-              //           stories: [
-              //             Story(id: '1', title: 'Voices', emoji: '🎙️'),
-              //             Story(id: '2', title: 'Whats new', emoji: '👨‍💻'),
-              //             Story(id: '3', title: 'PRO', emoji: '🤝'),
-              //             Story(id: '4', title: 'Supermind', emoji: '🧠'),
-              //           ],
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
+          const SettingsSectionHeader('APPLICATION'), // TODO: localize
+          SettingsSectionCard(
+            children: [
               if (!_isPro)
-                SettingsTile.navigation(
-                  title: Text('keklist PRO'),
+                ListTile(
+                  title: const Text('keklist PRO'),
                   leading: const Icon(Icons.handshake, color: Colors.yellowAccent),
-                  onPressed: (BuildContext context) => _openPaywall(),
+                  trailing: settingsNavTrailing(context),
+                  onTap: () => _openPaywall(),
                 ),
-              SettingsTile.navigation(
+              ListTile(
                 title: Text(context.l10n.releaseNotes),
                 leading: const Icon(Icons.new_releases, color: Color.fromARGB(255, 191, 188, 191)),
-                onPressed: (BuildContext context) => _showWhatsNew(),
+                trailing: settingsNavTrailing(context),
+                onTap: () => _showWhatsNew(),
               ),
-              SettingsTile.navigation(
-                title: Text('Dev Blog [Telegram] [RU]'),
+              ListTile(
+                title: const Text('Dev Blog [Telegram] [RU]'), // TODO: move to feedback settings (new screen)
                 leading: const Icon(Icons.newspaper, color: Colors.blue),
-                onPressed: (BuildContext context) => _openAppNews(),
+                trailing: settingsNavTrailing(context),
+                onTap: () => _openAppNews(),
               ),
-              SettingsTile.navigation(
+              ListTile(
                 title: Text(context.l10n.suggestFeature),
                 leading: const Icon(Icons.handyman, color: Colors.green),
-                onPressed: (BuildContext context) => _openSuggestFeature(),
+                trailing: settingsNavTrailing(context),
+                onTap: () => _openSuggestFeature(),
               ),
-              SettingsTile.navigation(
+              ListTile(
                 title: Text(context.l10n.emailUs),
                 leading: const Icon(Icons.feedback, color: Colors.blueGrey),
-                onPressed: (BuildContext context) async => await _openEmailFeedbackForm(),
+                trailing: settingsNavTrailing(context),
+                onTap: () async => await _openEmailFeedbackForm(),
               ),
               if (_isPro) _buildProFooterTile(context),
             ],
           ),
-          SettingsSection(
-            title: Text(context.l10n.appearance.toUpperCase()),
-            tiles: [
-              SettingsTile.navigation(
+          SettingsSectionHeader(context.l10n.appearance.toUpperCase()),
+          SettingsSectionCard(
+            children: [
+              ListTile(
                 leading: const Icon(Icons.language),
                 title: Text(context.l10n.language),
-                onPressed: (_) => _showLanguagePicker(),
+                trailing: settingsNavTrailing(context),
+                onTap: () => _showLanguagePicker(),
               ),
-              SettingsTile.navigation(
+              ListTile(
                 leading: const Icon(Icons.brightness_medium, color: Colors.grey),
-                title: Text(context.l10n.theme),
-                onPressed: (_) => _showThemePicker(),
+                title: Text(context.l10n.appearance),
+                trailing: settingsNavTrailing(context),
+                onTap: () => _showAppearanceSettings(),
               ),
-              // SettingsTile.switchTile(
-              //   initialValue: _showTitles,
-              //   leading: const Icon(Icons.title, color: Colors.grey),
-              //   title: Text(context.l10n.showDayDividers),
-              //   onToggle: (bool value) => _switchShowTitles(value),
-              // ),
-              // SettingsTile.switchTile(
-              //   initialValue: !_isSensitiveContentShowed,
-              //   leading: const Icon(Icons.visibility_off, color: Colors.grey),
-              //   title: const Text('Hide sensitive content'),
-              //   onToggle: (bool value) => _switchSensitiveContentVisibility(!value),
-              // ),
-              // SettingsTile.navigation(
-              //   title: const Text('Feature flags'),
-              //   leading: const Icon(Icons.flag, color: Colors.blue),
-              //   onPressed: (BuildContext context) => _showFeatureFlags(),
-              // ),
-              SettingsTile.navigation(
+              ListTile(
                 title: Text(context.l10n.tabsSettings),
                 leading: const Icon(Icons.dashboard, color: Colors.blue),
-                onPressed: (_) => _showTabsSettings(),
+                trailing: settingsNavTrailing(context),
+                onTap: () => _showTabsSettings(),
               ),
               if (_isDebugMenuVisible)
-                SettingsTile.navigation(
+                ListTile(
                   title: Text(context.l10n.debugMenu),
                   leading: const Icon(Icons.bug_report, color: Colors.orange),
-                  onPressed: (_) => _showDebugMenu(),
+                  trailing: settingsNavTrailing(context),
+                  onTap: () => _showDebugMenu(),
                 ),
             ],
           ),
-          SettingsSection(
-            title: Text(context.l10n.about.toUpperCase()),
-            tiles: [
-              SettingsTile.navigation(
+          SettingsSectionHeader(context.l10n.about.toUpperCase()),
+          SettingsSectionCard(
+            children: [
+              ListTile(
                 title: Text(context.l10n.sourceCode),
                 leading: const Icon(Icons.code, color: Colors.yellow),
-                onPressed: (BuildContext context) async => await _openSourceCode(),
+                trailing: settingsNavTrailing(context),
+                onTap: () async => await _openSourceCode(),
               ),
-              SettingsTile.navigation(
+              ListTile(
                 title: Text(context.l10n.termsOfUse),
                 leading: const Icon(Icons.verified_user, color: Colors.grey),
-                onPressed: (BuildContext context) => _openTermsOfUse(),
+                trailing: settingsNavTrailing(context),
+                onTap: () => _openTermsOfUse(),
               ),
-              SettingsTile.navigation(
+              ListTile(
                 title: Text(context.l10n.privacyPolicy),
                 leading: const Icon(Icons.privacy_tip, color: Colors.grey),
-                onPressed: (BuildContext context) => _openPrivacyPolicy(),
+                trailing: settingsNavTrailing(context),
+                onTap: () => _openPrivacyPolicy(),
               ),
-              SettingsTile.navigation(
+              ListTile(
                 title: Text(context.l10n.licenses),
                 leading: const Icon(Icons.description_outlined, color: Colors.grey),
-                onPressed: (BuildContext context) => showLicensePage(context: context),
+                trailing: settingsNavTrailing(context),
+                onTap: () => showLicensePage(context: context),
               ),
             ],
           ),
-          SettingsSection(
-            title: Text(context.l10n.dangerZone.toUpperCase()),
-            tiles: [
-              SettingsTile(
+          SettingsSectionHeader(context.l10n.dangerZone.toUpperCase()),
+          SettingsSectionCard(
+            children: [
+              ListTile(
                 title: Text(context.l10n.clearOnDeviceData),
                 leading: const Icon(Icons.delete_outline, color: Colors.red),
-                onPressed: (BuildContext context) async => await _clearCache(),
+                onTap: () async => await _clearCache(),
               ),
             ],
           ),
@@ -277,17 +251,19 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     );
   }
 
-  AbstractSettingsTile _buildProFooterTile(BuildContext context) {
+  Widget _buildProFooterTile(BuildContext context) {
     final Locale locale = Localizations.localeOf(context);
     final String dateStr = _proNextRenewalDate != null
         ? DateFormatters.dayMonthAndYearFormat(locale).format(_proNextRenewalDate!)
         : '—';
     final String priceStr = _proPriceString ?? '—';
 
-    return SettingsTile(
-      title: const SizedBox.shrink(),
-      enabled: false,
-      description: Text(context.l10n.proUserFooter(priceStr, dateStr)),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 12.0),
+      child: Text(
+        context.l10n.proUserFooter(priceStr, dateStr),
+        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
+      ),
     );
   }
 
@@ -346,26 +322,10 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     if (purchased) sendEventToBloc<MembershipBloc>(const MembershipRefreshEvent());
   }
 
-  String _themeName(BuildContext context) => switch (_themePreference) {
-    KeklistThemeMode.light => context.l10n.themeLight,
-    KeklistThemeMode.dark => context.l10n.themeDark,
-    KeklistThemeMode.system => context.l10n.themeSystem,
-  };
-
-  Future<void> _showThemePicker() async {
-    final result = await showConfirmationDialog<KeklistThemeMode>(
-      context: context,
-      title: context.l10n.theme,
-      initialSelectedActionKey: _themePreference,
-      actions: [
-        AlertDialogAction(key: KeklistThemeMode.light, label: context.l10n.themeLight),
-        AlertDialogAction(key: KeklistThemeMode.dark, label: context.l10n.themeDark),
-        AlertDialogAction(key: KeklistThemeMode.system, label: context.l10n.themeSystem),
-      ],
-    );
-    if (result != null) {
-      sendEventToBloc<SettingsBloc>(SettingsChangeThemePreference(themePreference: result));
-    }
+  void _showAppearanceSettings() {
+    Navigator.of(
+      context,
+    ).push<void>(SwipeablePageRoute<void>(builder: (BuildContext context) => const AppearanceSettingsScreen()));
   }
 
   // void _switchShowTitles(bool value) {
@@ -454,6 +414,9 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
     }
     final audioFilesCount = audioFiles.length;
 
+    final emotionState = context.read<EmotionBloc>().state;
+    final emotionsCount = emotionState is EmotionsList ? emotionState.emotions.length : 0;
+
     // Show password input bottom sheet with metadata
     final password = await PasswordInputBottomSheet.show(
       context: context,
@@ -461,6 +424,7 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
       isOptional: true,
       mindsCount: mindsCount,
       audioFilesCount: audioFilesCount,
+      emotionsCount: emotionsCount,
     );
 
     if (password == null) return; // User cancelled

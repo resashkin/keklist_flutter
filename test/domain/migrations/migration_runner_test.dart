@@ -1,10 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:keklist/domain/migrations/migration.dart';
 import 'package:keklist/domain/migrations/migration_runner.dart';
+import 'package:keklist/domain/repositories/emotion/emotion_repository.dart';
 import 'package:keklist/domain/repositories/files/app_file_repository.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
+import 'package:keklist/domain/repositories/settings/keklist_interface_style.dart';
 import 'package:keklist/domain/repositories/settings/keklist_theme_mode.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
+import 'package:keklist/domain/services/entities/emotion.dart';
 import 'package:keklist/domain/services/language_manager.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -12,21 +15,39 @@ class MockMindRepository extends Mock implements MindRepository {}
 
 class MockSettingsRepository extends Mock implements SettingsRepository {}
 
+class MockEmotionRepository extends Mock implements EmotionRepository {}
+
 class MockMigration extends Mock implements Migration {}
 
 void main() {
   late MockMindRepository mockMindRepo;
   late MockSettingsRepository mockSettingsRepo;
+  late MockEmotionRepository mockEmotionRepo;
   late MigrationRunner runner;
 
   setUp(() {
     mockMindRepo = MockMindRepository();
     mockSettingsRepo = MockSettingsRepository();
+    mockEmotionRepo = MockEmotionRepository();
+
+    // Make the v3 seed migration a no-op by reporting emotions already exist.
+    when(() => mockEmotionRepo.obtainEmotions()).thenReturn([
+      Emotion(
+        id: 'seeded',
+        title: 'Joy',
+        emoji: '😄',
+        parentId: null,
+        isArchived: false,
+        orderIndex: 0,
+        creationDate: DateTime(2024),
+      ),
+    ]);
 
     runner = MigrationRunner(
       settingsRepository: mockSettingsRepo,
       mindRepository: mockMindRepo,
       fileRepository: const AppFileRepository(),
+      emotionRepository: mockEmotionRepo,
     );
 
     // Register fallback values for mocktail
@@ -35,6 +56,7 @@ void main() {
         isMindContentVisible: true,
         previousAppVersion: null,
         themePreference: KeklistThemeMode.dark,
+        interfaceStyle: KeklistInterfaceStyle.liquidGlass,
         shouldShowTitles: true,
         userName: null,
         language: SupportedLanguage.english,
@@ -49,16 +71,17 @@ void main() {
 
   group('MigrationRunner', () {
     test('runs no migrations when schema version is up to date', () async {
-      // Current version matches the latest migration (v2), no migrations needed
+      // Current version matches the latest migration (v3), no migrations needed
       when(() => mockSettingsRepo.value).thenReturn(
         KeklistSettings(
           isMindContentVisible: true,
           previousAppVersion: null,
           themePreference: KeklistThemeMode.dark,
+          interfaceStyle: KeklistInterfaceStyle.liquidGlass,
           shouldShowTitles: true,
           userName: null,
           language: SupportedLanguage.english,
-          dataSchemaVersion: 2,
+          dataSchemaVersion: 3,
           hasSeenLazyOnboarding: false,
           isDebugMenuVisible: false,
           isPhotoVideoSourceEnabled: false,
@@ -77,6 +100,7 @@ void main() {
           isMindContentVisible: true,
           previousAppVersion: null,
           themePreference: KeklistThemeMode.dark,
+          interfaceStyle: KeklistInterfaceStyle.liquidGlass,
           shouldShowTitles: true,
           userName: null,
           language: SupportedLanguage.english,
@@ -97,6 +121,7 @@ void main() {
           isMindContentVisible: true,
           previousAppVersion: null,
           themePreference: KeklistThemeMode.dark,
+          interfaceStyle: KeklistInterfaceStyle.liquidGlass,
           shouldShowTitles: true,
           userName: null,
           language: SupportedLanguage.english,

@@ -14,6 +14,11 @@ Mind _$MindFromJson(Map<String, dynamic> json) => Mind(
   creationDate: DateTime.parse(json['creationDate'] as String),
   sortIndex: (json['sortIndex'] as num).toInt(),
   rootId: json['rootId'] as String?,
+  emotionIds:
+      (json['emotionIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList() ??
+      const [],
 );
 
 Map<String, dynamic> _$MindToJson(Mind instance) => <String, dynamic>{
@@ -24,4 +29,5 @@ Map<String, dynamic> _$MindToJson(Mind instance) => <String, dynamic>{
   'creationDate': instance.creationDate.toIso8601String(),
   'sortIndex': instance.sortIndex,
   'rootId': instance.rootId,
+  'emotionIds': instance.emotionIds,
 };

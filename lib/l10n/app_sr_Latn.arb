@@ -8,6 +8,7 @@
         "description": "Naslov sekcije korisničkih podataka"
     },
     "appearance": "Izgled",
+    "interfaceStyle": "Stil interfejsa",
     "@appearance": {
         "description": "Naslov sekcije izgleda"
     },
@@ -383,6 +384,7 @@
     "importError": "Uvoz neuspešan",
     "mindsToExport": "Umovi",
     "audioFilesToExport": "Audio fajlovi",
+    "emotionsToExport": "Emocije",
     "mindsExported": "Umovi izvezeni",
     "audioFilesExported": "Audio fajlovi izvezeni",
     "mindsImported": "Umovi uvezeni",
@@ -440,5 +442,23 @@
     "audioRecordStopError": "Nije moguće zaustaviti snimanje. Pokušajte ponovo.",
     "emojiPickerUsedInMinds": "Used in minds",
     "emojiPickerAll": "All",
-    "proUserFooter": "Vi ste PRO korisnik. Sledeća uplata {price} biće {date}."
+    "proUserFooter": "Vi ste PRO korisnik. Sledeća uplata {price} biće {date}.",
+    "emotions": "Emocije",
+    "archived": "Arhivirano",
+    "archive": "Arhiviraj",
+    "restore": "Vrati",
+    "deletePermanently": "Trajno obriši",
+    "newEmotion": "Nova emocija",
+    "editEmotion": "Izmeni emociju",
+    "emotionNameHint": "Naziv",
+    "emotionPickHint": "Dodirnite za označavanje",
+    "emotionDrillHint": "duže držite za dublje",
+    "noEmotionsYet": "Još nema emocija",
+    "noArchivedEmotions": "Nema arhiviranih emocija",
+    "addEmotion": "Dodaj emociju",
+    "addEmotionsToMind": "Dodaj emocije",
+    "doneEditing": "Gotovo",
+    "emotionEditHint": "Dodirnite za preimenovanje · ✕ za uklanjanje · prevucite za preuređivanje",
+    "emotionInUseMessage": "Ova emocija se koristi u nekim mislima. Arhivirajte je da ostane tamo, ili je obrišite svuda.",
+    "deleteEmotionMessage": "Obrisati ovu emociju? Biće uklonjena iz svih misli koje je koriste."
 }

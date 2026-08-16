@@ -7,9 +7,14 @@ import 'package:keklist/domain/repositories/tabs/tabs_settings_shared_preference
 import 'package:keklist/domain/repositories/mind/object/mind_object.dart';
 import 'package:keklist/domain/repositories/mind/mind_hive_repository.dart';
 import 'package:keklist/domain/repositories/mind/mind_repository.dart';
+import 'package:keklist/domain/repositories/emotion/object/emotion_object.dart';
+import 'package:keklist/domain/repositories/emotion/emotion_repository.dart';
+import 'package:keklist/domain/repositories/emotion/emotion_hive_repository.dart';
 import 'package:keklist/domain/repositories/settings/object/settings_object.dart';
 import 'package:keklist/domain/repositories/settings/settings_hive_repository.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
+import 'package:keklist/domain/repositories/bloc_log_settings/bloc_log_settings_hive_repository.dart';
+import 'package:keklist/domain/repositories/bloc_log_settings/bloc_log_settings_repository.dart';
 import 'package:keklist/domain/repositories/debug_menu/debug_menu_repository.dart';
 import 'package:keklist/domain/repositories/debug_menu/debug_menu_hive_repository.dart';
 import 'package:keklist/domain/repositories/debug_menu/object/debug_menu_object.dart';
@@ -19,6 +24,8 @@ import 'package:keklist/domain/repositories/weather/weather_hive_repository.dart
 import 'package:keklist/domain/repositories/weather/weather_repository.dart';
 import 'package:keklist/domain/services/export_import/export_import_service.dart';
 import 'package:keklist/domain/services/weather/weather_api_service.dart';
+import 'package:keklist/presentation/blocs/settings_bloc/settings_bloc.dart';
+import 'package:keklist/presentation/blocs/emotion_bloc/emotion_bloc.dart';
 import 'package:keklist/presentation/core/helpers/platform_utils.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'package:keklist/presentation/cubits/used_emoji/used_emoji_cubit.dart';
@@ -49,11 +56,20 @@ final class MainContainer {
     injector.map<MindRepository>(
       (injector) => MindHiveRepository(box: Hive.box<MindObject>(HiveConstants.mindBoxName)),
     );
+    injector.map<EmotionRepository>(
+      (injector) => EmotionHiveRepository(box: Hive.box<EmotionObject>(HiveConstants.emotionBoxName)),
+      isSingleton: true,
+    );
     injector.map<SettingsRepository>(
       (injector) => SettingsHiveRepository(box: Hive.box<SettingsObject>(HiveConstants.settingsBoxName)),
     );
     injector.map<DebugMenuRepository>(
       (injector) => DebugMenuHiveRepository(box: Hive.box<DebugMenuObject>(HiveConstants.debugMenuBoxName)),
+      isSingleton: true,
+    );
+    injector.map<BlocLogSettingsRepository>(
+      (injector) => BlocLogSettingsHiveRepository(box: Hive.box(HiveConstants.blocLogSettingsBoxName)),
+      isSingleton: true,
     );
     injector.map<AppFileRepository>(
       (_) => const AppFileRepository(),
@@ -63,6 +79,7 @@ final class MainContainer {
       (injector) => ExportImportService(
         mindRepository: injector.get<MindRepository>(),
         fileRepository: injector.get<AppFileRepository>(),
+        emotionRepository: injector.get<EmotionRepository>(),
       ),
       isSingleton: true,
     );
@@ -73,6 +90,24 @@ final class MainContainer {
       (injector) => WeatherHiveRepository(
         box: Hive.box<WeatherCacheObject>(HiveConstants.weatherCacheBoxName),
         apiService: WeatherApiService(),
+      ),
+      isSingleton: true,
+    );
+    // BLoCs that need async-gap-safe dispatch (file pickers, native callbacks)
+    // are registered here as singletons so sendEventTo can fall back to DI
+    // when the originating widget's State has unmounted.
+    injector.map<SettingsBloc>(
+      (i) => SettingsBloc(
+        repository: i.get<SettingsRepository>(),
+        exportImportService: i.get<ExportImportService>(),
+      ),
+      isSingleton: true,
+    );
+    injector.map<EmotionBloc>(
+      (i) => EmotionBloc(
+        emotionRepository: i.get<EmotionRepository>(),
+        mindRepository: i.get<MindRepository>(),
+        settingsRepository: i.get<SettingsRepository>(),
       ),
       isSingleton: true,
     );

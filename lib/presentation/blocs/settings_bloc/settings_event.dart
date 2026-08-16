@@ -52,6 +52,12 @@ final class SettingsChangeThemePreference extends SettingsEvent {
   const SettingsChangeThemePreference({required this.themePreference});
 }
 
+final class SettingsChangeInterfaceStyle extends SettingsEvent {
+  final KeklistInterfaceStyle interfaceStyle;
+
+  const SettingsChangeInterfaceStyle({required this.interfaceStyle});
+}
+
 final class SettingsGetMindCandidatesToUpload extends SettingsEvent {}
 
 final class SettingsUploadMindCandidates extends SettingsEvent {}

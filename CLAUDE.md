@@ -217,6 +217,10 @@ Load with `await dotenv.load(fileName: 'dotenv')` in `main.dart`.
 
 ## Important Conventions
 
+### Code Style
+
+**IMPORTANT**: The source of truth for code style is [`documentation/CODE_STYLE.md`](documentation/CODE_STYLE.md). Read and follow it before writing or modifying code. In short: at most one line of comment per code block, self-documenting readable code over explanatory comments, and complex descriptions moved into `documentation/` rather than inline.
+
 ### Hive Models
 Classes stored in Hive must:
 1. Have `@HiveType(typeId: X)` annotation with unique typeId

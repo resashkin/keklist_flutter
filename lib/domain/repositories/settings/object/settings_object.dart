@@ -1,4 +1,5 @@
 import 'package:hive_ce_flutter/hive_ce_flutter.dart';
+import 'package:keklist/domain/repositories/settings/keklist_interface_style.dart';
 import 'package:keklist/domain/repositories/settings/keklist_theme_mode.dart';
 import 'package:keklist/domain/repositories/settings/settings_repository.dart';
 import 'package:keklist/domain/services/language_manager.dart';
@@ -61,6 +62,13 @@ final class SettingsObject extends HiveObject {
   @HiveField(18, defaultValue: -1)
   late int themePreferenceIndex;
 
+  // Default 1 = Liquid Glass; platform gating forces Material on non-iOS at read time.
+  @HiveField(19, defaultValue: 1)
+  late int interfaceStyleIndex;
+
+  @HiveField(20, defaultValue: false)
+  late bool hasSeededEmotions;
+
   SettingsObject();
 
   KeklistSettings toSettings() => KeklistSettings(
@@ -70,6 +78,7 @@ final class SettingsObject extends HiveObject {
         themePreference: themePreferenceIndex < 0
             ? (isDarkMode ? KeklistThemeMode.dark : KeklistThemeMode.light)
             : KeklistThemeMode.fromIndex(themePreferenceIndex),
+        interfaceStyle: KeklistInterfaceStyle.fromIndex(interfaceStyleIndex),
         userName: userName,
         language: SupportedLanguage.fromCode(language),
         dataSchemaVersion: dataSchemaVersion,
@@ -82,5 +91,6 @@ final class SettingsObject extends HiveObject {
         isMediaFolderSourceEnabled: isMediaFolderSourceEnabled,
         mediaFolderPath: mediaFolderPath,
         isMediaFolderRecursive: isMediaFolderRecursive,
+        hasSeededEmotions: hasSeededEmotions,
       );
 }

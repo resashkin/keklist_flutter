@@ -3,7 +3,7 @@ description: write moments to see your life
 
 publish_to: "none"
 
-version: 4.7.0+130
+version: 5.0.0+141
 
 environment:
   sdk: ">=3.10.0"
@@ -44,9 +44,8 @@ dependencies:
   just_audio: ^0.10.5
   rxdart: ^0.28.0
   scrollable_positioned_list: ^0.3.5
-  settings_ui: ^3.0.1
-  share_plus: ^12.0.0
-  syncfusion_flutter_charts: ^33.1.46
+  share_plus: ^12.0.2
+  syncfusion_flutter_charts: ^33.2.13
   url_launcher: ^6.1.9
   uuid: ^4.2.1
   video_player: ^2.10.1
@@ -63,21 +62,21 @@ dependencies:
   local_auth: ^3.0.1
   translator: ^1.0.0
   auto_size_text: ^3.0.0
-  scrollview_observer: ^1.26.0
+  scrollview_observer: ^1.27.0
   streaming_shared_preferences: ^2.0.0
   json_serializable: ^6.13.1
-  json_annotation: ^4.11.0
+  json_annotation: ^4.12.0
   swipeable_page_route: ^0.4.8
   purchases_flutter: ^10.0.1
   http: ^1.2.2
   geolocator: ^14.0.2
-  record: ^6.1.2
+  record: ^7.0.0
   just_waveform: ^0.0.7
   flutter_gen: ^5.9.0
   file_selector: ^1.1.0
   crypto: ^3.0.7
   shared_preferences: ^2.5.5
-
+  native_liquid_glass: ^0.2.10
 dev_dependencies:
   flutter_lints: ^6.0.0
   flutter_test:

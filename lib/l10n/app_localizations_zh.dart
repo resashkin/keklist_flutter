@@ -18,6 +18,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get appearance => '外观';
 
   @override
+  String get interfaceStyle => '界面风格';
+
+  @override
   String get exportToCsv => '导出到CSV';
 
   @override
@@ -374,6 +377,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get audioFilesToExport => '音频文件';
 
   @override
+  String get emotionsToExport => '情绪';
+
+  @override
   String get mindsExported => '笔记已导出';
 
   @override
@@ -551,4 +557,58 @@ class AppLocalizationsZh extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return '您是PRO用户。下一次 $price 的付款将于 $date 进行。';
   }
+
+  @override
+  String get emotions => '情绪';
+
+  @override
+  String get archived => '已归档';
+
+  @override
+  String get archive => '归档';
+
+  @override
+  String get restore => '恢复';
+
+  @override
+  String get deletePermanently => '永久删除';
+
+  @override
+  String get newEmotion => '新建情绪';
+
+  @override
+  String get editEmotion => '编辑情绪';
+
+  @override
+  String get addEmotion => '添加情绪';
+
+  @override
+  String get addEmotionsToMind => '添加情绪';
+
+  @override
+  String get emotionNameHint => '名称';
+
+  @override
+  String get doneEditing => '完成';
+
+  @override
+  String get emotionEditHint => '点按重命名 · ✕ 删除 · 拖动排序';
+
+  @override
+  String get emotionInUseMessage => '此情绪已被一些 mind 使用。归档可将其保留在那里，或彻底删除。';
+
+  @override
+  String get emotionPickHint => '点按标记';
+
+  @override
+  String get emotionDrillHint => '长按进入下级';
+
+  @override
+  String get noEmotionsYet => '还没有情绪';
+
+  @override
+  String get noArchivedEmotions => '没有已归档的情绪';
+
+  @override
+  String get deleteEmotionMessage => '删除此情绪？它将从所有使用它的 mind 中移除。';
 }

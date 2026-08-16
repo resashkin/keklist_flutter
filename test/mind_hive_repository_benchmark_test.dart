@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:hive_ce/hive.dart';
 import 'package:keklist/domain/hive_constants.dart';
 import 'package:keklist/domain/repositories/mind/object/mind_object.dart';
@@ -6,7 +8,9 @@ import 'package:keklist/domain/repositories/mind/mind_repository.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 
 Future<void> main() async {
-  Hive.init('.');
+  // Use an isolated temp dir so boxes never land in the project root.
+  final tempDir = Directory.systemTemp.createTempSync('hive_mind_repo_benchmark');
+  Hive.init(tempDir.path);
   Hive.registerAdapter<MindObject>(MindObjectAdapter());
   final hiveBox = await Hive.openBox<MindObject>(HiveConstants.mindBoxName);
   final MindRepository repository = MindHiveRepository(box: hiveBox);
@@ -42,4 +46,7 @@ Future<void> main() async {
   //     await repository.obtainMinds();
   //   },
   // ).report();
+
+  await Hive.deleteFromDisk();
+  if (tempDir.existsSync()) tempDir.deleteSync(recursive: true);
 }

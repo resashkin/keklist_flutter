@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:haptic_feedback/haptic_feedback.dart';
+import 'package:keklist/domain/services/entities/emotion.dart';
+import 'package:keklist/presentation/blocs/emotion_bloc/emotion_bloc.dart';
+import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
+import 'package:keklist/presentation/screens/emotions/emotion_marking_sheet.dart';
+import 'package:keklist/presentation/screens/emotions/widgets/emotion_chip.dart';
+import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/core/helpers/mind_utils.dart';
 import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/bulleted_list/mind_bullet_list_widget.dart';
@@ -48,6 +56,12 @@ final class MindMessageWidget extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                       ),
+                      // Always shown on root minds so there is a stable anchor to
+                      // add the first emotion, not only to see existing ones.
+                      if (mind.rootId == null) ...[
+                        const SizedBox(height: 16.0),
+                        _MindEmotionsRow(mind: mind),
+                      ],
                     ],
                   ),
                 ),
@@ -89,6 +103,71 @@ final class MindMessageWidget extends StatelessWidget {
           ]
         ],
       ),
+    );
+  }
+}
+
+/// Renders a mind's tagged emotions as small chips under its main emoji.
+/// Resolves ids via [EmotionBloc] (archived included, so tagged minds still
+/// show them) and skips ids that no longer resolve. Tapping a chip opens the
+/// marking sheet aimed at that emotion rather than untagging it outright, which
+/// was too easy to trigger by accident. See ADR-0002.
+final class _MindEmotionsRow extends StatelessWidget {
+  final Mind mind;
+
+  const _MindEmotionsRow({required this.mind});
+
+  /// Opens the marking sheet, optionally aimed at [emotionId]; the add chip
+  /// passes none and simply opens at the top level.
+  void _openSheet(BuildContext context, {String? emotionId}) {
+    Haptics.vibrate(HapticsType.soft);
+    EmotionMarkingSheet.show(
+      context: context,
+      initialSelectedIds: mind.emotionIds.toSet(),
+      focusEmotionId: emotionId,
+      onSelectionChanged: (ids) => context.read<MindBloc>().add(
+            MindSetEmotions(mindId: mind.id, emotionIds: ids.toList()),
+          ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<EmotionBloc, EmotionState>(
+      builder: (context, state) {
+        if (state is! EmotionsList) return const SizedBox.shrink();
+        final byId = {for (final Emotion emotion in state.emotions) emotion.id: emotion};
+        final emotions = mind.emotionIds.map((id) => byId[id]).whereType<Emotion>().toList();
+
+        // With no chips to sit beside, the icon alone reads as ambiguous — so the
+        // empty state gets a labelled, wider target pulled to the trailing edge.
+        if (emotions.isEmpty) {
+          return Align(
+            alignment: Alignment.centerRight,
+            child: EmotionAddChip(
+              label: context.l10n.addEmotionsToMind,
+              onTap: () => _openSheet(context),
+            ),
+          );
+        }
+
+        return Wrap(
+          spacing: 6.0,
+          runSpacing: 6.0,
+          alignment: WrapAlignment.center,
+          children: [
+            for (final emotion in emotions)
+              EmotionChip(
+                emojis: state.lineageEmojis(emotion),
+                label: emotion.title,
+                selected: true,
+                useCommentPalette: true,
+                onTap: () => _openSheet(context, emotionId: emotion.id),
+              ),
+            EmotionAddChip(onTap: () => _openSheet(context)),
+          ],
+        );
+      },
     );
   }
 }

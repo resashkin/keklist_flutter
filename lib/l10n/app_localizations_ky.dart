@@ -18,6 +18,9 @@ class AppLocalizationsKy extends AppLocalizations {
   String get appearance => 'Көрүнүш';
 
   @override
+  String get interfaceStyle => 'Интерфейс стили';
+
+  @override
   String get exportToCsv => 'CSVга экспорттоо';
 
   @override
@@ -383,6 +386,9 @@ class AppLocalizationsKy extends AppLocalizations {
   String get audioFilesToExport => 'Аудио файлдар';
 
   @override
+  String get emotionsToExport => 'Эмоциялар';
+
+  @override
   String get mindsExported => 'Ойлор экспортталды';
 
   @override
@@ -573,4 +579,61 @@ class AppLocalizationsKy extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'Сиз PRO колдонуучусуз. Кийинки $price төлөм $date болот.';
   }
+
+  @override
+  String get emotions => 'Эмоциялар';
+
+  @override
+  String get archived => 'Архив';
+
+  @override
+  String get archive => 'Архивдөө';
+
+  @override
+  String get restore => 'Калыбына келтирүү';
+
+  @override
+  String get deletePermanently => 'Биротоло өчүрүү';
+
+  @override
+  String get newEmotion => 'Жаңы эмоция';
+
+  @override
+  String get editEmotion => 'Эмоцияны түзөтүү';
+
+  @override
+  String get addEmotion => 'Эмоция кошуу';
+
+  @override
+  String get addEmotionsToMind => 'Эмоция кошуу';
+
+  @override
+  String get emotionNameHint => 'Аталышы';
+
+  @override
+  String get doneEditing => 'Даяр';
+
+  @override
+  String get emotionEditHint =>
+      'Атын өзгөртүү үчүн басыңыз · ✕ өчүрүү үчүн · иреттөө үчүн сүйрөңүз';
+
+  @override
+  String get emotionInUseMessage =>
+      'Бул эмоция кээ бир майндтарда колдонулат. Аны ошол жерде сактоо үчүн архивдеңиз же бардык жерден өчүрүңүз.';
+
+  @override
+  String get emotionPickHint => 'Белгилөө үчүн басыңыз';
+
+  @override
+  String get emotionDrillHint => 'тереңдөө үчүн кармап туруңуз';
+
+  @override
+  String get noEmotionsYet => 'Азырынча эмоциялар жок';
+
+  @override
+  String get noArchivedEmotions => 'Архивделген эмоциялар жок';
+
+  @override
+  String get deleteEmotionMessage =>
+      'Бул эмоцияны өчүрөсүзбү? Ал аны колдонгон бардык майндтардан өчүрүлөт.';
 }

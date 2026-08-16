@@ -18,6 +18,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get appearance => '外観';
 
   @override
+  String get interfaceStyle => 'インターフェーススタイル';
+
+  @override
   String get exportToCsv => 'CSVにエクスポート';
 
   @override
@@ -377,6 +380,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get audioFilesToExport => '音声ファイル';
 
   @override
+  String get emotionsToExport => '感情';
+
+  @override
   String get mindsExported => 'メモをエクスポートしました';
 
   @override
@@ -554,4 +560,59 @@ class AppLocalizationsJa extends AppLocalizations {
   String proUserFooter(String price, String date) {
     return 'あなたはPROユーザーです。次の支払い $price は $date に予定されています。';
   }
+
+  @override
+  String get emotions => '感情';
+
+  @override
+  String get archived => 'アーカイブ';
+
+  @override
+  String get archive => 'アーカイブ';
+
+  @override
+  String get restore => '復元';
+
+  @override
+  String get deletePermanently => '完全に削除';
+
+  @override
+  String get newEmotion => '新しい感情';
+
+  @override
+  String get editEmotion => '感情を編集';
+
+  @override
+  String get addEmotion => '感情を追加';
+
+  @override
+  String get addEmotionsToMind => '感情を追加';
+
+  @override
+  String get emotionNameHint => '名前';
+
+  @override
+  String get doneEditing => '完了';
+
+  @override
+  String get emotionEditHint => 'タップで名前変更 · ✕ で削除 · ドラッグで並び替え';
+
+  @override
+  String get emotionInUseMessage =>
+      'この感情は一部のマインドで使われています。アーカイブしてそこに残すか、すべてから削除します。';
+
+  @override
+  String get emotionPickHint => 'タップで付与';
+
+  @override
+  String get emotionDrillHint => '長押しで詳細へ';
+
+  @override
+  String get noEmotionsYet => '感情がまだありません';
+
+  @override
+  String get noArchivedEmotions => 'アーカイブされた感情はありません';
+
+  @override
+  String get deleteEmotionMessage => 'この感情を削除しますか？使用しているすべてのマインドから削除されます。';
 }

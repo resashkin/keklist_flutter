@@ -11,6 +11,10 @@
     "@appearance": {
         "description": "Appearance section title"
     },
+    "interfaceStyle": "Interface Style",
+    "@interfaceStyle": {
+        "description": "Interface style setting label (Material vs Liquid Glass)"
+    },
     "exportToCsv": "Export to CSV",
     "@exportToCsv": {
         "description": "Export to CSV button"
@@ -488,6 +492,10 @@
     "@audioFilesToExport": {
         "description": "Audio files count label for export"
     },
+    "emotionsToExport": "Emotions",
+    "@emotionsToExport": {
+        "description": "Emotions count label for export"
+    },
     "mindsExported": "Minds exported",
     "@mindsExported": {
         "description": "Minds exported count"
@@ -728,5 +736,74 @@
             "price": { "type": "String" },
             "date": { "type": "String" }
         }
+    },
+    "emotions": "Emotions",
+    "@emotions": {
+        "description": "Emotions feature title"
+    },
+    "archived": "Archived",
+    "@archived": {
+        "description": "Title for the archived emotions screen and section"
+    },
+    "archive": "Archive",
+    "@archive": {
+        "description": "Action to archive an emotion"
+    },
+    "restore": "Restore",
+    "@restore": {
+        "description": "Action to restore an archived emotion"
+    },
+    "deletePermanently": "Delete permanently",
+    "@deletePermanently": {
+        "description": "Action to permanently delete an archived emotion"
+    },
+    "newEmotion": "New emotion",
+    "@newEmotion": {
+        "description": "Title for the create-emotion form"
+    },
+    "editEmotion": "Edit emotion",
+    "@editEmotion": {
+        "description": "Title for the edit-emotion form"
+    },
+    "addEmotion": "Add emotion",
+    "@addEmotion": {
+        "description": "Link to create a new emotion at the current level"
+    },
+    "addEmotionsToMind": "Add emotions",
+    "@addEmotionsToMind": {
+        "description": "Button on a mind card that opens the emotion marking sheet"
+    },
+    "emotionNameHint": "Name",
+    "@emotionNameHint": {
+        "description": "Placeholder for the emotion title field"
+    },
+    "doneEditing": "Done",
+    "@doneEditing": {
+        "description": "Hint link that exits emotion edit mode"
+    },
+    "emotionEditHint": "Tap to rename · ✕ to remove · drag to reorder",
+    "@emotionEditHint": {
+        "description": "Hint shown while the emotion marking sheet is in edit mode"
+    },
+    "emotionInUseMessage": "This emotion is used by some minds. Archive it to keep it there, or delete it everywhere.",
+    "@emotionInUseMessage": {
+        "description": "Message when removing an emotion used by minds, offering archive or delete"
+    },
+    "emotionPickHint": "Tap to tag",
+    "emotionDrillHint": "long-press to go deeper",
+    "@emotionPickHint": {
+        "description": "Hint in the emotion marking sheet explaining tap vs long-press"
+    },
+    "noEmotionsYet": "No emotions yet",
+    "@noEmotionsYet": {
+        "description": "Empty state for the emotions list"
+    },
+    "noArchivedEmotions": "No archived emotions",
+    "@noArchivedEmotions": {
+        "description": "Empty state for the archived emotions screen"
+    },
+    "deleteEmotionMessage": "Delete this emotion? It will be removed from any minds using it.",
+    "@deleteEmotionMessage": {
+        "description": "Confirmation when permanently deleting an emotion"
     }
 }
